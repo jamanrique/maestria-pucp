@@ -10,12 +10,53 @@
 
 \section{Pregunta 5.a.}
 
+Demuestre que $\mathit{A}_{1} \in \sigma(C), \mathit{A}_{2} \in \sigma(C), ...$
+
+\textbf{Demostración:}
+
+Supongamos $\mathit{A}_{i} \in C, i=1,2, ...$
+
+Recordemos que, por definición 1.2. del texto de la clase, $C \subset \sigma(C)$
+
+Por lo tanto, $\mathit{A}_{i} \in C \subset \sigma(C), i=1,2, ...$
+
+Finalmente, $\mathit{A}_{i} \in \sigma(C), i=1,2, ...$
 
 \section{Pregunta 5.b.}
+Demuestre que $\bigcup^{\infty}_{j=1} A_{j} \in \sigma(C)$.
 
+\textbf{Demostración:}
+
+Supongamos que $\mathit{A}_{i} \in \sigma(C), i=1,2, ...$,
+
+Por definición de $\sigma$-álgebra (definición 1.1 del texto de la clase), toda $\sigma$-álgebra es cerrada respecto a reuniones infinitas enumerables.
+
+Dada la suposición y la definición de $\sigma$-álgebra, se concluye que  $\bigcup^{\infty}_{j=1} A_{j} \in \sigma(C)$.
 
 \section{Pregunta 16.a.}
+Demuestre que $\mathit{f}^{-1} (\sigma(C))$ es una $\sigma$-álgebra en $\Omega_{1}$.
 
+\textbf{Demostración:}
+
+Si $\sigma(C)$ es una $\sigma$-álgebra en $\Omega_{2}$, entonces se cumplen las siguientes definiciones:
+
+\begin{itemize}
+	\item $\Omega_{2} \in \sigma(C)$
+	\item $\forall \mathit{A} \in \sigma(C): \mathit{A}^{c} \in \sigma(C)$
+	\item $\forall \mathit{A}_{1},\mathit{A}_{2}, ... \in \sigma(C): \bigcup^{\infty}_{j=1} A_{j} \in \sigma(C)$
+\end{itemize}
+
+En base a ello, aplicamos la imagen inversa a la $\sigma$-álgebra generada y verificaremos si se cumple la definición en $\Omega_{1}$.
+
+\begin{itemize}
+	\item $\Omega_{2} \in \sigma(C)$
+	\item $\forall \mathit{A} \in \sigma(C): \mathit{A}^{c} \in \sigma(C)$
+	\item $\forall \mathit{A}_{1},\mathit{A}_{2}, ... \in \sigma(C): \bigcup^{\infty}_{j=1} A_{j} \in \sigma(C)$
+\end{itemize}
+
+Observamos que, aplicando la imagen inversa a $\sigma(C)$, la definición de $\sigma$-álgebra se mantiene en $\Omega_{1}$. 
+
+Por lo tanto, $\mathit{f}^{-1} (\sigma(C))$ es una $\sigma$-álgebra en $\Omega_{1}$.
 
 \section{Pregunta 16.b.}
 
