@@ -49,9 +49,9 @@ Si $\sigma(C)$ es una $\sigma$-álgebra en $\Omega_{2}$, entonces se cumplen las
 En base a ello, aplicamos la imagen inversa a la $\sigma$-álgebra generada y verificaremos si se cumple la definición en $\Omega_{1}$.
 
 \begin{itemize}
-	\item $\Omega_{2} \in \sigma(C)$
-	\item $\forall \mathit{A} \in \sigma(C): \mathit{A}^{c} \in \sigma(C)$
-	\item $\forall \mathit{A}_{1},\mathit{A}_{2}, ... \in \sigma(C): \bigcup^{\infty}_{j=1} A_{j} \in \sigma(C)$
+	\item $\mathit{f}^{-1}(\Omega_{2}) = \Omega_{1} \in \mathit{f}^{-1}(\sigma(C))$
+	\item $\forall \mathit{f}^{-1}(\mathit{A}) \in \mathit{f}^{-1}(\sigma(C)): \mathit{f}^{-1}(\mathit{A}^{c}) = (\mathit{f}^{-1}(\mathit{A}))^{c} \in \mathit{f}^{-1}(\sigma(C))$
+	\item $\forall \mathit{f}^{-1}(\mathit{A}_{1}),\mathit{f}^{-1}(\mathit{A}_{2}), ... \in \mathit{f}^{-1}(\sigma(C)): \mathit{f}^{-1}(\bigcup^{\infty}_{j=1} A_{j}) = \bigcup^{\infty}_{j=1}(\mathit{f}^{-1}(A_{j})) \in \mathit{f}^{-1}(\sigma(C))$
 \end{itemize}
 
 Observamos que, aplicando la imagen inversa a $\sigma(C)$, la definición de $\sigma$-álgebra se mantiene en $\Omega_{1}$. 
@@ -59,5 +59,27 @@ Observamos que, aplicando la imagen inversa a $\sigma(C)$, la definición de $\s
 Por lo tanto, $\mathit{f}^{-1} (\sigma(C))$ es una $\sigma$-álgebra en $\Omega_{1}$.
 
 \section{Pregunta 16.b.}
+
+Demuestre que  $\mathit{f}^{-1} (C) \subset \mathit{f}^{-1} (\sigma(C))$
+
+\textbf{Demostración:}
+
+Recordemos que:
+\begin{itemize}
+\item $\mathit{f}^{-1} (C) = \{\mathit{f}^{-1} (A): A \in C\}$
+\item $\mathit{f}^{-1} (A) = \{w \in \Omega_{1}: \mathit{f}(w) \in A\}$
+\end{itemize}
+
+Debido a ello, se obtiene que $\mathit{f}(w) \in A \in C$
+
+Por definición, $C \subset \sigma(C)$
+
+Por lo tanto, $\mathit{f}(w) \in A \in C \subset \sigma(C)$
+
+Aplicando imagen inversa, se obtiene que: $w \in \mathit{f}^{-1} (A) \in \mathit{f}^{-1} (C) \subset \mathit{f}^{-1} (\sigma(C))$
+
+Finalmente, se observa que $\mathit{f}^{-1} (C) \subset \mathit{f}^{-1} (\sigma(C))$.
+
+
 
 \end{document}
