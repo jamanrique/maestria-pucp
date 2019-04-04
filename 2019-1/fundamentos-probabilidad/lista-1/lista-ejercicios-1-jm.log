@@ -1,14 +1,16 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2019.1.27)  3 APR 2019 00:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2019.4.3)  3 APR 2019 19:57
 entering extended mode
- restricted \write18 enabled.
- %&-line parsing enabled.
-**lista-ejercicios-1-jm.tex
-(./lista-ejercicios-1-jm.tex
-LaTeX2e <2018-12-01>
-(c:/texlive/2018/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2018/09/03 v1.4i Standard LaTeX document class
-(c:/texlive/2018/texmf-dist/tex/latex/base/size11.clo
-File: size11.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
+**./lista-ejercicios-1-jm.tex
+(lista-ejercicios-1-jm.tex
+LaTeX2e <2018-04-01> patch level 5
+
+("C:\Users\Justo.Manrique\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\arti
+cle.cls"
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+
+("C:\Users\Justo.Manrique\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\size
+11.clo"
+File: size11.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count80
 \c@section=\count81
@@ -22,21 +24,35 @@ File: size11.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
-(c:/texlive/2018/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2018/11/13 3.27 The Babel package
+("C:\Users\Justo.Manrique\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\b
+abel.sty"
+Package: babel 2018/09/26 3.24 The Babel package
 
-(c:/texlive/2018/texmf-dist/tex/generic/babel/switch.def
-File: switch.def 2018/11/13 3.27 Babel switching mechanism
+("C:\Users\Justo.Manrique\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\s
+witch.def"
+File: switch.def 2018/09/26 3.24 Babel switching mechanism
 )
-(c:/texlive/2018/texmf-dist/tex/generic/babel-spanish/spanish.ldf
+*************************************
+* Local config file bblopts.cfg used
+*
+
+("C:\Users\Justo.Manrique\AppData\Local\Programs\MiKTeX 2.9\tex\latex\arabi\bbl
+opts.cfg"
+File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
+ babel
+)
+("C:\Users\Justo.Manrique\AppData\Local\Programs\MiKTeX 2.9\tex\latex\babel-spa
+nish\spanish.ldf"
 Language: spanish.ldf 2016/03/03 v5.0p Spanish support from the babel system
 
-(c:/texlive/2018/texmf-dist/tex/generic/babel/babel.def
-File: babel.def 2018/11/13 3.27 Babel common definitions
+("C:\Users\Justo.Manrique\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\b
+abel.def"
+File: babel.def 2018/09/26 3.24 Babel common definitions
 \babel@savecnt=\count88
 \U@D=\dimen103
 
-(c:/texlive/2018/texmf-dist/tex/generic/babel/txtbabel.def)
+("C:\Users\Justo.Manrique\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\t
+xtbabel.def")
 \bbl@dirlevel=\count89
 )
 \es@quottoks=\toks14
@@ -46,12 +62,12 @@ Package babel Info: Making . an active character on input line 662.
 Package babel Info: Making < an active character on input line 707.
 Package babel Info: Making > an active character on input line 707.
 ))
-(c:/texlive/2018/texmf-dist/tex/latex/base/inputenc.sty
-Package: inputenc 2018/08/11 v1.3c Input encoding file
+("C:\Users\Justo.Manrique\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\inpu
+tenc.sty"
+Package: inputenc 2018/04/06 v1.3b Input encoding file
 \inpenc@prehook=\toks15
 \inpenc@posthook=\toks16
-)
-(./lista-ejercicios-1-jm.aux
+) (lista-ejercicios-1-jm.aux
 LaTeX Info: Redefining \. on input line 6.
 LaTeX Info: Redefining \% on input line 6.
 )
@@ -85,41 +101,45 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <10.95> on input line 13.
 
 Overfull \hbox (0.73607pt too wide) in paragraph at lines 34--35
-[]\OT1/cmr/m/n/10.95 Dada la su-po-si-ci^^Son y la de-fi-ni-ci^^Son de $\OML/cm
-m/m/it/10.95 ^^[$\OT1/cmr/m/n/10.95 -^^Salge-bra, se con-clu-ye que $[][] \OML/
-cmm/m/it/10.95 A[] \OMS/cmsy/m/n/10.95 2
+[]\OT1/cmr/m/n/10.95 Dada la su-po-si-cion y la de-fi-ni-cion de $\OML/cmm/m/
+it/10.95 $\OT1/cmr/m/n/10.95 -alge-bra, se con-clu-ye que $[][] \OML/cmm/m/it
+/10.95 A[] \OMS/cmsy/m/n/10.95 2
  []
 
 [1
 
-{c:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-(./lista-ejercicios-1-jm.aux
+{C:/Users/Justo.Manrique/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+[2] (lista-ejercicios-1-jm.aux
 LaTeX Info: Redefining \. on input line 6.
 LaTeX Info: Redefining \% on input line 6.
 ) ) 
 Here is how much of TeX's memory you used:
- 1192 strings out of 492616
- 15226 string characters out of 6132768
- 89346 words of memory out of 5000000
- 5155 multiletter control sequences out of 15000+600000
- 9551 words of font info for 33 fonts, out of 8000000 for 9000
+ 1193 strings out of 492970
+ 16323 string characters out of 3122599
+ 89619 words of memory out of 3000000
+ 5114 multiletter control sequences out of 15000+200000
+ 9551 words of font info for 33 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 27i,6n,31p,292b,359s stack positions out of 5000i,500n,10000p,200000b,80000s
-<c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/te
-xlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/201
-8/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2018/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2018/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2018/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmr10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmr12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
-7.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/t
-exlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/20
-18/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2018/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on lista-ejercicios-1-jm.pdf (2 pages, 115796 bytes).
+ 27i,6n,31p,368b,359s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Users/Justo.Manrique/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publi
+c/amsfonts/cm/cmbx10.pfb><C:/Users/Justo.Manrique/AppData/Local/Programs/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Justo.Manrique/AppData
+/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/
+Justo.Manrique/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
+/cmmi10.pfb><C:/Users/Justo.Manrique/AppData/Local/Programs/MiKTeX 2.9/fonts/ty
+pe1/public/amsfonts/cm/cmmi8.pfb><C:/Users/Justo.Manrique/AppData/Local/Program
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Justo.Manrique/
+AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/
+Users/Justo.Manrique/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfo
+nts/cm/cmr17.pfb><C:/Users/Justo.Manrique/AppData/Local/Programs/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Justo.Manrique/AppData/Local/Pro
+grams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Justo.Manr
+ique/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb
+><C:/Users/Justo.Manrique/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/
+amsfonts/cm/cmti10.pfb>
+Output written on lista-ejercicios-1-jm.pdf (2 pages, 123782 bytes).
 PDF statistics:
- 59 PDF objects out of 1000 (max. 8388607)
- 42 compressed objects within 1 object stream
+ 57 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
