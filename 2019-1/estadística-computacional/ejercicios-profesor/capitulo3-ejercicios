@@ -1,0 +1,18 @@
+using Plots, PyPlot, Distributions, DataFrames
+M = 10000
+X = zeros(M)
+for h in 1:M
+    cond = 0
+    while cond==0
+        a = Uniform()
+        a_1 = rand(a,M)
+        exp_1 = -log.(a_1)/(2/3)
+        u = rand(a)
+        if u <= mean(((2/pi^(1/2)).*exp_1.^(0.5).*exp.(-exp_1))./(1.013*exp.((2/3).*exp_1)))
+            X[h] = exp_1[h]
+            cond = 1
+        end
+    end
+end
+
+histogram(X)
