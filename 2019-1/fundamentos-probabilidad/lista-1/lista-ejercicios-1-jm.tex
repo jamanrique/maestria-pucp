@@ -48,14 +48,23 @@ Supongamos que $\sigma(C)$ es una $\sigma$-álgebra en $\Omega_{2}$. Entonces, s
 
 Para demostrar que $\mathit{f}^{-1}(\sigma(C))$ es una $\sigma$-álgebra en $\Omega_{1}$, verificaremos si dicha imagen inversa cumple los 3 axiomas de la definición de $\sigma$-álgebra en $\Omega_{1}$. 
 
-Respecto al primer axioma, recordemos que $\Omega_{1} = \mathit{f}^{-1}(\Omega_{2})$ y que $\Omega_{2} \in \sigma(C)$. Por lo tanto, por definición, $\Omega_{1} \in \mathit{f}^{-1}(\sigma(C))$. Se cumple el primer axioma.
+Recordemos que, por definición,  $f^{-1}(A)=\left\{\omega \in \Omega_{1} : f(\omega) \in A\right\}$ y $f^{-1}(\mathcal{C})=\left\{f^{-1}(A) : A \in \mathcal{C}\right\}$. En base a esto, se realizará la demostración:
 
-Respecto al segundo axioma, recordemos lo siguiente:
+\subsection{1er axioma}
+
 \begin{itemize}
-	\item Si $ A \in C$, entonces, por definición de $\sigma$-álgebra, $\mathit{A} \in \sigma(C)$ y $\mathit{A}^{c} \in \sigma(C)$.
-	\item Por definición, $\mathit{f}^{-1} (C) = \{\mathit{f}^{-1} (A): A \in C \subset \sigma(C) \}$. Entonces, $\mathit{f}^{-1}(A) \in \mathit{f}^{-1}(\sigma(C))$.
-	\item La primera condición también debe sostenerse en $\Omega_{1}$ y esto se cumple por propiedad. $\mathit{f}^{-1}(A^{c}) = (\mathit{f}^{-1}(A))^{c} \in \mathit{f}^{-1}(\sigma(C))$. Se cumple el segundo axioma.
+	\item Recordemos que $\Omega_{1} = \mathit{f}^{-1}(\Omega_{2})$ y que $\Omega_{2} \in \sigma(C)$. Por lo tanto, por definición, $\Omega_{1} \in \mathit{f}^{-1}(\sigma(C))$. Se cumple el primer axioma.
 \end{itemize}
+
+\subsection{2do axioma}
+
+\begin{itemize}
+	\item Sea $ A \in C$, entonces, por definición de $\sigma$-álgebra, $\mathit{A} \in \sigma(C)$ y $\mathit{A}^{c} \in \sigma(C)$.
+	\item Por definición, $\mathit{f}^{-1} (C) = \{\mathit{f}^{-1} (A): A \in C \subset \sigma(C) \}$. Entonces, $\mathit{f}^{-1}(A) \in \mathit{f}^{-1}(C) \subset \mathit{f}^{-1}(\sigma(C))$.
+	\item Para que  $\mathit{f}^{-1}(\sigma(C))$ sea considerada una $\sigma$-álgebra, entonces $\mathit{(f}^{-1}(C))^{c}$ debe estar contenido en $\mathit{f}^{-1}(\sigma(C))$. Esto se cumple por propiedad. $\mathit{f}^{-1}(A^{c}) = (\mathit{f}^{-1}(A))^{c} \in \mathit{f}^{-1}(\sigma(C))$. Se cumple el segundo axioma.
+\end{itemize}
+
+\subsection{3er axioma}
 
 Respecto al tercer axioma, recordemos que $\bigcup^{\infty}_{j=1} A_{j} \in \sigma(C)$, entonces $\mathit{f}^{-1}(A_{j}) \in \mathit{f}^{-1}(A), j=1,2, ... $, por lo tanto  $\bigcup_{j=1}^{\infty} \mathit{f}^{-1}(A_j) = \mathit{f}^{-1}(\bigcup_{j=1}^{\infty}A_j) \in \mathit{f}^{-1}(\sigma(C))$. Se cumple el tercer axioma.
 
@@ -67,15 +76,12 @@ Demuestre que $\mathit{f}^{-1} (C) \subset \mathit{f}^{-1} (\sigma(C))$.
 
 \textbf{Demostración:}
 
-Debido a ello, se obtiene que $\mathit{f}(w) \in A \in C$
+Esto se demostró en la pregunta 16.a., segundo axioma.
 
-Por definición, $C \subset \sigma(C)$
-
-Por lo tanto, $\mathit{f}(w) \in A \in C \subset \sigma(C)$
-
-Aplicando imagen inversa, se obtiene que: $w \in \mathit{f}^{-1} (A) \in \mathit{f}^{-1} (C) \subset \mathit{f}^{-1} (\sigma(C))$
-
-Finalmente, se observa que $\mathit{f}^{-1} (C) \subset \mathit{f}^{-1} (\sigma(C))$.
+\begin{itemize}
+	\item Sea $ A \in C$, entonces, por definición de $\sigma$-álgebra, $\mathit{A} \in \sigma(C)$ y $\mathit{A}^{c} \in \sigma(C)$.
+	\item Por definición, $\mathit{f}^{-1} (C) = \{\mathit{f}^{-1} (A): A \in C \subset \sigma(C) \}$. Entonces, $\mathit{f}^{-1}(A) \in \mathit{f}^{-1}(C) \subset \mathit{f}^{-1}(\sigma(C))$.
+\end{itemize}
 
 
 \section{Pregunta 16.c.}
