@@ -1,0 +1,234 @@
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\section*{Pregunta 1}
+
+Ver a continuación la resolución de la pregunta:
+
+\subsection*{Carga de librerías y parametrización inicial}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{rm}\hlstd{(}\hlkwc{list}\hlstd{=}\hlkwd{ls}\hlstd{())}
+\hlkwd{library}\hlstd{(stargazer)}
+\end{alltt}
+
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# \\\#\# Please cite as:}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\#\ \ Hlavac, Marek (2018). stargazer: Well-Formatted Regression and Summary Statistics Tables.}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\#\ \ R package version 5.2.2. https://CRAN.R-project.org/package=stargazer}}\begin{alltt}
+\hlkwd{library}\hlstd{(psych)}
+\end{alltt}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning: package 'psych' was built under R version 3.5.3}}\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{12430}\hlstd{)}
+
+\hlstd{M} \hlkwb{=} \hlnum{10000}
+
+\hlstd{n} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{30}\hlstd{,}\hlnum{50}\hlstd{,}\hlnum{100}\hlstd{)}
+\hlstd{media} \hlkwb{=} \hlnum{1}
+\hlstd{var} \hlkwb{=} \hlnum{1}
+
+\hlstd{T_mat}\hlkwb{<-}\hlkwd{matrix}\hlstd{(}\hlnum{0}\hlstd{,M,}\hlnum{18}\hlstd{)}
+
+\hlkwd{colnames}\hlstd{(T_mat)}\hlkwb{<-}\hlkwd{c}\hlstd{(}\hlstr{"Xbar.30.N"}\hlstd{,}\hlstr{"Xwin.30.N"}\hlstd{,}\hlstr{"Xbar.30.T"}\hlstd{,}\hlstr{"Xwin.30.T"}\hlstd{,}
+                   \hlstr{"Xbar.30.G"}\hlstd{,}\hlstr{"Xwin.30.G"}\hlstd{,}\hlstr{"Xbar.50.N"}\hlstd{,}\hlstr{"Xwin.50.N"}\hlstd{,}
+                   \hlstr{"Xbar.50.T"}\hlstd{,}\hlstr{"Xwin.50.T"}\hlstd{,}\hlstr{"Xbar.50.G"}\hlstd{,}\hlstr{"Xwin.50.G"}\hlstd{,}
+                   \hlstr{"Xbar.100.N"}\hlstd{,}\hlstr{"Xwin.100.N"}\hlstd{,}\hlstr{"Xbar.100.T"}\hlstd{,}
+                   \hlstr{"Xwin.100.T"}\hlstd{,}\hlstr{"Xbar.100.G"}\hlstd{,}\hlstr{"Xwin.100.G"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\subsection*{Estudio de simulación}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwa{for}\hlstd{(h} \hlkwa{in} \hlnum{1}\hlopt{:}\hlnum{3}\hlstd{)\{}
+  \hlkwa{for}\hlstd{(j} \hlkwa{in} \hlnum{1}\hlopt{:}\hlstd{M)\{}
+    \hlstd{x} \hlkwb{=} \hlkwd{rnorm}\hlstd{(}\hlkwc{n} \hlstd{= n[h],}\hlkwc{mean} \hlstd{= media,}\hlkwc{sd} \hlstd{= var)}
+    \hlstd{y} \hlkwb{=} \hlstd{media} \hlopt{+} \hlnum{1}\hlopt{/}\hlkwd{sqrt}\hlstd{(}\hlnum{2}\hlstd{)}\hlopt{*}\hlkwd{rt}\hlstd{(}\hlkwc{n} \hlstd{= n[h],}\hlkwc{df} \hlstd{=} \hlnum{4}\hlstd{)}
+    \hlstd{z} \hlkwb{=} \hlkwd{rgamma}\hlstd{(}\hlkwc{n} \hlstd{= n[h],}\hlkwc{shape} \hlstd{= media,} \hlkwc{scale} \hlstd{= var)}
+    \hlstd{T_mat[j,(}\hlnum{6}\hlopt{*}\hlstd{h}\hlopt{-}\hlnum{5}\hlstd{)}\hlopt{:}\hlstd{(}\hlnum{6}\hlopt{*}\hlstd{h)]} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{mean}\hlstd{(x),}
+                                \hlkwd{winsor.mean}\hlstd{(}\hlkwc{x} \hlstd{= x,}\hlkwc{trim} \hlstd{=} \hlnum{0.2}\hlstd{),}
+                                \hlkwd{mean}\hlstd{(y),}
+                                \hlkwd{winsor.mean}\hlstd{(}\hlkwc{x} \hlstd{= y,}\hlkwc{trim} \hlstd{=} \hlnum{0.2}\hlstd{),}
+                                \hlkwd{mean}\hlstd{(z),}
+                                \hlkwd{winsor.mean}\hlstd{(}\hlkwc{x} \hlstd{= z,}\hlkwc{trim} \hlstd{=} \hlnum{0.2}\hlstd{))}
+  \hlstd{\}}
+\hlstd{\}}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\subsection*{Cálculo del error cuadrático medio}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{medias} \hlkwb{=} \hlkwd{colMeans}\hlstd{(T_mat)}
+\hlstd{est} \hlkwb{=} \hlkwd{rep}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"Media aritmética"}\hlstd{,} \hlstr{"Media winsorisada"}\hlstd{),}\hlkwc{times}\hlstd{=}\hlnum{9}\hlstd{)}
+\hlstd{dis} \hlkwb{=} \hlkwd{rep}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"N"}\hlstd{,}\hlstr{"N"}\hlstd{,}\hlstr{"t"}\hlstd{,}\hlstr{"t"}\hlstd{,}\hlstr{"G"}\hlstd{,}\hlstr{"G"}\hlstd{),}\hlkwc{times}\hlstd{=}\hlnum{3}\hlstd{)}
+\hlstd{tam} \hlkwb{=} \hlkwd{rep}\hlstd{(n,}\hlkwc{each}\hlstd{=}\hlnum{4}\hlstd{)}
+\hlstd{sesgo} \hlkwb{=} \hlstd{medias} \hlopt{-} \hlstd{media}
+\hlstd{varianza} \hlkwb{=} \hlkwd{diag}\hlstd{(}\hlkwd{var}\hlstd{(T_mat))}
+\hlstd{ECM} \hlkwb{=} \hlstd{varianza} \hlopt{+} \hlstd{sesgo}\hlopt{^}\hlnum{2}
+\hlstd{res_ecm} \hlkwb{=} \hlkwd{rbind}\hlstd{(}\hlkwd{matrix}\hlstd{(ECM[dis}\hlopt{==}\hlstr{"N"}\hlstd{],}\hlnum{3}\hlstd{,}\hlnum{2}\hlstd{,}\hlkwc{byrow}\hlstd{=T),}
+                \hlkwd{matrix}\hlstd{(ECM[dis}\hlopt{==}\hlstr{"t"}\hlstd{],}\hlnum{3}\hlstd{,}\hlnum{2}\hlstd{,}\hlkwc{byrow}\hlstd{=T),}
+                \hlkwd{matrix}\hlstd{(ECM[dis}\hlopt{==}\hlstr{"G"}\hlstd{],}\hlnum{3}\hlstd{,}\hlnum{2}\hlstd{,}\hlkwc{byrow}\hlstd{=T))}
+\hlstd{res_ecm} \hlkwb{=} \hlkwd{cbind}\hlstd{(}\hlkwd{rep}\hlstd{(n,}\hlnum{3}\hlstd{),res_ecm)}
+\hlkwd{colnames}\hlstd{(res_ecm)} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlstr{"Tamaño de Muestra"}\hlstd{,}
+                      \hlstr{"Media Aritmética"}\hlstd{,}
+                      \hlstr{"Media Winsorizada"}\hlstd{)}
+\hlkwd{rownames}\hlstd{(res_ecm)} \hlkwb{=} \hlkwd{rep}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"Normal"}\hlstd{,}\hlstr{"t"}\hlstd{,}\hlstr{"Gamma"}\hlstd{),}\hlkwc{each} \hlstd{=} \hlnum{3}\hlstd{)}
+\hlstd{res_ecm} \hlkwb{=} \hlkwd{round}\hlstd{(res_ecm,}\hlnum{4}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\begin{kframe}
+\begin{alltt}
+\hlkwd{stargazer}\hlstd{(res_ecm)}
+\end{alltt}
+\end{kframe}
+% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: lun., May. 20, 2019 - 00:28:46
+\begin{table}[!htbp] \centering 
+  \caption{} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}} cccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & Tamaño de Muestra & Media Aritmética & Media Winsorizada \\ 
+\hline \\[-1.8ex] 
+Normal & $30$ & $0.034$ & $0.038$ \\ 
+Normal.1 & $50$ & $0.021$ & $0.022$ \\ 
+Normal.2 & $100$ & $0.010$ & $0.011$ \\ 
+t & $30$ & $0.035$ & $0.026$ \\ 
+t.1 & $50$ & $0.020$ & $0.015$ \\ 
+t.2 & $100$ & $0.010$ & $0.007$ \\ 
+Gamma & $30$ & $0.034$ & $0.056$ \\ 
+Gamma.1 & $50$ & $0.020$ & $0.046$ \\ 
+Gamma.2 & $100$ & $0.010$ & $0.038$ \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table} 
+
+
+De acuerdo a nuestro estudio de simulación, observamos que a medida que simulamos más observaciones el error cuadrático medio disminuye en todos los estudios. Asimismo, se observa lo siguiente:
+
+\begin{itemize}
+  \item En el estudio de datos simétricos sin outliers, se observa que la media aritmética es mejor estimador que la media winsorizada puesto que la primera tiene menor variabilidad (menor ECM aunque por un poco margen (0.010 vs. 0.011)
+  \item En el estudio de datos simétricos con outliers, se observa que la media winsorizada es un mejor estimador que la media aritmética (0.007 vs 0.010).
+  \item En el estudio de datos asimétricos, la media aritmética es mucho mejor estimador que la media winsorizada (0.010 vs. 0.038).
+\end{itemize}
+
+\subsection*{Cálculo del sesgo}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{res_ses} \hlkwb{=} \hlkwd{rbind}\hlstd{(}\hlkwd{matrix}\hlstd{(sesgo[dis}\hlopt{==}\hlstr{"N"}\hlstd{],}\hlnum{3}\hlstd{,}\hlnum{2}\hlstd{,}\hlkwc{byrow}\hlstd{=T),}
+                \hlkwd{matrix}\hlstd{(sesgo[dis}\hlopt{==}\hlstr{"t"}\hlstd{],}\hlnum{3}\hlstd{,}\hlnum{2}\hlstd{,}\hlkwc{byrow}\hlstd{=T),}
+                \hlkwd{matrix}\hlstd{(sesgo[dis}\hlopt{==}\hlstr{"G"}\hlstd{],}\hlnum{3}\hlstd{,}\hlnum{2}\hlstd{,}\hlkwc{byrow}\hlstd{=T))}
+\hlstd{res_ses} \hlkwb{=} \hlkwd{cbind}\hlstd{(}\hlkwd{rep}\hlstd{(n,}\hlnum{3}\hlstd{),res_ses)}
+\hlkwd{colnames}\hlstd{(res_ses)} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlstr{"Tamaño de Muestra"}\hlstd{,}
+                      \hlstr{"Media Aritmética"}\hlstd{,}
+                      \hlstr{"Media Winsorizada"}\hlstd{)}
+\hlkwd{rownames}\hlstd{(res_ses)} \hlkwb{=} \hlkwd{rep}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"Normal"}\hlstd{,}\hlstr{"t"}\hlstd{,}\hlstr{"Gamma"}\hlstd{),}\hlkwc{each} \hlstd{=} \hlnum{3}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\begin{kframe}
+\begin{alltt}
+\hlkwd{stargazer}\hlstd{(res_ses)}
+\end{alltt}
+\end{kframe}
+% Table created by stargazer v.5.2.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: lun., May. 20, 2019 - 00:28:46
+\begin{table}[!htbp] \centering 
+  \caption{} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}} cccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & Tamaño de Muestra & Media Aritmética & Media Winsorizada \\ 
+\hline \\[-1.8ex] 
+Normal & $30$ & $$-$0.002$ & $$-$0.003$ \\ 
+Normal.1 & $50$ & $0.001$ & $0.001$ \\ 
+Normal.2 & $100$ & $0.0003$ & $0.0003$ \\ 
+t & $30$ & $$-$0.001$ & $$-$0.002$ \\ 
+t.1 & $50$ & $0.001$ & $0.002$ \\ 
+t.2 & $100$ & $0.001$ & $0.001$ \\ 
+Gamma & $30$ & $0.003$ & $$-$0.166$ \\ 
+Gamma.1 & $50$ & $0.003$ & $$-$0.169$ \\ 
+Gamma.2 & $100$ & $0.001$ & $$-$0.173$ \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table} 
+
+
+De acuerdo a nuestro estudio de simulación, observamos que el sesgo se reduce en la medida que aumenta el número de observaciones, con excepción de la media winsorizada en la distribución asimétrica. Asimismo, se observa lo siguiente:
+
+\begin{itemize}
+  \item En las simulaciones simétricas, tanto para la simulación con outliers y sin outliers, se observa que ambas medias tienen el mismo nivel de sesgo.
+  \item En la simulación no simétrica, la media aritmética se acerca al valor del parámetro (disminuye su sesgo) en la medida que incrementa el número de observaciones, sin embargo la media winsorizada incrementa su sesgo al aumentar el número de observaciones.
+\end{itemize}
+\end{document}
