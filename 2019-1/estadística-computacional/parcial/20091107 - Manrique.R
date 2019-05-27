@@ -57,10 +57,11 @@ fisher_info = solve(-res.L$hessian)
 fisher_info
 
 sigma = sqrt(diag(fisher_info))
-sigma = diag(sigma)
 sigma = sigma[4]
 
 ftwt = faithful$waiting
 
 up = res.L$par[4] +1.96*(sigma/sqrt(length(ftwt)))
 low = res.L$par[4] -1.96*(sigma/sqrt(length(ftwt)))
+ci = c(low, res.L$par[4], up)
+ci
