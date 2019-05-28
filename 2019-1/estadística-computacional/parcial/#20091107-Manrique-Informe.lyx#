@@ -1,0 +1,648 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Parcial - Estadística Computacional
+\end_layout
+
+\begin_layout Author
+Justo Andrés Manrique Urbina
+\end_layout
+
+\begin_layout Date
+Fecha: 28 de Mayo de 2018
+\end_layout
+
+\begin_layout Section
+Pregunta 3 (8 puntos)
+\end_layout
+
+\begin_layout Standard
+Una variable aleatoria 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$X$
+\end_layout
+
+\end_inset
+
+, definida en toda la recta, tiene distribución normal asimétrica flexible
+ generalizada, propuesta por Ma y Genton (2004), si su función de densidad
+ es dada por la siguiente expresión: 
+\begin_inset Formula 
+\[
+2\phi(x|\xi,\sigma^{2})\Phi(\alpha(x-\xi)/\sigma+\beta(x-\xi)^{3}/\sigma^{3})
+\]
+
+\end_inset
+
+en dónde 
+\begin_inset Formula $\xi\mathbb{\in R},\sigma^{2}>0,\alpha\in\mathbb{R},\beta\in\mathbb{R},\phi(a|b,c^{2})$
+\end_inset
+
+ es la función de densidad de una distribución normal univariada con media
+ 
+\begin_inset Formula $b$
+\end_inset
+
+, varianza 
+\begin_inset Formula $c^{2}$
+\end_inset
+
+, y evaluada en 
+\begin_inset Formula $a$
+\end_inset
+
+, y 
+\begin_inset Formula $\Phi(a)$
+\end_inset
+
+ es la función de distribución acumulada de una normal estándar evaluada
+ en 
+\begin_inset Formula $a$
+\end_inset
+
+.
+ Una variable continua 
+\begin_inset Formula $X$
+\end_inset
+
+que tenga función de densidad dada por la ecuación anterior se denota por
+ 
+\begin_inset Formula $X\sim FSGN(\xi,\sigma,\alpha,\beta)$
+\end_inset
+
+ (dónde FSGN son las siglas de 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textit{flexible generalized skew-normal}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Resolución de la pregunta a)
+\end_layout
+
+\begin_layout Standard
+Explique e implemente en R un algoritmo para generar 10,000 valores de 
+\begin_inset Formula $X\sim FSGN(70,20,2,-2)$
+\end_inset
+
+.
+ Verifique su simulación a través de una técnica gráfica.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{Resolución:}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se implementa el algoritmo Metrópolis-Hastings (MH) para generar valores
+ de dicha distribución.
+ Para ello, dado que la función de densidad 
+\begin_inset Formula $FSGN$
+\end_inset
+
+ tiene como base una distribución normal univariada, se tomará como función
+ generadora de candidatos una distribución normal univariada, representada
+ como 
+\begin_inset Formula $q(\APLstar|x)\sim N(70,400)$
+\end_inset
+
+, en dónde la media se encuentra centrada en la función a estimar y cuya
+ varianza está basada en la varianza de la distribución a estimar.
+\end_layout
+
+\begin_layout Standard
+Sea Y un valor candidado generado de 
+\begin_inset Formula $q(\APLstar|x)\sim N(70,400)$
+\end_inset
+
+, entonces el algoritmo MH es de la forma:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\alpha(X,Y)=min(1,\frac{f(Y)q(X|Y)}{f(X)q(Y|X)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dado que 
+\begin_inset Formula $q(X|Y)=\frac{1}{\sqrt{2\pi\sigma²}}e^{-\frac{(x-y)²}{2\sigma²}}$
+\end_inset
+
+, y 
+\begin_inset Formula $q(Y|X)=\frac{1}{\sqrt{2\pi\sigma\text{²}}}e^{-\frac{(y-x)\text{²}}{2\sigma\text{²}}}$
+\end_inset
+
+ ambos eventos se pueden cancelar quedando el algoritmo de la forma:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\alpha(X,Y)=min(1,\frac{f(Y)}{f(X)})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Ver a continuación la aplicación del algoritmo en el cuadro Algoritmo 1.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+## Definimos los parámetros ##
+\end_layout
+
+\begin_layout Plain Layout
+rm(list=ls())
+\end_layout
+
+\begin_layout Plain Layout
+set.seed(50000)
+\end_layout
+
+\begin_layout Plain Layout
+eps = 70
+\end_layout
+
+\begin_layout Plain Layout
+sig = 20
+\end_layout
+
+\begin_layout Plain Layout
+alpha = 2
+\end_layout
+
+\begin_layout Plain Layout
+beta = -2
+\end_layout
+
+\begin_layout Plain Layout
+## Definimos la función de interés ##
+\end_layout
+
+\begin_layout Plain Layout
+FSGN = function(x,eps, sig, alpha, beta){
+\end_layout
+
+\begin_layout Plain Layout
+2 * dnorm(x=x,mean=eps, sd=sig) * pnorm(alpha*(x-eps)/sig+beta*(x-eps)^3/sig^3,m
+ean = 0,sd = 1)
+\end_layout
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\begin_layout Plain Layout
+## Definimos el algoritmo ##
+\end_layout
+
+\begin_layout Plain Layout
+# Valor Inicial
+\end_layout
+
+\begin_layout Plain Layout
+M=10000
+\end_layout
+
+\begin_layout Plain Layout
+z=1
+\end_layout
+
+\begin_layout Plain Layout
+# Metropolis Hastings
+\end_layout
+
+\begin_layout Plain Layout
+for(h in 2:M){
+\end_layout
+
+\begin_layout Plain Layout
+x = z[h-1]
+\end_layout
+
+\begin_layout Plain Layout
+y = rnorm(1, mean = eps,sd = sig^2)
+\end_layout
+
+\begin_layout Plain Layout
+u = runif(1)
+\end_layout
+
+\begin_layout Plain Layout
+abc= min(1,(FSGN(y,eps,sig,alpha,beta)/FSGN(x,eps,sig,alpha,beta)))
+\end_layout
+
+\begin_layout Plain Layout
+if(u<=abc){z[h]<-y} #acepta al candidato
+\end_layout
+
+\begin_layout Plain Layout
+if(u>abc){z[h]<-x} #rechaza al candidato
+\end_layout
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Método de Metrópolis - Hastings
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Posteriormente, graficamos los valores generados, así como un gráfico temporal
+ de los valoers generados para observar si es estacionario.
+ Ver gráficos a continuación:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename MH-simulacion.jpg
+	scale 60
+	groupId Gráfico 1
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Resultados de la simulación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename MH-serietiempo.jpg
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Linea de tiempo
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finalmente, se observa que la línea de tiempo se muestra estacionaria por
+ lo que se toma dicha simulación como válida.
+\end_layout
+
+\begin_layout Subsection
+Resolución de la pregunta b)
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{Resolución:}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Observamos que la función de verosimilitud de la función 
+\begin_inset Formula $FSGN$
+\end_inset
+
+ se tiene de la forma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+footnote{Siempre y cuando la muestra sea independiente.}
+\end_layout
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+2\phi(x|\xi,\sigma^{2})\Phi(\alpha(x-\xi)/\sigma+\beta(x-\xi)^{3}/\sigma^{3})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{2}{\sqrt{2\pi\sigma²}}e^{\frac{-(x-\xi)²}{\sigma²}}*\frac{1}{2}\left[1+erf(\frac{\alpha(x-\xi)/\sigma+\beta(x-\xi)³/\sigma³}{\sigma\sqrt{2}})\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathop{\prod_{j=1}^{n}\frac{2}{\sqrt{2\pi\sigma\text{²}}}e^{\frac{-(x_{j}-\xi)\text{²}}{\sigma\text{²}}}*\frac{1}{2}\left[1+erf(\frac{\alpha(x_{j}-\xi)/\sigma+\beta(x_{j}-\xi)\text{³}/\sigma\text{³}}{\sigma\sqrt{2}})\right]}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{1}{\sigma^{n}(\sqrt{2\pi})^{n}}e^{\frac{-1}{\sigma^{2}}\mathop{\sum_{j=1}^{n}(x_{j}-\xi)^{2}}}\mathop{\prod_{j=1}^{n}}\left[1+erf(\frac{\alpha(x_{j}-\xi)/\sigma+\beta(x_{j}-\xi)\text{³}/\sigma\text{³}}{\sigma\sqrt{2}})\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Posteriormente, la log-verosimilitud quedaría de la siguiente forma:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{-n}{2}log(2\sigma^{2}\pi)+\left(\frac{-1}{2\sigma^{2}}\mathop{\sum_{j=1}^{n}(x_{j}-\xi)²}\right)+\mathop{\sum_{j=1}^{n}log\left(1+erf(\frac{\alpha(x_{j}-\xi)/\sigma+\beta(x_{j}-\xi)\text{³}/\sigma\text{³}}{\sigma\sqrt{2}})\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Con el propósito de hallar los estimados de máxima verosimilitud se hizo
+ uso del set de datos 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{faithful}
+\end_layout
+
+\end_inset
+
+ de R.
+ Ver código a continuación:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Código R para estimación de máxima verosimilitud
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Esto da como resultado, para 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$
+\backslash
+beta$
+\end_layout
+
+\end_inset
+
+ el valor de -747.5.
+ Si bien el valor puede estar lejos del valor de optimización, se observa
+ que se respeta el rango de 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$
+\backslash
+beta$
+\end_layout
+
+\end_inset
+
+ el cual es los números reales.
+\end_layout
+
+\end_body
+\end_document
