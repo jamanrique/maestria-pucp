@@ -941,7 +941,7 @@ res.L.0 = optim(c(70,20,0),log.like.0,method = "L-BFGS-B")
 \end_layout
 
 \begin_layout Plain Layout
-EMV.0 = round(res.L.0$par,3);EMV.0
+EMV.0 = round(res.L.0$par,3)
 \end_layout
 
 \begin_layout Plain Layout

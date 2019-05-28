@@ -635,7 +635,7 @@ res.L = optim(c(70,20,0,0),log.like,method = "L-BFGS-B",hessian = T)
 \end_layout
 
 \begin_layout Plain Layout
-round(res.L$par,3)
+EMV = round(res.L$par,3)
 \end_layout
 
 \begin_layout Plain Layout
@@ -897,24 +897,70 @@ textit{ji-cuadrado}
 \end_layout
 
 \begin_layout Standard
-Ver la ecuación a continuación:
+Ver el código R a continuación:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float algorithm
+placement H
 wide false
 sideways false
 status open
 
 \begin_layout Plain Layout
+log.like.0 = function(theta){
+\end_layout
 
+\begin_layout Plain Layout
+eps = theta[1]
+\end_layout
+
+\begin_layout Plain Layout
+sig = theta[2]
+\end_layout
+
+\begin_layout Plain Layout
+alpha = theta[3]
+\end_layout
+
+\begin_layout Plain Layout
+ftwt = faithful$waiting
+\end_layout
+
+\begin_layout Plain Layout
+-((-length(ftwt)*log(sig)-length(ftwt)*log(sqrt(2*pi))+((-1/(2*sig^2))*sum((ftwt
+-eps)^2))+sum(log(pnorm(alpha*(ftwt-eps)/sig)))))
+\end_layout
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\begin_layout Plain Layout
+res.L.0 = optim(c(70,20,0),log.like.0,method = "L-BFGS-B")
+\end_layout
+
+\begin_layout Plain Layout
+EMV.0 = round(res.L.0$par,3);EMV.0
+\end_layout
+
+\begin_layout Plain Layout
+l = 2*(log.like.0(EMV.0)-log.like(EMV))
+\end_layout
+
+\begin_layout Plain Layout
+pval = 1-pchisq(l,1)
+\end_layout
+
+\begin_layout Plain Layout
+pval
 \end_layout
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
+Código R para la prueba de hipótesis
 \end_layout
 
 \end_inset
@@ -929,6 +975,24 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+El p-valor resulta menor a 0.05, por lo que se rechaza la hipótesis nula.
+ Por lo tanto, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$
+\backslash
+beta$
+\end_layout
+
+\end_inset
+
+ es distinto de 0.
 \end_layout
 
 \end_body
