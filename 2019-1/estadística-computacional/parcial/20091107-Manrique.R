@@ -48,11 +48,11 @@ log.like = function(theta){
   alpha = theta[3]
   beta = theta[4]
   ftwt = faithful$waiting
-  -((-length(ftwt)/2)*log(pi*2*sig^2)+((-1/(2*sig^2))*sum((ftwt-eps)^2))+sum(log(1+erf((alpha*(ftwt-eps)/sig+beta*(ftwt-eps)^3/sig^3)/(sig*sqrt(2))))))
+  -((-length(ftwt))*log(sig)-length(ftwt)*log(sqrt(2*pi))+((-1/(2*sig^2))*sum((ftwt-eps)^2))+sum(log(pnorm(alpha*(ftwt-eps)/sig + (beta*(ftwt-eps)^3/sig^3)))))
 }
 
-res.L = optim(c(70,20,0,0),log.like,method = "L-BFGS-B",upper=c(100,40,100,100),lower=c(0,0,-100,-100),hessian = T)
-round(res.L$par,3)
+res.L = optim(c(70,20,0,0),log.like,method = "L-BFGS-B",hessian = T)
+EMV = round(res.L$par,3)
 res.L$hessian
 
 fisher_info = solve(res.L$hessian)
@@ -63,7 +63,21 @@ sigma = sigma[4]
 
 ftwt = faithful$waiting
 
-up = res.L$par[4] +1.96*(sigma/sqrt(length(ftwt)))
-low = res.L$par[4] -1.96*(sigma/sqrt(length(ftwt)))
+up = res.L$par[4] +qnorm(0.975)*(sigma)
+low = res.L$par[4] -qnorm(0.975)*(sigma)
 ci = c(low, res.L$par[4], up)
 ci
+
+log.like.0 = function(theta){
+	eps = theta[1]
+	sig = theta[2]
+	alpha = theta[3]
+	ftwt = faithful$waiting
+	-((-length(ftwt)*log(sig)-length(ftwt)*log(sqrt(2*pi))+((-1/(2*sig^2))*sum((ftwt-eps)^2))+sum(log(pnorm(alpha*(ftwt-eps)/sig)))))
+}
+
+res.L.0 = optim(c(70,20,0),log.like.0,method = "L-BFGS-B")
+EMV.0 = round(res.L.0$par,3)
+l = 2*(log.like.0(EMV.0)-log.like(EMV))
+pval = 1-pchisq(l,1)
+pval

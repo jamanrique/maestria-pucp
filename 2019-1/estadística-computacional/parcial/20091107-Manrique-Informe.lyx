@@ -170,15 +170,6 @@ Resolución de la pregunta a)
 \end_layout
 
 \begin_layout Standard
-Explique e implemente en R un algoritmo para generar 10,000 valores de 
-\begin_inset Formula $X\sim FSGN(70,20,2,-2)$
-\end_inset
-
-.
- Verifique su simulación a través de una técnica gráfica.
-\end_layout
-
-\begin_layout Standard
 \begin_inset ERT
 status open
 
@@ -547,13 +538,24 @@ footnote{Siempre y cuando la muestra sea independiente.}
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula 
+\[
+\sigma^{-n}(\sqrt{2\pi})^{-n}e^{\frac{-1}{\sigma^{2}}\mathop{\sum_{j=1}^{n}(x_{j}-\xi)^{2}}}\mathop{\prod_{j=1}^{n}}\left[1+erf(\frac{\alpha(x_{j}-\xi)/\sigma+\beta(x_{j}-\xi)\text{³}/\sigma\text{³}}{\sigma\sqrt{2}})\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Posteriormente, la log-verosimilitud quedaría de la siguiente forma:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\frac{-n}{2}log(2\sigma^{2}\pi)+\left(\frac{-1}{2\sigma^{2}}\mathop{\sum_{j=1}^{n}(x_{j}-\xi)²}\right)+\mathop{\sum_{j=1}^{n}log\left(1+erf(\frac{\alpha(x_{j}-\xi)/\sigma+\beta(x_{j}-\xi)\text{³}/\sigma\text{³}}{\sigma\sqrt{2}})\right)}
+-n*log(\sigma)-n*log(\sqrt{2\pi})+\left(\frac{-1}{2\sigma^{2}}\mathop{\sum_{j=1}^{n}(x_{j}-\xi)²}\right)+\mathop{\sum_{j=1}^{n}log\left(1+erf(\frac{\alpha(x_{j}-\xi)/\sigma+\beta(x_{j}-\xi)\text{³}/\sigma\text{³}}{\sigma\sqrt{2}})\right)}
 \]
 
 \end_inset
@@ -620,8 +622,8 @@ ftwt = faithful$waiting
 \end_layout
 
 \begin_layout Plain Layout
--((-length(ftwt)/2)*log(pi*2*sig^2)+((-1/(2*sig^2))*sum((ftwt-eps)^2))+sum(log(1
-+erf((alpha*(ftwt-eps)/sig+beta*(ftwt-eps)^3/sig^3)/(sig*sqrt(2))))))
+-((-length(ftwt))*log(sig)-length(ftwt)*log(sqrt(2*pi))+((-1/(2*sig^2))*sum((ftw
+t-eps)^2))+sum(log(pnorm(alpha*(ftwt-eps)/sig + (beta*(ftwt-eps)^3/sig^3)))))
 \end_layout
 
 \begin_layout Plain Layout
@@ -629,8 +631,11 @@ ftwt = faithful$waiting
 \end_layout
 
 \begin_layout Plain Layout
-res.L = optim(c(70,20,0,0),log.like,method = "L-BFGS-B",upper=c(100,40,100,100),lo
-wer=c(0,0,-100,-100),hessian = T)
+res.L = optim(c(70,20,0,0),log.like,method = "L-BFGS-B",hessian = T)
+\end_layout
+
+\begin_layout Plain Layout
+EMV = round(res.L$par,3)
 \end_layout
 
 \begin_layout Plain Layout
@@ -642,10 +647,6 @@ Código R para estimación de máxima verosimilitud
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -668,9 +669,66 @@ beta$
 
 \end_inset
 
- el valor de -20.08.
- Si bien el valor puede estar lejos del valor de optimización, se observa
- que se respeta el rango de 
+, el valor de -1.428.
+\end_layout
+
+\begin_layout Subsection
+Resolución de la pregunta c)
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{Resolución:}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align block
+El estimador de máxima verosimilitud, en tanto la muestra sea grande, tiene
+ la distribución:
+\begin_inset Formula $\mathord{\widehat{\theta}}\overset{aprox}{\sim}N(\theta,V)$
+\end_inset
+
+.
+ En dónde 
+\begin_inset Formula $V$
+\end_inset
+
+ se obtiene de la forma 
+\begin_inset Formula $\hat{V}=I_{F}(\hat{\theta})^{-1}$
+\end_inset
+
+.
+ Posteriormente, el intervalo de confianza se obtiene de la forma:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left[\theta\pm Z_{1-\alpha}*(\sqrt{I_{F_{[4,4]}}(\hat{\theta})^{-1})}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En dónde 
+\begin_inset Formula $I_{F_{[4,4]}}(\hat{\theta})^{-1}$
+\end_inset
+
+es el valor asociado a 
 \begin_inset ERT
 status open
 
@@ -683,11 +741,7 @@ beta$
 
 \end_inset
 
- el cual es los números reales.
-\end_layout
-
-\begin_layout Subsection
-Resolución de la pregunta c)
+.
 \end_layout
 
 \begin_layout Standard
@@ -700,10 +754,6 @@ placement H
 wide false
 sideways false
 status open
-
-\begin_layout Plain Layout
-
-\end_layout
 
 \begin_layout Plain Layout
 fisher_info = solve(res.L$hessian)
@@ -726,11 +776,11 @@ ftwt = faithful$waiting
 \end_layout
 
 \begin_layout Plain Layout
-up = res.L$par[4] +1.96*(sigma/sqrt(length(ftwt)))
+up = res.L$par[4] +1.96*(sigma)
 \end_layout
 
 \begin_layout Plain Layout
-low = res.L$par[4] -1.96*(sigma/sqrt(length(ftwt)))
+low = res.L$par[4] -1.96*(sigma)
 \end_layout
 
 \begin_layout Plain Layout
@@ -753,6 +803,171 @@ Código R para hallar el intervalo de confianza
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se obtiene un intervalo de confianza de [-2.018, -0.837], para un estimador
+ puntual -1.428.
+\end_layout
+
+\begin_layout Subsection
+Resolución de la pregunta d)
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textbf{Resolución:}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para resolver la pregunta, tomaremos 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$
+\backslash
+beta = 0$
+\end_layout
+
+\end_inset
+
+ en la función de log-verosimilitud.
+ Por lo tanto, la nueva ecuación sería:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+-n*log(\sigma)-n*log(\sqrt{2\pi})+\left(\frac{-1}{2\sigma^{2}}\mathop{\sum_{j=1}^{n}(x_{j}-\xi)\text{²}}\right)+\mathop{\sum_{j=1}^{n}log\left(1+erf(\frac{\alpha(x_{j}-\xi)/\sigma}{\sigma\sqrt{2}})\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se obtendrán los valores óptimos de esta ecuación a través de la función
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textit{optim}
+\end_layout
+
+\end_inset
+
+ en R.
+ Posteriormente, se evaluará la ecuación en sus valores óptimos frente a
+ la ecuación inicial (con sus respectivos valores óptimos).
+ Finalmente se realizará una prueba 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textit{ji-cuadrado}
+\end_layout
+
+\end_inset
+
+ sobre esta evaluación para así probar la hipótesis.
+\end_layout
+
+\begin_layout Standard
+Ver el código R a continuación:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+log.like.0 = function(theta){
+\end_layout
+
+\begin_layout Plain Layout
+eps = theta[1]
+\end_layout
+
+\begin_layout Plain Layout
+sig = theta[2]
+\end_layout
+
+\begin_layout Plain Layout
+alpha = theta[3]
+\end_layout
+
+\begin_layout Plain Layout
+ftwt = faithful$waiting
+\end_layout
+
+\begin_layout Plain Layout
+-((-length(ftwt)*log(sig)-length(ftwt)*log(sqrt(2*pi))+((-1/(2*sig^2))*sum((ftwt
+-eps)^2))+sum(log(pnorm(alpha*(ftwt-eps)/sig)))))
+\end_layout
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\begin_layout Plain Layout
+res.L.0 = optim(c(70,20,0),log.like.0,method = "L-BFGS-B")
+\end_layout
+
+\begin_layout Plain Layout
+EMV.0 = round(res.L.0$par,3);EMV.0
+\end_layout
+
+\begin_layout Plain Layout
+l = 2*(log.like.0(EMV.0)-log.like(EMV))
+\end_layout
+
+\begin_layout Plain Layout
+pval = 1-pchisq(l,1)
+\end_layout
+
+\begin_layout Plain Layout
+pval
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Código R para la prueba de hipótesis
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Plain Layout
 
 \end_layout
@@ -760,6 +975,24 @@ Código R para hallar el intervalo de confianza
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+El p-valor resulta menor a 0.05, por lo que se rechaza la hipótesis nula.
+ Por lo tanto, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$
+\backslash
+beta$
+\end_layout
+
+\end_inset
+
+ es distinto de 0.
 \end_layout
 
 \end_body
