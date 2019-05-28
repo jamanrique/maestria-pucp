@@ -691,6 +691,74 @@ Resolución de la pregunta c)
 \end_layout
 
 \begin_layout Standard
+Ver código R a continuación:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+fisher_info = solve(res.L$hessian)
+\end_layout
+
+\begin_layout Plain Layout
+fisher_info
+\end_layout
+
+\begin_layout Plain Layout
+sigma = sqrt(diag(fisher_info))
+\end_layout
+
+\begin_layout Plain Layout
+sigma = sigma[4]
+\end_layout
+
+\begin_layout Plain Layout
+ftwt = faithful$waiting
+\end_layout
+
+\begin_layout Plain Layout
+up = res.L$par[4] +1.96*(sigma/sqrt(length(ftwt)))
+\end_layout
+
+\begin_layout Plain Layout
+low = res.L$par[4] -1.96*(sigma/sqrt(length(ftwt)))
+\end_layout
+
+\begin_layout Plain Layout
+ci = c(low, res.L$par[4], up)
+\end_layout
+
+\begin_layout Plain Layout
+ci
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Código R para hallar el intervalo de confianza
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
 
 \end_layout
 

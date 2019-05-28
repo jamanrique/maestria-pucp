@@ -668,7 +668,7 @@ beta$
 
 \end_inset
 
- el valor de -747.5.
+ el valor de -20.08.
  Si bien el valor puede estar lejos del valor de optimización, se observa
  que se respeta el rango de 
 \begin_inset ERT
@@ -684,6 +684,14 @@ beta$
 \end_inset
 
  el cual es los números reales.
+\end_layout
+
+\begin_layout Subsection
+Resolución de la pregunta c)
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \end_body
