@@ -1,0 +1,300 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options false
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "palatino" "default"
+\font_sans "helvet" "default"
+\font_typewriter "courier" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 95 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Índice
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Examen 2 - Estadística Computacional
+\end_layout
+
+\begin_layout Standard
+a) Encuentre la función de distribución a posteriori de 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$p(
+\backslash
+theta | Y,W)$
+\end_layout
+
+\end_inset
+
+ y las distribuciones condicionales de 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$
+\backslash
+lambda$
+\end_layout
+
+\end_inset
+
+ y 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$
+\backslash
+gamma$.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Resolución
+\end_layout
+
+\begin_layout Standard
+Primero hallamos la función de verosimilitud de 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$p(Y,W|
+\backslash
+theta)$
+\end_layout
+
+\end_inset
+
+, la cual es:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathop{\prod_{i=1}^{n}\frac{e^{-n_{i}\gamma\lambda}\left(n_{i}\gamma\lambda\right)^{y_{i}}}{y_{i}!}}\prod_{j=1}^{m}\frac{e^{-m_{j}\lambda}\left(m_{j}\lambda\right)^{w_{j}}}{w_{j}!}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+e^{-\lambda\gamma\sum_{i=1}^{n}n_{i}}\left(\lambda\gamma\right)^{\sum_{i=1}^{n}y_{i}}e^{-\lambda\sum_{j=1}^{m}m_{j}}\lambda^{\sum_{j=1}^{m}w_{j}}\prod_{i=1}^{n}\frac{n_{i}^{y_{i}}}{y_{i}!}\prod_{j=1}^{m}\frac{m_{j}^{w_{j}}}{w_{j}!}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+p(Y,W|\theta)=L(\centerdot)=e^{-\text{\ensuremath{\lambda(\gamma\sum_{i=1}^{n}n_{i}+\sum_{j=1}^{m}m_{j})}}}\lambda^{\sum_{i=1}^{n}y_{i}+\sum_{j=1}^{m}w_{j}}\gamma^{\sum_{i=1}^{n}y_{i}}\prod_{i=1}^{n}\frac{n_{i}^{y_{i}}}{y_{i}!}\prod_{j=1}^{m}\frac{m_{j}^{w_{j}}}{w_{j}!}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Posteriormente, hallamos la distribución a posteriori:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+p(\theta|Y,W)=p(\theta)p(Y,W|\theta)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+p(\theta|Y,W)=\frac{1}{\Gamma(a)}b^{a}\lambda^{a-1}e^{-b\lambda}*\frac{1}{\Gamma(c)}c^{d}\gamma^{c-1}e^{-d\gamma}*p(Y,W|\theta)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finalmente, encontramos las distribuciones condicionales de 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$lambda$
+\end_layout
+
+\end_inset
+
+ y 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$gamma$
+\end_layout
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+p(\lambda|\gamma,Y,W)\propto\lambda^{a-1}e^{-b\lambda}*e^{-\text{\ensuremath{\lambda(\gamma\sum_{i=1}^{n}n_{i}+\sum_{j=1}^{m}m_{j})}}}\lambda^{\sum_{i=1}^{n}y_{i}+\sum_{j=1}^{m}w_{j}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+p(\lambda|\gamma,Y,W)\propto\lambda^{\left(a+\sum_{i=1}^{n}y_{i}+\sum_{j=1}^{m}w_{j}\right)-1}e^{-\lambda\left(\gamma\sum_{i=1}^{n}n_{i}+\sum_{j=1}^{m}m_{j}+b\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\lambda\AC gamma\left(a+\sum_{i=1}^{n}y_{i}+\sum_{j=1}^{m}w_{j},\gamma\sum_{i=1}^{n}n_{i}+\sum_{j=1}^{m}m_{j}+b\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+p(\gamma|\lambda,Y,W)\propto\gamma^{c-1}e^{-d\gamma}\gamma^{\sum_{i=1}^{n}y_{i}}e^{-\text{\ensuremath{\lambda(\gamma\sum_{i=1}^{n}n_{i})}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+p(\gamma|\lambda,Y,W)\propto\gamma^{(\sum_{i=1}^{n}y_{i}+c)-1}e^{-\gamma(d+\lambda\sum_{i=1}^{n}n_{i})}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\gamma\AC gamma\left(\sum_{i=1}^{n}y_{i}+c,d+\lambda\sum_{i=1}^{n}n_{i}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
