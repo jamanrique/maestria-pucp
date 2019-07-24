@@ -1,0 +1,124 @@
+% ****** Start of file apssamp.tex ******
+%
+%   This file is part of the APS files in the REVTeX 4.1 distribution.
+%   Version 4.1r of REVTeX, August 2010
+%
+%   Copyright (c) 2009, 2010 The American Physical Society.
+%
+%   See the REVTeX 4 README file for restrictions and more information.
+%
+% TeX'ing this file requires that you have AMS-LaTeX 2.0 installed
+% as well as the rest of the prerequisites for REVTeX 4.1
+%
+% See the REVTeX 4 README file
+% It also requires running BibTeX. The commands are as follows:
+%
+%  1)  latex apssamp.tex
+%  2)  bibtex apssamp
+%  3)  latex apssamp.tex
+%  4)  latex apssamp.tex
+%
+\documentclass[%
+reprint,
+%superscriptaddress,
+%groupedaddress,
+%unsortedaddress,
+%runinaddress,
+%frontmatterverbose, 
+%preprint,
+%showpacs,preprintnumbers,
+%nofootinbib,
+%nobibnotes,
+%bibnotes,
+ amsmath,amssymb,
+ aps,
+%pra,
+%prb,
+%rmp,
+%prstab,
+%prstper,
+%floatfix,
+]{revtex4-1}
+
+\usepackage{graphicx}% Include figure files
+\usepackage{dcolumn}% Align table columns on decimal point
+\usepackage{bm}% bold math
+%\usepackage{hyperref}% add hypertext capabilities
+%\usepackage[mathlines]{lineno}% Enable numbering of text and display math
+%\linenumbers\relax % Commence numbering lines
+
+%\usepackage[showframe,%Uncomment any one of the following lines to test 
+%%scale=0.7, marginratio={1:1, 2:3}, ignoreall,% default settings
+%%text={7in,10in},centering,
+%%margin=1.5in,
+%%total={6.5in,8.75in}, top=1.2in, left=0.9in, includefoot,
+%%height=10in,a5paper,hmargin={3cm,0.8in},
+%]{geometry}
+
+\begin{document}
+
+\preprint{APS/123-QED}
+
+\title{Modelos Lineales 1: Avance}% Force line breaks with \\
+
+\author{Justo Andr\'es Manrique Urbina }
+ \email{ja.manrique@pm.me}
+\affiliation{%
+ Pontificia Universidad Cat\'olica del Per\'u
+\\
+ 20091107
+}%
+
+\date{April 7, 2018}% It is always \today, today,
+             %  but any date may be explicitly specified
+
+\begin{abstract}
+El presente documento contiene el avance del trabajo asociado al curso de Modelos Lineales 1, de la Maestr\'ia de Estad\'istica de la Pontificia Universidad Cat\'olica del Per\'u (PUCP). El prop\'osito del mismo es utilizar los conceptos ense\~nados en clase y ponerlos en pr\'actica a trav\'es del estudio de una base de datos escogida por el alumno. Al respecto, se utiliza una base de datos asociada al consumo de gasolina en 48 estados de Estados Unidos de Am\'erica y se requiere modelar el consumo de gasolina a trav\'es de 4 variables. En la primera y segunda secci\'on del documento se delinea el objetivo del modelo estad\'istico y algunos comentarios de las variables utilizadas, as\'i como un breve an\'alisis de estos. Posteriores secciones se a\~nadir\'an al presente documento en la presentaci\'on del 13 de mayo de 2018.
+\end{abstract}
+
+\maketitle
+
+%\tableofcontents
+
+\section{\label{sec:level1}Introducci\'on}
+
+El presente documento contiene el avance del trabajo asociado al curso de Modelos Lineales 1, de la Maestr\'ia de Estad\'istica de la PUCP. Para utilizar los conceptos ense\~nados en clase, se utilizar\'a una base de datos asociada al consumo de gasolina en 48 estados de Estados Unidos de Am\'erica. Dicha base de datos se obtuvo de Internet, y se hace referencia al texto \textit{Applied Linear Regression} de Weisberg, edici\'on del a\~no 1980, p\'aginas 32-33.
+\\
+\\
+\textit{Descripci\'on del problema}
+\\
+\\
+El gobierno de los Estados Unidos de Am\'erica (EUA) desea entender el efecto del impuesto de la gasolina sobre el consumo de la misma, para identificar:
+\begin{itemize}
+\item El campo de acci\'on que tiene, a trav\'es de este mecanismo, para disuadir o promover el consumo de gasolina.
+\item Observar qu\'e otras variables impactan en el consumo de gasolina y ponerlas en contraste con el mecanismo impositivo, con el objetivo de identificar la importancia relativa del mecanismo frente a otras variables.
+\end{itemize}
+\\
+\textit{Objetivo del estudio}
+\begin{itemize}
+\item Establecer un modelo lineal que permita identificar las determinantes del consumo de gasolina.
+\item Conocer el impacto que tiene el mecanismo impositivo respecto al consumo de gasolina.
+\item Conocer la importancia relativa del mecanismo impositivo frente a otras variables de estudio.
+\end{itemize}
+\\
+\\
+\section{\label{sec:level2} Datos}
+Los variables concernientes al estudio son las siguientes:
+\begin{itemize}
+\item Impuesto a la gasolina: El impuesto asignado a la gasolina por cada estado, en t\'erminos de c\'entimos de d\'olar por gal\'on.
+\item Ingreso per c\'apita promedio: Ingreso promedio anual en d\'olares per c\'apita en cada estado.
+\item Millas de autopista: La cantidad, en millas, de autopista construida en cada estado.
+\item Personas con licencia de conducir: La proporci\'on de personas en cada estado, respecto al total de cada uno, que cuentan con una licencia de conducir.
+\item Consumo de gasolina: La cantidad, en millones, de galones consumidos en determinado estado por todo un a\~no.
+\end{itemize}
+\\
+Se puede apreciar que las variables anteriormente descritas son cuantitativas.
+\subsection{\label{sec:level2}Respecto a la base de datos}
+La base de datos est\'a compuesta de tal forma que cada fila compone la medici\'on de cada uno de los 48 estados. En ese sentido, la base de datos est\'a compuesta de 48 observaciones y 5 variables, de las cuales la variable respuesta es el consumo de gasolina.\\
+\\
+ De acuerdo a lo indicado en el texto, la informaci\'on se obtuvo de la Administraci\'on Federal de Autopistas del gobierno de EUA.
+
+
+\end{document}
+%
+% ****** End of file apssamp.tex ******

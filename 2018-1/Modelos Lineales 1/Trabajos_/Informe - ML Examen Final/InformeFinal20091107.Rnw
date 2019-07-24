@@ -1,0 +1,317 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\selectlanguage{spanish}
+\title{%
+			Examen Final de Modelos Lineales 1 \\
+			\large Pontificia Universidad Católica del Perú}
+\date{11 de Julio de 2018}
+\author{Justo Andrés Manrique Urbina\footnote{e-mail: ja.manrique@pm.me}}
+
+\begin{document}
+\maketitle
+
+El presente informe contiene las respuestas del alumno respecto al examen final de Modelos Lineales 1.
+
+<<Carga de librerías, tidy=FALSE,eval=TRUE,,size="small",message=FALSE>>=
+# Carga de librerías
+library(formatR)
+library(robustbase)
+library(car)
+library(stargazer)
+library(MASS)
+library(agricolae)
+library(multcomp)
+par(mfrow=c(2,2))
+@
+
+\section{Pregunta 1}
+
+Ver al final del informe.
+
+\section{Pregunta 2}
+
+Ver al final del informe.
+
+\section{Pregunta 3}
+
+Se procede con la carga de los datos en R y renombre de las variables para facilitar el análisis.
+
+<<Preg_3_Carga de Datos, tidy=TRUE,eval=TRUE,,size="small">>=
+rm(list=ls())
+#		Paso 1: Carga de datos
+swiss_1 <- data.frame(swiss)
+
+#   Paso 2: Renombre de columnas para un análisis más fácil
+names(swiss_1) [1] <- "Y" 	#Variable Fertility a Y.
+names(swiss_1) [2] <- "A1" 	#Variable Agriculture a A1.
+names(swiss_1) [3] <- "A2" 	#Variable Examination a A2.
+names(swiss_1) [4] <- "A3" 	#Variable Education a A3.
+names(swiss_1) [5] <- "A4"  #Variable Catholic a A4.
+names(swiss_1) [6] <- "A5"  #Variable Infant Mortality a A5.
+@
+
+Posteriormente, se efectúa un análisis descriptivo de los datos. En este se puede apreciar lo siguiente:
+\begin{itemize}
+	\item La base de datos Swiss se compone de 47 observaciones.
+	\item Las variables con mayor variabilidad son las variables A3 y A4, puesto que su desviación estándar es similar a su media (esto daría un coeficiente de variación cercano a 1). Posteriormente, le siguen las variables A2, A1, A5 e Y en ese orden.
+\end{itemize}
+
+Ver cuadro a continuación:
+
+<<Preg_3_Descriptivo,eval=TRUE,,size="small",results='asis'>>=
+stargazer(title ="Análisis descriptivo de datos: Swiss",swiss_1,
+iqr=FALSE,flip = TRUE)
+@
+
+Con el propósito de evaluar, en primera instancia, posibles indicios de multicolinealidad entre variables, así como identificar las relaciones de las covariables con la variable respuesta, se generó una matriz de correlación con todas las variables contenidas en la base de datos. En esta matriz, se puede apreciar lo siguiente:
+
+\begin{itemize}
+	\item La variable A1 tiene una correlación negativa medianamente fuerte con las variables A2 y A3. Por otro lado, dicha variable tiene una correlación positiva mediana con la variable A4.
+	\item La variable A2 tiene una correlación positiva medianamente fuerte con la variable A3. Por otro lado, dicha variable tiene una correlación negativa medianamente fuerte con la variable A4.
+\end{itemize}
+
+La matriz de correlaciones se puede observar en el Cuadro 2, conforme el siguiente código:
+
+<<Preg_3_Correlaciones,eval=TRUE,,size="small",results='asis'>>=
+correlation.matrix <- cor(swiss_1[,c("Y","A1","A2",
+"A3","A4","A5")])
+stargazer(correlation.matrix, title="Matriz de correlaciones")
+@
+
+Posteriormente, se efectuó una regresión lineal mediante mínimos cuadrados ordinarios, tomando en consideración lo indicado anteriormente. En dicha regresión se observa que:
+\begin{itemize}
+	\item La variable A2 no es estadísticamente significativa (su p-valor es mayor a 0.05). Por ello, procederemos a descartarla y generar un segundo modelo de regresión lineal.
+\end{itemize}
+
+Ambos modelos de regresión se pueden observar en el Cuadro 3 al final de esta sección, conforme el siguiente código:
+
+<<Preg_3_1raRegresión,eval=TRUE,size="small",results='asis'>>=
+lm1_swiss <- lm(formula = Y ~ A1+A2+A3+A4+A5,
+data=swiss_1)
+lm2_swiss <- lm(formula = Y ~ A1+A3+A4+A5,
+data=swiss_1)
+stargazer(lm1_swiss,lm2_swiss, title="Regresión Lineal")
+@
+
+\newpage
+Una vez definido el modelo a utilizar, se procede a evaluar los supuestos del modelo mediante los siguientes gráficos:
+
+<<evalerrores,eval=TRUE,size="small">>=
+par(mfrow=c(2,2))
+plot(lm2_swiss,main = "Diagnóstico de regresión")
+@
+
+En estos se aprecia lo siguiente:
+
+\begin{itemize}
+  \item La gráfica "Residuals vs Fitted" tiene como objetivo identificar si los residuales tienen un comportamiento no lineal. En esta, no se observa una relación no lineal entre los residuales; por lo tanto, se puede inferir no existe una relación no lineal que habría que modelar.
+  \item La gráfica "Normal Q-Q" permite identificar si los residuos están normalmente distribuidos. En el caso los residuos no sigan, en general, una línea recta, sería un indicador que los errores no están distribuidos normalmente. En base al cuadro presentado, pueden existir indicios de no-normalidad. Esto se pondrá a prueba a través del test Shapiro-Wilks.
+  \item La gráfica "Scale-Location" permite identificar si los errores son homocedásticos o no. En ese sentido, si hubiere algún grado de linealidad en esta gráfica, ello implicaría que los errores no tienen varianza constante por lo que no serían homocedásticos. En base al cuadro presentado, un grado de linealidad en la medida que el valor predicho aumenta; por lo tanto, se podría concluir que los errores son heterocedásticos.
+  \item La gráfica "Residuals vs Leverage" permite identificar puntos aberrantes dentro de la base de datos. En base al cuadro presentado, la observación "Sierra" tiene una distancia de Cooks mayor que las otras observaciones. Sin embargo, no supera los umbrales como para tener un impacto significativo.
+\end{itemize}
+
+Finalmente, se efectuaron tests estadísticos de homocedasticidad y normalidad de los errores a fin de validar los supuestos de la regresión lineal múltiple bajo mínimos cuadrados ordinarios. Ver resultados a continuación:
+
+\begin{itemize}
+  \item Prueba de Normalidad de Errores (Shapiro-Wilks)
+    \begin{itemize}
+      \item El test de Shapiro-Wilks está orientado a identificar si los errores siguen una distribución normal, a fin de validar los supuestos de la regresión. La hipótesis nula de dicho test es que una determinada muestra proviene de una población normalmente distribuida (Camiz, 2018). Conforme se aprecia en el cuadro posterior, el p-valor del test es mayor a 0.05 por lo que se no serechaza dicha hipótesis nula. Por lo tanto, los residuos seguirían una distribución normal cumpliendo con el supuesto de la regresión.
+    <<echo=FALSE,message=FALSE>>=
+    shapiro.test(lm2_swiss$residuals)
+    @
+    \end{itemize}  
+  \item Prueba de Homocedasticidad de Errores (Prueba de Breusch-Pagan)
+    \begin{itemize}
+      \item El test de Breusch-Pagan está orientado a identificar si los errores tienen una varianza homocedástica, a fin de validar los supuestos de la regresión. La hipótesis nula de dicho test es que los errores son homocedásticos (Camiz,2018). Conforme se aprecia en el cuadro posterior, el p-valor del test es menor a 0.05, por lo que no se rechaza la hipótesis nula. Por lo tanto, los residuos tendrían varianza constante cumpliendo con el supuesto de la regresión.
+      <<echo=FALSE,message=FALSE>>=
+      ncvTest(lm2_swiss)
+      @
+    \end{itemize}
+\end{itemize}
+
+\subsection{Corrección de la multicolinealidad}
+
+Con el propósito de corregir la multicolinealidad entre A1, A2 y A3, se propuso crear una variable de interacción entre estas tres, conforme se puede ser en el proceso posterior:
+
+<<multicolinealidad,eval=TRUE,size="small">>=
+lm3_swiss <- lm(formula = Y ~ A1:A2:A3+A4+A5,
+data=swiss_1)
+summary(lm3_swiss)
+@
+
+Se observa que la interacción es estadísticamente significativa	e impacta negativamente en la variable respuesta <<Fertilidad>>. Asimismo, se observa que las variables A4 y A5 tienen un impacto positivo conforme se aprecia en sus coeficientes.
+\section{Pregunta 4}
+
+\subsection{Pregunta 4.a)}
+
+Se ajustó un modelo de regresión por mínimos cuadrados ordinarios y se ejecutó la prueba de diagnóstico a través del comando plot() en R. En dicho diagnóstico se prestó atención en la prueba <<Residuals vs. Leverage>> con el propósito de identificar las observaciones atípicas. Se observó que la observación 18 es una observación atípica (supera el umbral de 0.5). Ver gráfico a continuación:
+
+<<Preg_4, tidy=TRUE,eval=TRUE,size="small",results='asis'>>=
+#### Inicio de la pregunta 4 ####
+rm(list=ls())
+data(coleman)
+par(mfrow=c(2,2))
+fit<- lm(formula =  Y ~ salaryP + fatherWc + sstatus + teacherSc + motherLev, data = coleman)
+plot(fit)
+@
+
+Posteriormente, se generó un nuevo modelo de regresión eliminando dicha observación, y se observa que:
+\begin{itemize}
+	\item El nuevo modelo de regresión tiene como significativas a todas las variables (exceptuando la variable <<salaryP>>), mientras que el primer modelo de regresión solo mantiene como significativos a las variables <<sstatus>> y <<teacherSC>>.
+	\item El nuevo modelo de regresión tiene un R ajustado de 0.949, mientras que el anterior de 0.873.
+	\item La variable <<motherLev>> aumentó su coeficiente, de -1.811 a -4.571 con el nuevo modelo de regresión.
+	\item La constante del nuevo modelo aumentó 34.287, de 19.949 del modelo anterior.
+\end{itemize}
+
+En conclusión, la eliminación de la observación atípica cambió drásticamente la significancia de las variables así como sus coeficientes. Ver código en R dónde se observa la comparación de ambos modelos.
+
+<<preg4_a, tidy=TRUE,eval=TRUE,size="small",results='asis'>>=
+fit_2 <- lm(formula = Y ~ salaryP+fatherWc+sstatus+teacherSc+motherLev,data = coleman[-c(18),])
+par(mfrow=c(2,2))
+stargazer(title = "Regresión Lineal",fit,fit_2)
+@
+\newpage
+\subsection{Pregunta 4.b)}
+Se procedió con la generación de la regresión robusta, ver código generado en R:
+<<preg4_b, tidy=TRUE,eval=TRUE,size="small",results='asis'>>=
+rob.fit <- rlm(formula = Y ~ salaryP+fatherWc+sstatus+teacherSc+motherLev,data = coleman)
+stargazer(title = "Regresión Lineal",fit,fit_2,rob.fit)
+@
+
+Se puede observar que:
+
+\begin{itemize}
+	\item Las variables contenidas en la regresión robusta, la cual tiene 20 observaciones, son estadísticamente significativas a pesar de la existencia de una variable atípica. Dicho modelo es similar, respecto a la significancia de sus variables, con el modelo lineal bajo mínimos cuadrados ordinarios generado con solo las 19 observaciones (es decir, dónde se elimina la variable atípica).
+	\item Respecto a los coeficientes, la regresión robusta tiene mayor similitud con el modelo lineal bajo mínimos cuadrados ordinarios que solo contiene 19 observaciones. Sin embargo, la regresión robusta presenta diferencias por los coeficientes de las variables <<motherLev>> y la constante (-3.520 a -4.571 y 27.350 a 34.287 respectivamente).
+\end{itemize}
+
+\section{Pregunta 5}
+
+\subsection{Pregunta 5.a)}
+	\begin{itemize}
+		\item El factor de bloque consiste en la variable Día, puesto que en esta se prueban cada uno de los silos. Asimismo, es imposible aleatorizar la variable Día.
+		\item El factor de tratamiento es compuesto por la variable Silos.
+	\end{itemize}
+	
+\subsection{Pregunta 5.b)}
+
+Las hipótesis estadísticas se encuentran al final del informe.
+
+Ver a continuación el modelo estadístico:
+<<preg5_a, eval=TRUE,size="small">>=
+rm(list=ls())
+silos <- read.table("D:/Justo Andrés/Dropbox/Maestría en Estadística/2018 - 1/Modelos Lineales 1/Trabajos_/Informe - ML Examen Final/Datos/silos.txt",header=TRUE)
+mod_silos<-lm(temperatura~Silo+as.factor(Dia),silos)
+anova_silos<-anova(mod_silos)
+anova_silos
+@
+
+Se observa que ambas covariables no son significativas (su p-valor es mayor al umbral de 0.05).
+
+\subsection{Pregunta 5.c)}
+
+Para efectuar el análisis de medias, se utilizó el método de mínimas diferencias. Ver a continuación la ejecución del código:
+<<preg5_a.2, eval=TRUE,size="small">>=
+mediat<-tapply(silos$temperatura,silos$Silo,mean)
+
+difAB <- abs(mediat[1]-mediat[2])
+difAC <- abs(mediat[1]-mediat[3])
+difAD <- abs(mediat[1]-mediat[4])
+difAE <- abs(mediat[1]-mediat[5])
+difBC <- abs(mediat[2]-mediat[3])
+difBD <- abs(mediat[2]-mediat[4])
+difBE <- abs(mediat[2]-mediat[5])
+difCD <- abs(mediat[3]-mediat[4])
+difCE <- abs(mediat[3]-mediat[5])
+difDE <- abs(mediat[4]-mediat[5])
+
+CME <- anova_silos$`Mean Sq`[3]
+t<- qt(0.975,anova_silos$Df[3])
+ 
+LSD <- t*sqrt((2*CME)/4)
+vecdif <- c(difAB,difAC,difAD,difAE,difBC,difBD,difBE,difCD,difCE,difDE)
+nombres <- c("difAB","difAC","difAD","difAE","difBC",
+"difBD","difBE","difCD","difCE","difDE")
+
+for(i in 1:10)
+{
+  if(vecdif[i]>LSD)
+    print(paste(nombres[i],"Significativa"))
+  else
+    print(paste(nombres[i],"No significativa"))
+}
+@
+
+Se observa que no existen diferencias significativas. Asimismo, se realizó el análisis de diferencias mediante el método Tukey. Ver a continuación el código:
+
+<<preg5_a.3, tidy=TRUE, eval=TRUE,size="small">>=
+ amod_1<-aov(temperatura~Silo+as.factor(Dia),data=silos)
+ compmet_1<-glht(amod_1,linfct=mcp(Silo="Tukey"))
+ summary(compmet_1)
+@
+
+Se observa que no existen diferencias significativas. 
+
+\section{Pregunta 6}
+
+\subsection{Pregunta 6.a)}
+
+Respuesta al final del Informe.
+
+\subsection{Pregunta 6.b)}
+
+Ver a continuación la ejecución del código R:
+
+<<preg6_b, tidy=TRUE, eval=TRUE,size="small">>=
+rm(list=ls())
+rdmto <- read.table("D:/Justo Andrés/Dropbox/Maestría en Estadística/2018 - 1/Modelos Lineales 1/Trabajos_/Informe - ML Examen Final/Datos/rendimiento.txt",header=TRUE)
+
+mod_rdmto <- lm(rendimiento~as.factor(presion)+as.factor(temperatura)+presion*temperatura,rdmto)
+
+anova_rdmto <-anova(mod_rdmto)
+anova_rdmto
+@
+
+Se observa, a través del p-valor, que las variables <<presion>> y <<temperatura>> son significativas. La interacción de ambas variables está muy próxima a la significancia estadística.
+
+\subsection{Pregunta 6.c)}
+
+Ver a continuación la ejecución del código R:
+
+<<preg6_c, tidy=TRUE, eval=TRUE,size="small">>=
+with(rdmto,(interaction.plot(as.factor(presion),as.factor(temperatura),rendimiento,type="b",pch=c(18,24,22),leg.bty = "o",main ="Efecto de interacción",xlab="presion",ylab="rendimiento")))
+@
+
+Se observa que, con el propósito de obtener un mayor rendimiento, la presión debe mantenerse en el valor <<215>> y la temperatura en <<170>>.
+
+\section{Pregunta 7}
+\subsection{Pregunta 7.a)}
+
+Ver la generación del gráfico mediante R:
+<<preg7_a, tidy=TRUE, eval=TRUE,size="small">>=
+
+rm(list=ls())
+fibra <- read.table("D:/Justo Andrés/Dropbox/Maestría en Estadística/2018 - 1/Modelos Lineales 1/Trabajos_/Informe - ML Examen Final/Datos/fibra.txt",header=TRUE)
+plot(fibra$resitencia,fibra$diametro)
+cor(fibra$resitencia,fibra$diametro)
+@
+
+Se observa que existe una relación lineal fuerte entre ambas variables (con un índice de correlación de 0.94). Esto podría deberse a que un mayor diámetro contiene mayor peso, lo cual podría hacerle más resistente.
+
+\subsection{Pregunta 7.b)}
+Las hipótesis estadísticas se encuentran al final del informe.
+
+Ver a continuación el código en R respecto al modelo estadístico:
+
+<<preg7_b, tidy=TRUE, eval=TRUE,size="small">>=
+
+mod <- lm(resitencia~diametro+maquina,fibra)
+anova_fibra <- Anova(mod, type="III") 
+anova_fibra
+@
+
+\subsection{Pregunta 7.c)}
+Las máquinas, de acuerdo al p-valor obtenido en el ANCOVA anterior, no influye en la resistencia del monofilamento (su p-valor es mayor a 0.05).
+
+\end{document}

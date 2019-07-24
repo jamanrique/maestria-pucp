@@ -1,0 +1,18 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\selectlanguange{spanish}
+\usepackage[utf8]{inputenc}
+
+\title{%
+			Examen Final de Modelos Lineales 1 \\
+			\large Pontificia Universidad Católica del Perú}
+\date{11 de Julio de 2018}
+\author{Justo Andrés Manrique Urbina}
+
+\begin{document}
+
+\maketitle
+
+
+
+\end{document}

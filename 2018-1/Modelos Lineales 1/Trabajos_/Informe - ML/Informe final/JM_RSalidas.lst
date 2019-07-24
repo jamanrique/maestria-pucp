@@ -1,0 +1,181 @@
+> source('D:/Dropbox/Maestría en Estadística/2018 - 1/Modelos Lineales 1/Trabajos_/Informe - ML/Informe final/3. Código R/Anexo1_ML - Justo Manrique.R', encoding = 'UTF-8', echo=TRUE)
+
+> #   El presente anexo contiene el código R utilizado para el análisis de regresión lineal utilizado en el informe de Modelos Lineales 1.
+> rm(list = .... [TRUNCATED] 
+
+> #   Paso 1: Abrir la base de datos en R
+> ##  1.a. Apertura de la libreria "foreign" y otras librerías.
+> library("foreign")
+
+> library("stargazer")
+
+> ##  1.b. Determinación del working directory en dónde se aloja el archivo
+> setwd("D:/Dropbox/Maestría en Estadística/2018 - 1/Modelos Lineales 1/Tr ..." ... [TRUNCATED] 
+
+> ##  1.c. Ingreso del archivo en R
+> BD_fuel <- read.csv("Trabajo1_ML_fuel.csv",header = TRUE,sep = "\t")
+
+> #   Paso 2: Renombre de columnas para un análisis más fácil
+> names(BD_fuel) [1] <- "A1" #Impuesto a la Gasolina a A1
+
+> names(BD_fuel) [2] <- "A2" #Ingreso per cápita promedio a A2
+
+> names(BD_fuel) [3] <- "A3" #Millas de autopista a A3
+
+> names(BD_fuel) [4] <- "A4" #Personas con licencia de conducir a A4
+
+> names(BD_fuel) [5] <- "B"  #Consumo de gasolina a B
+
+> #   Paso 3: Analíticas descriptivas y análisis preliminar
+> stargazer(BD_fuel,title = "Resumen estadístico")
+
+% Table created by stargazer v.5.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: Mon, May 14, 2018 - 09:25:59
+\begin{table}[!htbp] \centering 
+  \caption{Resumen estadístico} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+Statistic & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{St. Dev.} & \multicolumn{1}{c}{Min} & \multicolumn{1}{c}{Max} \\ 
+\hline \\[-1.8ex] 
+A1 & 48 & 7.668 & 0.951 & 5.000 & 10.000 \\ 
+A2 & 48 & 4,241.833 & 573.624 & 3,063 & 5,342 \\ 
+A3 & 48 & 5,565.417 & 3,491.507 & 431 & 17,782 \\ 
+A4 & 48 & 0.570 & 0.055 & 0.451 & 0.724 \\ 
+B & 48 & 576.771 & 111.886 & 344 & 968 \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table} 
+
+> pairs(BD_fuel,pch = 5,lower.panel = NULL, main = "Matriz de diagramas de dispersión")
+
+> stargazer(cor(BD_fuel),title = "Matriz de correlaciones")
+
+% Table created by stargazer v.5.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: Mon, May 14, 2018 - 09:25:59
+\begin{table}[!htbp] \centering 
+  \caption{Matriz de correlaciones} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}} cccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & A1 & A2 & A3 & A4 & B \\ 
+\hline \\[-1.8ex] 
+A1 & $1$ & $0.013$ & $$-$0.522$ & $$-$0.288$ & $$-$0.451$ \\ 
+A2 & $0.013$ & $1$ & $0.050$ & $0.157$ & $$-$0.245$ \\ 
+A3 & $$-$0.522$ & $0.050$ & $1$ & $$-$0.064$ & $0.019$ \\ 
+A4 & $$-$0.288$ & $0.157$ & $$-$0.064$ & $1$ & $0.699$ \\ 
+B & $$-$0.451$ & $$-$0.245$ & $0.019$ & $0.699$ & $1$ \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table} 
+
+> # Paso 4: Regresiones lineales
+> reg_1 <- lm(formula = B ~ A1 + A2 + A3 + A4,data = BD_fuel)
+
+> stargazer(reg_1, title = "Regresión lineal múltiple")
+
+% Table created by stargazer v.5.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: Mon, May 14, 2018 - 09:26:00
+\begin{table}[!htbp] \centering 
+  \caption{Regresión lineal múltiple} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{1}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-2} 
+\\[-1.8ex] & B \\ 
+\hline \\[-1.8ex] 
+ A1 & $-$34.790$^{**}$ \\ 
+  & (12.970) \\ 
+  & \\ 
+ A2 & $-$0.067$^{***}$ \\ 
+  & (0.017) \\ 
+  & \\ 
+ A3 & $-$0.002 \\ 
+  & (0.003) \\ 
+  & \\ 
+ A4 & 1,336.449$^{***}$ \\ 
+  & (192.298) \\ 
+  & \\ 
+ Constant & 377.291$^{**}$ \\ 
+  & (185.541) \\ 
+  & \\ 
+\hline \\[-1.8ex] 
+Observations & 48 \\ 
+R$^{2}$ & 0.679 \\ 
+Adjusted R$^{2}$ & 0.649 \\ 
+Residual Std. Error & 66.306 (df = 43) \\ 
+F Statistic & 22.706$^{***}$ (df = 4; 43) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table} 
+
+> reg_2 <- lm(formula = B ~ A1 + A2 + A4,data = BD_fuel)
+
+> stargazer(reg_1,reg_2, title = "Comparación entre regresiones lineales múltiples",keep.stat = c("n","rsq","adj.rsq","ser","f","aic"),no.space=TRUE)
+
+% Table created by stargazer v.5.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: Mon, May 14, 2018 - 09:26:00
+\begin{table}[!htbp] \centering 
+  \caption{Comparación entre regresiones lineales múltiples} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lcc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-3} 
+\\[-1.8ex] & \multicolumn{2}{c}{B} \\ 
+\\[-1.8ex] & (1) & (2)\\ 
+\hline \\[-1.8ex] 
+ A1 & $-$34.790$^{**}$ & $-$29.484$^{***}$ \\ 
+  & (12.970) & (10.584) \\ 
+  A2 & $-$0.067$^{***}$ & $-$0.068$^{***}$ \\ 
+  & (0.017) & (0.017) \\ 
+  A3 & $-$0.002 &  \\ 
+  & (0.003) &  \\ 
+  A4 & 1,336.449$^{***}$ & 1,374.768$^{***}$ \\ 
+  & (192.298) & (183.670) \\ 
+  Constant & 377.291$^{**}$ & 307.328$^{*}$ \\ 
+  & (185.541) & (156.831) \\ 
+ \hline \\[-1.8ex] 
+Observations & 48 & 48 \\ 
+R$^{2}$ & 0.679 & 0.675 \\ 
+Adjusted R$^{2}$ & 0.649 & 0.653 \\ 
+Residual Std. Error & 66.306 (df = 43) & 65.938 (df = 44) \\ 
+F Statistic & 22.706$^{***}$ (df = 4; 43) & 30.442$^{***}$ (df = 3; 44) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table} 
+
+> # Paso 4.1: Hallar AIC
+> AIC(reg_1,reg_2)
+      df      AIC
+reg_1  6 545.5892
+reg_2  5 544.1578
+
+> # Paso 5: Análisis de residuos
+> par(mfrow=c(2,2))
+
+> plot(reg_2)
+
+> shapiro.test(reg_2$residuals)
+
+	Shapiro-Wilk normality test
+
+data:  reg_2$residuals
+W = 0.9282, p-value = 0.005858
+
+
+> library(car)
+
+> ncvTest(reg_2)
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 11.0997    Df = 1     p = 0.0008634181 

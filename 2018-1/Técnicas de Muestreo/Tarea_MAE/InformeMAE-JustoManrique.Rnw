@@ -1,0 +1,19 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[spanish]{babel}
+  \selectlanguage{spanish}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{mathtools}
+
+
+\title{Lista de ejercicios N° 2: Técnicas de Muestreo}
+\author{Justo Andrés Manrique Urbina\\Pontificia Universidad Católica del Perú\thanks{e-mail:justo.manrique@pucp.pe; ja.manrique@pm.me}}
+\date{09 de Junio de 2018}
+\begin{document}
+\maketitle
+
+\section{Pregunta 1}
+\section{Pregunta 11}
+\section{Pregunta 12}
+\section{Pregunta 17}
+\end{document}

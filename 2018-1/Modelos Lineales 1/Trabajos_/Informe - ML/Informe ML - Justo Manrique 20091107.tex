@@ -1,0 +1,87 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[spanish]{babel}
+	\selectlanguage{spanish}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\title{Determinantes del consumo de la gasolina: Un estudio en los Estados Unidos de América}
+\author{Justo Andrés Manrique Urbina\\Pontificia Universidad Católica del Perú\thanks{e-mail:justo.manrique@pucp.pe; ja.manrique@pm.me}}
+\date{13 de mayo de 2018}
+\begin{document}
+\maketitle
+\section{Introducción}
+	El presente informe contiene el trabajo asociado al curso de Modelos Lineales 1, a cargo del profesor Sergio Camiz, de la Maestría de Estadística de la Pontificia Universidad Católica del Perú. El propósito del mismo es utilizar los conceptos enseñados en clase y aplicar una regresión múltiple sobre una base de datos escogida por el autor del informe. Al respecto, se realizó un análisis de las determinantes del consumo de la gasolina en 48 estados de los Estados Unidos de América (aquí en adelante, EUA). Los datos se obtuvieron del texto \textit{Applied Linear Regression} de Weisberg, edición del año 1980.
+	$Queda pendiente explicar qué regresión se hizo, por qué, cuántas se hicieron, qué se validó y cuales fueron las conclusiones$
+	\subsection{Descripción del Problema}
+		El gobierno de los EUA desea entender las determinantes del consumo de la gasolina. Especificamente, conocer cómo los mecanismos impositivos hacia el combustible inciden sobre el consumo de forma general. Ello con el objetivo de:
+		\begin{itemize}
+			\item Entender el campo de acción que tiene, a través de estos mecanismos, el gobierno para disuadir o promover el consumo de gasolina.
+			\item Conocer otras variables que impactan en el consumo y ponerlas en contraste con el mecanismo impositivo, con el objetivo de identificar la importancia relativa del mecanismo frente a otras variables.
+		\end{itemize}
+	\subsection{Objetivo del estudio}
+		 \begin{itemize}
+		 	\item Establecer un modelo lineal que permita identificar las determinantes del consumo de gasolina.
+		 	\item Conocer el impacto que tiene el mecanismo impositivo respecto al consumo de gasolina.
+		 	\item Conocer la importancia relativa del mecanismo impositivo frente a otras variables de estudio.
+		 \end{itemize}
+\section{Datos}
+	Las variables concernientes al estudio son las siguientes:
+	\begin{center}
+		\begin{tabular}{p{4cm}|p{4cm}|p{2.5cm}}
+		Nombre de la variable&Descripción de la variable&Tipo de variable\\
+		\hline
+		\hline
+		Impuesto a la gasolina&El impuesto asignado a la gasolina por cada estado, en términos de centavos de dólar por galón&Cuantitativa\\
+		\hline
+		Ingreso per cápita promedio&Ingreso promedio anual en dólares per cápita en cada estado&Cuantitativa\\
+		\hline
+		Millas de autopista&La cantidad, en millas, de autopista construida en cada estado de EUA.&Cuantitativa\\
+		\hline
+		Personas con licencia de conducir&La proporción de personas en cada estado, respecto al total de cada uno, que cuentan con una licencia de conducir.&Cuantitativa\\
+		\hline
+		Consumo de gasolina&La cantidad, en millones de galones consumidos en determinado estado por todo el año&Cuantitativa
+		\end{tabular}
+	\end{center}
+
+\section{Análisis preliminar de los datos}
+
+% Table created by stargazer v.5.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: Sun, May 13, 2018 - 10:01:36
+\begin{table}[!htbp] \centering 
+	\caption{} 
+	\label{} 
+	\begin{tabular}{@{\extracolsep{5pt}}lc} 
+		\\[-1.8ex]\hline 
+		\hline \\[-1.8ex] 
+		& \multicolumn{1}{c}{\textit{Dependent variable:}} \\ 
+		\cline{2-2} 
+		\\[-1.8ex] & B \\ 
+		\hline \\[-1.8ex] 
+		A1 & $-$34.790$^{**}$ \\ 
+		& (12.970) \\ 
+		& \\ 
+		A2 & $-$0.067$^{***}$ \\ 
+		& (0.017) \\ 
+		& \\ 
+		A3 & $-$0.002 \\ 
+		& (0.003) \\ 
+		& \\ 
+		A4 & 1,336.449$^{***}$ \\ 
+		& (192.298) \\ 
+		& \\ 
+		Constant & 377.291$^{**}$ \\ 
+		& (185.541) \\ 
+		& \\ 
+		\hline \\[-1.8ex] 
+		Observations & 48 \\ 
+		R$^{2}$ & 0.679 \\ 
+		Adjusted R$^{2}$ & 0.649 \\ 
+		Residual Std. Error & 66.306 (df = 43) \\ 
+		F Statistic & 22.706$^{***}$ (df = 4; 43) \\ 
+		\hline 
+		\hline \\[-1.8ex] 
+		\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+	\end{tabular} 
+\end{table} 
+\end{document}
