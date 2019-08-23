@@ -1,0 +1,2 @@
+bibliografía del curso:
+- regression: models, methods and application

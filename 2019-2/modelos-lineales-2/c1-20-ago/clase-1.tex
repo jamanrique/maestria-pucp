@@ -1,0 +1,66 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\begin{document}
+
+Tenemos un modelo Y_i = Bo + B1 X + E1. Asumimos que el error tiene distribución normal N(0,sigma cuadrado). El error es independiente. X, por el momento, es conocido. Lo que deberíamos darnos cuenta es que el X es fijo y observable, y el Y_i es aleatorio. Dado ello, Y_i tiene distribución normal(Bo + B1 * Xi, sigma cuadrado). También podemos escribir T_ que tiene una distribución normal (u_i, sigma cuadrado) dónde u_i = N_i y N_i = Bo + B1 X. Existen tres componentes en este modelo.
+
+Distribución de la variable respuesta (parte aleatoria) = Yi ~ N(u_i, sigma cuadrado)
+Predictor lineal (parte sistemática) = N_i = Bo + B1 *X_i
+Enlace (función de enlace) = u_i = N_i
+El modelo lineal es bien flexible. Puede modelar un montón de distribuciones que pueden ser complejas.
+
+OJO: imaginemos que quieres modelar la salario con edad. Este sigue una curva no lineal concava. Podemos pensar el modelo como el siguiente:
+Parte aleatoria Yi ~ N(u_i, $\sigma$ cuadrado)
+Predictor lineal = N_i = B0, B1 *Xi + B2 * $X_{i}$ al cuadrado
+Enlace = u_i = N_i
+
+Podrisa incluso partir la función concava en particiones y modelar la función mediante funciones indicadoras.
+
+Para cada valor de Xi tienes una distribución de la Yi (ver gráfico inkscape).
+
+Imaginemos que queremos modelar conteo. Entonces nuestra variable aleatoria tendría distribución Y ~ pois(u_i), nuestro predictor lineal sería n_i = B0 + B1 X_i) y la función de enlace sería log(u_i) = n_i
+
+Modelo logístico: Y_i ~ Bernoulli(u_i); N_i = Bo + B1_xi; log(u_i/(1-u_i)) = Ni.
+
+Esto da pie a indicar los modelos lineales generalizados. En dónde Y_i ~ FE_familia-exponencial_(u_i,$\phi$), en donde $\phi$ es un parámetro de dispersión.
+La familia exponencial es la siguiente: Normal, Gamma, Normal Inversa, Poisson, Bernoulli. Doblemente diferenciable y monótona.
+
+Modelo aditivo generalizado: Asumo que los efectos de las covariables son aditivos.
+
+Todos los modelos que se han mostrado hasta ahora sirven para modelar la media. Por otro lado, la regresión cuantílica sirve para modelar cuantiles.
+
+Se tiene un modelo Yi = B0 + B1 * Xi1 + B2 * Xi2 + ... + Bk Xik + Ei , i= 1, 2, ... , n. Es más práctico evaluar todo de forma matricial.
+
+Se tiene entonces Y = (Y1, Y2, ... , Yn)T, B = (B0, B1, ... , Bk) ,
+X =  
+(1, X11 .... , X1k
+. . . . . . . .  . 
+. . . .. . . . . .
+1, Xn1, ..... , Xnk)
+
+y E = (e1, e2 ... ek)T
+
+Entonces todo se puede evaluar como Y = XB + E; E ~ N(0, $\sigma$ cuadrado I -identidad-)
+El estimador de mínimos cuadrados ordinarios es: $\sum_{i_{n}}$ Ei al cuadardo = (E)T E = (Y-XB)T (Y-XB)
+LS(B) = (Y)TY - 2(Y)T XB + (B)T (X)T XB.
+
+Entonces, derivamos la suma de los cuadrados en relación a $\beta$ y sale = -2(X)T Y + 2 (X)T X B = 0
+Luego tenemos que ((X)T X)) -1 (X)T X B = ((X)T X) -1 (X)T Y
+se cancela el argumento de la izquierda y se tiene que B = ((X)T X) -1 (X)T Y
+
+Luego tenemos que verificar que el estimador es insesgado y con varianza mínima. A este B hay que hallar la esperanza. Utilizamos el TB2 - prueba 2. y obtenemos que: E(B estimado) = E(((X)T X) -1 (X)T Y) = ((X)T X) -1 
+
+ver pantalla de celular. dos imágenes.
+
+El VIF es el factor de inflación de varianza (1/(1-R2 j)).
+
+Vamos a probar que el estimador de B de minimos cuadrados ordinarios es el mejor que hay.
+
+Ver la segunda pantalla de celular. Es un huevo!! XD
+
+El residual no es el error; el residual tiene que ver con el estimado. El error es con el beta de la población.actor de inflación de varianza (1/(1-R2 j)).
+
+Vamos a probar que el estimador de B de minimos cuadrados ordinarios es el mejor que hay.
+
+Ver la segunda pantalla de celular. Es un huevo!! XD
+\end{document}

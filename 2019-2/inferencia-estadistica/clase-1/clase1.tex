@@ -1,0 +1,55 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\title{Clase 1: Inferencia Estadística}
+\begin{document}
+Primera definición: Sean $X_{1},\ldots,X_{n}$ variables aleatorias (definidas en el espacio muestral) a partir de las cuales se realizará la inferencia. Si estas variables son independientes y tienen la misma distribución de $X$, se dice que se tiene una muestra aleatoria simple de $X$.
+Segunda definición: El parámetro es una cantidad $\theta$, que depende de la distirbución de la muestra disponible $f_{X_{1},\ldots,X_{n}}$. $\theta$ es desconocido, pues sus valores posibles constituyen el conjunto $\Theta$. Cabe resaltar que $\theta$ también puede ser un vector.
+\section{Ejemplo 1}
+Sea $Y_{1}=\theta X_{1} + \epsilon_{1}, \ldots, Y_{n}=\theta X_{n} + \epsilon_{n}$ dónde $X_{1},\ldots,X_{n}$ son cantidades conocidas. Asimismo $\theta \in \mathbb{R}$ es una cantidad desconocia y $\epsilon_{1},\ldots,\epsilon{n}$ son variables aleatorias independientes y cada una tiene una distribución $N(0,1)$. $Y_{1}, \ldots, Y_{n}$ es una muestra aleatoria. Estas variables son independientes; sin embargo no tienen la misma distribución, $Y_{i}~N(\theta X_{i},1)$.
+\section{Ejemplo 2: Inferencia sobre una población}
+Sea $X_{i}=1$, si la unidad de observación i satisface cierta característica; 0, caso contrario para $i=1,\ldots,n$. Sea $P(X_{i}=1)=\theta, i=1,\ldots,n$ y $P(X_{i}=0)=1-\theta, i=1,\ldots,n$ Entonces $X_{i}~B(\theta)$.
+Si asumimos que $X_{1},\ldots,X_{n}$ son independientes, entonces $X_{1},\ldots,X_{n}$ es una muestra aleatoria simple de $X$ en dónde $X~B(\theta)$. Interpretación: $\theta$= proporción de unidades, en una población, que satisface la característica.
+Tercera definición: La estadística es cualquier función de la muestra (disponible) $g(X_{1},\ldots,X_{n})$. Usualmente $g$ es una función de valor real, pero también puede ser de valor vectorial. \textbf{Observación:} $g$ no debe depender de parámetros desconocidos.
+\section{Ejemplos de la tercera definición}
+$X_{(1)}=minimo{X_{1}, \ldots, X_{n}}$
+$X_{(1)}=maximo{X_{1}, \ldots, X_{n}} $
+$\sum_{j=1}=X_{j}$
+$\frac{\sum_{j=1}=X_{j}}{n}$ media muestral, también existe la varianza muestral y el segundo momento muestral.
+Cuarta definición: Si $\theta$ es un parámetro, un estimador de $\theta$ es una estadística $\hat{\theta}= \hat{\theta}(X_{1},\ldots,X_{n})$ que se usa para aproximar el valor desconocido de $\theta$. \textbf{Observación:} $\hat{\theta}$ es una variable aleatoria.
+\section{Propiedades de un estimador}
+\subsection{Propiedad de insesgamiento}
+$\hat{\theta}$ es un estimador insesgado de $\theta$, si $E(\hat{\theta})=\theta, \forall \theta \in \Theta$.
+\subsection{Ejemplo de insesgamiento}
+El Estimador usual de $\theta$ está dado por:
+\[  \hat{\theta} = \frac{\sum_{j=1}X_{j}Y_{j}}{\sum_{j=1}X_{j}X_{j}}.\]
+\[  E(\hat{\theta})=  \frac{\sum_{j=1}X_{j}E(Y_{j})}{\sum_{j=1}X_{j}X_{j}} = \theta.\]
+Dado que $E(Y_{j}) = \theta X_{j}$. Por lo tanto, $\hat{\theta}$ es un estimador insesgado de $\theta$.
+
+En general se tiene que
+\[ E(\bar{g(x)}) = E(g(x)).\]
+\textbf{Demostración:}
+\[ \bar{g(x)}= \frac{\sum_{j=1}g(X_{j})}{n}.\]
+\[ E(\bar{g(x)})=  \frac{1}{n} \sum_{j=1} E(g(X_{j})).\]
+\[ E(\bar{g(x)})=  \frac{1}{n} n \sum_{j=1} E(g(X)).\]
+\[ E(g(X)).\]
+El estimador usual de la varianza $\sigma^{2}$ es:
+Sea una muestra aleatoria simple de $X$ dónde $E(X)=\mu$ y $V(X)=\sigma^{2}$. $S^{2}$ es el estimador usual de $\sigma^{2}$. 
+
+Ver imagen
+
+\section{Ejemplo}
+Sea $E(\bar{X^{2}}) = V(\bar{X}) + E^{2}(\bar{X})$. Entonces se tiene que:
+\[ V(\frac{\sum_{j=1}^{n}X_{j}}{n}) + \mu^{2}.\]
+\[ \frac{1}{n^{2}} \sum_{j=1}^{n}V(X_{j}) + \mu^{2}.\] Por independencia se tiene que $V(\sum) = \sum V()$.
+\[  \frac{\sigma^{2}}{n} + \mu^{2}.\]
+Luego, de (1), (2) y (3):
+\[ E(S^{2})=  \frac{n}{n-1}[E(X^{2})- \ldots ].\]
+\[  \frac{n}{n-1}[\sigma^{2}+\mu^{2}-( \frac{\sigma^{2}}{n} + \mu^{2})].\]
+\[ \sigma^{2}.\]
+
+Definición: Si $\lim_{n infinito} E(\hat{\theta})=\theta, \forall \theta \in \Theta$, se dice que $\hat{\theta}$ es asintóticamente insesgado.
+\section{Propiedad de eficiencia}
+Si $\hat{\theta_{1}}$ y $\hat{\theta_{1}}$ son estimadores insesgados de $\theta$, se dice que $\hat{\theta_{1}}$ es más eficiente que  $\hat{\theta_{1}}$ si $V(\hat{\theta_{1}}) < V(\hat{\theta_{2}})$.
+\textbf{Explicación:}
+\end{document}
