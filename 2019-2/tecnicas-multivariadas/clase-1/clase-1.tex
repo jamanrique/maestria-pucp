@@ -1,0 +1,92 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\title{Clase 1: Técnicas de Análisis Multivariado}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+Usualmente, en los datos tenemos demasiadas variables: $X_{1},\ldots,X_{p}$. En estos datos, buscamos las interrelaciones que tienen las variables, o tal vez explicar un grupo de variables en tèrminos de otras. Estos datos se representan en matrices cuyo marco teórico es soportado por la álgebra lineal y probabilidad. Si se estudian los datos que aparecen para cada variable $X_{1},\ldots,X_{p}$ esto comprende el análisis multivariado. Cuando uno comienza a aprender estadístico, utiliza funciones univariadas y gráficos como histogramas o barras, para ir buscando el modelo univariado  que ayude en el estudio de la variable.
+
+El estudio multivariado inicia a partir del estudio simultáneo entre dos variables $X_{1}, X_{2}$. Una de los primeros análisis es la covarianza y el coeficiente de correlación; en métodos gráficos tenemos los gráficos de dispersión (siempre y cuando sean variables numéricas).
+\section{Álgebra Lineal}
+El análisis matricial comprende una matriz tal que:
+\[
+X= 
+\begin{bmatrix}
+X_{11} & X_{12} & \cdots & X_{1p} \\
+X_{21} & X_{22} & \cdots & X_{2p} \\
+\vdots & \vdots & \vdots & \vdots \\
+X_{n1} & X_{n2} & \cdots & X_{np}
+\end{bmatrix}
+\]
+Si n=p entonces tenemos una matriz cuadrada.
+
+La transpuesta de $A$ es definida como $A^{T}$
+
+La matriz identidad es definida como una matriz cuya diagonal es 1 y todos los demás elementos es 0
+
+Una matriz es simétrica si $A^{T}=A$
+
+Un matriz es idempotente si $A * A = A$
+
+Una matriz es ortogonal si $A^{T} * A = I$
+
+La traza es la suma de la suma de los elementos de la diagonal. $tr(A) = \sum_{i=1}^{n}a_{ii}$. La suposición es que A es cuadrada.
+
+Determinante de una matriz es definida como $\det(A) = \sum_{\sigma \in P_{n}}\prod_{i=1}^{n} a_{i} \sigma_{i}$
+
+La matriz inversa de A se denota de la siguiente forma: $A^{-1}\frac{C}{|A|}$
+
+\subsection{Autovectores y autovalores de una matriz}
+Los autovectores son, obviamente, vectores, y autovalores son escalares. Para una matriz $A$ cuadrada, tenemos que $e$ es un autovector de $A$ si:
+\[
+Ae=\lambda e
+\]
+en dónde $\lambda$ es el autovalor -escalar- y $e$ es el autovector. Generalmente se eligen autovectores unitarios. Esto quiere decir que ${(\sum_{i=1}^{n} e^{2}_{1i})}^{0.5}=1$. 
+
+Si $A$ es simétrica los autovectores se pueden elegir de tal modo que sean unitarios, es decir $||e_{i}||=1$ y que sean mutuamente perpendiculares. Que sean mutuamente perpendiculares significa que, para cada par de autovectores, la multiplicación de una por la otra transpuesta dan cero.
+Asimismo, si obtienen los autovalores de una matriz, se obtiene lo siguiente:
+\[ 
+\det{A}=\prod_{i=1}^{p}\lambda_{i}
+\]
+\[
+	tr(A)=tr(\lambda)=\sum_{j=1}^{p}\lambda_{j}
+\]
+La pregunta principal es ¿cómo encontrar los autovectores? Entonces tebemos resolver la ecuación $\det{A-\lambda I}=0$.
+
+\section{Derivación}
+Sea $f:\mathbb{R} \rightarrow \mathbb{R}$ y para el vector $(px1)$ la derivada es el vector columna de las derivadas parciales. Esta derivada se le conoce como la gradiente.
+
+\section{Descomposición espectral}
+Toda matriz simétrica se puede descomponer de la siguiente forma.
+\[ 
+A = \Gamma \Lambda \Gamma^{T}
+\]
+en dónde $\Gamma$ corresponde a la matriz formada por los autovectores de $A$. Esto se representaría en lo siguiente:
+\[
+\begin{bmatrix}
+e_{11} & e_{21} & \cdots & e_{n1} \\
+e_{12} & e_{22} & \cdots & e_{n2} \\
+\vdots & \vdots & \vdots & \vdots \\
+e_{1n} & e_{2n} & \cdots&e_{nn} 
+\end{bmatrix}
+\begin{bmatrix}
+\Lambda_{11} & 0 & \cdots & 0 \\
+0 & \Lambda_{22} & \cdots & 0 \\
+\vdots & \vdots & \vdots & \vdots \\
+0 & 0 & \cdots & 0
+\end{bmatrix}
+\begin{bmatrix}
+e_{11} & e_{12} & \cdots & e_{1p} \\
+e_{21} & e_{22} & \cdots & e_{2p} \\
+\vdots & \vdots & \vdots & \vdots \\
+e_{n1} & e_{n2} & \cdots & e_{np}
+\end{bmatrix}
+\]
+
+A través de la descomposición espectral podemos hablar de la <<raíz cuadrada de una matriz>>,\textbf{siempre y cuando la matriz siempre sea simétrica}.
+Formas cuadráticas$\ldots$ ver slide.
+Mardia K.V. 
+\end{document}

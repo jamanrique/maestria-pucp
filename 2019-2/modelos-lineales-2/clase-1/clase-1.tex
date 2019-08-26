@@ -1,0 +1,78 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\title{Clase 1: Modelos Lineales}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+Existe un modelo $Y_{1}=B_{0}+B_{1}X+\varepsilon$. Asumimos que el error tiene distribución normal $N\sim(1,\sigma^{2})$ e independiente. $X$, por el momento, es conocido fijo y observable. Por otro lado $Y_{i}$ es una variable aleatoria. Bajo estas condiciones, $Y_{i}$ tiene distribución normal $Y_{i}\sim N(B_{0}+B_{i}*x_{i},\sigma^{2})$.
+
+Desde el punto de vista de los modelos lineales generalizados, $Y_{i}$ tiene distribución normal $Y_{i}\sim N(\mu_{i},\sigma^{2}$ dónde $\mu_{i}=N_{i}$ y $N_{i}=B_{0}+B_{i}*x_{i}$. Lo anteriormente expuesto se conoce como los tres componentes del modelo lineal generalizado:
+\begin{itemize}
+	\item \textbf{Parte aleatoria:} Es la distribución de la variable respuesta, en este caso $Y_{i}\sim N(\mu_{i},\sigma^{2})$.
+	\item \textbf{Predictor lineal:} El predictor lineal $N_{i}=B_{0}+B_{i}*x_{i}$
+	\item \textbf{Enlace:} La función de enlace es $\mu_{i}=N_{i}$
+\end{itemize}
+
+Una de las ventajas del modelo lineal es bien flexible, lo cual permite modelar un montón de distribuciones que pueden ser complejas. Por ejemplo, imaginemos que se desea modelar el salario con edad. Esta relación sigue una curva no lineal cóncava. Utilizando lo explicado anteriormente, se tendría lo siguiente:
+
+\begin{itemize}
+	\item \textbf{Parte aleatoria:} $Y_{i}\sim N(\mu_{i},\sigma^{2})$
+	\item \textbf{Predictor lineal:} $N_{i}=B_{0}+B_{i}*x_{i}+x_{i}^{2}$
+	\item \textbf{Enlace:} $\mu_{i}=N_{i}$
+\end{itemize}
+
+Incluso a partir de la función cóncava del predictor lineal puede ser modelada particionando los datos y modelando la función mediante funciones indicadoras.
+
+Por ejemplo, imaginemos que queremos modelar una variable de conteo. Utilizando lo explicado anteriormente, se tendría lo siguiente:
+
+\begin{itemize}
+	\item \textbf{Parte aleatoria:} $Y_{i}\sim Poisson(\mu_{i})$
+	\item  \textbf{Predictor lineal:} $N_{i}=B_{0}+B_{i}*x_{i}$
+	\item \textbf{Enlace:} $log(\mu_{i})=N_{i}$
+\end{itemize}
+
+El modelo logístico tendría la siguiente estructura:
+
+\begin{itemize}
+	\item \textbf{Parte aleatoria:} $Y_{i}\sim  Bernoulli(\mu_{i})$
+	\item \textbf{Predictor lineal:} $N_{i}=B_{0}+B_{i}*x_{i}$
+	\item \textbf{Enlace:} $log(\frac{\mu_i}{1-\mu_{1}})=N_{i}$
+\end{itemize}
+
+Dichas estructuras tienen la estructura de un modelo lineal generalizado. En dónde $Y_{i}\sim FE(\mu_{i},\phi)$, en dónde FE significa familia exponencial y $\phi$ es un parámetro de dispersión. Las distribuciones relacionadas a la familia exponencial: Normal, Gamma, Normal Inversa, Poisson, Bernoulli y toda familia doblemente diferenciable y monótona.
+
+Los modelos que serán estudiados sirven para modelar la respuesta media. Existen otros métodos de regresión que modelan otros aspectos de la distribución de la variable respuesta (ejemplo: la regresión cuantílica sirve para modelar cuantiles).
+
+Se tiene un modelo $Y_{i}=B_{0}+B_{1}*X_{2}*X_{i2}+\ldots+B_{k}*X_{ik}+\varepsilon_{i}, i=1,2, \ldots ,n$.  La notación para manejar estos ejemplos más extensos se realiza de forma matricial.
+
+Se tiene entonces $Y=(Y_{1},Y_{2},\ldots,Y{n})^{T}$ y $B=(B_{0},B_{1},\ldots,B{k})^{T}$ y
+\[
+X= 
+\begin{pmatrix}
+1 & x_{11} & x_{12} & \ldots & x_{1k} \\
+1 & x_{21} & x_{22} & \ldots & x_{2k} \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+1 & x_{i1} & x_{i2} & \ldots & x_{ik} \\
+\end{pmatrix}
+\]
+y $\varepsilon=(\varepsilon_{1},\varepsilon{2},\ldots,\varepsilon{n})^{T}$
+
+Bajo esta notación, todo se puede evaluar como $Y= XB + \varepsilon; \varepsilon\sim N(1,\sigma^{2}I)$. El estimador de mínimos cuadrados ordinarios del siguiente modelo es $\sum_{1}^{n} \varepsilon^{2}=E^{T}E=(Y-XB)^{T}(Y-XB)$ y el estimador de B es $LS(B)=Y^{T}T-2Y^{T}XB+B^{T}X^{T}XB$.
+
+Derivamos la suma de cuadrados en relación a $\beta$, obteniendo $-2X^{T}+2X^{T}XB=0$. Posteriormente, tenemos que $(X^{T}X)^{-1}X^{T}XB=(X^{T}X)^{-1}X^{T}Y$. Se cancelan los argumentos y se tiene que $\beta=(X^{T}X)^{-1}X^{T}Y$.
+
+Finalmente, debemos verificar que el estimador es insesgado y tiene varianza mínima (es el más eficiente). Hallamos el valor esperado de este estimador y obtenemos lo siguiente, que $E(\hat{B})=E((X^{T}X)^{-1}X^{T}Y)=(X^{T}X)^{-1}X^{T}E(Y)=(X^{T}X)^{-1}X^{T}XB=B$. Por lo tanto, el estimador $\hat{B}$ es insesgado.
+
+Para hallar la varianza de $B$ tenemos que $cov(\hat{B})=cov((X^{T}X)^{-1}X^{T}Y)$, esto es $(X^{T}X)^{-1}X^{T}cov(Y)=(X^{T}X)^{-1}\sigma^{2}I$. Multiplicamos ambos segmentos por $(X^{T}X)^{-1}$. Teniendo finalmente que la varianza de $B$ es $\sigma^{2}(X^{T}X)^{-1}$. 
+Posteriormente, debemos probar que el estimador de $B$, el cual se halló mediante mínimos cuadrados ordinarios, es el mejor que existe. Para eso ver la siguiente demostración:
+
+\end{document}
+
+
+El residual no es el error; el residual tiene que ver con el estimado. El error es con el beta de la población.actor de inflación de varianza (1/(1-R2 j)).
+
+Vamos a probar que el estimador de B de minimos cuadrados ordinarios es el mejor que hay.
+
+Ver la segunda pantalla de celular. Es un huevo!! XD
