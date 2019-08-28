@@ -66,13 +66,118 @@ Derivamos la suma de cuadrados en relación a $\beta$, obteniendo $-2X^{T}+2X^{T
 Finalmente, debemos verificar que el estimador es insesgado y tiene varianza mínima (es el más eficiente). Hallamos el valor esperado de este estimador y obtenemos lo siguiente, que $E(\hat{B})=E((X^{T}X)^{-1}X^{T}Y)=(X^{T}X)^{-1}X^{T}E(Y)=(X^{T}X)^{-1}X^{T}XB=B$. Por lo tanto, el estimador $\hat{B}$ es insesgado.
 
 Para hallar la varianza de $B$ tenemos que $cov(\hat{B})=cov((X^{T}X)^{-1}X^{T}Y)$, esto es $(X^{T}X)^{-1}X^{T}cov(Y)=(X^{T}X)^{-1}\sigma^{2}I$. Multiplicamos ambos segmentos por $(X^{T}X)^{-1}$. Teniendo finalmente que la varianza de $B$ es $\sigma^{2}(X^{T}X)^{-1}$. 
-Posteriormente, debemos probar que el estimador de $B$, el cual se halló mediante mínimos cuadrados ordinarios, es el mejor que existe. Para eso ver la siguiente demostración:
+Posteriormente, debemos probar que el estimador de $B$, el cual se halló mediante mínimos cuadrados ordinarios, es el mejor que existe. Para eso ver la siguiente demostración: 
 
+Sea el siguiente estimador lineal:
+\[ 
+	\tilde{B}=((X^{T}X)^{-1}X^{T}+B)Y + b
+.\]
+dónde $\tilde{B}$ es una matriz p*n cualquiera.
+
+El esperado de esta matriz es:
+\[ 
+	E(\tilde{B})=E(((X^{T}X)^{-1}X^{T}+B)Y+b) 
+.\]
+\[ 
+E((X^{T}X)^{-1}X^{T}Y+BY+b)
+.\]
+\[ 
+	(X^{T}X)^{-1}X^{T}E(Y)+B*E(Y)+b
+.\]
+\[ 
+	(X^{T}X)^{-1}X^{T}XB+BXB+b
+.\]
+\[ 
+B+BXB+b
+.\]
+Para que $\tilde{B}$ sea insesgado se debe cumplir que tanto $b=0$ como $BX=0$.
+
+Una vez definido el valor esperado, observaremos la varianza del estimador mediante lo siguiente:
+\[ 
+	cov(\tilde{B})=cov((X^{T}X)^{-1}X^{T}+B)Y+b)
+.\]
+\[ 
+	((X^{T}X)^{-1}X^{T}+B)cov(Y)(X(X^{T}X)^{-1}+B^{T})
+.\]
+\[ 
+	((X^{T}X)^{-2}X^{T}+B)\sigma^{2} I(X(X^{T}X)^{-1}+B^{T})
+.\]
+\[ 
+	\sigma^{2}(X^{T}X)^{-1}X^{T}X(X^{T}X)^{-1}+\sigma BX(X^{T}X)^{-1}+\sigma^{2}(X^{T}X)^{-1}X^{T}B^{T}+\sigma^{2} BB^{T}
+.\]
+\[ 
+	\sigma^{2}(X^{T}X)^{-1}+\sigma^{2}BB^{T}
+.\]
+
+Posteriormente, hallaremos la varianza de una combinación lineal de $\tilde{B}$. Definimos entonces $l$ como una matriz con dimensión $p*1$. Se tiene entonces lo siguiente:
+\[ 
+	Var(l^{T}\tilde{B})=l^{T}var(\tilde{B})l
+.\]
+\[ 
+	l^{T}(\sigma^{2}(X^{T}X)^{-1}+\sigma^{2}BB^{T})l
+.\]
+\[ 
+	l^{T}(\sigma^{2}(X^{T}X)^{-1}l+\sigma l^{T}BB^{T}l
+.\]
+\[ 
+	l^{T}var(\tilde{B})l+\sigma^{2}l^{T}l
+.\]
+\[ 
+	var(l^{T}\tilde{B})+\sigma^{2}l^{T}l
+.\]
+El término $\sigma^{2}l^{T}l$ es mayor igual a cero. Por lo tanto, se tiene que:
+\[ 
+	var(l^{T}\tilde{B})\leq var(l^{T}\tilde{B})
+.\]
+$\hat{B}$ es el mejor estimador lineal insesgado.
+
+Posteriormente, analizaremos el residual. \textbf{Ojo: }Se conoce como el residual como el estimador del error. El residual es definido como $e=Y-\hat{Y}$, lo cual tiene lo siguiente:
+\[ 
+Y-X\hat{B}
+.\]
+\[ 
+	Y-X(X^{T}X)^{-1}X^{T}Y
+.\]
+\[ 
+Y-HY
+.\]
+\[ 
+	e=(I-H)Y
+.\]
+Posteriormente, definiremos $e^{T}e$ como la suma de cuadrados de los residuales y hallaremos su valor esperado. Esto es:
+\[ 
+	E(e^{T}e)=E(Y^{T}(I-H)(I-H)Y)
+.\]
+\[ 
+	E(Y^{T}(1-H)Y)
+.\]
+\[ 
+	tr((I-H)cov(Y)) + E(Y)^{T}(1-H)E(Y)
+.\]
+\[ 
+	tr((I-H)\sigma^{2}I)+B^{T}X^{T}(I-H)XB
+.\]
+\[ 
+	\sigma^{2}tr(I-H)+B^{T}X^{T}XB-B^{T}X^{T}HXB
+.\]
+\[ 
+	\sigma^{2}(n-p)+B^{T}X^{T}XB-B^{T}X^{T}XB
+.\]
+\[ 
+	E(e^{T}e)=\sigma^{2}(n-p)
+.\]
+Se tiene entonces que:
+\[ 
+	E(\frac{e^{T}e}{n-p})=\sigma^{2}
+.\]
+Por lo tanto, podemos definir $\hat{\sigma}^{2}=\frac{e^{T}e}{n-1}$ como un estimador insesgado de $\sigma^{2}$.
+
+Se definen, en base a lo mencionado, distintas propiedades. Estas son:
+\begin{itemize}
+	\item $\hat{Y}^{T}e=0$
+	\item $\hat{X}^{T}e=0$
+	\item $\sum_{i=1}^{n}e_{i}=0$
+	\item $\sum_{i=1}^{n}\hat{Y}_{i}=\sum_{i=1}^{n}Y_{i}$
+	\item La recta de regresión estimada pasa por el punto $(1,\bar{X}_{1},\bar{X}_{2},\ldots,\bar{X}_{K},\bar{Y})$
+\end{itemize}
 \end{document}
-
-
-El residual no es el error; el residual tiene que ver con el estimado. El error es con el beta de la población.actor de inflación de varianza (1/(1-R2 j)).
-
-Vamos a probar que el estimador de B de minimos cuadrados ordinarios es el mejor que hay.
-
-Ver la segunda pantalla de celular. Es un huevo!! XD

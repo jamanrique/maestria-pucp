@@ -1,0 +1,268 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\title{Clase 2: Modelos Lineales}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+\section{Residuales}
+Los residuales se pueden escribir como $e=(I-H)Y$. Los residuales son una combinación lineal de las observaciones. A continuación, ver las propiedades de los residuales:
+\subsection{Esperanza del residual}
+\[ E(e)=E((I-H)Y) .\]
+\[ =(I-H)E(Y) .\]
+\[ =(I-H)XB .\]
+\[ =0 .\]
+\textbf{Tarea:} Probar por qué sale 0.
+\subsection{Covarianza del residual}
+\[ cov(e)=cov((I-H)Y) .\]
+\[ =(I-H) cov(Y) (I-H).\]
+\[ =(I-H)\sigma^{2} I (I-H) .\]
+\[ =\sigma^{2}(I-H)(I-H) .\]
+\[ =\sigma^{2}(I-H) .\]
+\subsection{Varianza de un residual}
+Definamos la matriz hat como:
+\[
+H= 
+\begin{pmatrix}
+h_{11} & h_{12} & \ldots & h_{1n} \\
+h_{21} & h_{22} & \ldots & h_{2n} \\
+\vdots & \vdots & \vdots & \vdots \\
+h_{n1} & h_{n2} & \ldots & h_{nn} \\
+\end{pmatrix}
+\]
+Por lo tanto, la varianza de un residual es definida por $var(e_{i})=\sigma^{2}(1-h_{ii})$. La covarianza de dos residuales es $cov(e_{i},e_{j})=-\sigma^{2}h_{ij}$.
+
+En paralelo, los errores tienen la siguiente distribución:
+\[ \varepsilon \sim N(0,\sigma^{2}I) .\]
+\[ var(\varepsilon)=\sigma^{2} .\]
+\[ cov(\varepsilon_{i},\varepsilon_{j})=0, \forall i \neq j .\]
+
+\subsection{Teorema B 8.2}
+Sea lo siguiente:
+\[ X \sim N(0,I) .\]
+Sea una matriz $B$ $n*p$ y $R$ una matriz idempotente simétrica. El rango de R se define como $r(R)=r$. Por lo tanto se puede probar lo siguiente:
+\begin{itemize}
+	\item $X^{T}RX \sim X^{2}_{r}$
+	\item $\hat{X}BR=0$ $\rightarrow$ $X^{T}RX$ y $BX$ son independientes.
+\end{itemize}
+
+\subsection{Análisis de los residuales}
+Se tiene la suma de cuadrados de los residuales definida como $\sum_{i=1}^{n}e^{2}_{i}=e^{T}e$. Por lo tanto se define:
+\[ e^{T}e=[(I-H)Y]^{T}(I-H)Y .\]
+\[ =Y^{T}(I-H)Y .\]
+\[ =(XB+\varepsilon)^{T}(I-H)(XB+\varepsilon) .\]
+\[ =\varepsilon^{T}(I-H)\varepsilon + B^{T}X^{T}(I-H)XB+\varepsilon^{T}(I-H)XB+B^{T}X^{T}(I-H)\varepsilon .\]
+\textbf{Tarea:} Probar que la expresión $B^{T}X^{T}(I-H)\varepsilon$ es 0.
+
+Por otro lado, tenemos que:
+\[ \frac{e^{T}e}{\sigma^{2}}=\frac{\varepsilon^{T}}{\sigma}(I-H)\frac{\varepsilon}{\sigma} .\]
+\[ =\varepsilon^{*^{T}}(I-H)\varepsilon^{*} .\]
+en dónde se define como $\varepsilon^{*}=\frac{\varepsilon}{\sigma}$. Se tiene, también que $\varepsilon^{*}\sim N(0,I)$. Por el teorema anteriormente mencionado, se tiene que:
+\[ \varepsilon^{*^{T}}(I-H)\varepsilon^{*} \sim X^{2}_{rango(1-H)} .\]
+\[ \varepsilon^{*^{T}}(I-H)\varepsilon^{*} \sim X^{2}_{n-p} .\]
+\[ \frac{e^{T}e}{\sigma^{2}} \sim X^{2}_{n-p} .\]
+
+Hallamos el esperado de dicha distribución, la cual es:
+\[ E(\frac{e^{T}e}{\sigma^{2}}) = n-p .\]
+\[ E(\frac{e^{T}e}{n-p}=\sigma^{2} .\]
+
+Por lo tanto,un estimador insesgado de $\sigma^{2}$ es dado por:
+\[ \hat{\sigma}^{2}=\frac{e^{T}e}{n-p}=\frac{SS_{res}}{n-p}=MS_{res}.\]
+\[ \frac{(n-p)\hat{\sigma}^{2}}{\sigma^{2}}\sim X^{2}_{n-p} .\]
+
+\subsection{Otra subsección}
+\[ \frac{1}{\sigma}(\hat{B}-B)=\frac{1}{\sigma}((X^{T}X)^{-1}X^{T}Y-B) .\]
+\[ =\frac{1}{\sigma}((X^{T}X)^{-1}X^{T}(XB+\varepsilon)-B) .\]
+\[ =\frac{1}{\sigma}((X^{T}X)^{-1}X^{T}XB+(X^{T}X)^{-1}X^{T}\varepsilon-B) .\]
+\[ =(X^{T}X)^{-1}X^{T}\frac{\varepsilon}{\sigma} .\]
+\[ =(X^{T}X)^{-1}X^{T}\varepsilon^{*} .\]
+\[ =(X^{T}X)^{-1}X^{T}-(X^{T}X)^{-1}X^{T}H .\]
+\[ =(X^{T}X)^{-1}X^{T}-(X^{T}X)^{-1}X^{T}X(X^{T}X)^{-1}X^{T} .\]
+\[ = 0 .\]
+una matriz de ceros. Bajo el teorema anteriormente mencionado, se tiene entonces que:
+
+$(X^{T}X)^{-1}X^{T}\varepsilon^{*}$ es independiente de $\varepsilon^{*^{T}}(I-H)\varepsilon^{*}$.
+$\frac{1}{\sigma}(\hat{B}-B)$ es independiente de $\frac{e^{T}e}{\sigma^{2}}$
+$\hat{B}$ y $\hat{\sigma}^{2}$ son independientes.
+
+\subsection{Otra subsección}
+Recordemos que:
+\begin{itemize}
+	\item $\hat{\sigma}^{2} = \frac{e^{T}e}{n-p}$ es un estimador insesgado de $\sigma^{2}$
+	\item $\frac{(n-p)\hat{\sigma}^{2}}{\sigma^{2}} \sim X^{2}_{n-p}$
+	\item $\hat{B} y \hat{\sigma}^{2}$ son independientes.
+\end{itemize}
+
+\subsection{Intervalos de confianza}
+Se tiene que:
+\[ \hat{B}\sim N(B,\sigma^{2}(X^{T}X)^{-1} .\]
+y definimos $C=(X^{T}X)^{-1}(C_{ij})_{p*p}$. Se tiene entonces que:
+\[ \hat{B}_{j} \sim (B_{j},\sigma^{2}c_{jj}) .\]
+\[ \frac{\hat{B}_{j}-B_{j}}{\sigma \sqrt{C_{jj}}} \sim N(0,1) .\]
+Si $Z \sim  N(0,1)$ y $W \sim X^{2}_{k}$ son independientes, entonces $T=\frac{Z}{\sqrt{\frac{w}{k}}}\sim X^{2}_{k}$.
+\[ \frac{\frac{\hat{B}_{j}-B_{j}}{\sigma\sqrt{C_{jj}}}}{\sqrt{(n-p)\frac{\hat{\sigma}^{2}}{\sigma^{2}}\frac{1}{n-p}}} .\]
+\[ \frac{\hat{B}_{j}-B_{j}}{\hat{\sigma}\sqrt{C_{jj}}} \sim t_{(n-p)}.\]
+\[ P(-t_{1-\frac{\alpha}{2}}\leq T \leq t_{1-\frac{\alpha}{2}})=1-\alpha .\]
+\[ P(\hat{B}_{j}-t_{1-\frac{\alpha}{2}}\hat{\sigma}\sqrt{C_{jj}} \leq B_{j} \leq \hat{B}_{j}+t_{1-\frac{\alpha}{2}}\hat{\sigma}\sqrt{C_{jj}})=1-\alpha .\]
+Por tanto, se tiene que:
+\[ IC_{(1-\alpha)}(B_{j}) = (\hat{B}_{j} \pm t_{1-\frac{\alpha}{2}}\hat{\sigma}\sqrt{C_{jj}}) .\]
+
+\subsection{Error estándar}
+\[ \sqrt{\hat{var(\hat{B}_{j})}} = \sqrt{\hat{\sigma}^{2}C_{jj}} .\]
+Se define entonces el error estándar como $\hat{\sigma}\sqrt{C_{jj}}$.
+
+\subsection{Predicción}
+Definamos lo siguiente:
+\[ Y_{0}= B_{0},B_{1}X_{01}+ \ldots + B_{k}X_{0k}+\varepsilon_{0} .\]
+\[ Y_{0}=X_{0}^{T}+\varepsilon_{0} .\]
+El esperado de $Y_{0}$, el cual está definido como $E(Y_{0}|X_{0})=X_{0}^{T}B$. Finalmente, definimos el estimado de $Y_{0}$ como lo siguiente:
+\[ \hat{Y}_{0} = X_{0}^{T}\hat{B} .\]
+Y hallamos su esperado.
+\[ E(\hat{Y}_{0})=E(X_{0}^{T}\hat{B})=X_{0}^{T}B .\]
+\textbf{Tarea:} Desarrollar la varianza de $var(\hat{Y}_{0})$, la cual es $\sigma^{2} X_{0}^{T}(X^{T}X)^{-1}X_{0}$.
+
+Si estuviéramos en un modelo de regresión lineal simple, se obtiene lo siguiente:
+\[ var(\hat{Y}_{0})=\sigma^{2}(\frac{1}{n}+ \frac{(X_{0}-\bar{X})^{2}}{S_{xx}}) .\]
+en dónde $S_{xx}=\sum_{i=1}^{n}(x_{i}-\bar{x})^{2}$
+
+\textbf{Tarea: }Probar el siguiente resultado, explicando cada paso.
+\[ IC_{(1-\alpha)}(\mu_{Y|X_{0}})=X_{0}^{T}\hat{B} \pm t_{1-\frac{\alpha}{2}}\hat{\sigma}\sqrt{X_{0}^{T}(X^{T}X)^{-1}X_{0}} .\]
+Teniendo que:
+\[ \frac{X_{0}^{T}\hat{B}-\mu_{Y|X_{0}}}{\sigma \sqrt{X_{0}^{T}(X^{T}X)^{-1}X_{0}}} \sim N(0,1).\]
+
+\subsection{Intervalo de predicción}
+
+Se tiene lo siguiente:
+\begin{itemize}
+	\item \textbf{Nueva observación: }$Y_{0}\sim N(X_{0}^{T}B,\sigma^{2})$
+	\item \textbf{Muestra: }$\hat{Y_{0}}\sim N(X_{0}^{T}B,\sigma^{2}X_{0}^{T}(X^{T}X)^{-1}X_{0}$
+\end{itemize}
+
+Se tiene que:
+\[ Y_{0}-\hat{Y}_{0} \sim N(0,\sigma^{2}(1+X_{0}(X^{T}X)^{-1}X_{0})) .\]
+
+\subsection{Prueba de Hipótesis}
+Se tiene una hipótesis lineal general, la cual es:
+\[ H_{0}: CB =d .\]
+\[ H_{1}: CB \neq d.\]
+dónde $C_{r*p}$, $d_{r*1}$ y $rango(C)=r$
+
+Tenemos lo siguiente:
+\begin{itemize}
+	\item \textbf{Modelo Completo: }$Y=XB+\varepsilon$, sin restricción.
+	\item \textbf{Modelo Reducido:} $Y=XB+\varepsilon$, sujeto a $H_{0}: CB=d$ verdadero.
+\end{itemize}
+
+Tenemos la siguiente estadística de prueba: $\Delta SS_{res}=SS_{res.H_{0}}-SS_{res}$.
+\[ \frac{\frac{1}{r}\Delta SS_{res}}{\frac{1}{n-p}SS_{res}} \sim F(r,n-p) .\]
+Y la prueba es $H_{0}$ si $F > F_{1-k}$.
+
+Se define $\hat{B}^{0}$ como el estimador de $B$ si $H_{0}: CB=d$ es verdadero. Por lo tanto, se debe minimizar $(Y-XB)^{T}(Y-XB)$ sujeto a $CB=d$. Esto es equivalente a minimizar:
+\[ L =(Y-XB)^{T}(Y-XB)-2\lambda^{T}(CB-d) .\]
+\[ L=Y^{T}Y+B^{T}X^{T}XB-2B^{T}X^{T}Y-2\lambda^{T}(CB-d) .\]
+
+Se sacan las derivadas:
+\[ \frac{\partial L}{\partial B}=-2X^{T}Y+2X^{T}XB-2C^{T}\lambda =0 .\]
+\[ \frac{\partial L}{\partial \lambda} =-2CB+2d=0.\]
+
+De la segunda derivada se obtiene que $CB=d$.
+
+En $(1)$, se tiene que:
+\[ (X^{T}X)B-X^{T}Y=C^{T}\lambda .\]
+\[ (X^{T}X)^{-1}(X^{T}X)B-(X^{T}X)^{-1}X^{T}Y=(X^{T}X)^{-1}C^{T}\lambda .\]
+\[ B-\hat{B}=(X^{T}X)^{-1}C^{T}\lambda .\]
+\[ CB-C\hat{B}=C(X^{T}X)^{-1}C^{T}\lambda .\]
+\[ d-C\hat{B}=C(X^{T}X)^{-1}C^{T}\lambda .\]
+\[ (C(X^{T}X)^{-1}C^{T})^{-1}(d-C\hat{B})=\lambda .\]
+Posteriormente se obtiene $B$:
+\[ B-\hat{B}=(X^{T}X)^{-1}C^{T}\lambda .\]
+\[ B=\hat{B}-(X^{T}X)^{-1}C^{T}(C(X^{T}X)^{-1}C^{T})^{-1}(C\hat{B}-d) .\]
+\[ \hat{B}^{0}=\hat{B}-\Delta .\]
+
+\[ \hat{Y}^{0}=X\hat{B}^{0} .\]
+\[ e^{0}=Y-\hat{Y}^{0} .\]
+\[ =Y-X\hat{B}^{0} .\]
+\[= Y-X(\hat{B}-\Delta) .\]
+\[ =Y-X\hat{B}+X\Delta .\]
+\[ =e+X\Delta .\]
+
+Entonces, por otro lado se obtiene:
+\[ =e^{0^{T}}e^{0}=(e+X\Delta)^{T}(e+X\Delta) .\]
+\[ =e^{T}e + \Delta^{T}X^{T}X\Delta+\Delta^{T}Xe+e^{T}X\Delta .\]
+\textbf{Tarea: }Probar por qué $\Delta^{T}Xe + e^{T}X\Delta=0$.
+
+Se tiene entonces que:
+\[ \Delta SS_{res}=\Delta^{T}X^{T}X\Delta .\]
+\[ =(C\hat{B}-d)^{T}(C(X^{T}X)^{-1}C(X^{T}X)^{-1}X^{T}X(X^{T}X)^{-1}C^{T}(C(X^{T}X)^{-1}C^{T})^{-1}(C\hat{B}-d) .\]
+\[ = (C\hat{B}-d)^{T}(C(X^{T}X)^{-1}C^{T})^{-1}(C\hat{B}-d).\]
+
+\subsection{Idea:}
+\[ \hat{B}\sim N(B,\sigma^{2}(X^{T}X)^{-1}) .\]
+\[ C\hat{B} \sim N(CB,\sigma^{2}C(X^{T}X)^{-1}C^{T}) .\]
+
+Si $H_{0}$ es verdadera, es decir $H_{0}: CB = d$ entonces:
+\[ C\hat{B} \sim N(d,\sigma^{2}C(X^{T}X)^{-1}C^{T} .\]
+\[ (C\hat{B}-d)^{T}\frac{(C(X^{T}X)^{-1}C^{T})^{-1}}{\sigma^{2}}(C\hat{B}-d) \sim X^{2}_{r}.\]
+Entonces se tiene lo siguiente:
+\begin{itemize}
+	\item $\frac{\Delta SS_{res}}{\sigma^{2}} \sim X^{2}_{r}$, si $H_{0}$ es verdadera.
+	\item $\frac{SS_{res}}{\sigma^{2}} \sim  X^{2}_{n-p}$
+	\item $\Delta SS_{res}$ depende solamente de $\hat{B}$; $\hat{B}$ y $SS_{res}$ son independientes.
+	\item $\Delta SS_{res}$ y $SS_{res}$ son independientes.
+\end{itemize}
+
+Recordemos la siguiente regla de la distribución F:
+\[ w \sim X^{2}_{k1} .\]
+\[ V \sim X^{2}_{k2} .\]
+Si ambos elementos son independientes, entonces se tiene que:
+\[ \frac{\frac{w}{k1}}{\frac{V}{k2}}\sim F(k1,k2) .\]
+
+Por lo tanto, se tiene que:
+\[ \frac{\frac{\Delta SS_{res}}{\sigma^{2} * r}}{\frac{SS_{res}}{\sigma^{2}*(n-p)}}\sim F(r,n-p) .\]
+Se eliminan los $\sigma^{2}$ y se tiene:
+\[ \frac{\frac{\Delta SS_{res}}{r}}{\frac{SS_{res}}{(n-p)}}\sim F(r,n-p) .\]
+
+\subsection{Residuales}
+Los residuales ordinarios se tienen de la siguiente forma:
+\[ e=(I-H)Y .\]
+\[ E(e_{i})=0 .\]
+\[ var(e_{i})=\sigma^{2}(1-h_{ii}) .\]
+\[ cov(e_{i},e_{j})=-\sigma^{2}h_{ij}, \forall i \neq j .\]
+
+Los residuales estandarizados son:
+\[ r_{i}=\frac{e_{i}}{\hat{\sigma}\sqrt{1-h_{ii}}} .\]
+No obstante, no tiene distribución $t$ porque $\hat{\sigma}^{2}$ y $e_{i}$ no son independientes.
+
+Dado ello, creamos los residuales <<estudentizados>>:
+\[ e_{i}\sim N(0,\sigma^{2}(1-h_{ii})) .\]
+\[ \frac{e_{i}}{\sigma \sqrt{1-h_{ii}}} \sim N(0,1).\]
+
+\subsection{Residuales <<estudentizados>>}
+Supongamos que obtenemos la muestra sin la observación i-ésima (n-1 observaciones). Por lo tanto, estimamos la varianza de los errores $\sigma^{2}$ obteniendo:
+\[ \frac{(n-p-1)\hat{\sigma}^{2}_{i}}{\sigma^{2}} \sim X^{2}_{n-p-1}
+.\]
+
+Entonces $e_{i}$ y $\hat{\sigma}^{2}_{i}$ son independientes.
+
+Asimismo, para obtener el residual estudentizado se tiene que:
+\[ \frac{\frac{e_{i}}{\sigma \sqrt{1-h_{ii}}}}{\sqrt{\frac{(n-p-1)\hat{\sigma}^{2}_{i}}{\sigma^{2}(n-p-1)}}}=\frac{e_{i}}{\hat{\sigma}_{i}\sqrt{1-h_{ii}}} \sim  t_{(n-p-1)} .\]
+
+\[ t_{i}=\frac{e_{i}}{\hat{\sigma}_{i}\sqrt{1-h_{ii}}}=r_{i}\sqrt{\frac{n-p-1}{n-p-r_{i}^{2}}} .\]
+
+\subsection{Supuesto de Normalidad de los errores}
+qq-plot de los residuales estudentizados.
+
+\subsection{Valores atípicos}
+Observaciones con un residual estudentizado alto son posibles valores atípicos.
+
+\subsection{Leverage (apalancamiento)}
+\[ \hat{Y}=HY .\]
+\[ \hat{Y}_{i}=\sum_{j=1}^{n}h_{ij}Y_{j}=h_{ii}Y_{i}+\sum_{i \neq j}h_{ij}Y_{j}.\]
+\[ h_{ii}=X^{T}_{i}(X^{T}X)^{-1}X_{i} .\]
+
+Si consideramos el modelo lineal simple, tendriamos que:
+\[ h_{ii}=\frac{1}{n}+\frac{(X_{i}-\bar{X})^{2}}{S_{xx}} .\]
+Un $h_{ii}$ alto indicaría un punto atípico en las $X's$.
+
+\end{document}
