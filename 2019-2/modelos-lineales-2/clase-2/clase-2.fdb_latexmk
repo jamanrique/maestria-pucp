@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1566960802 "clase-2.tex" "clase-2.pdf" "clase-2" 1566960802
+["pdflatex"] 1567044074 "clase-2.tex" "clase-2.pdf" "clase-2" 1567044074
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1557554374 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1557554374 1004 54797486969f23fa377b128694d548df ""
   "/usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1557554374 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -48,9 +48,9 @@
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1557554374 33301 a3134070eacafb10b1f371612ce2650d ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1566344205 3233970 ab845fc2b5afa9d5e4a65f288842af78 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1566344195 7979416 c800f0789c16d8897511f4824f4a26b9 ""
-  "clase-2.aux" 1566960802 2277 36231c6acdb1380d0be3ced6d8f7fc07 "pdflatex"
-  "clase-2.tex" 1566960801 11817 817b40b930111532257b3965f83de76c ""
+  "clase-2.aux" 1567044074 2277 36231c6acdb1380d0be3ced6d8f7fc07 "pdflatex"
+  "clase-2.tex" 1567044073 11817 817b40b930111532257b3965f83de76c ""
   (generated)
-  "clase-2.log"
-  "clase-2.aux"
   "clase-2.pdf"
+  "clase-2.aux"
+  "clase-2.log"
