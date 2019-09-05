@@ -1,0 +1,60 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\newtheorem{mydef}{Definition}
+\newtheorem{mythm}{Theorem}
+\newtheorem{myprf}{Proof}
+\title{Clase 3: Modelos lineales}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+\section{Leverage}
+Sea $h_{ii}=x_{i}^{T}{(X^{T}X)}^{-1}x_{ii}$ para el modelo lineal simple. Se tiene entonces que $h_{ii}=\frac{1}{n}+\frac{{(x_{i}-\bar{x})}^{2}}{S_{xx}}$. En el modelo lineal múltiple se tiene lo siguiente:
+\[ h_{ii}=\frac{1}{n}+{(x_{i}-\bar{x})}{(\tilde{X}^{T}\tilde{X})}^{-1}(x_{i}-\bar{x}).\]
+en dónde:
+\[
+X= 
+\begin{pmatrix}
+	{(X_{11}-\bar{X}_{1})} & {(X_{12}-\bar{X}_{1})} & \ldots & {(X_{1k}-\bar{X}_{1})} \\
+\vdots & \vdots & \vdots & \vdots \\
+{(X_{n1}-\bar{X}_{k})} & {(X_{n2}-\bar{X}_{k})} & \ldots & {(X_{nk}-\bar{X}_{k})} \\
+\end{pmatrix}
+\]
+En este modelo se está excluyendo el intercepto.
+
+\section{Distancia de Cook}
+Recordemos que $\hat{B} \sim N(B,\sigma^{2}{(X^{T}X)}^{-1})$. Posteriormente lo estandarizamos a:
+\[ \frac{{(\hat{B}-B)}^{T}{(X^{T}X)}^{-1}{(\hat{B}-B)}}{\sigma^{2}} \sim X^{2}_{p}.\]
+
+Para estimar el efecto de la i-ésima observación en la estimación de $B$. Definimos $\hat{B}$ como el estimador de mínimos cuadrados ordinarios y $\hat{B}_{1}$ como el estimador de mínimos cuadrados ordinarios eliminando la estimación i-ésima. La distancia entonces de define como:
+\[ D_{i}=\frac{{(\hat{B}_{i}-\hat{B})}^{T}{(X^{T}X)}^{-1}{(\hat{B}_{i}-\hat{B})}}{P\hat{\sigma}^{2}}.\]
+\[ D_{i}=\frac{{(\hat{Y}_{i}-\hat{Y})}^{T}{(\hat{Y}_{i}-\hat{Y})}}{P\hat{\sigma}^{2}}.\]
+
+Por otro lado, también podemos definir la distancia de Cook como lo siguiente:
+\[ D_{i}=\frac{r_{i}^{2}}{p}\frac{h_{ii}}{1-h_{ii}}.\]
+
+\section{Gráfico de variable adicional o residuos de regresión parcial}
+Definamos como:
+\[ Y = XB + \varepsilon.\]
+Particionamos $X$ en dos matrices: una que contenga $X_{j}$ y otra que no contenga $X_{j} = X_{(j)}$. Lo mismo para $B$. Entonces tendremos:
+\[ Y = X_{(j)}B_{(j)}+X_{j}B_{j}+\varepsilon.\]
+\[ (1-H_{(j)})Y=(1-H_{(j)})(X_{(j)}B_{(j)}+X_{j}B_{j}+\varepsilon).\]
+\[ \varepsilon(y|X_{(j)})=e(X_{j}|X_{(j)})+\varepsilon^{*}.\]
+Entonces se tiene que:
+\[ e(y|X_{(j)})=B_{j}e(X_{j}|X_{(j)})+\varepsilon^{*}.\]
+Si se grafica esto, la pendiente es $B_{j}$.
+
+\section{Diagnóstico}
+\begin{itemize}
+	\item \textbf{Supuesto de normalidad: } Revisión del qqplot de $t_{i}$ (residuos estudentizados).
+	\item \textbf{Homocedasticidad: }Gráfico de residuos estudentizados vs valores ajustados.
+\end{itemize}
+
+\section{Criterios de información: Evaluación de modelos}
+\[ AIC=-2l{(\hat{B},\hat{\sigma}^{2})}+2(p+1).\]
+
+En dónde $p+1$ es el número de parámetros y $\hat{l}$ es la logverosimilitud evaluado en el EMV. La $\hat{l}$ corresponde al ajuste del modelo y $p+1$ a la complejidad.
+\end{document}

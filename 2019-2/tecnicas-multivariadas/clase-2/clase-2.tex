@@ -1,0 +1,119 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\newtheorem{mydef}{Definition}
+\newtheorem{mythm}{Theorem}
+\newtheorem{myprf}{Proof}
+\title{Clase 2: Técnicas multivariadas}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+Sea un vector $v \in \mathbb{R}^{n}$ definido como $(v_{1},v_{2},\ldots,v_{n})^{T}$. 
+\begin{mydef}
+	La longitud de un vector se define como $L_{v}=\sqrt{v_{1}^{2}+v_{2}^{2}+\ldots+v_{n}^{2}}$.
+\end{mydef}
+\begin{mydef}
+El coseno del ángulo entre 2 vectores $u$ y $v$ se define como:
+\[ cos \theta = \frac{uv}{L_{u}L_{v}}.\]
+$uv$ es un producto escalar definido como $\sum u_{i}v_{i}$.
+
+Si $u=cV$, en dónde $c$ es una constante, entonces el coseno se expresa como:
+\[ \frac{cvv}{L_{v}^{2}}.\]
+\end{mydef}
+
+Si $u$ es perpendicular a $v$ entonces $cos \theta =0$. Usando $cos \theta$, se puede hablar una medida de "similaridad" entre vectores. Esto sirve para analizar textos.
+
+\section{Descomposición espectral}
+Recordemos que:
+\[ A = \Gamma \Lambda \Gamma^{T}.\]
+en dónde $\Gamma=(e_{1},e_{2},\ldots,e_{p})$ y $\Lambda$ es la diagonal que contiene a todos los autovalores. Entonces A se define como
+\[ A=\lambda_{1}e_{1}e_{1}^{T}+\ldots+\lambda_{p}e_{p}e_{p}^{T}.\]
+\begin{mythm}. Desigualdad de Cauchy-Schwarz
+Si $b$ y $d$ son 2 vectores, entonces se tiene que:
+\[ {(b^{T}d)}^{2} \leq (b^{T}b)(d^{T}d).\]
+Para $b=cd$, en dónde c es un escalar simple.
+\end{mythm}
+\begin{myprf}
+	Usar el siguiente vector $b-xd$ en dónde $x$ es un real arbitrario. Si $(b-xd)\neq0$, entonces su longitud es mayor a 0.
+	\[ 0 < (b-xd)^{T}(bx-d).\]
+	\[ 0 < b^{T}b-2x(b^{T}d)+x^{2}(d^{T}d).\]
+	\[ 0 < b^{T}b-\frac{(b^{T}b)^{2}}{d^{T}d}+d^{T}d(x-\frac{b^{T}d}{d^{T}d})^{2}.\]
+
+	Como x es cualquier valor entonces esta expresión se cumple para
+	\[ x=\frac{b^{T}d}{d^{T}d}.\]
+	
+	Por lo tanto, se tiene que:
+	\[ 0 < b^{T}b-\frac{(b^{T}d)^{2}}{d^{T}d}.\]
+
+	Cumpliéndose la igualdad.
+\end{myprf}
+
+\subsection{Extensión de la desigualdad}
+Para $B$ definida positiva, se tiene que:
+\[ b^{T}d \leq (b^{T}Bb)(dB^{-1}d).\]
+\begin{myprf}
+	\[ b^{T}d=b^{T}Id=b^{T}B^{\frac{1}{2}}B^{-\frac{1}{2}}d=(B^{\frac{1}{2}}b)^{T}(B^{-\frac{1}{2}}d).\]
+\end{myprf}
+
+Para $B$ definida positiva y $d$ vector $\forall x \neq 0$ vector, se tiene que:
+\[ max_{x} \frac{(x^{T}d)^{2}}{x^{T}Bx}=\lambda_{1}.\]
+dónde $\lambda_{1}$ es el mayor autovalor de $B$ y el máximo se obtiene cuando $x$ es igual a $cB^{-1}d$.
+
+\textbf{Ejercicio: }Demostrar que:
+\begin{itemize}
+	\item \[ \frac{(x^{T}d)^{2}}{x^{T}Bx} \neq \lambda_{1}, \text{$\lambda_{1}$ es cota superior}.\]
+\item Ver que en $cB^{-1}d$ se cumple la igualdad.
+\end{itemize}
+
+\section{Maximización de formas cuadráticas}
+Sea $B$ definida positiva con $x^{T}Bx > 0$.
+
+Sea $(\lambda_{1},\lambda_{2},\ldots,\lambda_{p})$ autovalores de $B$.
+
+Sea $(e_{1},e_{2},\ldots,e_{p})$ autovectores de $B$.
+
+\[ max_{x \neq 0} \frac{x^{T}Bx}{x^{T}x}=\lambda_{1}, \text{$\lambda_{1}$ es un mayor autovalor}.\]
+
+Entonces se tiene que:
+\[ B=\Gamma \Lambda \Gamma^{T}.\]
+\[ B^{\frac{1}{2}}=\Gamma \Lambda^{\frac{1}{2}} \Gamma ^{T}.\]
+\[ \frac{x^{T}Bx}{x^{T}x}=\frac{x^{T}B^{0.5}B^{0.5}x}{x^{T}Ix}=\frac{\sum \lambda_{i} y_{i}^{2}}{\sum y_{i}^{2}} \leq \lambda_{1}, \text{en dónde $Y^{T}=x^{T}\Gamma$ e $I = \Gamma \Gamma^{T}$}.\]
+
+\section{Vectores y matrices aleatorios}
+Un vector aleatorio es un vector en dónde cada componente es una variable aleatoria. Es decir $X = (X_{1},X_{2},\ldots,X_{n})$ en dónde cada componente $X_{i}, i=1,2,\ldots,n$ es una variable aleatoria.
+
+Una matriz aleatoria, cada uno de sus componentes es una variable aleatoria. Es decir:
+\[
+X= 
+\begin{pmatrix}
+X_{11} & X_{12} & \ldots & X_{1p} \\
+X_{21} & X_{22} & \ldots & X_{2p} \\
+\vdots & \vdots & \vdots & \vdots \\
+X_{n1} & X_{n2} & \ldots & X_{np} \\
+\end{pmatrix}
+\]
+En dónde cada entrada $X_{ij}$ es una variable aleatoria.
+
+\subsection{Vector aleatorio}
+La distribución del vector $X$ es una función de distribución conjunta. Para $X_{i}$, todas conjuntas, se tiene que:
+\[ f(X)=F(X_{1},X_{2},\ldots,X_{p}).\]
+
+Para variables discretas, es la suma.
+
+\textbf{Valor esperado de un vector aleatorio: } Sea $X$ un vector aleatorio, entonces el valor esperado de $X$ se denota con el vector $u=E(\bar{X})=(E(X_{1}),E(X_{2}),\ldots,E(X_{n}))$
+
+\textbf{Covarianza de un vector aleatorio: }Sea $X$ una matriz aleatoria, entonces la covarianza de $X$ es: $Cov(X)=E((X-\mu)(X-\mu)^{T})$
+
+\textbf{Propiedades:} Se tienen la siguientes propiedades:
+\[ E(cX) = cE(X).\]
+\[ E(X+Y)=E(X)+E(Y).\]
+\[ (E(AXB) = A*E(X)*B, \text{$A$ y $B$ son matrices no aleatorias}.\]
+\[ cor(CX)=C\sum_{X}C^{T}.\]
+
+\subsection{Muestreo en Multivariado}
+Es lo mismo que muestreo univariado.
+
+\end{document}

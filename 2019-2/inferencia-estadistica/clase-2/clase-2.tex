@@ -1,0 +1,194 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\newtheorem{mydef}{Definition}
+\newtheorem{mythm}{Theorem}
+\newtheorem{myprf}{Proof}
+\title{Clase 2: Inferencia Estadística}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+\section{Ejemplo}
+Sea $(X_{1},X_{2},\ldots,X_{n})$ una muestra aleatoria de $X \sim exp(\beta)$. Como estimador de $\beta$, consideraremos lo siguiente:
+\[ \hat{\beta}=\frac{1}{\bar{X}}.\]
+Validaremos si $\hat{\beta}$ es un estimador consistente. Recordemos que:
+\[ \lim_{n \rightarrow \infty} \bar{X} = E(X) \text{ c.s}.\]
+Por lo tanto tenemos que:
+\[ \lim_{n \rightarrow \infty} \hat{\beta}= \lim_{n \rightarrow \infty} (\frac{1}{\bar{X}})=\frac{1}{\lim_{n \rightarrow \infty}\bar{X}}=\frac{1}{\frac{1}{\beta}}=\beta \text{ c.s}.\]
+Debido a ello, podemos concluir que $\hat{\beta}$ es un estimador consistente.
+
+\section{Ejemplo}
+En base al ejemplo anterior, consideremos lo siguiente:
+\[ \hat{\beta}_{1}=\frac{2n}{\sum_{j=1}^{n}X^{2}_{j}}.\]
+Validaremos si $\hat{\beta}_{1}$ es consistente.
+\[ \hat{B}_{1}=\frac{2}{\frac{\sum_{j=1}^{n}X_{j}^{2}}{n}}.\]
+\[ \hat{\beta}_{1}=\frac{2}{\bar{X^{2}}}.\]
+Luego, tenemos que $\lim_{n \rightarrow \infty} \hat{\beta}_{1}=\lim_{n \rightarrow \infty}\frac{2}{\bar{X^{2}}}$. Esto es:
+\[ =\lim_{n \rightarrow \infty}\frac{2}{\lim_{n \rightarrow \infty}\bar{X^{2}}}.\]
+\[ =\frac{2}{E(X^{2})} \text{, c.s}.\]
+\[ \lim_{n\rightarrow \infty}\hat{\beta}_{1}=\frac{2}{\frac{2}{\beta^{2}}}=\beta^{2} \text{, c.s}.\]
+Por lo tanto, $\hat{\beta}_{1}$ no es un estimador consistente de $\beta$. Cabe resaltar que $\hat{\beta}_{2}=\sqrt{\hat{\beta}_{1}}$ entonces $\hat{\beta}_{2}$ sí es un estimador consistente, pues
+\[ \lim{n \rightarrow \infty} \hat{\beta}_{2}=\lim_{n \rightarrow \infty}\sqrt{\hat{\beta}_{1}}.\]
+\[ =\sqrt{\lim_{n \rightarrow \infty}\hat{\beta}_{1}}.\]
+\[ =\sqrt{\beta^{2}}\text{ , c.s}.\]
+\[ =\beta.\]
+
+\textbf{Tarea:} Hallar expresiones simplificadas de $E(\hat{\beta})$ y $V(\hat{\beta})$. \textbf{Sugerencia:} Recordemos que:
+\[ \hat{\beta}=\frac{1}{\bar{X}}.\]
+\[ \hat{\beta}=\frac{n}{\sum_{j=1}^{n}X_{j}}.\]
+El denominador, que ahora lo definiremos como $T$, tiene distribución $T \sim G(n,\beta)$. Por lo tanto se tiene que:
+\[ \hat{\beta}=n T^{-1}.\]
+Dado que el valor esperado de $T$, $E(T^{t})$ es igual a:
+\[ E(T^{t})=\frac{\Gamma(n+t)}{\beta^{t}\Gamma(n)}, n+t > 0.\]
+Dado el contexto de muestra aleatoria, se tiene que:
+\[ E(T^{t})=\frac{\Gamma(n-1)}{\beta^{-1}\Gamma(n)}.\]
+\[ =\beta\frac{(n-2)!}{(n-1)!}.\]
+\begin{equation}
+	E(T^{t}) = \frac{\beta}{n-1}
+\end{equation}
+
+De ello, se obtiene que:
+\[ E(\hat{\beta})=E(nT^{-1}).\]
+\[ E(\hat{\beta})=n E(T^{-1}).\]
+\[ E(\hat{\beta})=\frac{n}{n-1} \beta.\]
+
+Por otro lado, la varianza del estimador, $V(\hat{\beta})$ es:
+\[ V(\hat{\beta})=V(nT^{-1}).\]
+\[ =n^{2}V(T^{-1}).\]
+Recordemos que $V(T^{-1})$ es igual a $E(T^{-2})-E^{2}(T^{-1})$. Solo falta calcular $E(T^{-2})$, el cual es:
+\[ E(T^{-2})=\frac{\Gamma(n-1)}{\beta^{-2}\Gamma(n)}, n>2.\]
+\[=\frac{(n-3)!}{\beta^{-2}(n-1)!}.\]
+\begin{equation}
+	E(T^{-2})=\frac{\beta^{2}}{(n-1)(n-2)}
+\end{equation}
+La varianza por tanto es:
+\[ V(\hat{\beta})=n^{2}[\frac{\beta^{2}}{(n-1)(n-2)}-\frac{\beta^{2}}{{(n-1)}^{2}}].\]
+\[ =\frac{n^{2}\beta^{2}}{{(n-1)}^{2}(n-2)}.\]
+\section{Ejercicio}
+Sea $\hat{\beta}_{3}=\frac{n-1}{n\bar{X}}$. Verificar que $\hat{\beta}_{3}$ es insesgado y consistente.
+\section{Ejemplo}
+Sea $\bar{p}$ el estimador usual de $p$; es decir, $\bar{p}=\bar{X}$, dónde $(X_{1},X_{2},\ldots,X_{n})$ son una muestra aleatoria de $X \sim B(p)$. Deducir una expresión simplificada para $V(\bar{p})$.
+
+\[ V(\hat{p})=V(\bar{X})=\frac{V(X)}{n}= \frac{p(1-p)}{n}.\]
+Esto se debe a que $X \sim  B(p)$.
+
+\begin{mydef}
+	Si $(X_{1},X_{2},\ldots,X_{n})$ es una muestra aleatoria de $X$, dónde $E(X)=\mu$ y $V(X)=\sigma^{2}$; entonces:
+	\[ \frac{\sqrt{n}(\bar{X}-\mu)}{\sigma} \rightarrow Z \sim N(0,1).\]
+	Asi, para un $n$ suficientemente grande, se tiene entonces:
+	\[ \frac{\sqrt{n}(\bar{X}-\mu)}{\sigma}\sim N(0,1), \text{aproximadamente}.\]
+\end{mydef}
+\textbf{Observación:} Se tiene que:
+\[ |\bar{X}-\mu|: \text{error de estimación}.\]
+\[ V(\bar{X})= \frac{\sigma^{2}}{n}.\]
+\[ \sigma_{\bar{X}}=\frac{\sigma}{\sqrt{n}}: \text{error estándar de estimación de $\bar{X}$}.\]
+Luego, $P(|\bar{X}-\mu|)<c \sigma_{\bar{X}}$ es una cantidad de interés. Se tiene entonces que:
+\[ P(|\bar{X}-\mu|< c \sigma_{\bar{X}}).\]
+\[ P(|\bar{X}-\mu|< c \frac{\sigma}{\sqrt{n}}).\]
+\[ P(\frac{\sqrt{n}|\bar{X}-\mu|}{\sigma}<c).\]
+\[ P(|Z_{n}|<c).\]
+\[ P(-c < Z_{n} < c).\]
+\[ P(-c<Z>c), \text{dónde $Z\sim N(0,1)$}.\]
+\[ F_{z}(c)-F_{z}(-c).\]
+\[ 2F_{z}(c)-1.\]
+\begin{mythm}
+	(Teorema de Slutsky): Se tiene lo siguiente:
+	\[ X_{n} \rightarrow X, \text{converge en distribución.}\]
+	\[ plim Y_{n} \rightarrow c, \text{converge en probabilidad.}\]
+	Entonces: $X_{n}Y_{n} \rightarrow cX$, con convergencia en distribución. Entonces se cumple que
+	\[ \lim_{n \rightarrow \infty} X_{n}=X, \text{c.s.} \rightarrow plim X_{n}=X, \text{converge en distribución}.\]
+\end{mythm}
+\textbf{Propiedad:} Si $(X_{1},X_{2},\ldots,X_{n})$ es una muestra aleatoria de $X$, dónde $E(X)=\mu$ y $V(X)=\sigma^{2}$ y $\hat{\sigma}$ es un estimador consistente de $\sigma$; entonces
+\[ \frac{\sqrt{n}(\bar{X}-\mu)}{\hat{\sigma}}\rightarrow Z \sim N(0,1), \text{converge en probabilidad.}\]
+
+\begin{myprf}
+Sea:
+\[ \frac{\sqrt{n}(\bar{X}-\mu)}{\hat{\sigma}}\rightarrow Z \sim N(0,1), \text{converge en probabilidad.}\]
+\[ \lim_{n\rightarrow\infty}\hat{\sigma}=\sigma, \text{c.s}.\]
+Se tiene entonces que:
+\[ \frac{\sqrt{n}(\bar{X}-\mu)}{\hat{\sigma}}=\frac{\sigma}{\hat{\sigma}}\frac{\sqrt{n}(\bar{X}-\mu)}{\sigma}.\]
+Aplicando el teorema anterior, y dado que $\hat{\sigma}$ es consistente. Se tiene entonces que:
+\[ Y_{n}Z_{n}=\frac{\sqrt{n}(\bar{X}-\mu)}{\hat{\sigma}}.\]
+Por lo tanto, se tiene que:
+\[ \frac{\sqrt{n}(\bar{X}-\mu)}{\hat{\sigma}} \rightarrow Z, \text{converge en distribución}.\]
+\end{myprf}
+\textbf{Observación: } Con el resultado anterior se puede evaluar $P(|\bar{X}-\mu| < \hat{\sigma}_{\bar{X}})$ dónde $\hat{\sigma}_{\hat{X}}=\frac{\hat{\sigma}}{\sqrt{n}}$. El término final se le conoce como \textit{estimación del error estándar de estimación}.
+\section{Propiedad de Suficiencia}
+\begin{mydef}
+Una estadística $T=g(X_{1},X_{2},\ldots,X_{n})$ es una estadística suficiente para $\theta$, si:
+\[ f_{X_{1},X_{2},\ldots,X_{n}|T=t}, \text{no depende de $\theta$, $\forall t$ valor posible de $T$}.\]
+\end{mydef}
+
+\subsection{Ejemplo:}
+Sea $(X_{1},X_{2},\ldots,X_{n})$ una muestra aleatoria de $X\sim P(\lambda)$. Sea
+\[ T=\sum_{j=1}^{n}X_{j}.\]
+Veamos si $T$ es una estadística suficiente para $\lambda$.
+\[ f_{X_{1},X_{2},\ldots,X_{n}|T=t}(X_{1},X_{2},\ldots,X_{n})=\frac{P(X_{1}=x_{1}\cap \ldots \cap X_{n}=x_{n} \cap T=t)}{P(T=t)}.\]
+\subsubsection{Caso 1}
+Si $\sum_{j=1}^{n}x_{j} \neq t$, se tiene entonces que
+\[ \frac{P(\emptyset)}{P(T=t)}=0.\]
+\subsubsection{Caso 2}
+Si $\sum_{j=1}^{n}x_{j}=t$, entonces se tiene que:
+\[ \frac{P(X_{1}=x_{1}\cap \ldots \cap X_{n}=x_{n})}{T=t}.\]
+\[ \frac{\prod_{j=1}^{n}P(X_{j}=x_{j})}{P(T=t)}.\]
+Dado que $X\sim P(\lambda)$:
+\[ \frac{\prod_{j=!}^{n}\frac{e^{-\lambda}\lambda^{x_{j}}}{x_{j}!}}{\frac{e^{-n\lambda}(n\lambda)^{t}}{t!}}.\]
+Simplificando, se tiene que:
+\[ \frac{\frac{e^{-n\lambda}\lambda^{\sum_{j=1}^{n}x_{j}}}{\prod_{j=1}^{n}x_{j}!}}{\frac{e^{-n\lambda}n^{t}\lambda^{t}}{t!}}.\]
+\[ \frac{t!}{n^{t}\prod_{j=1}^{n}x_{j}!}.\]
+Por lo tanto, esta estadística es suficiente y ya no depende del parámetro $\lambda$.
+
+\subsubsection{Ejercicio}
+Sea $(X_{1},X_{2},\ldots,X_{n})$ una muestra aleatoria de $X\sim P(\lambda)$ y $\bar{X}$ es un estimado insesgado de $\lambda$. Es decir, $E(\bar{X})=E(X)=\lambda$. ¿Es $\bar{X}$ un estimador suficiente para $\lambda$?
+
+\textbf{Resolución: } Sí, pues:
+\[ \bar{X}=\frac{T}{n}, \text{$T$ es suficiente de $\lambda$}.\]
+
+\begin{mythm}
+Factorización de Neyman. Una estadística $T=g(X_{1},X_{2},\ldots,X_{n})$ es suficiente para el parámetro $\theta$ si y solo si existen funciones $h$, independientes de $\theta$, y $l$ tales que:
+\[ \forall (X_{1},X_{2},\ldots,X_{n}) \in \mathbb{R}_{X_{1},X_{2},\ldots,X_{n}}, \forall \theta \in \Theta .\]
+\[ f(_{1},_{2},\ldots,_{n})=h(X_{1},X_{2},\ldots,X_{n}) l(g(X_{1},X_{2},\ldots,X_{n}),\theta).\]
+\end{mythm}
+\begin{myprf}
+	En el desarrollo del caso anterior (caso discreto), se tenía lo siguiente:
+
+	\textbf{Caso 1:} $(X_{1},X_{2},\ldots,X_{n})$ es tal que $g(X_{1},X_{2},\ldots,X_{n}) \neq t$:
+	\[ f_{X_{1},X_{2},\ldots,X_{n}|T=t}(X_{1},X_{2},\ldots,X_{n})=0.\]
+	no depende de $\theta$.
+
+
+	\textbf{Caso 2:} $(X_{1},X_{2},\ldots,X_{n})$ es tal que $g(X_{1},X_{2},\ldots,X_{n})=t$, se tiene lo siguiente:
+	\[ f_{X_{1},X_{2},\ldots,X_{n}|T=t}(X_{1},X_{2},\ldots,X_{n})=\frac{\prod_{j=1}^{n}(X_{j}=x_{j})}{P(T=t)}.\]
+	\[ \frac{f_{X_{1},X_{2},\ldots,X_{n}}(X_{1},X_{2},\ldots,X_{n})}{\sum \ldots \sum f_{X_{1},X_{2},\ldots,X_{n}}(Y_{1},Y_{2},\ldots,Y_{n})}.\]
+
+\end{myprf}
+\subsection{Ejemplo}
+$\bar{X}=\frac{x_{1}+\ldots+x_{n}}{n}$ es una estadística suficiente para $\lambda$, pues
+\[ f_{X_{1},X_{2},\ldots,X_{n}}(X_{1},X_{2},\ldots,X_{n})=\frac{1}{x_{1}!*\ldots*x_{n}!}\lambda^{\frac{n(x_{1}+\ldots+x_{n})}{n}e^{-n\lambda}}., x_{i} \in \mathbb{N}\]
+Se observa aquí en el primer factor el $h(X_{1},X_{2},\ldots,X_{n})$ y en el segundo $l(\frac{x_{1}+\ldots+x_{n}}{n},\lambda)$.
+
+\subsection{Propiedad}
+Si $T_{1}$ es una estadística suficiente para $\theta$ y $T_{2}$ es una estadística tal que $T_{1}$ es una función de $T_{2}$, entonces $T_{2}$ también es suficiente.
+
+\begin{myprf}
+Se tiene:
+\[ T_{1}=g_{1}(X_{1},X_{2},\ldots,X_{n}).\]
+\[ f_{(X_{1},X_{2},\ldots,X_{n})}(X_{1},X_{2},\ldots,X_{n})=h(X_{1},X_{2},\ldots,X_{n}) l(g_{1}(X_{1},X_{2},\ldots,X_{n});\theta).\]
+
+Pero como $T_{1}$ es una función de $T_{2}$, digamos $T_{1}=g(T_{2})$, entonces:
+\[ g_{1}(X_{1},X_{2},\ldots,X_{n})=g(T_{2}).\]
+
+Pero $T_{2}$ también es una estadística, entonces:
+\[ T_{2}=g_{2}(X_{1},X_{2},\ldots,X_{n}).\]
+\[ g_{1}(X_{1},X_{2},\ldots,X_{n})=g(g_{2}(X_{1},X_{2},\ldots,X_{n})).\]
+
+De ello entonces se obtiene que 
+\[ f_{(X_{1},X_{2},\ldots,X_{n})}(X_{1},X_{2},\ldots,X_{n})=h(X_{1},X_{2},\ldots,X_{n}) l(g(g_{2}(X_{1},X_{2},\ldots,X_{n});\theta)).\]
+
+Entonces $g_{2}(X_{1},X_{2},\ldots,X_{n})$ es una estadística suficiente.
+\end{myprf}
+
+\end{document}
