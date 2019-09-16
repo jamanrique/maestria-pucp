@@ -1,0 +1,76 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\newtheorem{mydef}{Definition}
+\newtheorem{mythm}{Theorem}
+\newtheorem{myprf}{Proof}
+\title{Clase 4: Inferencia Estadística}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+\section{Parte 1}
+Sea $X=(X_{1},X_{2},\ldots,X_{n})$ y que:
+\[ \forall t: \{ x: T_{2}{(x)}=t\} \in \{x: T_{1}{(x)}=t_{1}\}, \exists t_{1}.\]
+Una definición equivalente es:
+\[ T_{2}{(x)}=T_{2}{(y)} \rightarrow T_{1}{(x)}=T_{1}{(y)}.\]
+Otra definición equivalente es:
+\[ T_{1}=h{(T_{2})}.\]
+
+\subsection{1 implica 2}
+\[ T_{2}{(x)}=T_{2}{(y)}.\]
+Sea $t=T_{2}{(x)}=T_{2}{(y)}$
+\[ \rightarrow x \in \{z:T_{2}(z)=t\}\in \{z:T_{1}{(z)}=t_{1}\},\exists t_{1}.\]
+\[ \rightarrow y \in \{z:T_{2}{(z)}=t\} \in \{z: T_{1}{(z)}=t_{1}\},\exists t_{1}\]
+\subsection{3 implica 2}
+\[ T_{2}{(x)}=T_{2}{(y)}.\]
+\[ \rightarrow h(T_{2}{(x)})=h{(T_{2}{(y)})}.\]
+\[ \rightarrow T_{1}{(x)}=T_{2}{(y)}.\]
+
+\subsection{2 implica 3}
+\[ t \in \mathbb{R}_{T_{2}}.\]
+\[ \rightarrow \exists x_{0} tq T_{2}{(x_{0})}=t.\]
+\[ h(t)=T_{1}{(x_{0})}.\]
+Notemos que si existe $y_{9}\neq x_{0}$ tal que $T_{2}{(x_{0})}=t$, entonces se tiene que:
+\[ T_{1}{(X_{0})}=T_{2}{(y_{0})}.\]
+\[ h{(t)}=T_{1}{(X_{0})}=T_{2}{(y_{0})}.\]
+
+\section{Estadística suficiente y mínima}
+\begin{mydef}
+$T$ es una estadística suficiente y mínima  si resume tanto o más que cualquier otra estadística suficiente.
+\end{mydef}
+
+\textbf{Observación: }Si $T$ es suficiente y mínima y $T_{2}$ es suficiente, entonces se cumple que:
+\begin{itemize}
+	\item \[ \forall t:\{x:T_{2}{(x)}=T\} \in \{x:T(X)=T_{x}\}, \exists t_{1}.\]
+	\item \[ T_{2}{(x)}=T_{2}{(y)}\rightarrow T{(x)}=T{(y)}.\]
+	\item  \[\exists h: T{(x)}=h{({(T_{{(x)}})})}\]
+\end{itemize}
+
+\begin{mythm}
+$T$ es una estadística suficiente y mínima si y solo si se cumple que:
+\[ \frac{f_{(X_{1},X_{2},\ldots,X_{n})}{(z)}}{f_{(X_{1},X_{2},\ldots,X_{n})}{(y)}}.\]
+esto es independiente de $\theta$.
+\end{mythm}
+\section{Ejemplo}
+Sea
+\[ X\sim \text{doble exponencial($\theta$)}.\]
+y su función de densidad está dada por:
+\[ f_{{(x)}}=\frac{1}{2}\theta e^{-\theta |x|}, \forall x \in \mathbb{R}.\]
+La función conjunta de $f_{c}{(x)}$ $(X_{1},X_{2},\ldots,X_{n})$ está dada por:
+\[ {(\frac{1}{2})}^{n}\theta^{n}e^{-\theta \sum_{j=1}^{n} |X_{j}|}.\]
+Para hallar si la estadística es suficiente y mínima entonces utilizamos el cociente:
+\[ \frac{f_{c}{(x)}}{f_{c}{(y)}}=e^{-\theta{(\sum |x_{j}| - \sum |y_{j}|)}}.\]
+Si ambos son iguales, entonces es independiente de $\theta$.
+
+\section{Ejemplo}
+Sea
+\[ X \sim N(0;\sigma^{2});\theta=\sigma^{2}>0.\]
+Entonces la función conjunta es:
+\[ {(\frac{1}{\sqrt{2\pi}})}^{n}\sigma^{-n}e^{-\frac{1}{2\sigma^{2}}\sum X_{j}^{2}}.\]
+Si se utiliza el teorema, entonces se tiene:
+\[ \frac{f_{c}{(x)}}{f_{c}{(y)}}=e^{-\frac{1}{2\sigma^{2}}{(\sum X_{j}^{2}-\sum Y_{j}^{2})}}.\]
+Si ambos son iguales, entonces es independiente de $\sigma^{2}$.
+\end{document}

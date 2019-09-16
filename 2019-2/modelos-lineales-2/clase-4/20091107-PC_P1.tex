@@ -1,0 +1,46 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\newtheorem{mydef}{Definition}
+\newtheorem{mythm}{Theorem}
+\newtheorem{myprf}{Proof}
+\title{Práctica Calificada 1: Modelos Lineales 2}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+\textbf{Nota: } Utilizar el código R para observar los gráficos.
+\section{Pregunta 2.a}
+
+En el diagrama de dispersión se puede observar lo siguiente:
+\begin{itemize}
+	\item Se observa que existe una relación negativa entre el salario y la inestabilidad emocional, al fragmentar el conjunto de observaciones por nivel de educación.
+	\item Se observa que tener una educación media tiene relación con un menor salario en promedio; y que tener educación baja o alta tiene relación con un mayor salario, siendo (en promedio) la educación baja la que tiene mayor salario.
+	\item Se observa que tener una educación media tiene relación con menor inestabilidad emocional en promedio; y que tener educación baja o alta tiene relación con una mayor inestabilidad emocional, siendo las personas con educación baja la que (en promedio) tienen mayor inestabilidad emocional.
+\end{itemize}
+
+\section{Pregunta 2.b}
+
+En el análisis de regresión a través de la función \textit{summary} en R, se observó lo siguiente:
+\begin{itemize}
+	\item Se observó que un aumento en una unidad del índice de inestabilidad emocional tiene relación con una disminución del salario (el estimado puntual es de -3177).
+	\item Se observó que una disminución en el nivel de educación (de alto a medio o bajo) tiene relación con una disminución del salario, siendo el mayor impacto de alto a bajo.
+\end{itemize}
+
+Los resultados contradicen lo observado en la segunda viñeta de la pregunta 2.a. puesto que la observación inicial era que la educación baja tenía, en promedio, un mayor salario.
+
+\section{Pregunta 2.c}
+
+Ver a continuación el análisis de diagnóstico:
+\begin{itemize}
+	\item Se observó que existen puntos atípicos utilizando la distancia de Cook. Al respecto, se mencionan las observaciones con mayor distancia: 932, 91, 867, 411 y 378.
+	\item Se observó, a través del gráfico de cuantiles, que los residuales siguen una distribución normal.
+	\item Para cada nivel de educación, se observó los residuales estudentizados. Se observó que la distribución de los residuales son aproximadamente simétricos y con pocos outliers, por lo que podemos deducir que la regresión es homocedástica.
+\end{itemize}
+
+\section{Pregunta 2.d}
+El estimador puntual del salario para un empleado con un índice de inestabilidad emocional 6.9 y nivel de educación bajo es de 28,214.97.
+
+\end{document}
