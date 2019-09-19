@@ -1,0 +1,162 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\newtheorem{mydef}{Definition}
+\newtheorem{mythm}{Theorem}
+\newtheorem{myprf}{Proof}
+\title{Clase 5: Modelos Lineales 2}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+\section{Modelos Lineales Generalizados}
+\begin{itemize}
+	\item $Y_{i}=X_{i}^{T}\beta+\varepsilon_{i}; \varepsilon_{i}\sim N(0,\sigma^{2})$
+	\item $Y_{i}\sim N(\mu_{i},\sigma^{2})$, se le conoce como componente aleatorio.
+	\item $N_{i} = X_{i}^{T}\beta$, se le conoce como componente sistemático.
+	\item $\mu_{i}=N_{i}$, se le conoce como la función de enlace.
+\end{itemize}
+
+Lo que haremos va a ser extender el modelo. Para ello, admitiremos que el modelo \textbf{no es necesariamente normal, sino que pertenece a la familia exponencial.} Pensaremos que el componente sistemático se mantendrá igual. Sin embargo, $g(\mu_{i})=N_{i}$. En general, el $g(\cdot)$ tiene que ser una función monótona y doblemente diferenciable.
+
+\begin{mydef}
+Una variable aleatoria $y$ pertenece a la familia exponencial si su función de densidad o de probabilidad es de la forma:
+\[ f(y,\theta,\phi)=\exp\{\phi{(y\theta-b{(\theta)})}+c{(y,\phi)}\}, \theta \mathbb{R}, \phi > 0.\]
+dónde $b{(\cdot)}$ y $c{(\cdot,\cdot)}$ son funciones conocidas. Bajo ciertas condiciones de regularidad, se cumple que:
+\[ E{(\frac{\partial }{\partial \theta}\log f{(y,\theta,\phi)})}=0.\]
+\[ E{(\frac{\partial^{2}}{\partial \theta^{2}}\log f{(y,\theta,\phi)})}=-E{(\{\frac{\partial}{\partial \theta}\log f{(y,\theta,\phi)}\}^{2})}.\]
+Dadas las propiedades anteriores, se cumple lo siguiente:
+\[ E{(Y)}=\mu=b^{'}{(\theta)}.\]
+\[ Var(y)=\frac{1}{\phi}b^{''}{(\theta)}=\frac{1}{\theta} V{(\mu)}.\]
+en dónde $V(\cdot)$ es una función.
+
+\textbf{Tarea: }Demostrar que las expresiones de $E(Y)$ y $V(Y)$ son correctas utilizando las propiedades dadas anteriormente.
+\end{mydef}
+
+\subsection{Distribución de Poisson}
+
+Sea:
+\[ Y\sim P(\mu) \rightarrow f{(y)}=\frac{e^{-\mu}u^{y}}{y!}, y=0,1,2\ldots.\]
+\[ f{(y)}=\exp\{y\log \mu - \mu - \log{(y!)}\}.\]
+\[ f{(y)}=\exp\{\phi{(y\theta-b{(\theta)})}-c{(y,\theta)}\}; b{(\theta)}=e^{\theta}, \phi=1,c{(y,\phi)}=-\log{(y!)}.\]
+Por lo tanto, la distribución de Poisson pertenece a la familia exponencial. Asimismo, se tiene que:
+\[ E{(y)}=b^{'}{(\theta)}=e^{\theta}=\mu.\]
+\[ Var{(y)}=\frac{1}{\phi}b^{''}{(\theta)}=e\theta=\mu.\]
+\[ Var{(y)}=\frac{1}{\phi}V{(\mu)}; V{(\mu)}=\mu.\]
+
+\subsection{Distribución Normal}
+Sea:
+\[ Y\sim N{(\mu,\sigma^{2})}.\]
+\[ f{(y)}=\frac{1}{\sqrt{2\pi\sigma}}e^{-\frac{1}{2}\frac{{(y-\mu)}^{2}}{\sigma^{2}}}.\]
+\[ f{(y)}=\exp\{-\frac{1}{2}\frac{y^{2}}{\sigma^{2}}+\frac{y\mu}{\sigma^{2}}-\frac{\mu^{2}}{\sigma^{2}}-\frac{1}{2}\log{(\sigma^{2})}-\frac{1}{2}\log{(2\pi)}\}.\]
+\[ f{(y)}=\exp\{\phi{(y\theta-b{(\theta)})}+c{(y,\theta)}\}.\]
+\[ \phi=\frac{1}{\sigma^{2}}; \theta=\mu; b{(\theta)}=\frac{\theta^{2}}{2}.\]
+La distribución normal pertenece a la familia exponencial.
+\[ E{(y)}=b^{'}{(\theta)}=\theta=\mu.\]
+\[ Var(y)=\frac{1}{\phi}b^{''}{(\theta)}=\frac{1}{\phi}=\sigma^{2}.\]
+\[ V{(\mu)}=1.\]
+Se define el parámetro $\theta$ como el parámetro de regresión.
+
+Existe la función de enlace canónica (ver imagen, el $\theta$). Con la función de enlace canónica se garantiza la unicidad del estimador de máxima verosimilitud. Si se desea explicar un modelo de explicar, se utiliza un enlace logit (binomial), Poisson, o Normal.
+
+\section{Sección 2}
+Sea:
+\[ f{(y_{i})}=\exp\{\phi{(y_{i}\theta_{i}-b{(\theta_{i})})}+c{(y_{i},\phi)}\}.\]
+La función de log-verosimilitud se define como:
+\[ L = \sum_{i=1}^{n}\log f{(y_{i})}.\]
+\[ =\sum_{i=1}^{n} \phi{(y_{i}\theta_{i}-b{(\theta_{i})})}+c{(y_{i},\phi)}.\]
+\[ L{(\mu,Y)}=\sum_{i=1}^{n}L{(\mu_{i},Y_{i})}.\]
+
+\section{Tipos de modelos}
+\begin{itemize}
+	\item \textbf{Modelo nulo: }No hay covariables.
+	\item \textbf{Modelo bajo estudio: } Se tiene $p<n$
+		\begin{itemize}
+			\item En este modelo bajo estudio, se tiene que $L(\hat{\mu},Y)$.
+		\end{itemize}
+	\item \textbf{Modelo saturado: }Se tiene $p=n$
+		\begin{itemize}
+			\item Dado que es un modelo saturado, se tiene que $L(Y,Y)$.
+		\end{itemize}
+\end{itemize}
+
+En base a esto, se define la \textit{devianza}.
+
+\begin{mydef}
+La devianza se define como:
+\[ D^{*}{(y,\hat{\mu})}=2{(L{(Y,Y)}-L{(\hat{\mu},Y)})}\]
+\end{mydef}
+
+Se tiene también que:
+\[ \hat{\theta}_{i}=\theta{(\hat{\mu}_{i})} \leftarrow \text{Modelo bajo estudio}.\]
+\[ \tilde{\theta}_{i}=\theta{(Y_{i})} \leftarrow \text{modelo saturado}.\]
+Se asume que $\phi$ es fijo.
+
+Bajo esta definición, se tiene que:
+\[ D^{*}{(Y,\hat{\mu})}=2\{L{(Y,Y)}-L{(\hat{\mu},Y)}\}.\]
+\[ =2\sum_{i=1}^{n}\{\phi{(Y_{i}\tilde{\theta}_{i}-b(\tilde{\theta}_{i})}+c{(Y_{i},\phi)}-\phi{(Y_{i}\hat{\theta}_{i}-b{(\hat{\theta}_{i})})-c{(y_{i},\phi)}}\}.\]
+\[ =\phi 2 \sum_{i=1}^{n}\{{(Y_{i}{(\tilde{\theta}_{i}-\hat{\theta}_{i})})}+{(b{(\hat{\theta}_{i})-b{(\tilde{\theta}_{i})}})}\}.\]
+\[ \phi 2 \sum_{i=1}^{n}d^{2}{(Y_{i},\hat{\mu}_{1})}.\]
+\[ =\phi D{(Y,\hat{\mu})}.\]
+\[ D^{*}{(y,\hat{\mu})}=\phi D{(Y,\hat{\mu})}.\]
+en dónde el primer término es la devianza escalada y el segundo es la devianza. $D{(Y,\hat{\mu})}=\sum_{i=1}^{n}d^{2}{(Y_{i},\hat{\mu}_{i})}$
+
+\subsection{Poisson}
+Definamos $\theta=\log{(\mu)}$, $b{(\theta)}=e^{\theta}$, $\hat{\theta}_{i}=\log{(\hat{\mu}_{i})}$, $\tilde{\theta}_{i}=\log{(Y_{i})}$.
+\[ D(Y,\hat{\mu})=\sum_{i=1}^{n}2\{Y_{i}{(\tilde{\theta}_{i}-\hat{\theta}_{i}+b{(\tilde{\theta}_{i})})}\}.\]
+\[ = \sum_{i_1}^{n}2 \{Y_{i} \log{(Y_{i})}-\log{(\hat{\mu}_{i})}+\hat{\mu}_{i}-Y_{i}\}.\]
+\[ \sum_{i=1}^{n}2\{Y_{i}\log{(\frac{Y_{i}}{\hat{\mu}_{i}})}-{(Y_{i}-\hat{\mu}_{i})}\}.\]
+
+En la normal sale $\sum_{i=1}^{n}{(Y_{i}-\hat{\mu}_{i})}^{2}$.
+
+Si $\phi$ es constante: $\beta={(\beta_{1},\beta_{2})}^{T}$ con:
+\[ H_{0}: \beta_{1} = 0.\]
+\[ H_{1}: \beta_{1} \neq 0.\]
+
+\[ \rightarrow \text{Devianza del modelo completo:} D(y,\hat{\mu}).\]
+\[ \rightarrow \text{Devianza del modelo reducido:} D(y,\hat{\mu}^{o}.\]
+Podemos definir que la razón de verosimilitud, definida como $\varepsilon_{RV}=\phi{D{(y,\hat{\mu}^{o})}-D{(y,\hat{\mu})}}\sim_{aprox} X^{2}_{q}$, dónde $q$ es igual a la cantidad de parámetros. Se rechaza $H_{0}$ si $\varepsilon_{RV} > X^{2}_{1-\alpha,q}$.
+
+La prueba F, que no depende de $\phi$, se define como la siguiente:
+\[ F=\frac{{(D{(Y,\hat{\mu}^{o}-D{(y,\hat{\mu})})})}/q}{{(D{(Y,\hat{\mu})})}/{(n-p)}} \sim_{aprox} F{(q,n-p)}.\]
+Rechazar $H_{0}$ si $F > F_{1-\alpha,q,n-p}$.
+
+\section{Log-verosimilitud}
+\[ L(\beta,\phi)=\sum_{i=1}^{n}\phi{(Y_{i}\theta_{i}-b{(\theta_{i})})}+c{(Y_{i},\phi)}.\]
+\[ \frac{\partial L}{\partial B_{j}}=\sum_{i=1}^{n} \phi{(Y_{i}\frac{\partial \theta_{i}}{\partial u_{i}}\frac{\partial \mu_{i}}{\partial N_{i}}\frac{\partial N_{i}}{\partial B_{j}}-\frac{\partial b{(\theta_{i})}}{\partial \theta_{i}}\frac{\partial \theta_{i}}{\partial \mu_{i}}\frac{\partial \mu_{i}}{\partial N_{i}}\frac{\partial N_{i}}{B_{j}})}.\]
+Definamos como
+\[ \frac{\partial \theta_{i}}{\partial \mu_{i}}=\frac{1}{\frac{\partial \mu_{i}}{\partial \theta_{i}}}=\frac{1}{V_{i}}; \text{dónde $V_{i}=v(\mu_{i})$}.\]
+Asimismo, definamos que:
+\[ w_{i}={(\frac{\partial \mu_{i}}{\partial N_{i}})}^{2} * \frac{1}{V_{i}}.\]
+\[ w_{i}^{\frac{1}{2}}=\frac{\partial \mu_{i}}{\partial N_{i}}*\frac{1}{V_{i}^{\frac{1}{2}}}.\]
+\[ V_{i}^{\frac{1}{2}}w_{i}^{\frac{1}{2}}=\frac{\partial \mu_{i}}{\partial N_{i}}.\]
+Por lo tanto, se tiene que:
+\[ \frac{\partial L}{\partial \beta_{j}}=\sum_{i=1}^{n}\phi\{\sqrt{\frac{w_{i}}{V_{i}}}{(Y_{i}-\mu_{i})}x_{ij}\}.\]
+
+Posteriormente, sacamos segunda derivada para hallar la varianza del estimador, entonces se tiene que:
+Ver imagen.
+
+Posteriormente, se saca la información de Fisher. Los primeros términos se hacen 0, por lo que se tiene que:
+\[ -E{(\frac{\partial L}{\partial \beta_{j}\partial \beta_{p}})}=\phi \sum_{i=1}^{n}\frac{\partial \theta_{i}}{\partial \mu_{i}}{(\frac{\partial \mu_{i}}{\partial N_{i}})}^{2}x_{ij}x_{ip}.\]
+\[ = \phi \sum_{i=1}^{n}\frac{1}{V_{i}}{(\frac{\partial \mu_{i}}{\partial N_{i}})}^{2}x_{ij}x_{ip}.\]
+\[ \phi \sum_{i=1}^{n}w_{i}x_{ij}x_{ip}.\]
+\[ I_{\beta\beta}=X^{T}WX.\]
+
+Definamos el Score como:
+\[ U = {(U_{\beta},U_{\theta})}^{T}.\]
+La matriz de información de fisher es:
+\[ I={(I_{\beta\beta},I_{\beta\theta} | I_{\sigma\beta}, I_{\theta\theta})}\text{, matriz 2x2}.\]
+
+\[ U_{\theta}=\frac{\partial L}{\partial \phi}=\sum_{i=1}^{n}{(Y_{i}\theta_{i}-b{(\theta_{i})})}+c^{'}{(Y_{i},\theta)}.\]
+\[ \frac{\partial^{2}L}{\partial \phi^{2}}=\sum c^{''}{(y_{i},\phi)}.\]
+\[ I_{\theta\theta}=-E{(\frac{\partial^{2}L}{\partial \phi^{2}})}=-\sum_{i=1}^{n}E{(c^{''}{(Y_{i},\phi)})}.\]
+\[ \frac{\partial^{2} L }{\partial \beta_{j}\partial \beta_{l}}=\phi su.\]
+\[ I_{\beta\phi}=-E{(\frac{\partial L}{\partial \beta\partial \theta})}=0.\]
+\[ I ={(I_{\beta\beta},0 | 0, I_{\theta\theta})}.\]
+$\beta$ y $\theta$ son ortogonales asintóticamente.
+
+El algoritmo de scoring de Fisher entonces es:
+\[ \beta^{j+1}=\beta^{j}+I_{\beta\beta}^{-1}U_{\beta}.\]
+\end{document}
