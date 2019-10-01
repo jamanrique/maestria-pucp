@@ -1,0 +1,48 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\newtheorem{mydef}{Definition}
+\newtheorem{mythm}{Theorem}
+\newtheorem{myprf}{Proof}
+\title{Clase 5: Técnicas Multivariadas}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+
+\section{Componentes principales}
+La información de una variable univariada se encuentra en su desviación estándar. Similarmente, la información de variables multivariada se encuentra en la matriz de varianza y covarianza $\Sigma$. Por propiedad, tenemos que:
+\[ \sum_{i=1}^{p}\sigma^{2}_{ii}=\sum_{i=1}^{p}\lambda_{i}.\]
+
+Lo que deseamos explicar es la varianza total, la cual es la traza de $\Sigma$.Ello se puede explicar a través de los autovalores y los componentes principales. Para hallar los componentes principales, se debe realizrar:
+\begin{itemize}
+	\item Construir matriz de covarianza de $X_{1}\ldots X_{p}$
+	\item Hallar autovalores y autovectores: $\lambda_{i} \rightarrow e_{i}$
+	\item $Y_{i}=e_{i}^{'}X$, $var(Y_{i})=\lambda_{i}$
+\end{itemize}
+
+Para hallar la correlación entre el componente principal y una variable específica, se utiliza la siguiente fórmula:
+\[ p_{Y_{i},X_{k}}=\frac{e_{ik}\sqrt{\lambda_{ii}}}{\sqrt{\sigma_{kk}}}.\]
+
+\section{Regresión y componentes principales}
+Sea $Y=X\beta+\varepsilon$, $E{(\varepsilon)}=0$, $V{(\varepsilon)}=\sigma^{2}I$. Si hay multicolinealidad, la varianza de $\beta$ aumenta considerablemente. Esto se debe a que si existe colinealidad, los autovalores se vuelven 0. Al aplicar inversa y aplicar decomposición espectral, la varianza de $\beta$ tiene la siguiente expresión:
+\[ \sigma^{2}I {(\sum_{i=1}^{p}\frac{1}{\lambda_{i}}\mu_{k}\mu_{k}^{T})}.\]
+
+\section{Análisis Factorial}
+El análisis de componentes principales busca explicar la varianza total entre el menor número de variables. En el análisis factorial buscan explicar una estructura latente a los datos. A través de este análisis se identifican dimensiones que representan esquemas conceptuales de análisis.
+
+El modelo factorial se define como:
+\[ X_{j}-\mu_{j}=l_{j1}F_{1}+l_{j2}F_{2}+\ldots+l_{jm}F_{m}+\varepsilon_{j}.\]
+
+Cada $F_{\cdot}$ se define como una variable latente (no observable). Estas se llaman \textbf{factores comunes} y los $\varepsilon_{j}$ se lllaman \textbf{factores no comunes}. También se puede hacer un \textbf{análisis factorial confirmatorio}, que es un caso de la ecuación estructural.
+
+\subsection{Ecuaciones estructurales}
+En las ecuaciones estructurales existen dos tipos de variables, \textbf{latentes y medibles}.
+
+La varianza de $X_{i}$, bajo el modelo sería igual a
+\[ \Sigma=LL^{T}+\Psi.\]
+
+En dónde $LL^{T}$ se define como la comunalidad.
+\end{document}

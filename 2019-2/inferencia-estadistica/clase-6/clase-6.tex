@@ -1,0 +1,100 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\newtheorem{mydef}{Definition}
+\newtheorem{mythm}{Theorem}
+\newtheorem{myprf}{Proof}
+\title{Clase 6: Inferencia Estadística}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+
+\section{Teorema de Rao-Blackwell}
+
+Si $T$ es una estadística suficiente para $\theta$ y $\hat{\theta}$ es un estimador de $\theta$. Sea $\hat{\theta^{*}} = E{(\hat{\theta}|T)}$; entonces:
+\[ V{(\hat{\theta})}^{*}\leq V{(\hat{\theta})}.\]
+\[ V{(\hat{\theta}^{*})}=V{(\hat{\theta})} \text{ si y solo si:} \hat{\theta}^{*}=\hat{\theta}, \text{c.s.}.\]
+
+\begin{myprf}
+	$E{(\hat{\theta}|T)}$ no depende de $\theta$, pues $T$ es suficiente. Recordemos que $\hat{\theta}$ es una función de la muestra $g(X_{1},X_{2},\ldots,X_{n})$. Por lo tanto, se puede obtener a partir de $f_{(X_{1},X_{2},\ldots,X_{n})|T=t}$. Por lo tanto:
+	\[ \hat{\theta}^{*}=E{(\hat{\theta}|T)},\text{ es un estimador y función de T}.\]
+
+	Asimismo, tenemos por propiedad que $V{(X)}=E{(V{(X|Y)})} + V{(E{(X|Y)})}$. Por lo tanto, la varianza de $V{(\hat{\theta})}=E{(V{(\hat{\theta}|T)})}+V{(E{(\hat{\theta}|T)})}$. El primer término es mayor a 0 (salvo que la varianza sea constante). Por lo tanto,
+	\[ V{(\hat{\theta})}\geq V{(E{(\hat{\theta}|T)})}.\]
+	\[ V{(\hat{\theta})} \geq V{(\hat{\theta}^{*})}.\]
+Si todo es constante, entonces todo se hace 0.
+\end{myprf}
+\textbf{Observación: } Si $\hat{\theta}$ es insesgado, entonces $\hat{\theta}^{*}$ es también insesgado, pues:
+\[ E{(\hat{\theta}^{*})}=E{(E{(\hat{\theta}|T)})}=E{(\hat{\theta})}=\theta,\forall \theta \in \Theta.\]
+
+\section{Teorema}
+Si $T$ es una estadística completa para $\theta$ y $\hat{\theta}_{1}$ y $\hat{\theta}_{2}$ son estimadores insesgados y funciones de $T$; entonces $\hat{\theta}_{1}=\hat{\theta}_{2}$. Es decir, solamente puede existir un estimador insesgado que sea función de $T$, casi seguramente.
+
+\begin{myprf}
+	$\hat{\theta}_{1}=g_{1}{(T)}$ y $\hat{\theta}_{2}=g_{2}{(T)}$. Si definimos:
+	\[ E{(\hat{\theta}_{1}-\hat{\theta}_{2})}=E{(g_{1}{(T)}-g_{2}{(T)})}=0, \theta \in \Theta.\]
+	\[ g_{1}{(T)}-g_{2}{(T)}=0.\]
+\end{myprf}
+
+\section{Teorema de Lemann-Sheffer}
+Si $T$ es una estadística suficiente y completa para $\theta$ y existe un estimador insesgado que sea función de $T$; entonces, este es el mejor estimador insesgado.
+
+\begin{myprf}
+	Sea $\hat{\theta}^{*}$ tal estimador, tal que $\hat{\theta}^{*}=h{(T)}$ y $E{(\hat{\theta}^{*})}=\theta,\forall \theta \in \Theta$. Sea $\hat{\theta}$ un estimador insesgado de $\theta$:
+	\[ V{(\hat{\theta}^{*})}\leq V{(\hat{\theta})}.\]
+	Por teorema de Rao-Blackwell. Además, como $\hat{\theta}_{1}$ es insesgado $\leftarrow \hat{\theta}$ es insesgado y $\hat{\theta}_{1}$ es función de T (por definición de esperanza condicional). Entonces, por lo tanto:
+	\[ \hat{\theta}_{1}=\hat{\theta}^{*}.\]
+Por lo tanto, solo existe un estimador insesgado función de T.
+\end{myprf}
+
+\section{Ejemplo}
+Sea $X \sim  P{(\lambda)}, \lambda > 0$.
+\begin{itemize}
+	\item $T=\sum_{1}^{n}X_{i}$ es suficiente por el teorema de factorización.
+	\item T es completa $\leftarrow$ Familia exponencial $\lambda > 0 \iff \Theta = \mathbb{R}: \text{abierto}$.
+	\item $\bar{X}=\frac{T}{n}$ es insesgado. $E{(\bar{X})}=E{(X)}=\lambda, \forall \lambda > 0$.
+\end{itemize}
+
+Por lo tanto $\bar{X}$ es el mejor y único estimador insesgado de $\lambda$.
+
+\section{Ejemplo}
+Sea $X\sim N(0,\sigma^{2}),\sigma^{2}>0$.
+\begin{itemize}
+	\item $\hat{\sigma}^{2}=\sum_{j=1}^{n}X_{j}^{2}$ es suficiente y completa.
+	\item $E{(X^{2})}=\sigma^{2}$ y $\bar{X^{2}}$ es un estimador insesgado $E{(\bar{X^{2}})}=E{(X^{2})}$.
+\end{itemize}
+Por lo tanto
+\[ \hat{\sigma^{2}}=\frac{\sum_{i=1}^{n}X_{i}^{2}}{n}.\]
+es el mejor estimador insesgado de $\sigma^{2}$.
+
+\section{Ejercicio}
+Sea $\hat{\theta}$ un estimador completo e insesgado de $\theta$. Determinar el error en la conclusión siguiente:
+\[ E{(\hat{\theta}-\theta)}=0, \forall \theta in \Theta.\]
+Entonces, con $\hat{\theta}$ completo: $\hat{\theta}-\theta=0$,c.s.
+
+$g{(\hat{\theta})}=\hat{\theta}-\theta$ es una función de $\hat{\theta}$ pero también de $\theta$. Por definición $g{(T)}$ no puede depender de $\theta$.
+
+\begin{mydef}
+	Una estadística es auxiliar (anciliar) para $\theta$, si su distribución no depende de $\theta$.
+\end{mydef}
+\section{Ejemplo}
+
+Sea $X  \sim N{(\mu,\sigma^{2}_{0})}, \mu \in \mathbb{R}, \sigma^{2}$ conocido.
+\[ T=\frac{{(n-1)}S^{2}}{\sigma^{2}_{0}}\sim X^{2}_{{(n-1)}}.\]
+Entonces T es una estadística auxiliar para $\mu$.
+
+\textbf{Nota: } Sea $v \in \mathbb{N}$.
+\[ X^{2}_{v}=G{(\frac{v}{2},0.5)}.\]
+dónde $v$ se le conoce como grados de libertad.
+
+\section{Teorema de Basu}
+Si $T$ es una estadística suficiente para $\theta$ y $U$ una estadística auxiliar, entonces $T$ y $U$ son independientes.
+
+\begin{myprf}
+Basta demostrar que:
+\[ P{(U \in A | T)}=P{(U)}, \forall A \in R_{U}.\]
+\end{myprf}
+\end{document}

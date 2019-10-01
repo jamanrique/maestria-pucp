@@ -1,0 +1,63 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\newtheorem{mydef}{Definition}
+\newtheorem{mythm}{Theorem}
+\newtheorem{myprf}{Proof}
+\title{Clase 5: Inferencia Estadística}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+
+\section{Ejemplo}
+\[ X \sim U(0;\theta).\]
+Definamos $f_{\tilde{X}}=\frac{1}{\theta^{n}}, X_{{(n)}} \leq \theta; 0, X_{{(n)}} > 0$
+\[ \frac{f_{\tilde{X}}{(X)}}{f_{\tilde{X}}}{(Y)}=1; Y_{{(n)}}\leq \theta, X_{{(n)}}\leq \theta \text{ o } 0; Y_{{(n)}} \leq \theta, X_{{(n)}}>\theta.\]
+\[ X_{{(n)}}=Y_{{(n)}} \rightarrow \frac{f_{{\tilde{X}}}{(X)}}{f_{{\tilde{X}}}{(Y)}}=1, X_{{(n)}} \leq \theta.\]
+
+Sea $X_{{(n)}}<Y_{{(n)}}$:
+\[ \rightarrow Y_{{(n)}} \leq \theta \rightarrow X_{{(n)}} \leq \theta \rightarrow \frac{f_{\tilde{X}}{(X)}}{f_{\tilde{X}}{(Y)}=1, Y_{{(n)}}} \leq \theta.\]
+
+Por lo tanto, no se puede afirmar que $X_{{(n)}}$ sea minimal.
+
+\section{Ejemplo}
+\[ X\sim P(\lambda), \lambda > 0.\]
+
+\[ f_{\tilde{X}}(\tilde{X})=\frac{1}{x_{1}!x_{2}!\ldots x_{n}!}\lambda^{\sum_{i=1}^{n}X_{i}}e^{-n\lambda}.\]
+
+\[ \frac{f_{\tilde{X}}{(\tilde{X})}}{f_{\tilde{X}}{(\tilde{Y})}}=\frac{y_{1}!y_{2}!\ldots y_{n}!}{x_{1}!x_{2}!\ldots x_{n}!}\lambda^{\sum x_{i} - \sum y_{i}}.\]
+
+\begin{mydef}
+	\textbf{Completitud: } La familia de distribuciones $\{f{(x;\theta), \theta \in \Theta}\}$ es completa si
+	\[ X\sim f{(x;\theta)}, \theta \in \Theta.\]
+	\[ E{(U{(X)})}=0 \rightarrow U{(X)} = 0\text{, c.s.}.\]
+	\[  P{(U{(X)}=0)}=1.\]
+\end{mydef}
+
+\section{Ejemplo}
+La familia de distribuciones binomial es completa:
+\[ f{(x,\theta)}= \binom{N}{x} \theta^{x}{(1-\theta)}^{n-x},x=0,1,\ldots,n.\]
+Si $X \sim f{(x,\theta)}$:
+\[ E{(U{(X)})}=\sum_{x=0}^{n}U{(X)}\binom{N}{x}\theta^{x}{(1-\theta)}^{n-x}.\]
+Luego, $E{(U{(X)})}=0, \forall \theta \in {(0;1)}$
+
+\[ U{(0)}{(1-\theta)}^{n-1}+U{(1)}n\theta{(1-\theta)}^{n-1}+\ldots+I{(n)}\theta^{n}.\]
+
+Este es un polinomio en $\theta$ de grado $\leq n$. Sin embargo existirían infinitas raíces si $\theta \in {(0,1)}$, por lo que necesariamente $U{(X)}=0$.
+
+\begin{mydef}
+\textbf{Completitud: } Una estadística T es completa si su familia de distribuciones es completa.
+\end{mydef}
+
+\begin{mythm}
+En la familia exponencial, si $\Theta$ es un conjunto abierto, entonces las estadísticas suficientes son completas.
+\end{mythm}
+
+\section{Ejemplo}
+\[ X\sim \exp{(\theta)},\theta > 0; \Theta \in \mathbb{R}.\]
+\[ T=\sum_{i=1}^{n}X_{j} \text{ es suficiente y} \Theta=\mathbb{R}^{+}\text { es un conjunto abierto}.\]
+Por lo tanto T es completa.
+\end{document}

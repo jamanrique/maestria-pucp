@@ -1,0 +1,56 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\newtheorem{mydef}{Definition}
+\newtheorem{mythm}{Theorem}
+\newtheorem{myprf}{Proof}
+\title{Clase 6: Técnicas Multivariadas}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+
+\section{Diferencia entre métodos}
+Los componentes principales son la combinación lineal de los autovectores con los datos originales cuyo objetivo es formar nuevas variables para evaluar $\Sigma$. Sin embargo, el objetivo del análisis factorial es hallar \textbf{estructuras} en grupos de variables. Estas variables se definen como los \textit{constructos} que son determinados por los factores.
+
+\section{Extracción de factores}
+\subsection{Componentes principales}
+Recordemos que la varianza puede descomponerse en:
+\[ \Sigma = P \Lambda P^{T}.\]
+\[ = P {(\Lambda)}^{0.5}{(\Lambda)}^{0.5}P^{T}.\]
+\[ P \Lambda^{0.5}{(P\Lambda^{0.5})}^{T}.\]
+
+Recordemos que los componentes principales utilizan todos los datos, por lo que uno puede elegir cuántos componentes principales desean capturar. Si $m \leq p$, entonces los factores se pueden obtener de la siguiente forma:
+\[ \Sigma =_{aprox} {(P\Lambda^{0.5})}{(P\Lambda^{0.5})}^{T}+\Phi.\]
+
+\subsection{Definiciones}
+\[ \Sigma: \text{Matriz de variana y covarianza de Pearson}.\]
+\[ R: \text{Matriz de correlación de Pearson}.\]
+
+Si $X_{i}$ son ordinales, $i=1,2,\ldots,p$ se debe usar la correlación de Spearman. Para variables nominales, se debe utilizar el análisis de correspondencia.
+
+\section{Aproximación a los factores F}
+
+\[ X_{i}=LF+\varepsilon.\]
+
+Aplicar regresión, para ello estimar L. Usando el método de mínimos cuadrados ponderados pues $Var{(\varepsilon)}=\sigma^{2}oughtº$
+
+\section{Análisis Discriminante}
+
+El anàlisis discriminante es un aprendizaje supervisado de clasificación. Para que este método funcione, todas las variables $(X_{1},X_{2},\ldots,X_{p})$ deben ser continuas. El \textit{target} es una variable nominal. Suposiciones del modelo:
+\begin{itemize}
+	\item La matriz de varianza y covarianza para todos los grupos deben ser iguales.
+	\item Las variables numéricas tienen una distribución normal multivariada.
+\end{itemize}
+
+Considerar que estas suposiciones son para el análisis discriminante lineal.
+
+\[ X \in \Omega, \Omega = \mathbb{R}_{1} U \mathbb{R}_{2}.\]
+\[ X \in \mathbb{R}_{1} \iff X \in \text{Primera población $\Pi_{1}$}.\]
+\[ X \in \mathbb{R}_{2} \iff X \in \text{Primera población $\Pi_{2}$}.\]
+
+\end{document}
+
+

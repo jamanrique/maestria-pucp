@@ -1,0 +1,112 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\newtheorem{mydef}{Definition}
+\newtheorem{mythm}{Theorem}
+\newtheorem{myprf}{Proof}
+\title{Clase 6: Modelos Lineales}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+\section{Score}
+Definamos el score de la forma $U_{\beta}=\phi X^{T}w^{0.5}v^{-0.5}(Y-\mu)$. La matriz de información de Fisher se define como:
+\[ I_{\beta\beta}=\phi X^{T}wX.\]
+
+Tenemos como observaciones lo siguiente:
+\[ \eta_{i} = X_{i}^{T}\beta.\]
+\[ g{(\mu_{i})}=\eta_{i}.\]
+\[ V_{i}=V{(\mu_{i})}.\]
+\[ w_{i}=\frac{1}{V_{i}}{(\frac{\partial \mu_{i}}{\partial \eta_{i}})}^{2}.\]
+\[ W = diag{(w_{1},w_{2},\ldots,w_{n})}.\]
+\[ V = diag{(v_{1},v_{2},\ldots,v_{n})}.\]
+
+Para hallar el estimador de máxima verosimilitud, utilizaremos el algoritmos de Scoring de Fisher, este es:
+\[ \beta^{m+1}=\beta^{m}+I_{\beta\beta}{(\beta^{m})}^{-1}U_{\beta}{(\beta^{m})}.\]
+\[ \beta^{m+1}=\beta^{m}+{(\phi X^{T}w^{m}X)}^{-1}{(\phi X^{T}w^{m^{0.5}v^{m^{-0.5}}}{(y-\mu^{m})})}.\]
+\[ \beta^{m+1}=\beta^{m}+{(X^{T}w^{m}X)}^{-1}X^{T}w^{m^{0.5}}V^{m^{-0.5}}{(y-\mu^{m})}.\]
+Aplicando algunas identidades, se obtiene que:
+\[ \beta^{m+1}={(X^{T}+w^{m}+X)}^{-1}X^{T}w^{m}{(X\beta^{m}+w^{m^{-0.5}}v^{m^{-0.5}}{(Y-\mu^{m})})}.\]
+Se tiene la forma parecida a unos mínimos cuadrados ponderados, la cual es:
+\[ \beta^{m+1}={(X^{T}w^{m}X)}^{-1}X^{T}w^{m}Z^{m}.\]
+\[ Z^{m}=\eta^{m}+w^{m^{-0.5}}v^{m^{-0.5}}{(y-\mu^{m})}.\] 
+
+Sin embargo, el estimador se le conoce como el estímador de mínimos cuadrados iterativamente reponderados (\textit{iteratively reweighted least squares}).
+
+Por teoría de máxima verosimilitud, se tiene que:
+\[ \hat{\beta} \sim N(\beta,\frac{1}{\phi} {(X^{T}wX)}^{-1}).\]
+
+Dado que no tenemos el parámetro $\phi$ entonces utilizamos el estimado:
+\[ \hat{\beta} \sim N{(\beta,\frac{1}{\hat{\phi}}{(X^{T}\hat{w}X)}^{-1})}.\]
+
+\[ \hat{cov{(\hat{\beta})}}=\frac{1}{\hat{\phi}}{(X^{T}\hat{w}X)}^{-1}=\frac{1}{\hat{\phi}}C.\]
+
+\[ se{(\beta_{j})}={(\hat{Var{(\hat{\beta}_{j})}})}^{0.5}=\frac{1}{\hat{\phi}^{0.5}}\sqrt{C_{jj}}.\]
+Si deseamos hacer una prueba de hipótesis en donde $\beta_{j}=0$. $\frac{\hat{\beta}_{j}}{se(\beta_{j})} \sim N(0,1)$ si $H_{0}$ es verdadera.
+
+El intervalo de confianza se definiría como:
+\[ IC_{100{(1-\alpha)}\%}{(\beta_{j})}=\hat{\beta}_{j} +- Z_{1-\frac{\alpha}{2}}se{(\beta_{j})} .\]
+
+Para hacer la prueba de hipótesis de forma general, definamos lo siguiente:
+\[ \hat{\beta},\hat{\phi} \text{ EMV del modelo sin restricciones}.\]
+\[ L{(\hat{\beta},\phi)}=\text{ log-verosimilitud evaluada en el EMV}.\]
+
+$\hat{\beta}^{0}, \hat{\phi}^{0}$ el EMV del modelo si $H_{0}: CB=d$ es verdadera. Definamos $L{(\hat{\beta},\hat{\phi}^{0})} \rightarrow $ log-verosimilitud evaluada en $\hat{\beta}^{0}$ y $\hat{\phi}^{0}$. Entonces se define la razón de verosimilitud como:
+
+\[ \varepsilon_{RV}=2{(L{(\hat{\beta},\hat{\sigma})}-L{(\hat{\beta}^{0},\hat{\phi}^{0})})}\sim X^{2}_{{(r)}}.\]
+Se rechaza si $\varepsilon_{RV}> X^{2}_{1-\alpha,r}$.
+
+\section{Métodos de diagnóstico}
+Consideremos el algoritmo iterativo de mínimos cuadrados.
+\[ \hat{\beta}={(X^{T}\hat{w}X)}^{-1}X^{T}\hat{w}\hat{Z}.\]
+\[ \hat{\beta}={(X^{T}\hat{w}^{0.5}\hat{w}^{0.5}X)}^{-1}X^{T}\hat{w}^{0.5}\hat{w}^{0.5}\hat{Z}.\]
+\[ \hat{\beta}={(X^{*^{T}}X^{*})}^{-1}X^{*^{T}}Z^{*}.\]
+
+Definamos la matriz hat como lo siguiente:
+\[ H=X^{*}{(X^{*^{T}}X^{*})}^{-1}X^{*^{T}}.\]
+\[ \hat{H}=\hat{w}^{0.5}X{(X^{T}\hat{w}X)}^{-1}X^{T}\hat{w}^{0.5}.\]
+
+\section{Tipos de residuales}
+\begin{itemize}
+	\item \textbf{Residuales de Pearson: } Definamos:
+		\[ \hat{\beta}={(X^{T}\hat{w}X)}^{-1}X^{T}\hat{w}\hat{Z}.\]
+		\[ \hat{Z}=\hat{\eta}+\hat{w}^{-0.5}\hat{v}^{-0.5}{(y-\hat{\mu})}.\]
+		\[ E{(\hat{Z})} =_{aprox}\hat{\eta}.\]
+		\[ Cov{(\hat{Z})}=_{aprox}\hat{w}^{-1}.\]
+		El residual de Pearson es:
+		\[ r=\hat{w}^{0.5}{(\hat{z}-\hat{\eta})}.\]
+		\[ r=\hat{w}^{0.5}{(\hat{\eta}+\hat{w}^{-0.5}\hat{v}^{-0.5}{(y-\hat{\mu})}-\hat{\eta})}.\]
+		\[ r=\hat{v}^{0.5}{(y-\mu)}.\]
+
+	\[	cov(r) =_{aprox} \frac{1}{\phi}{(I-\hat{H})}.\]
+	Definimos el residual como:
+	\[ t_{s-_{i}}=\frac{y_{i}-\hat{\mu}_{i}}{\hat{v}_{i}^{0.5}*\frac{1}{\hat{\phi}^{0.5}}*{(1-\hat{h}_{ii})}^{0.6}}.\]
+	\[ t_{s_{i}}=\frac{\hat{\phi}^{0.5}{(y_{i}-\hat{\mu}_{i})}}{\sqrt{\hat{v_{i}}{(1-\hat{h}_{ii})}}}.\]
+	Sin embargo esto no tiene simetría, por lo tanto no es tan usado.
+\item \textbf{Residual de devianza:} Se define como el siguiente residual:
+	\[ t_{D_{i}}=\frac{\hat{\phi}^{0.5}d{(y_{i},\hat{\mu}_{i})}}{\sqrt{1-\hat{h}_{ii}}}.\]
+\end{itemize}
+
+\section{Influencia}
+Definimos la influencia como:
+\[ D_{i}=2{(L{(\hat{\beta})}-L{(\hat{\beta})_{(-i)}})}.\]
+Expandimos por Taylor y se obtiene:
+\[ D{(\beta)}=2{(L{(\hat{\beta})}-{(L{(\hat{\beta})}+(\beta-\hat{\beta})L^{'}{(\hat{\beta})+\frac{1}{2}{(\beta-\hat{\beta})}^{T}L^{''}{(\hat{\beta})}{(\beta-\hat{\beta})}}})}.\]
+\[ D{(\beta)}={(\beta-\hat{\beta})}^{T}L^{''}{(\hat{\beta})}{(\beta-\hat{\beta})}.\]
+
+\[ D{(\beta)}={(\hat{\beta}-\hat{\beta}_{{(i)}})}^{T}L^{''}{(\hat{\beta})}{(\hat{\beta}-\hat{\beta}_{{(i)}})}.\]
+Cambiamos el $L^{''}{(\hat{\beta})}$ por la matriz de información de Fisher y finalmente la Influencia se puede obtener realizando lo siguiente:
+\[ D_{i}={(\frac{\hat{h}_{ii}}{1-\hat{h}_{ii}})}t_{s_{i}}.\]
+
+\section{Banda de confianza simulada para los residuales}
+Estimar los parámetros del modelo por máxima verosimilitud: $\hat{\beta},\hat{\phi}$. Simulaciones consideran estas estimaciones como los valores reales de la población. Entonces se hace el siguiente algoritmo:
+\begin{itemize}
+	\item Simular $Y^{k}~FE{(\hat{\mu},\hat{\phi})}$
+	\item Estimar $\hat{\beta}^{k}$ y $\hat{\phi}^{k}$
+	\item Calcular residuales de devianza.
+	\item Ordenar los residuales de devianza y se guardan.
+	\item Volver al paso 1 y repetir la simulación.
+\end{itemize}
+\end{document}
