@@ -1,0 +1,122 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphics}
+\newtheorem{mydef}{Definition}
+\newtheorem{mythm}{Theorem}
+\newtheorem{myprf}{Proof}
+\title{Clase 8: Inferencia Estadística}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+\section{Métodos de Estimación}
+\subsection{Método de momentos}
+
+\[ m_{k}=E{(X^{k})}: \text{k-ésimo momento poblacional}.\]
+
+\[ M_{k}=\bar{X^{K}}=\frac{\sum_{j=1}^{n}X_{j}}{n}: \text{k-ésimo momento muestral}.\]
+
+Asumiendo $(X_{1},X_{2},\ldots,X_{n})$ como una muestra aleatoria de $X$.
+
+\subsubsection{Ejemplo}
+Sea $X \sim P{(\lambda)}$
+
+\[ m_{1}=E{(X)}=\lambda.\]
+\[ M_{1}=\bar{X}.\]
+
+El estimador de $\lambda$, por el método de los momentos, es la solución del sistema de ecuaciones (con incógnita $\lambda$):
+\[ m_{1}=M_{1}.\]
+Esto equivale a decir que:
+\[ \lambda=\bar{X}.\]
+\[ \hat{\lambda}=\bar{X}.\]
+
+\subsubsection{Ejemplo}
+Sea $X\sim N{(\mu,\sigma^{2})}$
+\[ m_{1}=E{(X)}=\mu.\]
+\[ m_{2}=E{(X^{2})}=\sigma^{2}+\mu^{2}.\]
+\[ M_{1}=\bar{X}.\]
+\[ M_{2}=\bar{X^{2}}.\]
+
+Los estimadores de $\mu$ y $\sigma^{2}$, por el método de momentos, corresponden a la solución del sistema de ecuaciones (con incógnita $\mu$ y $\sigma^{2}$) es:
+
+\[ m_{1}=M_{1}.\]
+\[ \hat{\mu}=\bar{x}.\]
+\[ m_{2}=M_{2}.\]
+\[ \sigma^{2}+\mu^{2}=\bar{X^{2}}.\]
+\[ \hat{\sigma^{2}}=\bar{X^{2}}-\bar{X}^{2}.\]
+
+\subsubsection{Ejemplo}
+Sea $X\sim N{(0,\sigma^{2})}$
+\[ m_{1}=E{(X)}=0: \text{no depende $\sigma^{2}$}.\]
+Pasamos a $m_{2}$ $\rightarrow$ se descarta $m_{1}=M_{1}$
+\[ m_{2}=E{(X^{2})}=\sigma^{2}.\]
+
+Resolvemos la ecuación:
+\[ m_{2}=M_{2}.\]
+\[ \rightarrow \sigma^{2} = \bar{X}^{2} \rightarrow \hat{\sigma^{2}}=\bar{X}^{2}.\]
+
+\section{Método de los mínimos cuadrados}
+Sea
+\[ Y = g{(X,\theta)}+\varepsilon.\]
+$g{(X,\theta)}$ no es variable aleatoria, $\varepsilon$ sí. Una muestra conjunta de $X$ e $Y$ es de la forma ${(Y_{1},X_{1})}, \ldots ,{(Y_{n},X_{n})}$ dónde $Y_{i} = g{(X_{i,\theta})}+\varepsilon_{i}$.
+
+La forma de $g{(\cdot)}$ es conocida y $th$ es un parámetro desconocido. Según este método el estimador de $\theta$ es el valor de $\theta$ que minimiza la función 
+\[ Q{(\theta)}=\sum_{j=1}^{n}{(Y_{i}-g{(X_{i},\theta)})}^{2}.\]
+
+\textbf{Observación: }Sea $A=(Y_{1},Y_{2},\ldots,Y_{n})$ un vector de variables aleatorias de Y, y $B=(g(X_{1}),g(X_{2}),\ldots,g(X_{n}))$ un vector de variables aleatorias de X. Entonces:
+\[ Q{(\theta)}=d^{2}{(A,B)}.\]
+El estimado de $\theta$ minimiza la distancia $d{(A,B)}$.
+
+\subsection{Regresión lineal simple sin intercepto}
+\[ Y=\theta X + \varepsilon.\]
+\[ Y_{i}=\theta x_{i}+\varepsilon_{i}; i=,1,\ldots,n.\]
+\[ Q{(\theta)}=\sum_{j=1}^{n}{(Y_{i}-\theta X_{i})}^{2}.\]
+\[ \frac{\partial }{\partial \theta}Q=\sum_{j=1}^{n} -2{(Y_{j}-\theta X_{j})}X_{j}.\]
+\[ \frac{\partial }{\partial \theta}=0 \rightarrow \theta = \frac{\sum X_{j}Y_{j}}{\sum X_{j}^{2}}.\]
+
+\[ \frac{\partial^{2}}{\partial \theta^{2}}Q = \sum_{j=1}^{n} X_{j}^{2} > 0.\]
+Por lo tanto $Q{(\cdot)}$ es mínima. Y el estimador es:
+\[ \hat{\theta}=\frac{\sum_{j=1}^{n}X_{j}Y_{j}}{\sum_{j=1}^{n}X_{j}^{2}}.\]
+
+\section{Propiedad de Gauss-Markov}
+Si $(\varepsilon_{1},\varepsilon_{2},\ldots,\varepsilon_{n})$ son independientes, con $E{(\varepsilon_{j})}=0$ y $V{(\varepsilon_{j})}=\sigma^{2}, j=1,\ldots,n$. Los estimadores de mínimos cuadrados son los mejores estimadores insesgados que sean funciones lineales de $(Y_{1},Y_{2},\ldots,Y_{n})$.
+
+\textbf{Ejercicio: } Sea $\hat{Y_{j}}= \hat{\theta_{1}}+\hat{\theta_{2}}X_{j}; j=1,\ldots,n$. Hallar $E{(Y_{j})}$ y $V{(Y_{j})}$.
+
+Sugerencia:
+\[ E{(Y_{j})}=E{(\hat{\theta_{1}})}+X_{j}E{(\hat{\theta_{2}})}.\]
+\[ V{(\hat{\theta_{1}}+\hat{\theta_{2}}X_{j})}=V{(\hat{\theta_{1}})}+X_{j}^{2}V{(\hat{\theta_{2}})}+2 X_{j}Cov{(\hat{\theta_{1}},\hat{\theta_{2}})}.\]
+\[ Cov{(\hat{\theta_{1}},\hat{\theta_{2}})}=Cov{(\sum_{1}^{n}a_{j}Y_{j},\sum_{1}^{n}b_{j}Y_{j})}.\]
+\[ Cov{(\hat{\theta_{1}},\hat{\theta_{2}})}=a_{1}b_{1}V{(Y_{1})}+\ldots+a_{n}b_{n}V{(Y_{n})}=\sigma^{2}\sum_{j=1}^{n}a_{j}b_{j}.\]
+
+\subsection{Método de Máxima Verosimilitud}
+\begin{mydef}
+	Dada la muestra registrada (u observada) $(X_{1}=x_{1},X_{2}=x_{2},\ldots,X_{n}=x_{n})$, y $l_{n}$ como función de verosimilitud asociada, se denota por $L{(\theta)}$, y se define como:
+	\[ L{(\theta)}=f_{(X_{1},X_{2},\ldots,X_{n})}{((X_{1},X_{2},\ldots,X_{n}))}.\]
+\end{mydef}
+
+\textbf{Ejemplo: }Sea $X\sim P{(\lambda)}$, dada la muestra registrada:
+\[ X_{1}=0;X_{2}=1;X_{3}=0;X_{4}=2.\]
+\[ L{(\theta)}=f_{(X_{1},X_{2},\ldots,X_{4})}{(0;1;0;2)}.\]
+\[ =f_{X_{1}}{(0)}f_{X_{2}}{(1)}f_{X_{3}}{(0)}f_{X_{4}}{(2)}.\]
+\[ L{(\lambda)}=\frac{e^{-4\lambda}\lambda^{3}}{2},\lambda>0.\]
+
+Es decir, $L{(\theta)}$ es la probabilidad de obtener justamente la muestra registrada. En general (caso continuo), $L{(\theta)}$ mide cuán verosímil resulta cada valor de $\theta$. La estimación de $\theta$, por máxima verosimilitud, es el valor de $\theta \in \Theta$ que maximiza $L{(\theta)}$.
+
+En general, la estimación de $\theta$ es $g{(x_{1},\ldots,x_{n})}$. El estimado de $\theta$ se define como $\hat{\theta}=g{(x_{1},\ldots,x_{n})}$.
+
+\textbf{Propiedad: } Si existe una estadística suficiente para $\theta$, entonces el estimador de máxima verosimilitud es una función de ella.
+
+\textbf{Explicación:}
+\[ L{(\theta)}=f_{X_{1},\ldots,X_{n}}{(X_{1},\ldots,X_{n})}=h{(X_{1},\ldots,X_{n})}l{(T{(X_{1},\ldots,X_{n})},\theta)}.\]
+Maximizar $L{(\theta)}$ es igual a maximizar $l{(T{(X_{1},\ldots,X_{n})},\theta)}$.
+
+\textbf{Propiedad: } Si un estimador es insesgado, entonces su varianza es:
+\[ V{(\hat{\theta})}\leq \frac{1}{n I{(\theta)}}.\]
+
+Para máxima verosimilitud, debemos conocer la distribución de la muestra.
+
+\end{document}

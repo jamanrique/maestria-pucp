@@ -1,0 +1,32 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\newtheorem{mydef}{Definition}
+\newtheorem{mythm}{Theorem}
+\newtheorem{myprf}{Proof}
+\title{Clase 7: Inferencia Estadística}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+
+\section{Desigualdad de Crámer-Rao}
+
+Si se cumplen las condiciones de regularidad, para todo $\hat{\theta}$ estimador insesgado de $\theta$:
+\[ V{(\hat{\theta})} \geq \frac{1}{n I_{F}{(\theta)}}.\]
+
+\subsection{Ejemplo}
+
+Sea $X \sim B{(\theta)}$:
+\[ I_{F}{(\theta)}=\frac{1}{\theta{(1-\theta)}}.\]
+Si $\hat{\theta}$ es un estimador insesgado. Entonces, por desigualdad de Crámer-Rao:
+\[ V{(\hat{\theta})} \geq \frac{\theta{(1-\theta)}}{n}.\]
+
+\begin{itemize}
+	\item $\bar{X}$ es un estimador insesgado. $E{(\hat{X})}=E{(X)}=\theta, \forall \theta \in {(0;1)}$
+	\item $V{(\hat{X})}=\frac{V{(X)}}{n}=\frac{\theta{(1-\theta)}}{n}$
+\end{itemize}
+
+\end{document}

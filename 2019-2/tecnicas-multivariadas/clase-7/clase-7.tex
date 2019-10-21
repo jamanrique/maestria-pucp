@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\newtheorem{mydef}{Definition}
+\newtheorem{mythm}{Theorem}
+\newtheorem{myprf}{Proof}
+\title{Clase 7: Análisis Multivariado}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+
+\section{Análisis Multivariado}
+\textbf{Problema:} Dadas dos poblaciones con probabilidad $\pi_{1}$ y $\pi_{2}$ y un elemento $X_{0}={(X_{1}^{0},X_{2}^{0},\ldots,X_{p}^{0})}$. ¿Dónde ubicarlo?
+
+\textbf{Criterio:} Ubicarlo de tal manera que el costo esperado por mala ubicación fuera mínimo.
+
+\subsection{Teoría}
+\[ {(\mu_{1}-\mu_{2})}^{T}\Sigma^{-1}x_{0}* \frac{-1}{2} {(\mu_{1}-\mu_{2})}^{T}\Sigma^{-1}{(\mu_{1}+\mu_{2})}\geq 0.\]
+\[ {(x_{1}-\bar{x})}^{T}S^{-1}x_{0}> \frac{1}{2}{(\bar{X}_{1}-\bar{X}_{2})}^{T}S^{-1}{(\bar{X_{1}}+\bar{X}_{2}})\]
+
+\section{Escalamiento Multidimensional}
+
+Según el profesor, se usa mucho en marketing. Se tienen muchos individuos $1,2,\ldots,n$ y muchas mediciones de cada individuo $1,2,\ldots,p$
+Las redes neuronales convolucionales recorren la imagen en sub-matrices.z
+
+\subsection{Escalamiento Multidimensional No Métrico}
+Partimos de una matriz de distancias o similaridades. Esta matriz está compuesta por objetos, es decir las variables descriptivas de cada objeto ya han sido condensadas en esta matriz. Se hace el siguiente procedimiento:
+\begin{itemize}
+	\item Se obtiene la matriz de similaridades. Solo con la escala ordinal.
+	\item Se hace el ordenamiento $S_{i_{1}J_{1}}< \ldots < S_{i_{n}J_{n}}$.
+\end{itemize}
+\end{document}
