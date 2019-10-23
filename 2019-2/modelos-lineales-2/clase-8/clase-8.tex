@@ -1,0 +1,179 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\newtheorem{mydef}{Definition}
+\newtheorem{mythm}{Theorem}
+\newtheorem{myprf}{Proof}
+\title{Clase 8: Modelos Lineales}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+\section{Modelos Lineales Generalizados}
+Permite mayor flexibilidad:
+\begin{itemize}
+	\item Variable respuesta (dependiente) puede asumir otras distribuciones no normales.
+	\item Relación entre una función de $E{(Y)}$ y $X$ "más" flexible.
+\end{itemize}
+
+\[ Y_{i}=X_{i}\beta + \varepsilon_{i}.\]
+
+En dónde $X_{i}\beta$ es el componente sistemático. $\varepsilon_{i}$ es el componente aleatorio.
+
+\subsection{Componentes de MLG}
+\subsubsection{Componente aleatorio:}
+		\begin{itemize}
+			\item $Y_{i}:$ variable aleatoria.
+			\item $Y_{i} \sim $Familia Exponencial.
+			\item $f_{Y_{i}}{(y_{i})}=exp{\frac{y\theta_{i}-b{(\theta_{i})}}{a{(\phi)}}-c{(y_{i},\phi)}}; y_{i} \in \mathbb{R}_{y}$
+		\end{itemize}
+
+
+Asimismo, también se tiene que:
+\begin{itemize}
+	\item $\theta_{i}:$ Parámetro asociado a la media.
+	\item $a{(\phi)}: $Parámetro de escala (dispersión).
+	\item $a(\cdot), b(\cdot), c(\cdot): $funciones específicas.
+	\item $R_{Y_{i}}$ no depende de $\theta_{i}$
+\end{itemize}
+
+Sea $(Y_{1},Y_{2},\ldots,Y_{n})$ muestra aleatoria de población de la variable aleatoria Y, entonces:
+\begin{itemize}
+	\item $Y_{i}$ es independiente de $Y_{j}, \forall i \neq j$.
+	\item $E{(Y_{i})}=\mu_{i}$
+\end{itemize}
+
+Cada $Y_{i}\sim FE{(\theta_{i},\phi)}$. Cada $Y_{i}$ es independiente de la otra pero no tienen la misma media.
+
+\subsubsection{Componente Sistemático}
+El predictor lineal ($n_{i}$) es una función de las variables explicativas.
+
+\subsubsection{Función de Enlace}
+La función de enlace es una función monótona (no decreciente) diferenciable que asocia ambos componentes. Es decir:
+\[ g{(E{(Y_{i})})}=N_{i}.\]
+\[ g{(\mu_{i})}=N_{i}.\]
+
+\textbf{Ejemplo: } $g{(\mu_{i})}= N_{i} = \beta_{0}+\beta_{1}X_{i1}$
+
+Cuando $N_{i}=\theta_{i}$, la función de enlace se llama canónica. Esto tiene algunas propiedades (revisar).
+
+\section{Resumen:}
+Los modelos lineales generalizados se resumen en:
+\[ Y_{i} \sim FE{(\theta_{i},\phi)}.\]
+\[ E{(Y_{i})}=\mu_{i}.\]
+\[ g{(\mu_{i})}=N_{i}=\phi{(\beta_{0}+\beta_{1}X_{i1}+\ldots+\beta_{p}X_{ip})}.\]
+
+Los parámetros por estimar en el modelo son: $\beta,\theta$.
+
+\textbf{Propiedades: }
+\begin{itemize}
+	\item $E{(Y)}=b'{(\theta)}$
+	\item $V{(Y)}=a{(\phi)}b''{(\theta)}=a{(\theta)}V{(\mu)}$, en dónde $V{(\mu)}$ es la varianza de la media.
+\end{itemize}
+
+\section{Modelos para datos binarios}
+\[ Y_{i}\sim Bernoulli{(p_{i})}.\]
+en dónde $p_{i}:$ probabilidad de éxito. Es decir, probabilidad de que el i-ésimo cliente realice un fraude.
+
+\subsection{Componente aleatorio:}
+\[ Y_{1}\sim Bernoulli{(p_{i})}.\]
+
+Pertenece a la familia exponencial:
+
+\[ f_{Y_{i}}=p^{Y_{i}}{(1-p)}^{{(1-Y_{i})}}.\]
+\[f_{Y_{i}}=exp{y_{i}log{(\frac{p_{i}}{1-p_{i}})}+log{(1-p_{i})}}.\]
+En dónde:
+\begin{itemize}
+	\item $a{(\phi)}=1$
+	\item $c{(y_{i},\phi)}=0$
+	\item $\theta_{i}=log{(\frac{p_{i}}{1-p_{i}})}$
+	\item $b{(\theta_{i})}=-log{(1-p_{i})} \rightarrow$ en función de $\theta_{i}$
+	\item $\theta_{i} = log{(\frac{p_{i}}{1-p_{i}})} \rightarrow e^{\theta_{i}}=\frac{p_{i}}{1-p_{i}} \rightarrow e^{\theta_{i}}-e^{\theta_{i}}p_{i}=p_{i} \rightarrow p_{i}=\frac{e^{\theta_{i}}}{1+e^{\theta_{i}}}$
+	\item $b{(\theta_{i})}= -log{(1-p_{i})} \rightarrow log{(\frac{1}{1+e^{\theta_{1}}})}^{-1} \rightarrow b{(\theta_{i})}=log{(1+e^{\theta_{i}})}$ 
+\end{itemize}
+
+\subsection{Componente sistemático}
+\[ N_{i}=\beta_{0}+\beta_{1}X_{i1}+\ldots+\beta_{p}X_{ip}.\]
+
+\subsection{Función de Enlace}
+Sea $p_{i}:$ probabilidad de éxito, está entre 0 y 1.
+\[ E{(Y_{i})}=p_{i}=\mu_{i} \rightarrow 0 \leq u_{i} \leq 1.\]
+\[ g{(\mu_{i})}=N_{i}.\]
+\[ p_{i}=\mu_{i}=g^{-1}{(N_{i})}.\]
+
+$g{(\cdot)}$ tiene que asegurar que las estimaciones de $p_{i}$ sean en $[0,1]$. En dónde $p_{i}\in [0,1]$, una elección natural de $g{(\cdot)}$ es la función de distribución acumulada para cualquier variable Ztal que:
+\[ F_{Z}{(Z)}=P{(Z<z)}\in [0,1].\]
+
+Por ejemplo: $Z \sim \text{logística}{(\mu=0,s=1)}$
+\[ f_{Z}{(z)}=\frac{exp{(-z)}}{{(1+exp{(-z)})}^{2}}.\]
+\[ F_{Z}{(z)}=\frac{e^{z}}{1+e^{z}}=\text{logit}^{-1}{(z)}; F_{z}{(z)}=p{(Z<z)}\in [0,1].\]
+
+Se utiliza esta función de distribución acumulada para el enlace logit:
+\[ \eta_{i}=log{(\frac{p_{i}}{1-p_{i}})}=logit{(p_{i})}.\]
+Entonces $g{(\cdot)}=\text{logit}$.
+
+\section{Resumen: GLM para datos binarios.}
+\textbf{Regresión logística:}
+$(Y_{1},Y_{2},\ldots,Y_{n})$ una muestra aleatoria de Y. En dónde $Y_{i} \sim \text{Bernoulli}{(p_{i})}$. La función de enlace es $\text{logit}{(p_{i})}=\eta_{i}=\beta_{0}+\beta_{1}X_{1}+\ldots+\beta_{p}X_{ip}$. Entonces:
+\[ \text{logit}{(p_{i})}=log{(\frac{p_{i}}{1-p_{i}})}.\]
+
+\subsection{Inferencia: EMV para MLG}
+Como existe independencia, entonces el estimador de máxima verosimilitud es:
+\[ L{(\beta,\phi)}= \prod_{n}^{i=1} f_{Y_{i}}{(y_{i})}.\]
+\[ = exp{(\frac{1}{a{(\phi)}} \sum_{i=1}^{n}{(y_{i}\theta_{i}-b{(\theta_{i})}+\sum_{i=1}^{n}c{(Y_{i},\phi)})})}.\]
+
+\[ l{(\beta,\phi)}=\frac{1}{a{(\phi)}} \sum_{i=1}^{n}{(y_{i}\theta_{i}-b{(\theta_{i})}+\sum_{i=1}^{n}c{(Y_{i},\phi)}}\]
+
+Función Score para $\beta$:
+\[ S{(\beta)}=\frac{\partial l{(\beta,\phi)}}{\partial \beta}=\frac{1}{a{(\phi)}} X^{T}W\Delta{(Y-\mu)}.\]
+
+En dónde $W=diag{(w_{i})}$, $\Delta=diag{(g_{u}{(\mu_{i})})}$, $w_{i}={(V{(\mu_{i})}g^{2}_{\mu}{(\mu_{i})})}^{-1}$. Asimismo se tiene que $V{(\mu_{i})}=\frac{V{(Y_{i})}}{a{(\phi)}}$ y $g_{u}{(\mu_{i})}=\frac{\partial \eta_{i}}{\partial u_{i}}$. En general, los modelos de estimación de máxima verosimilitud no tienen solución analítica.
+
+\subsection{Ejemplo:}
+
+Para la regresión de Bernoulli:
+
+\[ v{(\mu_{i})}=\frac{V{(Y_{i})}}{a{(\phi)}}=V{(Y_{i})}=\mu_{i}{(1-\mu_{i})}.\]
+\[ g_{u}{(\mu_{i})}=\frac{\partial \eta_{i}}{\partial \mu_{i}}= {(\frac{\partial \mu_{i}}{\partial \eta_{i}})}^{-1}={(\frac{\partial \frac{e^{\eta_{i}}}{1+e^{\eta_{i}}}}{\partial \eta_{i}})}^{-1}.\]
+\[ ={({(\frac{e^{\theta_{i}}}{1+e^{\theta_{i}}})}*{(\frac{1}{1+e^{\theta_{i}}})})}^{1}.\]
+\[ ={(p_{i}{(1-p_{i})})}^{-1}.\]
+\[ ={(\mu_{i}{(1-\mu_{i})})}^{-1}.\]
+\[ g_{u}{(\mu_{i})}={(V{(\mu_{1})}g_{\mu}^{2}{(\mu_{i})})}^{-1}={(\frac{1}{{(\mu_{i})}{(1-\mu_{i})}})}.\]
+\[ w=diag{(\mu_{i}{(1-\mu_{i})})}.\]
+\[ \Delta = diag{(\mu_{i}{(1-\mu_{i})})}^{-1}.\]
+\[ w\Delta =I_{n}.\]
+Por lo tanto, la función de Score de $\beta$ es:
+\[ S{(\beta)}=X^{T}{(Y-\mu)}.\]
+
+Dado que no tiene solución analítica, utilizamos métodos numéricos.
+\[ \beta^{m+1}=\beta^{m}+{(I{(\beta^{m})})}^{-1}S{(\beta^{m})}.\]
+en dónde $I{(\beta)}=-E{(\frac{\partial^{2}}{\partial \beta\partial \beta^{T}}l{(\beta)})}$ o $I{(\beta)}=\frac{1}{a{(\phi)}} X^{T}WX$.
+
+Para datos binarios logísticos son:
+
+\[ \beta^{m+1}=\beta^{m}+{(X^{T}WX)}^{-1}X^{T}{(Y-\mu)}.\]
+
+\subsection{Interpretación de parámetros de la salida de R}
+La razón de ODDS representa el incremento o reducción estimado en la chance de éxito por cada unidad en que se incrementa $x_{i}$. 
+
+\[ log{(\frac{p_{i}}{1-p_{i}})}=log(odds)=\eta_{i}.\]
+
+El predictor lineal para $X_{i}=x_{i}+1$ es $\eta{(x_{i}+1)}=\beta_{0}+\beta_{1}X_{i}+\beta_{1}$. Se realiza la diferencia en $\eta_{X_{i}}$, teniendo lo siguiente:
+\[ \eta{(X_{i}+1)}-\eta{(X_{i})}=\beta_{1}.\]
+\[ log{(odds{(X_{i}+1)})}-log{(odds{(X_{i})})}=\beta_{1}.\]
+\[ \frac{odds{(X_{i}+1)}}{odds{(X_{i})}}=e^{\beta_{1}}.\]
+
+\textbf{Ejemplo:} $e^{\hat{\beta_{1}}}=1.005514$. Por cada unidad monetaria en que se incrementa el balance, la chance de realizar fraude se incrementa 1.005514 veces, es decir aumenta un 0.05514\%.
+
+Bajo condiciones de regularidad, el EMV $\hat{\beta}$ del parámetro $\beta$ asintóticamente cumple que:
+
+\[ \hat{\beta} \rightarrow N{(\beta,{(I{(\beta)})}^{-1})}.\]
+\[ cov{(\hat{\beta})}={(\frac{1}{a{(\phi)}}X^{T}WX)}^{-1}.\]
+\[ \hat{cov{(\hat{\beta})}}={(\frac{1}{a{(\phi)}}X^{T}\hat{w}X)}^{-1}.\]
+\section{Propiedad de invarianza del EMV}
+
+Sea $\hat{\theta}$ el estimador de máxima verosimilitud $\theta \rightarrow \hat{g{(\theta)}} = g{(\hat{\theta})}$.
+
+\end{document}
