@@ -1,0 +1,520 @@
+---
+title: "Práctica 2 - Modelos Lineales 2"
+author: ' Hernandez Bello Diana Patricia ''20183808'',                                      Manrique
+  Urbina Justo Andres ''20091107'',                                        Moreano
+  Roldan Juan Pablo ''20184093'',                                           Parillo
+  Apaza Jorge Hernan ''19947810'' ,                                         Urbano
+  Burgos Alejandrina Margarita ''20047278'' '
+date: "10/26/2019"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Pregunta 1
+
+Sea $Y$ una variable aleatoria discreta con distribución binomial negativa $\mu$ y parámetro de dispersión $\phi$, cuya función de distribución es dada por
+\[ f{(y)}=\frac{\Gamma{(y+\phi)}}{\Gamma{(y+1)}\Gamma{(\phi)}}{(\frac{\mu}{\mu+\phi})}^{y}{(\frac{\phi}{\mu+\phi})}^{\phi}, y=0,1,2\ldots\]
+
+Demuestre que pertenece a la familia exponencial, para $\phi$ conocido.
+
+\textbf{Solución:} La función de probabilidad de $Y$ se puede reexpresar como:
+\[ f{(y)}=\frac{\Gamma{(y+\phi)}}{\Gamma{(y+1)}\Gamma{(\phi)}}{(1-p)}^y+p^\phi.\]
+
+Posteriormente, la función se puede expresar de la siguiente forma:
+
+\[f{(y)}=\frac{\Gamma{(y+\phi)}}{\Gamma{(y+1)}\Gamma{(\phi)}} \exp(y \log(1-p) \phi \log(p).\]
+
+En donde $p=\frac{\phi}{\mu+\phi}$ y $1-p=\frac{\mu}{\mu+\phi}$
+
+Se observa que pertenecería a la familia exponencial en tanto $\phi$ es conocido, pues:
+
+- $\theta=log(1-p)$
+- $b(\theta)=\phi\log(p)$ o, asimismo, $b(\theta)=\phi\log(1-e^\theta)$
+- $c(y,\phi)$ es igual a la función gamma.
+- $\phi=1$
+
+Demuestre que para $\phi$ conocido, la distribución de $Y$ pertenece a la familia exponencial.
+
+Encuentre la función de varianza y la función de enlace canónica.
+
+
+\textbf{Solución:} La función de varianza se define como:
+\[V(Y)=\frac{-1}{\phi}b^{''}(\theta)\]
+
+Resolviendo, se tiene que:
+\[ \frac{\partial^2}{\partial \theta^2} b(\theta)=\frac{\partial}{\partial \theta}(\frac{\phi e^\theta}{1-e^\theta})=\phi\frac{\partial}{\partial \theta}(\frac{ e^\theta}{1-e^\theta})=\phi \frac{e^\theta}{(1-e^\theta)^2}=\frac{\phi{(1-p)}}{p^2}\]
+
+Reemplazando $p$ y $1-p$, se tiene que:
+
+\[\frac{\frac{\phi \mu}{\mu+\phi}}{\frac{\phi^2}{(\mu+\phi)^2}}\]
+
+Por lo tanto, la varianza es:
+\[\mu + \frac{\mu^2}{\phi}.\]
+
+La función de enlace canónica se definiría de la siguiente forma:
+
+\[\theta=\frac{\mu}{\phi+\mu}\]
+
+## Pregunta 2
+
+**a)**  Demuestre la matriz de información de Fisher para \[\beta= (\beta_0,\beta_1)^T \]
+
+En general, la matriz de información de Fisher está dada por:
+\[I(\theta)= \phi\sum^n_{i=1}w_i x_i x_j\]
+
+Esto, de forma matricial, se escribe de:
+
+\[\phi X^TwX\]
+
+Considerando que, para Poisson, el siguiente enlace:
+\[\eta_i=\log(\mu_i)\]
+
+y varianza $V(\mu)=\mu$. 
+
+Asimismo, se tiene que:
+\[w_i=\frac{(\frac{\partial}{\partial\eta_i})^2}{V_i}\]
+\[w_i=\frac{(\frac{\partial\eta_i}{\partial})^{-2}}{V_i}\]
+
+En dónde $\frac{\partial \eta_i}{\partial \mu_i}=\frac{1}{\mu}$
+
+Por lo tanto, reemplazando en la ecuación anterior, se tiene que:
+\[w_i=\frac{(\frac{1}{\mu})^{-2}}{V_i}\]
+\[w_i=\frac{\mu^2}{\mu}=\mu\]
+
+Entonces se tiene que $w_i=\mu_i$. Por lo tanto, la matriz de información de Fisher es:
+\[\phi X^TwX\]
+
+en dónde se tiene lo siguiente:
+\[\phi=1\]
+\[w=diag(\mu_1,\mu_2,\ldots,\mu_n)\]
+
+
+**b)**  Encuentre una expresión de varianza de $\hat\beta_0 - \hat\beta_1$
+
+Se sabe que $Var(\hat\beta)=(X^TwX)^{-1}$ para Poisson.
+
+Para hallar $(X^TwX)$ (matriz de información de Fisher) se aplica:
+
+\[H(\beta) =-\frac{\partial^2 l(\beta_0,\beta_1)}{\partial \beta  \partial\beta'}  = - \sum^n_{i=1}  \frac{\partial^2 l_i(\beta_0,\beta_1)}{\partial \beta  \partial\beta'}\]
+
+Para el cálculo de $-\frac{\partial^2 l(\beta_0,\beta_1)}{\partial \beta  \partial\beta'}$
+se consideran las siguientes notaciones :
+
+- \[L_i(\beta_0,\beta_1) = u^{y_1}_i(exp(-\mu_i))\] como contribución de la observación i
+- \[L_i(\beta_0,\beta_1) = \prod^n_{i=1} L_i(\beta_0,\beta_1)\] como función de verosimilitud
+- \[l_i(\beta_0,\beta_1) = y_i log(\mu_i) - u_i = y_i(\beta_0+\beta_1 X_i) - exp(\beta_0+\beta_1 X_i)\] como logaritmo de la primera expresión
+
+Luego
+
+\[\frac{\partial^2 l_i(\beta_0,\beta_1)}{\partial \beta^2_0} = -exp(\beta_0+\beta_1 X_1) = - \mu_i\]
+
+\[\frac{\partial^2 l_i(\beta_0,\beta_1)}{\partial \beta^2_1} = -exp(\beta_0+\beta_1) X^2_i = - \mu_i X^2_i\]
+
+\[\frac{\partial^2 l_i(\beta_0,\beta_1)}{\partial \beta_0 \beta_1} = -exp(\beta_0+\beta_1) X_i = - \mu_i X_i\]
+
+De lo anterior se tiene que $H(\beta)$
+
+\[H(\beta) = \left(\begin{array}{cc} \sum^n_{i=1} \mu_i & \sum^n_{i=1} \mu_i x_i\\ \sum^n_{i=1} \mu_i x_i & \sum^n_{i=1} \mu_i x^2_i \end{array}\right)\]
+
+Dado que $H(\beta)=X^TwX$ y $Var(\hat\beta)=(X^TwX)^{-1}$ se tiene que :
+
+\[Var(\hat\beta)=(H(\beta))^{-1} = \frac{1}{(\sum^n_i \mu_i)(\sum^n_i \mu_i x^2_i)- 
+(\sum^n_i \mu_i X_i)^2} \left(\begin{array}{cc} \sum^n_i \mu_i  x^2_i& - \sum^n_i \mu_i x_i\\ - \sum^n_i \mu_i x_i & \sum^n_i \mu_i \end{array}\right)\]
+
+Donde : \[(\sum^n_{i=1} \mu_i)(\sum^n_{i=1} \mu_i x^2_i)-(\sum^n_{i=1} \mu_i X_i)^2 = Z\]
+
+Se solicita :
+
+\[Var(\hat\beta_0 - \hat\beta_1)= Var(\hat\beta_0) + Var(\hat\beta_1) - 2 Cov(\hat\beta_0,\hat\beta_1)\]
+
+\[Z(\sum^n_{i=1} \mu_i X^2_i) + Z(\sum^n_{i=1} \mu_i) + 2 \sum^n_{i=1} \mu_i x_i \]
+
+
+## Pregunta 3
+
+```{r message=FALSE, warning=FALSE}
+datos <- read.csv("~/Documents/maestria-pucp/2019-2/modelos-lineales-2/clase-7/Preg3.csv", sep=",",fileEncoding = "UTF-8")
+```
+
+```{r message=FALSE, warning=FALSE}
+library(glm2)
+library(faraway)
+library(car)
+library(spm)
+library(MASS)
+library(hnp)
+library(ggplot2)
+```
+
+En el archivo Preg3.csv se presentan los siguientes variables medidas durante un año en una región :
+
+- reclamos : números de reclamos en un seguro de autos para responsabilidad civil frente a terceros.
+
+- accidentes : números de accidetes en la región
+
+- poblacion : poblacion en la región
+
+**a)** Estime un modelo de regresión de Poisson para explicar tasa de reclamos por habitante de la región considerando como covariables el logaritmo del número de accidentes. Presente formalmente el modelo e interprete los coeficientes estimados.
+
+\[ Yi  \sim Poisson(\mu_i)\]
+\[ n_i  = \beta_o + \beta_1 x_i \]
+\[ log(u_i)  = n_i \]
+\[ u_i  = t_i * \lambda_i\]
+
+- $t_i$ = habitante  de la  región
+- $\lambda_i$ = tasa de reclamos por habitante de la región
+
+Donde :
+
+- $Y_i$ = número de reclamos por habitante de la región
+- $x_i$ = logaritmo del número de accidentes en la región
+
+Análisis previo:
+
+```{r message=FALSE, warning=FALSE}
+attach(datos)
+head(datos)
+dim(datos)
+```
+
+Para obtener reclamos por habitante de la región
+```{r message=FALSE, warning=FALSE}
+y<-reclamos/poblacion
+x<-log(accidentes)
+```
+
+```{r message=FALSE, warning=FALSE}
+nueva_data<-as.data.frame(cbind(y,x))
+head(nueva_data)
+```
+
+**Analizando la data mediante el gráfico de dispersión**
+```{r message=FALSE, warning=FALSE}
+scatterplotMatrix(nueva_data,smooth = FALSE)
+```
+
+Se observa que la varianza no es constante, a medida que aumenta $X$ se observa que 
+aumenta la varianza
+
+A continuación presentamos el primer modelo propuesto : 
+
+```{r message=FALSE, warning=FALSE}
+Modelo1 <- glm(y ~ x, data=nueva_data, family=poisson(link = "log"))
+```
+
+```{r message=FALSE, warning=FALSE}
+summary(Modelo1)
+exp(coef(Modelo1))
+```
+
+**Interpretación**
+\[\beta_0  estimado = -6.9083\]
+\[\beta_1  estimado = 0.2468\]
+\[\beta_0  estimado = exp(-6.9083)  \cong 0\]
+
+Se espera que el número de reclamos por habitante de la región sea aproximadamente cero 
+cuando el logaritmo del número de accidentes de la región es cero, es decir cuando el número de accidentes de la región es uno.
+
+\[\beta_1  estimado = exp(0.2468) \cong 1.28\]
+
+Cuando ocurre un incremento de uno en el logaritmo del número de accidentes de la región, se espera que esto genere un incremento de 29% en el número de reclamos por habitante de la región.
+
+
+**b)** Realice gráficos de leverage, distancia de Cook, residuos versus valores ajustados, residuos con bandas de confianza. Comente sus resultados.
+
+**Gráfico de Leverage y distancia de Cook**
+
+```{r message=FALSE, warning=FALSE}
+influenceIndexPlot(Modelo1,vars=c ("Cook", "hat"), id=list(n=5))
+```
+
+**Comentario**
+En el gráfico anterior de distancias de "Cook D" nos ayuda a identificar puntos que son potencialmente influyentes debido a su ubicación en el rango de los datos.
+
+También hay que notar el segundo gráfico donde se muestran los atípicos en las covariables x, h(hatvalues). A esto se le conoce como leverage o apalancamiento.
+
+Se recomienda retirar los puntos con alta distancia de cook y alto leverage effect(atípico en la covariable) como por ejemplo el punto 34.
+
+**Gráfico de residuos versus valores ajustados**
+
+```{r message=FALSE, warning=FALSE}
+residualPlot(Modelo1,type="rstandard")
+```
+
+El modelo de Poisson es heterocedástico
+
+Función de varianza: $$V(μ)=μ$$
+
+No se muestra patrones, es casi casi un ruido blanco, pero parece que hubiera mayor dispersión que en un modelo Poisson.
+
+**Gráfico de residuos con bandas de confianza**
+
+```{r message=FALSE, warning=FALSE}
+library(hnp)
+hnp(Modelo1,halfnormal = FALSE)
+```
+
+**Comentario **
+
+Vemos que hay varios puntos que se quedan fuera de la banda, lo que indica que este modelo no ajusta bien a los datos.
+
+Este gráfico de bandas y el anterior de residuos, nos hace pensar que necesitamos un modelo que contemple mayor varianza para que se ajuste mejor a los datos, como el modelo Binomial Negativa.
+
+**c)** En base a sus resultados en b) de ser necesario proponga un nuevo modelo y realice un análisis de diagnóstico que incluya el estudio del efecto de posibles observaciones infuyentes. Indique cuál sería el modelo adecuado para este problema.
+
+**Modelo 2 : Binomial Negativa**
+
+\[Yi \sim BN(ui,\phi)\]
+\[n_i  = \beta_o + \beta_1 x_i\]
+\[log(u_i)  = n_i\]
+\[E(Y_i)  = u_i\]
+\[ Var(Y_i)  = u_i + \frac{u_i^2}{\phi}\] , tiene por propiedad más varianza que el Modelo de Poisson.
+
+Donde : 
+
+- $Yi$ : número de reclamos por habitante de la región
+
+- $Xi$ : logaritmo del número de accidentes en la región
+
+Además, se retira del modelo el caso 34, por lo visto en los gráficos de leverage y distancias de Cook.
+
+```{r message=FALSE, warning=FALSE}
+Modelo2=glm.nb(y ~ x, data=nueva_data, subset=-34)
+```
+
+Coeficientes estimados
+
+```{r message=FALSE, warning=FALSE}
+summary(Modelo2)                  
+exp(coef(Modelo2))
+```
+
+Gráfico de leverage y distancia de Cook
+
+```{r message=FALSE, warning=FALSE}
+influenceIndexPlot(Modelo2,vars=c ("Cook", "hat"), id=list(n=3))
+```
+
+Del gráfico anterior , se recomienda retirar los puntos con alta distancia de cook y alto leverage effect como por ejemplo el punto 13.
+
+Gráfico de residuos versus valores ajustados
+
+```{r message=FALSE, warning=FALSE}
+residualPlot(Modelo2,type="rstandard")
+```
+
+Gráfico de residuos con bandas de confianza
+
+```{r message=FALSE, warning=FALSE}
+hnp(Modelo2,halfnormal = FALSE)
+```
+
+**Comentario**
+Vemos que los puntos están dentro de las bandas hasta un punto donde se salen de las bandas y forman una región fuera de ellas, lo que indica que este modelo tampoco ajusta bien a todos los datos.
+
+El gráfico de bandas de este modelo y del anterior nos hace pensar que faltan considerar más covariables para encontrar un modelo que ajuste mejor.
+
+**d)** Si en una región hubiera un aumento del 10% en el número de accidentes, calcule en forma puntual y por intervalo el efecto en la tasa de reclamos por habitante.
+
+**Modelo 3 : Binomial Negativa**
+```{r message=FALSE, warning=FALSE}
+Modelo3=glm.nb(y ~ x, data=nueva_data, subset=-c(34,13))
+```
+
+Coeficientes estimados
+```{r message=FALSE, warning=FALSE}
+summary(Modelo3)                  
+exp(coef(Modelo3))
+```
+
+\[\beta_0  estimado = -6.7600\]
+\[\beta_1  estimado = 0.2214\]
+\[\beta_0  estimado = exp(-6.7600)  \cong 0\]
+
+Se espera que el número de reclamos por habitante de la región sea aproximadamente cero cuando el logaritmo del número de accidentes de la región es cero, es decir cuando el número de accidentes de la región es uno.
+
+\[\beta_1  estimado = exp(0.2214) \cong 1.25\]
+
+Cuando ocurre un incremento de uno en el logaritmo del número de accidentes de la región, se espera que esto genere un incremento de 25% en el número de reclamos por habitante de la región.
+
+**Gráfico de Leverage y distancia de Cook**
+
+```{r message=FALSE, warning=FALSE}
+influenceIndexPlot(Modelo3,vars=c ("Cook", "hat"), id=list(n=3))
+```
+
+**Comentario**
+Se recomienda retirar los puntos con alta distancia de cook y alto leverage effect(atípico en la covariable) , en este modelo no tenemos puntos que cumplan ambas condiciones.
+
+**Gráfico de residuos versus valores ajustados**
+```{r message=FALSE, warning=FALSE}
+residualPlot(Modelo3,type="rstandard")
+```
+
+**Gráfico de residuos con bandas de confianza**
+```{r message=FALSE, warning=FALSE}
+hnp(Modelo3,halfnormal = FALSE)
+```
+
+```{r message=FALSE, warning=FALSE}
+AIC(Modelo1)
+AIC(Modelo2)
+AIC(Modelo3)
+```
+
+Por el criterio AIC el mejor modelo es el **Modelo 3**
+
+Pero el gráfico de bandas de residuos con bandas de confianza nos dice que ninguno de estos 3 modelos ajusta bien a los datos, sugerimos adicionar otras covariables que ayuden a explicar mejor.
+
+## Pregunta 4
+La base de datos utilizada para el presente informe contiene las siguientes variables:
+
+- \textbf{Variable respuesta}
+  - nsiniestros: Cantidad de siniestros ocurridos.
+
+- \textbf{Covariables}
+  - Asegurados_Total: Cantidad de asegurados en cada una de las pólizas.
+  
+  - Planilla_total: Monto mensual de salario pagado a los empleados en unidades monetarias dentro de cada póliza.
+  
+  - nivel_riesgo: Esta variable fue construida clasificando las actividades de riesgo del 1 al 5, donde 5 significa que la actividad económica que desarrolla la empresa tiene mayor exposición al riesgo de accidente o enfermedad profesional y 1 que la exposición a estos riesgos es menor.
+  
+La presente base de datos contiene 14,064 observaciones. Estas observaciones fueron recabadas por un período de 3 años. 
+
+**Objetivo**
+
+El objetivo de este análisis es modelar el número de reclamos de una póliza de seguro de vida contratada para un grupo asegurado (que consiste en todos los empleados de una empresa), mediante las variables explicativas: número de asegurados, planilla mensual (salario mensual del grupo) y nivel de riesgo de la actividad económica de la empresa.
+
+Los datos considerados en el análisis contemplan las Pólizas vigentes a corte dic/2017 de un producto de Seguro de Vida de una Compañía de Seguros de Perú. En cada una de estas pólizas al menos uno de los miembros del grupo asegurado ha presentado un reclamo de invalidez o los familiares de los miembros del grupo han presentado por lo menos un reclamo de fallecimiento en un periodo de tres años.
+
+El estudio se compone de un análisis exploratorio de los datos, selección del mejor modelo, análisis de diagnóstico del mismo e interpretación de resultados.
+
+### Análisis Exploratorio
+
+Para realizar el análisis exploratorio inicial, realizaremos la carga de los datos en el siguiente código:
+  
+```{r inicio pregunta 3,echo=TRUE,message=FALSE}
+library(dplyr)
+library(car)
+library(ggplot2)
+library(car)
+library(GGally)
+library(stargazer)
+library(hnp)
+setwd("/home/justomanrique/Documents/maestria-pucp/2019-2/modelos-lineales-2/clase-7/")
+datos_preg4 <- readxl::read_excel("pregunta4_diana_v2.xlsx")
+
+datos_preg4 = datos_preg4 %>%
+  mutate (  ACTIVIDAd=as.factor(ACTIVIDAd),
+            nivel_riesgo=as.factor(nivel_riesgo))
+```
+
+Realizamos un gráfico de dispersión mediante la función ggpairs, para identificar posibles relaciones entre los datos así como la distribución de las mismas:
+
+```{r gráfico exploratorio}
+nombres = c("ACTIVIDAd","Asegurados_total","Planilla_total","nsiniestros","nivel_riesgo")
+datos_preg4 = subset ( datos_preg4 , select = nombres )
+datos_preg4 = na.omit ( datos_preg4 )
+
+datos_preg4 = datos_preg4 %>%
+  mutate (  ACTIVIDAd=as.factor(ACTIVIDAd),
+            nivel_riesgo=as.factor(nivel_riesgo))
+
+datos_preg4 = datos_preg4[,2:5]
+
+summary(datos_preg4)
+```
+
+En base a ello se observa:
+
+- La cartera de pólizas en el presente informe es riesgosa, pues existe mayor proporción de pólizas con riesgo 4 y 5 que de pólizas con riesgo 1 a 3.
+- En las variables Asegurados_total, Planilla_total, nsiniestros existen valores extremos pues la gráfica se encuentra distorsionada, con alta concentración de valores en un lado y una cola larga hacia la derecha.
+- Se observa correlación fuerte entre la cantidad total de asegurados y planilla (correlación del 0.736).
+- Se observa correlación media entre la cantidad de siniestros y la planilla total (correlación del 0.513).
+
+### Selección de modelos
+
+```{r}
+modelo1 <- glm(nsiniestros ~ log(Asegurados_total) + log(Planilla_total) + nivel_riesgo, 
+data=datos_preg4, family=poisson(link = "log"))
+
+summary(modelo1)
+
+round(exp(coef(modelo1)),3)
+```
+
+Del modelo inicial, se puede observar que:
+
+- En la medida que incremente el nivel de riesgo (tomando como referencia el nivel 1), se espera un incremento en la cantidad de siniestros. El efecto se hace mayor, en la medida que el nivel de riesgo incrementa (ver tabla de coeficientes).
+- En la medida que incremente la cantidad de asegurados, se espera que incremente el 8% la cantidad de siniestros.
+- En la medida que aumente la planilla total, se espera que se incremente en 180% la cantidad de siniestros.
+
+### Análisis de diagnóstico
+
+La interpretación anteriormente indicada se sostiene en la medida que los supuestos del modelo se cumplan. Para ello, se realizó el siguiente análisis de diagnóstico:
+
+#### Residuales
+
+Ver a continuación el diagnóstico de residuales:
+
+```{r residuales}
+
+###Gráfico de residuos con bandas de confianza
+hnp(modelo1,halfnormal = FALSE)
+```
+
+Se observa, en el diagnóstico de residuales, que los residuos se ajustan adecuadamente a las bandas de confianza. Sin embargo, en las colas existe mayor dispersión. Esto podría deberse a los valores atípicos que existen dentro de la muestra (esto se observó en el análisis exploratorio).
+
+#### Visualización de puntos influyentes
+
+```{r puntos influyentes}
+###Gráfico de leverage y distancia de Cook
+influenceIndexPlot(modelo1,vars=c ("Cook", "hat"), id=list(n=3))
+```
+
+Se observa que las observaciones 1296,457 y 2274 son valores influyentes en el modelo de acuerdo a la distancia de Cook. Asimismo, en relación a los hat-values, las observaciones 47, 1296 y 12627 son valores influyentes.
+
+### Modelo final
+
+En base al trabajo anterior, se eliminaron los valores influyentes en común para evaluar el modelo final. Ver a continuación 
+
+```{r}
+# Modelo 2: Poisson Regression y ~ x -c(1296,47)
+modelo2 <- glm(nsiniestros ~ log(Asegurados_total) + log(Planilla_total) + nivel_riesgo, data=datos_preg4, family=poisson(link = "log"), subset = -c(1296,47))
+
+summary(modelo2)
+#ha cambiado la estimacion de los parametros beta y el log(asegurados_total se ha vuelto significativo)
+
+round(exp(coef(modelo2)),3)
+
+```
+Se observa que la estimación de los parámetros ha variado considerablemente para la cantidad total de asegurados (1.347 vs. 1.083), así como para la planilla (2.369 vs. 2.848). Asimismo, se observa que la cantidad total de asegurados se ha vuelto una variable significativa.
+
+Asimismo, se han hecho los siguientes diagnósticos.
+
+
+```{r}
+
+##############
+###Grafico de leverage y distancia de Cook
+
+influenceIndexPlot(modelo2,vars=c ("Cook", "hat"), id=list(n=3))
+
+###Gr?fico de residuos versus valores ajustados
+residualPlot(modelo2,type="rstandard")
+
+###Gr?fico de residuos con bandas de confianza
+hnp(modelo2,halfnormal = FALSE)
+```
+
+En relación a los gráficos presentados, se visualiza lo siguiente:
+
+- Se observa que los residuales se encuentran más cerca a las bandas de confianza de los residuales, sin embargo aún persisten ciertos valores influyentes.
+- Se observa que aún siguen persistiendo valores influyentes.

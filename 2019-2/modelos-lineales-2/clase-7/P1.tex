@@ -1,0 +1,26 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\newtheorem{mydef}{Definition}
+\newtheorem{mythm}{Theorem}
+\newtheorem{myprf}{Proof}
+\title{Modelos lineales}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+
+\section{Pregunta 1}
+Sea $Y$ una variable aleatoria discreta con distribución binomial negativa $\mu$ y parámetro de dispersión $\phi$, cuya función de distribución es dada por
+\[ f{(y)}=\frac{\Gamma{(y+\phi)}}{\Gamma{(y+1)}\Gamma{(\phi)}}{(\frac{\mu}{\mu+\phi})}^{y}{(\frac{\phi}{\mu+\phi})}^{\phi}, y=0,1,2\ldots\]
+
+Demuestre que para $\phi$ conocido, la distribución de $Y$ pertenece a la familia exponencial.
+
+\textbf{Solución:} La función de probabilidad de $Y$ se puede reexpresar como:
+\[ f{(y)}=\exp{(\phi \log{(\frac{\phi}{\mu+\phi})}+y \log{(\frac{\mu}{\mu+\phi})}+\log{(\frac{\Gamma{(y+\phi)}}{y! \Gamma{(\phi)}})})}.\]
+\[ f{(y)}=\exp{(\phi \log{(\phi)}+y \log{(n)}-{(\log{(\mu+\phi)})}{(y+\phi)}-\log{(\Gamma{(\phi)})}-\log{(y!)}-\log{(\Gamma{(y+\phi)})})}.\]
+
+
+\end{document}

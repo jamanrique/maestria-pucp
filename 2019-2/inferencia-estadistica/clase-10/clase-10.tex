@@ -1,0 +1,130 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\newtheorem{mydef}{Definition}
+\newtheorem{mythm}{Theorem}
+\newtheorem{myprf}{Proof}
+\title{Clase 10 - Inferencia Estadística}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+
+\section{Propiedad de Invarianza}
+
+Si $\hat{\theta}$ es el estimador de máxima verosimilitud de $\theta$; entonces, el estimador de máxima verosimilitud de $g{(\theta)}$ es $g{(\hat{\theta})}$.
+
+\subsection{Ejemplo}
+
+Si $X \sim N{(\mu,\sigma^{2})}$; entonces los estimadores de máxima verosimilitud son $\hat{\mu}=\bar{X}$ y $\hat{\sigma^{2}}=\frac{\sum_{j=1}^{n}{(X_{j}-\bar{X})}^{2}}{n}$. Entonces
+\begin{itemize}
+	\item Hallar $\hat{\theta}$ por máxima verosimlitud. \textbf{Solución: }$\sigma=\sqrt{\sigma^{2}=g{(\sigma^{2})}}$. Entonces por propiedad de invarianza, $\hat{\sigma}=\sqrt{\frac{\sum_{j=1}^{n}{(X_{j}-\bar{X})}^{2}}{n}}$.
+\end{itemize}
+ Se tiene el coeficiente de variación igual a $\frac{\sigma}{\mu}$. Entonces, por la propiedad de invarianza, el estimador de máxima verosimilitud del coeficiente de variación es:
+\[ \hat{CV}=\hat{\frac{\sigma}{\mu}}=\frac{\hat{\sigma}}{\hat{\mu}}=\frac{\sqrt{\sum_{j=1}^{n}{(X_{j}-\bar{X})^{2}}}}{\bar{X}}.\]
+
+\subsection{Ejemplo}
+
+Si $X~P{(\lambda)}$, entonces hallar el estimador de máxima verosímilitud de $p=P{(X=0)}$
+
+\[ P{(X=0)}=\frac{e^{-\lambda}\lambda^{0}}{0!}= e^{-\lambda}.\]
+Luego, por la propiedad de invarianza, el estimador de máxima verosímilitud de $p=e^{-\hat{\lambda}}=g{(\hat{\lambda})}=e^{-\bar{X}}$.
+
+\subsection{Ejemplo}
+Sea $X\sim N{(\mu,\sigma^{2})}$ y $p=P{(a\leq X\leq b)}$, dónde a y b son constantes. Hallar el estimador de máxima verosimilitud de p.
+
+\textbf{Recordatorio:} Tenemos que:
+\[ Z = \frac{X-\mu}{^{2}}\sim N{(0,1)}.\]
+\[ P{(a \leq X \leq b)}=F_{x}{(b)}-F_{x}{(a)}.\]
+\[ F_{x}{(X)}=F_{Z}{(\frac{X-\mu}{\sigma})}.\]
+
+Por lo tanto, se tiene que:
+\[ p = P{(a \leq X \leq b)}.\]
+\[ = F_{x}{(b)}-F_{x}{(a)}.\]
+\[ = F_{z}{(\frac{b-\mu}{\sigma})}-F_{z}{(\frac{a-\mu}{\sigma})}=g{(\mu,\sigma^{2})}.\]
+\[ \hat{p}= F_{z}{(\frac{b-\hat{\mu}}{\hat{\sigma}})}-F_{z}{(\frac{a-\hat{\mu}}{\hat{\sigma}})}=g{(\hat{\mu},\hat{\sigma})}.\]
+
+\section{Distribución asintótica del estimador de máxima verosimilitud}
+\subsection{Caso uniparamétrico}
+Asumiendo condiciones de regularidad, se tiene que:
+\[ \sqrt{n}{(\hat{\theta}-\theta)} \rightarrow_{distribución} N{(0,I^{-1}{(\theta)})}.\]
+Si $n$ es suficientemente grande, se tiene que:
+\[ \sqrt{n}{(\hat{\theta}-\theta)} \sim_{aprox} N{(0,I^{-1}{(\theta)})}.\]
+\[ \hat{\theta} \sim_{aprox} N{(\theta,\frac{1}{n I{(\theta)}})}.\]
+
+\subsubsection{Ejemplo}
+Se tiene que $X\sim B{(\theta,1)}$. La función de densidad es:
+\[ f{(x)}=\theta x^{\theta-1}, 0 < X < 1, \theta > 0.\]
+
+\[ Ln{(f{(x)})}=Ln{(\theta)}+{(\theta-1)}Ln{(x)}.\]
+\[ \frac{\partial^{2}}{\partial \theta^{2}}=\frac{-1}{\theta^{2}}.\]
+
+Luego, la información de fisher es $\frac{1}{\theta^{2}}$.
+
+Por otro lado, se tiene que:
+\[ l{(\theta)}=Ln{(L{(\theta)})}.\]
+\[ =n Ln{(\theta)}+{(\theta-1)}\sum_{j=1}^{n}Ln{(X_{j})}.\]
+\[ l'{(\theta)}=\frac{n}{\theta}+\sum_{j=1}^{n}Ln{(X_{j})}=0.\]
+\[ \hat{\theta}=-\frac{n}{\sum_{j=1}^{n}Ln{(X_{j})}}.\]
+
+La distribución asintótica es:
+\[ \sqrt{n}{(\hat{\theta}-\theta)} \rightarrow_{D} N{(0,\theta^{2})}.\]
+\subsubsection{Ejemplo}
+Supóngase que $n=36$ y hállese, aproximadamente
+\[ P{(\frac{\hat{\theta}}{1.196}\leq \theta \leq \frac{\hat{\theta}}{0.804})}.\]
+
+\textbf{Solución: } $n=36$:
+\[ 6{(\hat{\theta})-\theta}\sim N{(0,\theta^{2})}.\]
+\[ {(\hat{\theta})}\sim_{aprox} N{(\theta,\frac{\theta^{2}}{36})}.\]
+Se obtiene la variable estándar:
+\[ Z=\frac{\hat{\theta}-\theta}{\sqrt{\frac{\hat{\theta}}{36}}}\sim_{aprox} N{(0,1)}.\]
+
+\section{Versión a partir de la Información de Fisher observada}
+
+Sea $H{(\theta)}=\frac{\partial^{2}}{\partial \theta^{2}}l{(\theta)}$. Entonces $-H{(\hat{\theta})}$ se le denomina la información de Fisher observada.
+
+Entonces:
+\[ \sqrt{-H{(\hat{\theta})}}{(\hat{\theta}-\theta)} \rightarrow_{D} N{(0,1)}.\]
+
+\subsection{Ejemplo}
+
+Si $X\sim B{(\theta,1)}$, entonces:
+\[ H{(\theta)}=\frac{\partial^{2}}{\partial \theta^{2}}l{(\theta)}.\]
+\[ = \sum_{j=1}^{n}\frac{\partial^{2}}{\partial \theta^{2}}{(Ln{(f{(X_{j})})})}= \sum_{j=1}^{n}{(\frac{-1}{\theta^{2}})}=\frac{-n}{\theta^{2}}.\]
+
+Entonces, tenemos que:
+\[ \sqrt{\frac{n}{\hat{\theta}^{2}}}{(\hat{\theta}-\theta)}\sim_{aprox} N{(0,1)}.\]
+\[ \sqrt{n}{(\frac{\hat{\theta}-\theta}{\hat{\theta}})}\sim_{aprox} N{(0,1)}.\]
+En particular:
+\[ P{(\frac{\hat{\theta}}{1.196} \leq \theta \leq\frac{\hat{\theta}}{0.804})}.\]
+\[ P{(0.804 \theta \leq \hat{\theta} \leq 1.196\theta)}.\]
+\[ F_{z}{(\frac{6{(1.196\theta-\theta)}}{1.196\theta})} - F_{z}{(\frac{6{(0.804\theta-\theta)}}{0.804\theta})} .\]
+
+\section{Caso Multiparamétrico}
+
+\[ \theta = (\theta_{1},\theta_{2},\ldots,\theta_{n}) \in \Theta \subset \mathbb{R}^{k}.\]
+\[ I{(\theta)}=-E{(\frac{\partial^{2}}{\partial \theta_{i}\theta_{j}} Ln{(f{(x,\theta)})})}.\]
+Matriz cuadrada de orden k.
+
+\[ X\sim N{(\mu,\sigma^{2})}.\]
+
+\[ I{(\mu,\sigma^{2})}= 
+= 
+\begin{bmatrix}
+	-E{(\frac{\partial^{2}}{\partial \mu^{2}}Ln{(f{(x,\theta)})})}& -E{(\frac{\partial^{2}}{\partial \theta^{2}\theta\mu} Ln{(f{(x,\theta)})})} \\
+	-E{(\frac{\partial^{2}}{\partial \sigma^{2}\mu} Ln{(f{(x,\theta)})})} & -E{(\frac{\partial^{2}}{\partial \sigma^{2}}Ln f{(x,\theta)})}
+\end{bmatrix}
+\]
+Distribución asintótica a partir de la matriz de la información de Fiser
+\[ I{(\mu,\sigma^{2})}=
+= 
+\begin{bmatrix}
+\frac{1}{\sigma^{2}} & 0 \\
+0 & \frac{1}{2\sigma^{4}} 
+\end{bmatrix}
+\]
+\[ \sqrt{n}{(\hat{\theta}-\theta)} \rightarrow_{D} N{(0,I^{-1}{(\theta)})}.\]
+\end{document}
+
