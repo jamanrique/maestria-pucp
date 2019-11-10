@@ -1,0 +1,79 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\newtheorem{mydef}{Definition}
+\newtheorem{mythm}{Theorem}
+\newtheorem{myprf}{Proof}
+\title{Clase 12: Inferencia Estadística}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+\section{Intervalos de Confianza Usuales}
+Para la media $\mu$ con varianza $\sigma^{2}$ conocida y, bajo el supuesto de que $X \sim N{(\mu,\sigma^{2})}$, se tiene que:
+\[ Z=\frac{\sqrt{n}{(\bar{X}-\mu)}}{\sigma} \sim N{(0,1)}.\]
+
+\textbf{Paso 1:} Considerando Z como variable base.
+
+\textbf{Paso 2:} Sean $a$ y $b$ tal que:
+\[ F_{z}{(b)}=1-\frac{\alpha}{2} \text{y} F_{z}{(a)}=\frac{\alpha}{2}.\]
+
+En este caso se cumple que $a = -b$ y se denota $b$ por $Z_{1-\frac{\alpha}{2}}$. Asimismo, se tiene que:
+\[ F_{z}{(Z_{1-\frac{\alpha}{2}})}=1-\frac{\alpha}{2}.\]
+
+\textbf{Paso 3:}
+\[ a \leq Z \leq b \iff l_{2} \leq \mu \leq l_{2}.\]
+\[ -Z_{1-\frac{\alpha}{2}} \leq \frac{\sqrt{n}{(\bar{X}-\mu)}}{\sigma} \leq Z_{1-\frac{\alpha}{2}}.\]
+
+Entonces se tiene que:
+\[ \bar{X} - Z_{1-\frac{\alpha}{2}\frac{\sigma}{\sqrt{n}}} \leq \mu \leq \bar{X}+Z_{1-\frac{\alpha}{2}}\frac{\sigma}{\sqrt{n}}.\]
+
+Es un intervalo de confianza del $1-\alpha$ para estimar a $\mu$. \textbf{Nota:} Si $X$ no tiene distribución normal, pero el tamaño de muestra es suficientemente grande, se puede asumir que tiene distribución normal. Así, el intervalo de confianza mostrado anteriormente es válido.
+
+\section{T de student}
+
+Bajo el primer supuesto, asumamos que:
+\[ T = \frac{\sqrt{n}{(\bar{X}-\mu)}}{S}\sim t{(n-1)}.\]
+
+\textbf{Paso 1:} Consideramos a T como variable base.
+
+\textbf{Paso 2:} Hallamos $a$ y $b$ tal que:
+\[ F_{T}{(b)}=1-\frac{\alpha}{2} \text{y} F_{T}{(a)}=\frac{\alpha}{2}.\]
+
+Aquí también tenemos que $a=-b$ y $b$ se denota por $T_{n-1,1-\frac{\alpha}{2}}$ o simplemente $t_{1-\frac{\alpha}{2}}$; es decir:
+\[ F_{T}{(t_{1-\frac{\alpha}{2}})}=1-\frac{\alpha}{2}.\]
+
+\textbf{Paso 3:} $a \leq T \leq b \iff l_{1} \leq \mu \leq l_{2}$.
+\[ \bar{X}-t_{1-\frac{\alpha}{2} \frac{S}{\sqrt{n}}} \leq \mu \leq \bar{X}+t_{1-\frac{\alpha}{2}}\frac{S}{\sqrt{n}}.\]
+
+\section{Teorema de Slutsky}
+
+Por el teorema de Slutsky se tiene que:
+\[ \frac{\sqrt{n}{(\bar{X}-\mu)}}{S} \rightarrow_{D} Z\sim N{(0,1)}.\]
+
+Así $\frac{\sqrt{n}{(\bar{X}-\mu)}}{S}$ es una variable base. Y, mediante el método de la variable base resulta que:
+
+\[\bar{X}-Z_{1-\frac{\alpha}{2}} \frac{S}{\sqrt{n}};\bar{X}+Z_{1-\frac{\alpha}{2}} \frac{S}{\sqrt{n}}.\]
+
+\section{Diferencia de medias}
+
+Sea $(X_{1},X_{2},\ldots,X_{n})$ una muestra aleatoria de $X\sim N{(\mu_{1},\sigma^{2}_{2})}$ y sea $(Y_{1},Y_{2},\ldots,Y_{n})$ una muestra aleatoria de $Y\sim N{(\mu_{2},\sigma^{2}_{2})}$. Ambas muestras son independientes y $\sigma^{2}_{1}=\sigma^{2}_{2}=\sigma^{2}$. Sea
+\[ S^{2}_{p}=\frac{{(n_{1}-2)}S^{2}_{1}+{(n_{2}-1)}S^{2}_{2}}{n_{1}+n_{2}-2}.\]
+En dónde $S^{2}_{1}$ y $S^{2}_{2}$ son las varianzas muestrales. Demostrar que:
+\[ \frac{{(n_{1}+n_{2}-2)}S^{2}_{p}}{\sigma^{2}} \sim X^{2}{(n_{1}+n_{2}-2)}.\]
+
+Sea:
+\[ Z = \frac{\bar{X}-\bar{Y}-{(\mu_{1}-\mu_{2})}}{\sigma \sqrt{\frac{1}{n_{1}+\frac{1}{n_{2}}}}}.\]
+
+Sea:
+-\[ T = \frac{\bar{X}-\bar{Y}-{(\mu_{1}-\mu_{2})}}{S_{p}\sqrt{\frac{1}{n_{1}+\frac{1}{n_{2}}}}}.\]
+Demostrar que $T\sim t{(n_{1}+n_{2}-2)}$.
+
+\begin{myprf}
+	Usamos como variable base a $T$, para deducir un I.C., del ${(100-\alpha)}\%$, para estimar a $\mu_{1}-\mu_{2}$.
+
+
+\end{myprf}
+ \end{document}

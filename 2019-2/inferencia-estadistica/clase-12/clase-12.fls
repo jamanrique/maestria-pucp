@@ -1,0 +1,16 @@
+PWD /home/justomanrique/Documents/maestria-pucp/2019-2/inferencia-estadistica/clase-12
+INPUT /usr/share/texmf-dist/web2c/texmf.cnf
+INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
+INPUT clase-12.tex
+OUTPUT clase-12.log
+INPUT /usr/share/texmf-dist/tex/latex/base/article.cls
+INPUT /usr/share/texmf-dist/tex/latex/base/article.cls
+INPUT /usr/share/texmf-dist/tex/latex/base/size10.clo
+INPUT /usr/share/texmf-dist/tex/latex/base/size10.clo
+INPUT /usr/share/texmf-dist/tex/generic/babel/babel.sty
+INPUT /usr/share/texmf-dist/tex/generic/babel/babel.sty
+INPUT /usr/share/texmf-dist/tex/generic/babel/switch.def
+INPUT /usr/share/texmf-dist/tex/generic/babel-spanish/spanish.ldf
+INPUT /usr/share/texmf-dist/tex/generic/babel-spanish/spanish.ldf
+INPUT /usr/share/texmf-dist/tex/generic/babel/babel.def
+INPUT /usr/share/texmf-dist/tex/generic/babel/txtbabel.def
