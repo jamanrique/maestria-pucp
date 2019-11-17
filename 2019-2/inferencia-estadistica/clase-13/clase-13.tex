@@ -1,0 +1,116 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\newtheorem{mydef}{Definition}
+\newtheorem{mythm}{Theorem}
+\newtheorem{myprf}{Proof}
+\title{Clase 13: Inferencia Estadística}
+\author{Justo Andrés Manrique Urbina}
+\begin{document}
+\maketitle
+
+\section{Ejemplo}
+
+Si $X\sim N{(0,\sigma^{2})}$,$n=20$. Se vió, en un ejemplo anterior, que:
+\[ \frac{\sum_{i=1}^{n}X_{j}^{2}}{34.1696}; \frac{\sum_{i=1}^{n}X_{j}^{2}}{9.5908}.\]
+es un intervalo de confianza del 9\% para estimar a $\sigma^{2}$. Deducir, a partir del intervalo anterior, uno para $\theta=P{(X>1)}$.
+
+\subsection{Solución:}
+Sea:
+\[ X\sim N{(0,\sigma^{2})}.\]
+\[ \rightarrow Z=\frac{x}{\sigma} \sim N{(0,1)}.\]
+\[ \rightarrow \theta=P{(X>1)}.\]
+\[ =1-F_{x}{(1)}.\]
+\[ \theta = 1-F_{z}{(\frac{1}{\sigma})}.\]
+
+Luego:
+\[ l_{1} \leq \sigma^{2} \leq l_{2}.\]
+\[ \sqrt{l_{1}} \leq \sigma \leq \sqrt{l_{2}}.\]
+\[ \frac{1}{\sqrt{l_{2}}}\leq \frac{1}{\sigma} \leq \frac{1}{\sqrt{l_1}}.\]
+
+\[ F_{z}{(\frac{1}{\sqrt{l_{2}}})}\leq F_{z}{(\frac{1}{\sigma})}\leq F_{z}{(\frac{1}{\sqrt{l_{1}}})}.\]
+\[ 1-F_{z}{(\frac{1}{\sqrt{l_{1}}})}\leq 1-F_{z}{(\frac{1}{\sigma})}\leq 1-F_{z}{(\frac{1}{\sqrt{l_{2}}})}.\]
+
+Por lo tanto, este es un intervalo de confianza del 95\% para estimar a $\theta$.
+
+\section{Ejercicio}
+Sea $X\sim \exp{(\theta)}$. Deducir también, del intervalo 95\% de confianza, lo siguiente: $P=P{(X>2)}$.
+
+\subsection{Solución:}
+
+\[ \rightarrow F_{x}{(X)}=1-e^{{(-\theta X)}},x > 0 .\]
+\[ \rightarrow p=P{(X>2)}.\]
+\[ =1-F_{x}{(2)}.\]
+\[ =1-1-e^{-2\theta}.\]
+\[ p=e^{-2\theta}.\]
+
+Luego se tiene que $L_{1}\leq \theta \leq l_{2}$
+\[ e^{-2l_{2}} \leq e^{-2\theta} \leq e^{-2l_{1}}.\]
+Por lo tanto, ese es un intervalo de confianza.
+
+\section{Contraste estadístico de hipótesis}
+Se tienen dos hipótesis acerca del parámetro $\theta$: $H_{0}$ y $H_{1}$. A la primera se le llama hipótesis nula y la segunda alternativa. A partir de los resultados de una muestra aleatoria se opta por una de las dos hipótesis.
+
+\begin{mydef}
+\textbf{Regla de decisión:} Es una regla que determina lo que debe ocurrir con la muestra para rechazar $H_{0}$.
+\end{mydef}
+
+\begin{mydef}
+\textbf{Región crítica:} Es otra forma de expresar la regla de decisión:
+\[ R.C = \{X_{1},X_{2},\ldots,X_{n}):(X_{1},X_{2},\ldots,X_{n}) \text{ satisface la regla de decisión.}\}.\]
+\end{mydef}
+
+Existen dos tipos de errores, al rechazar $H_{0}$:
+\begin{itemize}
+	\item \textbf{Tipo 1:} Rechazar $H_{0}$ siendo verdadera.
+	\item \textbf{Tipo 2:} Aceptar $H_{0}$ siendo falsa
+\end{itemize}
+
+Las probabilidades correspondientes se denotan por $\alpha$ y $\beta$, respectivamente. Es decir:
+\begin{itemize}
+	\item $\alpha:$ P(Rechazar $H_{0}$ siendo verdadera).
+	\item $\beta:$ P(Aceptar $H_{0}$ siendo falsa).
+\end{itemize}
+
+\section{Ejemplo:}
+En el contexto del ejemplo anterior evaluar los riesgos de de la prueba y también la potencia de esta:
+
+\subsection{Solución:}
+\[ \alpha=P{(\text{rechazar $H_{0}$ siendo verdadera})}.\]
+\[ =P{(x>7,\mu=5)}.\]
+\[ \alpha=P{(X>7,\mu=5)}.\]
+
+Por otra parte, estandarizamos la variable X.
+\[ Z=\frac{\sqrt{20}{(\bar{X}-\mu)}}{\sqrt{10}}\sim N{(0,1)}.\]
+
+De ello se desprende:
+\[ \alpha=P(\bar{x}>7),\mu=5.\]
+\[ =1-F_{z}{(\frac{\sqrt{20}{(7-5)}}{\sqrt{10}})}.\]
+\[ =1-F_{z}{(2.83)}.\]
+\[ =1-0.9977.\]
+\[ \alpha=0.0023.\]
+
+Análogamente, se tiene que:
+
+\[ \beta = P{(\bar{X}\leq 7, \mu=9)}.\]
+\[ =F_{\bar{X}}{(7)},\mu=9.\]
+\[ F_{z}{(\frac{\sqrt{20}(7-9)}{\sqrt{10}})},\mu=9.\]
+\[ =F_{z}{(-2.83)}.\]
+\[ \beta=0.0023.\]
+
+Entonces, se lee que el 100 $\alpha \%$ de las veces que se tome la decisión de rechazar $H_{0}$ se tomará una decisión equivocada.
+
+Por otro lado, se lee que el 100 $\beta \%$ de las veces que se tome la decisión de aceptar $H_{0}$, se tomará una decisión equivocada.
+
+\textbf{Observación:} Una buena regla de decisión es aquella que tenga $\alpha$ y $\beta$ pequeños. En general, fijado el tamaño de muestra, no se puede minimizar $\alpha$ y $\beta$ al mismo tiempo. Se suele fijar el valor de $\alpha$ y obtener una regla de decisión que tenga un $\beta$ pequeño.
+
+\section{Lema de Neyman-Pearson}
+Dadas las hipótesis y $\alpha$ y $\eta$ fijaados. La regla de decisión óptima, es decir, la regla que tiene el menor valor posible de $\beta$, entre todas aquellas reglas con probabilidad de cometer el error tipo 1 = $\alpha$ es de la forma siguiente: Rechazar $H_{0}$ si:
+\[ \frac{L{(\theta_{1})}}{L{(\theta_{0})}} > c.\]
+
+dónde c es P(Rechazar $H_{0}$ siendo verdadera) = $\alpha$ y $L{(\theta)}$ es la función de verosimlilitud de $\theta$, pero considerando la muestra antes de ser registrada:
+
+\end{document}
