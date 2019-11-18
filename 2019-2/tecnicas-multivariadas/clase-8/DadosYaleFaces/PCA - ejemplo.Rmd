@@ -1,0 +1,397 @@
+---
+title: "Ejemplos con componentes principales"
+author: ""
+date: "27-09-19"
+output:
+  html_document:
+    number_sections: TRUE
+    toc: TRUE
+    fig_height: 4
+    fig_width: 7
+    code_folding: show
+---
+
+```{r setup, include=FALSE, echo = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+rm(list = ls())
+```
+
+ 
+El archivo  DatosYaleFaces.rar, contiene directorios con archivos de fotos de 15 individuos, un directorio para cada individuo. Dentro de ellos, tenemos 11 fotos de cada individuo. Las fotos varian de acuerdo con aspectos tales como iluminación, expresión (sonrisa, serio, triste), por la presencia de lentes o no. La Figura de abajo exibe una muestra de esas fotos. Cada línea de fotos corresponde a un individuo. Las imágenes son normalizadas para alinear los ojos y bocas. Ellos aparecen mas o menos en el mismo lugar en la imagen.
+
+```{r fig1, echo = FALSE, out.width = "80%",fig.cap="Figura 1: Muestra de 5 fotos de 4 individuos"}
+knitr::include_graphics("images/faces.jpg")
+#
+```
+
+Vamos a realizar un análisis de las fotos via componentes principales con el objetivo de reconocer estos rostros. Imagine que tenga una base de datos con varias fotos de un conjunto de individuos. Para realizar un sistema de vigilancia para uma compañía y apenas los 15 individuos de estas fotos pueden entrar a un cierto lugar. La revisión es hecha automáticamente con una nueva foto obtenida en el  momento de intentar entrar. Vamos usar el método de PCA para crear um sistema para clasificar esta nueva foto a una de las 15 clases representadas por los diferentes individuos. Así, el problema es: llega una nueva foto.
+Queremos encontrar el rosto mas parecidos con la nueva foto en el banco de datos. Si el rosto mas parecido no es lo suficientemente próximo de la nueva foto, la entrada no es permitida.
+
+El método de autoface fue propuesto por Turk y Pentland (1991a, 1991b). Es principalmente un método de reducción de dimensionalidad y puede representar a muchas personas con un conjunto relativamente pequeño de datos. La idea es representar la foto de una cara como la suma de una cara promedio más una combinación lineal de un pequeño número de pseudo-fotos, que son las autofaces. Estas autofaces son fotos borrosas que capturan aspectos importantes de la composición de una cara.
+
+Podemos imaginar que cada imagen se toma aproximadamente como se muestra en la Figura 2. Las fotos de la izquierda son aproximadamente iguales a la misma foto promedio (el que esta al lado derecho del igual) más cuatro autofaces, cada una multiplicada por un peso específico para el individuo. Las diferentes personas variarán solo en los 4 pesos $w_{ij}$ que recibe cada autoface. Las caras automáticas son fijas y las mismas para todas las personas consideradas, así como la cara promedio, que también es la misma para todos.
+
+```{r fig2, echo = FALSE, out.width = "80%",fig.cap="Figura 2: Una foto (izquierda) es aproximadamente la suma de una foto promedio más cuatro caras automáticas multiplicadas por pesos w_{ij} específicos individuales. Las diferentes personas variarán solo en los 4 pesos w_{ij} que recibe cada autoface."}
+knitr::include_graphics("images/faces2.jpg")
+#
+```
+
+En este ejemplo, vamos a hacer el análisis con R. Primeramente, carguemos las fotos en el R. Vamos a usar el paquete `imager` que disponibiliza algunas funcionalidades para el procesamiento de imágenes en el R. Más informaciones en http://dahtah.github.io/imager/gettingstarted.html. El paquete `imager` esta basado en `CImg`, una biblioteca en C++ creada por David Tschumperle (CNRS). `imager` está en el CRAN y puede ser instalada a partir de la línea de comandos. Después de instalar, carguemos el paquete. 
+
+```{r message=FALSE}
+#install.packages("imager")
+library(imager)
+```
+
+La función `load.image` lee las imágenes en arquivos o URLs. Formatos de imagenes que tienen suporte actualmente son los siguientes: JPEG, PNG y BMP. Otros formatos piden la instalación de *ImageMagick*. Vamos a cambiar
+el directorio de trabajo para aquel que contienen las imágenes. usando `setwd("dir con imagenes")`. La lectura de la foto `s5.jpg` en el directorio `Faces3` es hecha con el comando `load.image`. A continuación, visualize la foto e imprima una información básica de la foto:
+
+```{r}
+im <- load.image("Faces3/s5.jpg")
+plot(im) # El eje  vertical corre en la dirección contraria a la usual
+im
+```
+
+El objeto `im` es un objeto del tipo imagem con 100x100 pixeles (width y height). `Depth` indica cuantos
+frames tiene la imagen. Si depth > 1 entonces la imagen es un video. `im` posee tres canales de colores, el usual
+sistema RGB (red-green-blue channels).
+
+```{r}
+im[1:10,1:10,1,1]
+
+im[1:10,1:10,1,2]
+
+im[1:10,1:10,1,3]
+```
+
+El comando `is.array(im)` devuelve `TRUE` mostrando que, en la práctica, `im` es apenas un array 3-dim para permitir
+la lectura de fotos a colores con los 3 canales rgb. Cada slice del array almacena uno de los colores-canais
+fundamentais (3 canales, red-green-blue o rgb channels con intensidades en cada pixel). Entretanto,
+los 3 slices son idénticos pues nuestras imágenes no son a colores. Ellas son apenas pixels con diferentes
+intensidades de gris. Vamos a revisar que los 3 slices del array 3-dim son los mismos verificando apenas
+una pequeña parte:
+
+```{r}
+im[1:5, 1:5, 1] == im[1:5, 1:5, 2]
+
+# Como los 3 slices del array son idénticos, reducimos a una matriz 2-dim
+
+im_mat = im[, , 1]
+is.matrix(im_mat)
+
+dim(im_mat) # Ahora tenemos una matriz 100 x 100
+
+plot(im_mat) # im_mat ya no es mas una imagen
+
+image(im_mat) # heat map de la matriz im_mat, la funciín image es del paquete por defecto "graphic""
+
+# El comando image es del R basico y hace un heat map de la matriz numérica
+# Histograma de los tonos de gris de los 100*100 pixels de la matriz im_mat
+hist(im_mat)
+
+# El tono de gris es un real entre 0 y 1 (en vez del entero de 0 a 255)
+# Una muestra aleatoria de 5 de esos pixels.
+sample(im_mat,5)
+```
+
+Vamos ahora a leer todas las fotos y comenar a realizar el análisis. Comencemos declarando una lista para recibir las fotos de todos los individuos: `fotos = list()`. Esta es una lista de tamaño 15 y cada elemento de esta lista es otra lista que contiene 11 fotos de un mismo individuo. Las fotos están en 15 directorios, uno para cada individuo, y nombrados como Faces1, Faces2, ..., faces15. Dentro del directorio Faces_i encontramos  las 11 fotos, en formato .bmp y .jpg, nombradas s1.bmp, s2.bmp,..., s11.bmp y s1.jpg, s2.jpg,..., s11.jpg. Cada un de estas fotos corresponden a diferentes poses de un mismo individuo. Vamos a ver como realizar la lectura de las fotos y su almacenamiento.  
+
+
+```{r}
+fotos = list()
+
+for(i in 1:15){
+ fotos[[i]]=list() # elemento i de la lista de individuos es una lista también
+ for(j in 1:11){
+   # Lectura de los archivos de fotos del individuo i
+   # Son 11 fotos en el directorio Faces#i
+   fotos[[i]][[j]] <- load.image(sprintf("Faces%i/s%i.jpg",i,j))
+ }
+}
+plot(fotos[[9]][[7]]) # Muestra la foto 7 del individuo 9
+plot(fotos[[5]][[2]]) # Muestra la foto 2 del individuo 5
+plot(fotos[[3]][[11]]) # Muestra la foto 11 del individuo 3
+```
+
+Vamos a ver algunas fotos aleatorias. Cada línea de fotos será un individuo distinto. Para que todas las fotos alcancen en la ventana gráfica, vamos a eliminar el espacio dejado (como default) en los márgenes de los gráficos. Para esto, vamos alterar los prámetros gráficos. Pero antes, guardemos una copia de los parámetros gráficos por default para restaurarlos al final:
+
+```{r}
+opar <- par() # guarde los parámetros gráficos
+
+## elimine los espacios en blanco en los márgenes y prepare la ventana
+## gráfica para recebir 4*5=20 fotos
+par(mfrow=c(4,5), mar=c(0,0,0,0))
+
+## plot de las 5 primeras fotos de los individuos 1, 3, 8 e 10
+for(i in c(1, 3, 8, 10)){
+  for(j in 1:5) plot(fotos[[i]][[j]], axes=F)
+}
+## restaure las opciones a default
+#par(opar)
+```
+
+Para el análisis de componentes principales, vamos a convertir las fotos en matrices y colocarlas en una lista `fotosmat`:
+
+```{r}
+fotosmat = list()
+for(i in 1:15){
+  fotosmat[[i]]=list()
+  for(j in 1:11){
+    fotosmat[[i]][[j]] = fotos[[i]][[j]][ , , 1]
+  }
+}
+# revisando si todas las 11 fotos del individuo 5 son matrices
+sapply(fotosmat[[5]], is.matrix)
+
+# todas las 11 matrices-fotos son de dimensión 100 x 100
+sapply(fotosmat[[5]], dim)
+```
+
+Apilemos las columnas de cada matriz formando una única columna. Con esto, perdemos la dimensión espacial de los pixeles de la imagen. A continuación, recolectamos las columnas en una grande matriz. El comando `stack` realiza esto, pero sólo funciona con *dataframes*, no funciona con matrices. Por lo que, transformamos la matriz en un *dataframe* y usamos el comando `stack` para apilar. El comando `stack` regresa una matriz con dos columnas: en una, están los valores de las columnas apiladas; en la otra los índices de las columnas de la matriz original.
+
+Procure entender usando con estos simples ejemplos:
+
+```{r}
+stack(as.data.frame(matrix(1:9, ncol=3)))
+
+stack(as.data.frame(matrix(1:12, ncol=4)))
+```
+
+Así, precisamos de la primera columna de salida de `stack`. Montamos la matriz con los vector apilados.
+
+```{r}
+mat_pixels = matrix(0,nrow=(100*100), ncol=11*15)
+for(i in 1:15){
+  for(j in 1:11){
+    mat_pixels[,j+(i-1)*11] = stack(as.data.frame(fotosmat[[i]][[j]]))[,1]
+  }
+}
+dim(mat_pixels)
+```
+
+Vamos a separar una foto de cada individuo para realizar su clasificación. Esto va constituir un conjunto de test, donde vamos evaluar nuestro método de clasificación como si estas foto separadas fueran las nuevas fotos. Nos quedaremos con una matriz de 150=15*11-15 columnas pues existen 15 individuos con 11 fotos cada uno. Vamos a escoger una foto al azar de cada individuo. 
+
+```{r}
+#set.seed(123)
+## índice del número de la foto, dentro de cada individuo
+ind = sample(1:11, 1, replace=T)
+ind
+
+## ajustando ahora los índices de las columnas de cada foto en mat_pixels
+indcol = ind + ((1:15) - 1)*11
+indcol
+
+# separando las fotos para un teste posterior. Ellas están en una matriz
+# con 15 columnas ordenadas deacuerdo con al indice de los individuos.
+mat_teste = mat_pixels[ , indcol]
+dim(mat_teste)
+
+## Retirando las columnas de teste de la matriz donde vamos a aplicar el PCA:
+mat_pixels = mat_pixels[,-indcol]
+```
+
+Necesitamos centrar todos las fotos del conjunto de entrenamiento retirando de cada foto, la foto media de
+todo el conjunto de fotos. Esta foto media es simplemente la *fotoA* obtenida retirando  la media aritmética
+sobre el conjunto de fotos en cada pixel. Esto es, para un pixel localizado en una cierta posición, retiramos la 
+media de todos los valores observados en aquella posición en las diferentes fotos del conjunto de entrenamiento.
+En R, sería:
+
+```{r}
+mat_media    = apply(mat_pixels, 1, mean) #el argumento "1" indica fila
+mat_centrada = mat_pixels - mat_media
+dim(mat_centrada)
+```
+
+Vamos desapilar esta foto media y visualizarla. Para desapilar, hacemos que la columna `mat_centrada` tenga 100 columnas de tamaño 100, generando una *imagenA* con la misma cantidad de pixels que las fotos originales.
+
+```{r}
+foto_media = as.cimg(mat_media, x=100, y=100) #Ancho y altura 100
+par(mfrow=c(1,1))
+plot(foto_media, axes=F)
+```
+
+Obtenemos ahora los componentes principales de la matriz transpuesta (`mat_centrada`) con 150 items y 10000
+atributos. La matriz $\Sigma$ de covariancia de los atributos (los pixels, en este caso) es una matriz de dimensión 10000×10000. Debemos portanto obtener 10000 autovectores y autovalores. Vamos usar la  función `princomp` del R.
+
+```{r}
+#pca_pixels = princomp(t(mat_centrada))
+#Error in princomp.default(t(mat_centrada)) : 'princomp' can only be used with more units than variables
+```
+
+La matriz `mat_centrada` posee mas atributos-columnas (p = 10000) que items-líneas (n = 150). En esta situación, `princomp` no funciona. El comando sabe que la matriz de covariancia empírica es de dimensión pxp. Esto significa que la matriz de covariancia de la matriz de datos 150 x 10000 es de dimensión 10000 x 10000 y con rango 150. Esto implica que existen 10000 - 150 autovalores exactamente nulos y el algoritmo de `princomp` no va a correr. Una salida simple es usar otro comando, el `prcomp`, que usa la descomposición de valor singular (SVD) y no se incomoda con las dimensiones de la matriz de datos. Una ventaja adicional es que el algoritmo SVD para encontrar autovalores y autovectores es más estable numéricamente y debería ser el preferido incluso cuando la matriz tiene más líneas-items que columnas-atributos.
+
+
+```{r}
+pca_pixels = prcomp(t(mat_centrada))
+summary(pca_pixels)
+```
+
+Veamos la variancia explicada por cada uno de los componentes. Los 10 primeros PCs explican 76% de la variación total. Incrementar mas de 10, quedando con 20 PCs, lleva a 86%. La salida del comando `prcomp` muestra apenas los 150 primeros componentes pues los otros 10000−150 componentes principales tiene autovalor igual a cero.
+Los 150 primeros autovectores, de dimensión 10000 cada uno, forman las columnas de la matriz `pca_pixels$rot`. 
+
+```{r}
+dim(pca_pixels$rot)
+## Grafico con los 10 primeros autovalores (o variancias de los 10 primeros PCAs)
+plot(pca_pixels)
+
+## Como son muchos autovalores, el default del plot usa apenas los 10 primeros
+## Para ver TODOS los 150, pueden extraerlos del objeto sdev
+autovalores = (pca_pixels$sdev)^2
+
+## Barplot de las variancias acumuladas indicando la opción de pocos
+## PCAs deben representar bien los 10000 atributos (pixels)
+barplot(cumsum(autovalores))
+
+## Vamos normalizar el eje vertical dividiendo por la suma total
+aux = cumsum(autovalores)/sum(autovalores)
+barplot(aux)
+
+## Procurando ver la parte inicial del gráfico con más detalles
+barplot(aux[1:30], ylim=c(0,1))
+## Vamos usar los 20 primeros autovectores.
+## Ellos son vectores de dimensión 10000 = 100 * 100
+autovetores = pca_pixels$rot[ , 1:20]
+```
+
+Vamos a crear ahora  las autofaces. Vamos desapilar los autovectores partiendo la columna de cada uno de ellos 
+en 100 columnas de tamaño 100 cada una. Con esto, cada autovector nos da origen a una "imagenA" con la misma cantidad de pixels que las fotos originales. Vamos a llamar a estas pseudo-fotos de autofaces.
+
+```{r}
+## Creando las autofaces
+auto_face=list()
+for(i in 1:20){
+  auto_face[[i]] = as.cimg(pca_pixels$rot[,i], x=100, y=100)
+#100x100, grayscale image
+}
+
+## Observando estas 20 autofaces
+par(mfrow=c(4,5), mar=c(0,0,0,0))
+for(i in 1:20) plot(auto_face[[i]], axes=F)
+```
+
+Vamos visualizar una face en `mat_teste` y su aproximación usando las $k$ primeras autofaces. Para esto
+precisamos escribir una foto como aproximadamente una suma de la foto media mais una combinación
+linear de las primeras $k$ autofaces (todos como vectores). En seguida, desapilando los vectores y mostramos
+las faces.
+
+Por ejemplo, usando la face en la columna 5 de `mat_teste`. Vamos obtener los coeficientes $b_k$ de la combinación lineal
+
+$$\text{foto} \approx \text{fotomedia} + b_1 v_1 + b_2 v_2 + \ldots + b_k v_k$$
+
+Sabemos que $b_j$ es el producto interno de los vectores formados por la foto centrada con el autovector $v_k$. Entonces 
+```{r}
+coef = t(autovetores) %*% (mat_teste[, 5] - mat_media)
+coef
+dim(coef)
+```
+
+La matriz `coef` es una matriz 20x1 con los coeficientes ($b_1,b_2,\ldots,b_{20}$). Este vector-columna es la representación de la foto en el espacio generado por los 20 primeros autovectores. En esta base de autovectores, el vector `coef` representa la foto aproximadamente. Los comandos abajo generan una aproximación de la foto 5 en `mat_teste` usando 2,3,4 hasta 20 autovectores resultando  la Figura 3 (la figura siguiente).
+ 
+
+```{r}
+foto_teste5 = list()
+foto_teste5[[1]] = as.cimg(mat_teste[,5], x=100, y=100)
+for(i in 2:20){
+  aprox_vetor = mat_media + autovetores[, 1:i] %*% coef[1:i,1]
+  foto_teste5[[i]] = as.cimg(as.numeric(aprox_vetor), x=100, y=100)
+}
+
+## guarde una copia de los parametros graficos por default
+opar <- par()
+
+## elimine los espacios blanco en los margenes y prepare para 4*5=20 fotos
+par(mfrow=c(4,5), mar=c(0,0,0,0))
+
+## plot de las fotos
+for(i in 1:20) plot(foto_teste5[[i]], axes=F)
+#Figura 3: Un individuo y sucesivas aproximaciones usando 2, 3, hasta 20 autovectores.
+
+## regrese a las opciones graficas default
+#par(opar)
+```
+
+La primera imagen es la imagen real. Las siguintes proporcionan las aproximaciones usando sucesivamente 2, 3, hasta 20 autofaces. Parece que usar 20 autofaces talvez sea excesivo. Visualmente, no existe una diferencia relevante entre la aproximación obtenida usando apenas los 12 primeros autovectores o aquella con 20 autovectores. Apesar de esto, vamos a repetir esta aproximación usando 20 autofaces para todas las fotos-columnas en `mat_teste`, guardando los coeficientes en una matriz `coef` de dimensión 20 × 15:
+
+```{r}
+coef = t(autovetores) %*% (mat_teste - mat_media)
+coef
+dim(coef)
+```
+
+Como clasificar cada una de estas 15 fotos en una de las categorías disponibles, las categorías siendo los
+15 individuos? Cual será la taxa de acierto de este sistema de clasificación? Vamos primero obtener la
+representación de cada una de las 150 fotos de entrenamiento en los 20 PCAs, exactamente como hicimos con las fotos de test
+
+```{r}
+coef_treino = t(autovetores) %*% (mat_pixels - mat_media)
+dim(coef_treino)
+## coef_treino es una matriz 20 x 150
+```
+
+Podemos ver como las 150 fotos del entrenamiento quedan dispuestas en el plano determinado apenas por las dos
+primeras componentes principales. Supuestamente, los dos primeros componentes principales no debe
+ser suficiente para discriminar bien los individuos.
+
+```{r}
+par(mfrow=c(1,1))
+colface = rainbow(15)[rep(1:15,rep(10,15))]
+plot(coef_treino[1,], coef_treino[2,], pch=21, bg=colface)
+```
+
+Vamos a obtener una representación media de cada uno de los 15 indivıduos. Vamos a obtener la media de los coeficientes de las 10 fotos de cada individuo.
+
+```{r}
+coefmedio = matrix(0, ncol=15, nrow=20)
+for(i in 1:15){
+  coefmedio[,i] = apply(coef_treino[ ,(1+(i-1)*10) : (i*10)], 1, mean)
+}
+## Esta es una matriz 20 x 15
+
+## Vamos ver como los 15 perfiles medios del entrenamiento en el plano
+## determinado apenas por las dos primeras componentes principales
+par(mfrow=c(1,1))
+colface = rainbow(15)
+plot(coefmedio[1,], coefmedio[2,], pch=21, bg=rainbow(15))
+```
+
+Cada foto de `mat_teste` de dimensión 100*100 x 15, en la representación de los  20 primeras PCAs, es una columna de la matriz `coef` que tiene dimensión 20 × 15. La matriz `coefmedio` también es de dimensión 20 × 15. Para cada foto (esto es, cada columna de coef), vamos encontrar la columna de `coefmedio` que es más próxima. La orden de esta columna mas próxima es el individuo mas próximo.
+
+```{r}
+indproximo = numeric()
+for(j in 1:15){
+  indproximo[j] = which.min( apply((coefmedio - coef[,j])^2, 2, mean) ) #el argumento 2 en el apply es la columna
+}
+
+indproximo
+#[1] 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+##  Clasificación perfecta!!!
+```
+
+
+El vector `indproximo` indica que la primera foto en `mat_teste` (columna 1) fue clasificada al primer
+individuo, lo cual es una decisión correcta. `indproximo` también indica que la segunda foto em `mat_teste` (columna 2) fue clasificada al segundo individuo, lo que también es correcto. Observando el resto del vector, queda claro que la clasificación fue la correcta para todas las 10 fotos del conjunto de teste.
+
+En conclusión, una versión aproximada de una foto en escala de grises de un rostro humano puede ser
+obtemida como una combinación lineal de unas pocas autofaces (eigenfaces, en inglés):
+
+$$\text{foto} = \text{media general} + c_1 v_1 + \ldots + c_ k v_k$$
+
+Los autovectores o PCAs $v_1, \ldots, v_k$ de la matriz de covariancia $\Sigma$ de la distribución conjunta de los pixels forman las autofaces. Es impresionante que apenas algunas pocas, las primeras $k$, autofaces o PCAs sean
+suficientes para obtener una buena similituid de los rostros de la mayoría de las personas. Las autofaces se parecen con un rosto humano medio, sin muchos trazos distintivos.
+
+El método de autoface fue propuesto por Turk y Pentland (1991a, 1991b). Es principalmente un método de reducción de dimensionalidad y puede representar a muchas personas con un conjunto relativamente pequeño de datos.
+
+
+
+# Bibliografía
+
+- https://homepages.dcc.ufmg.br/~assuncao
+
+- M. Turk, A. Pentland, (1991a), Eigenfaces for Recognition, Journal of Cognitive Neurosicence, Vol. 3, No. 1, 1991, pp. 71–86.
+
+- M.A. Turk, A.P. Pentland, (1991b), Face Recognition Using Eigenfaces, Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, 3–6 June 1991, Maui, Hawaii, USA, pp. 586–591.
+
+- A. Pentland, B. Moghaddam, T. Starner, (1994), View-Based and Modular Eigenspaces for Face Recognition, Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, 21–23 June 1994, Seattle, Washington, USA, pp. 84–91.
+
+- H. Moon, P.J. Phillips, Computational and Performance aspects of PCA-based Face Recognition Algorithms, Perception, Vol. 30, 2001, pp. 303–321.
+ 
