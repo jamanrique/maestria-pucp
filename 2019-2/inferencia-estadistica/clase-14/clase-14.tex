@@ -1,0 +1,139 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\title{Clase 14: Inferencia Estadística}
+\author{Justo Andrés Manrique Urbina}
+
+\begin{document}
+
+\textbf{Definición: } Dadas las siguientes hipótesis:
+\[H_{0}:\theta \in \Theta_{0}.\]
+\[ H_{1}:\theta \in \Theta_{1}.\]
+
+Fijado $ \eta \text{y} \alpha $. Si $ \forall \theta \in \Theta_{1} $, la regla de decisión óptima para el contraste
+\[H_{0}=\theta=\theta_{0}.\]
+\[H_{1: \theta=\theta_{2}}.\]
+es la misma, entonces esta regla se llama la regla de decisión uniformemente más poderosa.
+
+\section{Ejemplo}
+\[ X\sim N(\mu,10).\]
+en dónde $ n=20 $ y $ \alpha=0.05 $. Deduzca, si existe, la regla UMP para el contraste:
+\[H_{0}: \mu=5.\]
+\[H_{1}: \mu>5.\]
+
+\textbf{Solución:} Tenemos que:
+\[\Theta_{1=\{\mu:\mu>5\}}.\]
+\[H_{0}:\mu=5.\]
+\[H_{1}: \mu \in \Theta_{1}.\]
+
+Sea $\mu_{1} > 5 (\mu \in \Theta_{1})$ y consideramos el contraste:
+\[H_{0}: \mu=5.\]
+\[H_{1}:\mu=\mu_{1}.\]
+
+Mediante Neyman-Pearson hallamos la regla de decisión óptima para estas hipótesis (es decir, la que minimiza $\beta$ o maximiza la potencia $1-\beta$). Se vió en un ejemplo anterior que:
+
+\[l(\mu)=20(-\ln(\sqrt{2\pi}-\ln(\sqrt{10})))-\frac{1}{10} \sum^{20}_{j=1}{(X_{j}-\mu)}^{2}.\]
+
+Se rechaza $H_{0}$ si:
+\[\frac{L(\mu_{1})}{L(5)}>5.\]
+\[20(-\ln(\sqrt{2\pi}-\ln(\sqrt{10})))-\frac{1}{10}\sum^{20}_{1}{(X_{j}-\mu_{1})}^{2}-20(-\ln(\sqrt{2\pi})-\ln(\sqrt{10}))+\frac{1}{10}\sum{(X_{j}-5)}^{2} > c.\]
+
+\[(\mu_{1}-5)\sum^{20}_{1}{(X_{j}-5)}^{2}>c.\]
+\[\sum^{20}_{1}X_{j} > c.\]
+Pues no depende de $\mu_{1}$
+\[\bar{X}>c.\]
+
+Dónde $c$ es tal que:
+\[\text{P (Rechazar $H_{0}$ siendo verdadera)}=0.05.\]
+\[P(\bar{X}> c, \mu=5)=0.05.\]
+
+Por otra parte, tenemos que:
+\[X\sim N(\mu,\sigma^{2}).\]
+\[Z \sim N(0,1).\]
+
+\[Z\sim \frac{\sqrt{20}(\bar{X}-\mu)}{\sqrt{10}}\sim N(0,1).\]
+
+En dónde:
+\[F_{z}(\frac{\sqrt{20}(c-5)}{\sqrt{10}})=0.95.\]
+\[\frac{\sqrt{20}(c-5)}{\sqrt{10}}=1.645.\]
+\[c=6.1632.\]
+
+Se rechaza $H_{0}$ si $\bar{X}>6.1632$. Esta es la regla de decisión óptima (minimiza $\beta$ o maximiza $\pi$). Como esta regla de decisión es la misma para cualquier valor de $\mu_{1}$ (no depende de $\mu_{2}$) entonces esta es la regla de decisión uniformemente más poderosa.
+
+\section{Ejercicio}
+
+En el ejemplo anterior determinar $\beta$ (para el contraste original). \textbf{Solución:}
+\[\beta=P(\text{Aceptar $H_{0}$ siendo falsa}).\]
+\[\beta=P(\bar{X}\leq 6.1632, \mu > 5).\]
+\[\beta=\beta(\mu)=P(\bar{X} \leq 6.1632), \mu>5.\]
+\[=F_{\bar{X}}(6.1632),\mu>5.\]
+
+En relación al ejemplo anterior, tenemos que:
+\[\beta=\beta(\mu)=F_{z}(\frac{\sqrt{20}(6.1632-\mu)}{\sqrt{10}}),\mu>5.\]
+
+Note lo siguiente:
+
+\begin{itemize}
+	\item Si $\mu$ sube, entonces $\beta(\mu)$ baja.
+	\item $\beta(\infty)=\lim_{\mu \rightarrow \infty}\beta(\mu)=\lim_{\mu \rightarrow \infty} F_{z}(\frac{\sqrt{20}}{\sqrt{10}})(6.163-\mu)=0$
+	\item $\beta(5^{+}) = \lim_{\mu \rightarrow 5^{+}} \beta(\mu) = F_{z}(\frac{\sqrt{20}(6.1632-5)}{\sqrt{10}})=F_{z}(1.645)=0.95$.
+\end{itemize}
+
+Sea $\mu_{1}<5$ y considerando el contraste auxiliar:
+\[H_{0}: \mu=5.\]
+\[H_{1}: \mu=\mu_{1}.\]
+A este contraste se le aplica el Lema de Neyman-Pearson.
+
+Se rechaza $H_{0}$ si:
+\[\frac{L(\mu_{1})}{L(5)}>c.\]
+\[l(\mu_{1})-l(5)>c.\]
+\[\sum^{20}_{1}X_{j} < c.\]
+
+Se rechaza $H_{0}$ si $\bar{X} < c$ dónde $c$ es tal que:
+\[P(\text{Rechazar $H_{0}$ siendo verdadera})=0.05.\]
+\[P(\bar{x}<c, \mu=5)=0.05.\]
+\[F_{\bar{X}}(c)=0.05, \mu=5.\]
+
+Pero como:
+
+\[Z=\frac{\sqrt{20}(\bar{X}-\mu)}{\sqrt{10}}\sim N(0,1).\]
+
+Resulta que:
+\[F_{z}(\frac{\sqrt{20}(c-5)}{\sqrt{10}})=0.05.\]
+\[\frac{\sqrt{20}(c-5)}{\sqrt{10}}=1.645.\]
+\[c=3.8368.\]
+
+Se rechaza $H_{0}$ si $\bar{X}< 3.8368$
+
+Esta regla es la regla óptima (minimiza $\beta$) para el contraste auxiliar, que no depende de $\mu_{1}$, viene a ser la regla de decisión uniformemente más poderosa para el contraste de hipótesis regional.
+
+\section{Ejercicio}
+En el ejemplo anterior graficar $\beta$. Sea $\beta$ tal que:
+\[\beta=P(\text{Aceptar $H_{0}$ siendo falsa.}).\]
+\[=P(\bar{X}>3.8368, \mu<5).\]
+\[\beta=\beta(\mu)=P(\bar{X}>3.8368),\mu=5.\]
+\[=1-F_{\bar{X}}(3.8368),\mu=5.\]
+\[H_{0}: \mu=5.\]
+\[H_{1}=\mu<5.\]
+
+Estandarizando:
+\[\beta=\beta(\mu)=1-F_{z}(\frac{\sqrt{20}}{\sqrt{10}}(3.8368-\mu)).\]
+
+Observar que:
+\begin{itemize}
+	\item Si $\mu$ sube, entonces $\beta(\mu)$ sube.
+	\item $\beta(-\infty)=\lim_{\mu \rightarrow \infty} \beta(\mu)=1-F_{z}(\infty)=0$
+	\item $\beta(5^{-})=\lim_{\mu \rightarrow 5^{-}}\beta(\mu)=1-0.05=0.95$
+\end{itemize}
+
+\section{Ejemplo 3}
+\[X\sim N(\mu,10), n=20, \alpha=0.05.\]
+
+\[H_{0}:\mu=5.\]
+\[H_{1}:\mu \neq 5.\]
+Sea $\mu \neq 5$ y consideramos el contraste de hipótesis auxiliar.
+
+\end{document}

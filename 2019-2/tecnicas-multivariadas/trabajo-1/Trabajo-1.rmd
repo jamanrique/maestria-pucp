@@ -1,7 +1,7 @@
 ---
-title: "Técnicas de Análisis Multivariado"
+title: "Técnicas de Análisis Multivariado - Trabajo 1"
 author: "Justo Manrique Urbina - 20091107"
-date: "11/17/2019"
+date: "01/12/2019"
 output: pdf_document
 ---
 
@@ -9,22 +9,166 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+El presente trabajo tiene como objetivo ilustrar el uso de técnicas de análisis multivariado revisadas en la Maestría de Estadística PUCP. Para ello, se hizo uso de distintas bases de datos orientadas a la aplicación de dichas técnicas, las cuales se presentarán en las secciones correspondientes. Cada tipo de análisis tiene como base un problema de negocio o investigación, así como una base de datos la cual es útil para brindar solución al problema. Posteriormente, se analizan los resultados de dichas técnicas y se concluye sobre la misma.
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+Las técnicas multivariadas utilizadas en el presente informe son:
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+- Análisis de Componentes Principales.
+- Análisis Discriminante.
+- Análisis Factorial.
 
-```{r cars}
-summary(cars)
+Ver a continuación el uso de cada técnica. 
+
+# Análisis de Componentes Principales
+
+## Introducción
+
+<<Descripción del problema>>. 
+
+Los objetivos del presente estudio son:
+
+- Conocer si existen grupos de autos con perfiles de rendimiento similares e identificar si existen autos de distinta clase.
+- Identificar aquellos autos que lideran cada clase.
+
+
+## Datos
+
+Los datos provienen de la revista \textit{Motor Trend}, edición 1974. Dicha base de datos tiene las siguientes variables:
+
+- mpg: Millas por galón.
+- cyl: Número de cilindros.
+- disp: Desplazamiento (en pies cúbicos).
+- hp: Caballos de fuerza.
+- drat: Relación del eje trasero.
+- wt: Peso (definido en miles de libras).
+- qsec: Tiempo para llegar a recorrer un cuarto de libra.
+- am: Transmisión (automático o manual).
+- vs: Tipo de motor (en forma de V o recto).
+- gear: Cantidad de marchas hacia adelante.
+- carb: Número de carburadores.
+
+Con el propósito de ejecutar el análisis de los datos, realizamos la carga de librerías e importamos los datos. Posteriormente, realizamos un preprocesamiento de los datos para convertir los valores binarios en variables cualitativas.
+
+```{r}
+## Carga de datos y librerías ##
+library(FactoMineR)
+library(dplyr)
+library(psych)
+
+data("mtcars")
+
+## Preprocesamiento de datos ##
+
+mtcars$vs <- factor(mtcars$vs)
+mtcars$vs <- recode_factor(mtcars$vs, `0`="V-shaped",`1`="Straight")
+mtcars$am <- factor(mtcars$am)
+mtcars$am <- recode_factor(mtcars$am, `0`="Automatic",`1`="Manual")
 ```
 
-## Including Plots
+Posteriormente, se observa los primeros valores de la base de datos para entender su estructura.
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+head(mtcars)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Se observa que cada línea corresponde a un modelo de auto específico. Asimismo, se observa que todas las variables son cuantitavias, excepto por las variables 'am' y 'vs'. 
+
+## Resultados
+
+Posteriormente, se utilizó la matriz de correlación para entender las relaciones lineales que tiene cada variable respecto a otra. Se utilizaron solo las variables cuantitativas para este análisis:
+
+```{r}
+corcars <- cor(mtcars[c(1:7,10:11)])
+corcars
+```
+
+Se observa lo siguiente:
+
+- Se observan correlaciones negativas fuertes en los siguientes pares de variables: (mpg) Millas por galón y (cyl) Números de cilindros; (mpg) Millas por galón y (hp) Caballos de fuerza; (mpg) Millas por galón y (disp) Desplazamiento (en pies cúbicos); (mpg) Millas por galón y (wt) Peso (definido en miles de libras).
+- Se observan correlaciones positivas fuertes en los siguientes pares de variables: (cyl) Número de cilintros y (disp) Desplazamiento (en pies cúbicos); (cyl) Número de cilindros y (hp) Caballos de fuerza; (disp) Desplazamiento (en pies cúbicos) y (wt) Peso (definido en miles de libras).
+
+En base a este análisis, podemos intuir que aquellas variables que tengan una correlación positiva fuerte formarán parte de un componente, mientras que aquellos con correlación negativa fuerte formarán parte de distintos componentes. 
+
+Posteriormente, utilizamos el test de esfericidad de Bartlett:
+
+```{r}
+cortest.bartlett(corcars,n = 32)
+```
+
+De acuerdo a la prueba de esfericidad de Bartlett, observamos que el p-valor es muy pequeño por lo que la hipótesis nula se rechaza. En base a ello podemos concluir que la técnica de componentes principales será de aplicabilidad a la base de datos presentada.
+
+Posteriormente, realizaremos el análisis de componentes principales mediante el siguiente código. Ver a continuación el código y sus salidas:
+
+```{r}
+mt_pca <- PCA(mtcars,quali.sup = c(8,9),graph = TRUE,scale.unit = TRUE)
+```
+
+En base a los gráficos mostrados, se observa lo siguiente:
+
+- El primer eje (Dim 1) expresa el 62.84% de la variabilidad de los datos y el segundo eje (Dim 2) el 23.13% de los mismos. En total, los dos primeros ejes expresan juntos el 85.97% de la variabilidad de los datos.
+  - Variables factor map (PCA)
+    - Se observa que, si un auto se encuentra en el primer cuadrante (esquina superior izquierda), este tendrá mayor millaje por galón, relación del eje trasero y mayor cantidad de marchas hacia adelante. Esto en contraposición del segundo y cuarto cuadrante (parte derecha del gráfico), el cual está asociado a mayor número de cilindros, desplazamiento, peso y caballos de fuerza.
+  - Individuals factor map (PCA)
+    - Se observan que existen autos con perfiles de rendimiento similar. Por ejemplo, en el primer cuadrante se encuentran los autos Porsche 914-2 y Lotus Eurpa, mientras que en el cuarto cuadrante se encuentra el Cadillac Fleetwood y Chrysler Imperial.
+    - El perfil de rendimiento similar está asociado a la ubicación del auto en el plano de las dos dimensiones. Para ello, utilizamos el variables factor map para entender qué características tienen en común determinados autos.
+
+Posteriormente a este análisis, realizamos uno más detallado para identificar si existe otro componente (u otros componentes) que puedan incluirse para efectos del estudio. Para ello, generamos un gráfico que nos permita revisar la importancia de todos los componentes.
+
+```{r}
+barplot(mt_pca$eig[,1], main="Valores propios", names.arg=paste("dim",1:nrow(mt_pca$eig)))
+```
+
+Se observa que existen en total 9 componentes, de los cuales los dos primeros componentes (los cuales explican el 85.97% de los datos) son los que explican en mayor proporción la variabilidad. Los componentes del 3 al 9 tienen un bajo autovalor, por lo que no serán utilizados para el análisis.
+
+Asimismo, identificaremos si existen individuos (en este caso, autos) o variables que contribuyen mucho a los componentes elegidos. Ver código a continuación:
+
+```{r}
+round(mt_pca$ind$contrib[,1:2],2)
+round(mt_pca$var$contrib[,1:2],2)
+```
+
+Se observa lo siguiente:
+
+- Respecto a la importancia de variables en la construcción de componentes:
+  - Se observa que, para el segundo componente, la cantidad de carburadores, de marchas hacia adelante y el tiempo para recorrer un cuarto de milla son las variables más importantes.
+  - Se observa que, para el primer componente, la cantidad de millas por galón, el número de cilindros, los caballos de fuerza, el peso y el desplazamiento (en pies cúbicos) son las variables más importantes.
+  - La relación del eje trasero contribuye a ambos componentes de forma similar.
+- Respecto a la importancia de los individuos en la construcción de componentes:
+  - Los autos de marca Ford Pantera L, Ferrari Dino y Maserati Bora son los que contribuyen en gran manera a la construcción del segundo componente. Se observa que, en relación a los demás individuos, el aporte de estos individuos es mucho mayor.
+  - El aporte de los autos al componente 1 es más equilibrado que el componente 2. Se observa que los autos con mayor aporte son el Toyota Corolla, Honda Civic y Lincoln Continental, sin embargo en relación a los demás individuos el aporte es regular.
+
+Finalmente, realizamos la descripción de los ejes a través de la correlación de las variables de cada componente:
+
+```{r}
+dimdesc(mt_pca,axes = c(1,2))
+```
+En base a lo identificado, la primera dimensión está asociada a las características relacionadas a la potencia del motor (número de cilindros, caballos de fuerza, carburadores y cilindrada) mientras que la segunda dimensión está asociada a la maniobrabilidad del auto (cantidad de marchas, tipo de transmisión, entre otros).
+
+## Discusión y conclusiones
+
+En base al análisis presentado, y en relación a los objetos de estudio, se concluye lo siguiente:
+
+- Existen dos perfiles de autos: aquellos orientados a ser autos potentes (tienen mayor índice en la dimensión 1) y aquellos que son maniobrables (tienen mayor índice en la dimensión 2)
+- Utilizando las variables cualitativas, se observa que aquellos autos orientados a ser autos potentes tienen el motor en forma de V, mientras que aquellos que no tienen el motor de forma recta.
+- De igual forma, se observa que aquellos autos orientados a ser autos maniobrables tendrían mayor propensión a tener transmisión manual.
+- Existen autos que serían tanto maniobrables como potentes: los casos específicos serían el Maserati Bora y Ford Pantera.
+
+# Análisis Discriminante
+
+## Introducción
+
+## Datos
+
+## Resultados
+
+## Discusión y conclusiones
+
+# Análisis Factorial
+
+## Introducción
+
+## Datos
+
+## Resultados
+
+## Discusión y conclusiones

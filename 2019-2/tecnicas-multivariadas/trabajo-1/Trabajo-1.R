@@ -19,7 +19,7 @@ mtcars$am <- recode_factor(mtcars$am, `0`="Automatic",`1`="Manual")
 
 ## Análisis de PCA ##
 
-mt_pca <- PCA(mtcars,quali.sup = c(8,9),graph = TRUE)
+mt_pca <- PCA(mtcars,quali.sup = c(8,9),graph = TRUE,scale.unit = TRUE)
 
 ## Identificación de componentes ##
 

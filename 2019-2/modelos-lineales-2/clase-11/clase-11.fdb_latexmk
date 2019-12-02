@@ -1,0 +1,14 @@
+# Fdb version 3
+["pdflatex"] 1574208541 "clase-11.tex" "clase-11.pdf" "clase-11" 1574208545
+  "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1572595918 35752 024fb6c41858982481f6968b5fc26508 ""
+  "/usr/share/texmf-dist/tex/latex/base/article.cls" 1572595918 19931 9ab70b303cca263e0120c205e98dee99 ""
+  "/usr/share/texmf-dist/tex/latex/base/size10.clo" 1572595918 8405 41d2bb848d0640ceaee96d90b89378b7 ""
+  "/usr/share/texmf-dist/web2c/texmf.cnf" 1572595918 33301 a3134070eacafb10b1f371612ce2650d ""
+  "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1574009746 4572998 f9631eebba48c3ee98e5d310044b0a09 ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1574009742 8044940 025169b90eefebb21830e5440100bd2f ""
+  "clase-11.aux" 1574208542 8 a94a2480d3289e625eea47cd1b285758 "pdflatex"
+  "clase-11.tex" 1574208539 85 5e9955738077ec2eb5600801b2035b76 ""
+  (generated)
+  "clase-11.log"
+  "clase-11.pdf"
+  "clase-11.aux"

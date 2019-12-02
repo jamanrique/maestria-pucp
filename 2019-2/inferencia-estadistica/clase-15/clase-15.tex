@@ -1,0 +1,214 @@
+\documentclass{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\title{Clase 15: Inferencia estadística}
+\author{Justo Andrés Manrique Urbina}
+
+\begin{document}
+
+\section{Test de la Razón de Verosimilitud}
+
+Sea:
+\[H_{0}: \theta \in \Theta_0.\]
+\[H_{1}: \theta \in \Theta_{1}.\]
+\[\Theta = \Theta_{0} \dot\cup \Theta_{1}.\]
+
+Sea $\hat{\theta}$ el estimador de máxima verosimilitud sobre $\Theta$ y $\hat{\theta_{0}}$ el estimador de máxima verosimilitud sobre $\Theta_{0}$. Se tiene entonces que:
+\[R(\dot)=\frac{L(\hat{\theta_{0}})}{L(\hat{\theta})}.\]
+
+Según este test, se rechaza $H_{0}$ si $R(\dot) < c$ dónde $c$ es tal que:
+\[P(\text{Rechazar $H_{0}$ siendo verdadera})=\alpha.\]
+
+\section{Ejemplo 1}
+
+Sea $X\sim N(\mu;10)$, teniendo las siguientes hipótesis:
+\[H_{0}:\mu=5.\]
+\[H_{1}:\mu\neq 5.\]
+
+Dado que:
+\[\theta=\mu.\]
+\[\Theta_{0}=\{5\}.\]
+\[\Theta_{1}=R-\{5\}.\]
+\[\Theta=R.\]
+
+Asimismo, fue visto que $\hat{\mu}=\bar{X}$ y que $\hat{\mu_{0}}=5$ (pues $\Theta_{0}$ tiene un solo elemento). Se tiene que:
+\[\frac{L(5)}{L(\bar{X})}.\]
+
+Se rechaza de acuerdo al test. En caso apliquemos el logaritmo, se tiene que:
+\[\ln(L(5))-\ln(L(\bar{X}))<c.\]
+\[l(5)-l(\bar{X})< <.\]
+
+Además, se ha visto que:
+\[l(\mu)=20(-\ln(\sqrt{2\pi})-\ln(\sqrt{10}))-\frac{1}{10}\sum_{1}^{20}{(X_{j}-\mu)}^{2}.\]
+
+Entonces, se rechaza $H_{0}$ si:
+\[20(-\ln(\sqrt{2\pi})-\ln(\sqrt{10}))-\frac{1}{10}\sum_{1}^{20}{(X_{j}-5)}^{2}-20(-\ln(\sqrt{2\pi})-\ln(\sqrt{10}))+\frac{1}{10}\sum_{1}^{20}{(X_{j}-\bar{X})}^{2} < c.\]
+
+\[-\sum_{1}^{20}{(X_{j}-5)}^{2}+\sum_{1}^{20}{(X_{j}-\bar{X})}^{2} < c.\]
+\[-\sum X_{j}^{2} - 10 \sum X_{j}- 20(5^{2})+\sum X_{j}-20\bar{X}^{2} < c.\]
+\[20(10)\bar{X}-20\bar{X}^{2}<c.\]
+\[10\bar{X}-\bar{X}^{2} < c.\]
+\[\bar{X}^{2}-10\bar{X} > c.\]
+\[{(\bar{X}-5)}^{2}-5^{2} > c.\]
+\[{(\bar{X}-5)}^{2}>c.\]
+\[|X-5| > c.\]
+Se tiene entonces que $\bar{X}-5 > c$ o $\bar{x}-5 < -c$. Por lo tanto se tiene que $\bar{X}>c_{1}$ $\bar{X}<c_{2}$ y se rechaza la hipótesis acordemente. Dónde $c_{1}$ y $c_{2}$ son tales que:
+\[P(\text{Rechazar $H_{0}$ siendo verdadera})=0.05.\]
+\[P(\bar{x}>c_{1} \text{o} \bar{x}<c_{2},\mu=5)=0.05.\]
+\[P(\bar{x}>c_{1}o \bar{x}<c_{2})=0.05,\mu=5.\]
+\[P(\bar{x}>c_{2})+P(\bar{x}<c_{2})=0.05, \mu=5.\]
+\[1-F_{\bar{x}}(c_{1})+F_{\bar{x}}(c_{2})=0.05,\mu=5.\]
+\[F_{\bar{x}}(c_{2})-F_{\bar{x}}(c_{1})=0.95,\mu=5.\]
+
+Podemos considerar que $F_{\bar{X}}(c_{2})=0.975$ y $F_{\bar{x}}(c_{1})=0.025, \mu=5$.
+
+Además, recordemos que $X\sim N(\mu,10)$ y asimismo:
+\[Z = \frac{\sqrt{n}(\bar{x}-\mu)}{\sigma}\sim N(0,1).\]
+\[n=20,\mu=5,\sigma=\sqrt{10}.\]
+
+Esto da que:
+\[F_{z}(\frac{\sqrt{20}}{\sqrt{10}}(c_{2}-5))=0.975 \rightarrow \frac{\sqrt{20}}{\sqrt{10}}(c_{2}-5)=1.96.\]
+\[F_{z}(\frac{\sqrt{20}}{\sqrt{10}}(c_{1}-5))=0.025 \rightarrow \frac{\sqrt{20}}{\sqrt{10}}(c_{1}-5)=1.96.\]
+
+Por lo tanto:
+\[c_{2}=\frac{\sqrt{10}}{\sqrt{20}}(1.96)+5=6.3859.\]
+\[c_{1}=-\frac{\sqrt{10}}{\sqrt{20}}(1.96)+5=3.6141.\]
+
+Es decir, se rechaza $H_{0}$ si $\bar{X}>6.3859$ o $\bar{X}<3.6141$.
+
+\section{Ejemplo 2}
+\[X\sim N(\mu,\sigma^{2}), n=20, \alpha=0.05.\]
+\[H_{0}:\mu=5.\]
+\[H_{1}=\mu\neq 5.\]
+
+\[\theta=(\mu,\sigma^{2}).\]
+\[\Theta_{0}=\{5\}x R^{+}, (\mu=5 \text{y} \sigma \in R^{+}).\]
+\[\Theta_{1}=(R-\{5\})x R^{+}, (\mu \neq 5 \text{y} \sigma^{2} \in R^{+}).\]
+
+En este escenario, se tiene que:
+\[l(\mu,\sigma^{2})=20(-\ln(\sqrt{2\pi})-\frac{1}{2}\ln(\sigma^{2}))-\frac{1}{2\sigma^{2}}\sum_{1}^{20}{(X_{j}-\mu)}^{2}\]
+\[\frac{\partial{l}}{\partial{\mu}}=0 \rightarrow \sum_{1}^{20}2{(X_{j}-\mu)}=0 \rightarrow \mu=\bar{x}.\]
+\[\frac{\partial{l}}{\partial{\sigma^{2}}}=0 \rightarrow \sigma^{2}=\frac{\sum_{1}^{20}{(x_{j}-\mu)}^{2}}{20}.\]
+
+Luego:
+\[\hat{\mu}=\bar{X} \text{y} \hat{\sigma^{2}}=\frac{\sum{(x_{j}-\bar{x})}^{2}}{20}.\]
+\[\hat{\mu_{0}}=5 \text{y} \hat{\sigma^{2}_{0}}=\frac{\sum{(x_{j}-5)}^{2}}{20}.\]
+
+\[R(\cdot)=\frac{L(\hat{\mu_{0}},\hat{\sigma^{2}_{0}})}{L(\hat{\mu},\hat{\sigma^{2}})}.\]
+\[l(\hat{\mu_{0},\hat{\sigma^{2}_{0}}})-l(\hat{\mu},\hat{\sigma^{2}})<c.\]
+\[-10(\ln(\sum{(x_{j}-5)}^{2})-\ln(20))+10(\ln(\sum{(x_{j}-\bar{x})}^{2})-\ln(20))<c.\]
+\[-10\ln(\sum{(x_{j}-5)}^{2})+10\ln(\sum{(x_{j}-\bar{x})}^{2})<c.\]
+Tengamos presente que $x\sim N(\mu,\sigma^{2})$ y que:
+\[T = \frac{\sqrt{n}(\bar{x}-\mu)}{S}\sim t(n-1).\]
+en dónde $S^{2}=\frac{\sum{(x_{j}-\bar{x})}^{2}}{20-1}$
+\[-\ln(\sum{(x_{j}-5)}^{2})+\ln(\sum{(x_{j\bar{x}})}^{2})<c.\]
+\[\ln(\frac{\sum{(x_{j}-\bar{x})}^{2}}{\sum{(x_{j}-5)}^{2}})<c.\]
+\[\frac{\sum{(x_{j}-\bar{x})}^{2}}{\sum{(x_{j}-5)}^{2}}<c.\]
+\[\frac{\sum{(x_{j}-5)}^{2}}{19 S^{2}} > c.\]
+\[\frac{\sum x_{j}^{2}-\sum x_{j}+20(5^{2})}{19 S^{2}}.\]
+\[\frac{19 S^{2} - 20 \bar{x}^{2}-10(20\bar{x})+20(5^{2})}{19 S^{2}} > c.\]
+\[\frac{19 S^{2} + 20(\bar{x}^{2}-10\bar{x}+5^{2})}{S^{2}} > c.\]
+\[\frac{19 S^{2} + 20{(\bar{x}-5)}^{2}}{S^{2}} > c.\]
+\[19 + \frac{20{(\bar{x}-5)}^{2}}{S^{2}} > c.\]
+\[\frac{20{(\bar{x}-5)}^{2}}{S^{2}} > c.\]
+\[ T^{2} > c.\]
+\[ |T| > c.\]
+dónde $t = \frac{\sqrt{20}(\bar{x}-5)}{S}\sim t(20-1)$ si y sólo si $\mu=5$. Dónde $c$ es tal que:
+\[P(\text{Rechazar $H_{0}$ siendo verdadera})=0.05.\]
+\[P(|T| > c)=0.05,\mu=5.\]
+\[P(|T| \leq c) = 0.95,\mu=5.\]
+\[P(-c\leq T \leq c)=0.95,\mu=5.\]
+\[F_{T}(c)-F_{T}(-c)=0.95,\mu=5.\]
+\[F_{T}(c)-(1-F_{T}(c))=0.95,\mu=5.\]
+\[2 F_{T}(c)=1.95.\]
+\[F_{T}(c)=0.975,\mu=5.\]
+\[c=t_{0.975;19}.\]
+
+Se rechaza $H_{0}$ si $|T| > t_{0.975;19}$.
+\section{Ejemplo 3}
+Se tiene que $X\sim N(\mu,\sigma^{2}), n=20,\alpha=0.05$ y las hipótesis son:
+\[H_{0}: \sigma^{2} =9.\]
+\[H_{1}: \sigma^{2} \leq 9.\]
+
+Los parámetros son $\theta=(\mu,\sigma^{2})$, $\Theta_{0}=Rx\{9\}$ y $\Theta_{1}: IR x (IR^{+}-\{9\})$.
+
+Recordemos que los estimadores de máxima verosimilitud son:
+\[\mu=\bar{x}.\]
+\[\sigma^{2}=\frac{\sum{(x_{j}-\mu)}^{2}}{20}.\]
+Resulta entonces que:
+\[\hat{\mu}=\bar{x}, \hat{\sigma^{2}}=\frac{\sum{(x_{j}-\bar{x})}^{2}}{20}.\]
+\[\hat{\mu}_{0}=\bar{x}, \hat{\sigma^{2}}_{0}=9.\]
+Se rechaza $H_{0}$ si:
+\[l(\hat{\mu_{0}, \hat{\sigma^{2}}_{0}})-l(\hat{\mu}-\hat{\sigma^{2}})<c.\]
+\[20(-\ln(\sqrt{2\pi})-\frac{1}{2}\ln(\hat{\sigma^{2}_{0}}))-\frac{1}{2\hat{\sigma^{2}_{0}}}\sum{(x_{j}-\hat{\mu_{0}})}^{2}-20(-\ln(\sqrt{2\pi})-\frac{1}{2}\ln(\hat{\sigma^{2}}))+\frac{1}{2\hat{\sigma^{2}}}\sum{(x_{j}-\hat{\mu})}^{2} < c.\]
+\[-10\ln(9)-\frac{1}{2(9)}\sum{(x_{j}-\bar{x})}^{2}+10\ln(\sigma^{2})+\frac{1}{\frac{2 \sum{(\sum x_{j}-\bar{x})}^{2}}{20}}\sum{(x_{j}-\bar{x})}^{2}<c.\]
+\[-\frac{1}{2(9)}\sum{(x_{j}-\bar{x})}^{2}+10\ln(\frac{{\sum x_{j}-\bar{x}}^{2}}{20}) < c.\]
+\[\frac{-19}{18}S^{2}+10\ln(S^{2})<c.\]
+\[180 \ln(S^{2})-19 S^{2} < c.\]
+\[g(S^{2})<c.\]
+
+Se rechaza $H_{0}$ si:
+\[S^{2} < c_{1}\text{o} S^{2} > c_{2}.\]
+dónde $c_{1}$ y $c_{2}$ son tales que:
+\[P(\text{rechazar $H_{0}$ siendo verdadera})=0.05.\]
+\[P(S^{2}<c_{1} \text{o} S^{2}>c_{2}, \sigma^{2}=9)=0.05.\]
+\[P(S^{2}<c_{1} \text{o} S^{2}>c_{2}) = 0.05, \sigma^{2}=9.\]
+\[P(S^{2}<c_{1})+P(S^{2}>c_{2})=0.05,\sigma^{2}=9.\]
+
+Por ejemplo:
+\[P(S^{2}<c_{1})= 0.025 \text{y} P(S^{2}>c_{2})=0.025; \sigma^{2}=9.\]
+\[P(S^{2}<c_{1})=0.025 \text{y} P(S^{2}\leq c_{2})=0.975, \sigma^{2}=9.\]
+\[P(\frac{9}{19}W < c_{1})=0.025 \text{y} P(\frac{9}{19}W \leq c_{2})=0.975, \sigma^{2}=9.\]
+\[P(W<\frac{19}{9}c_{1})=0.025 \text{y} P(W\leq \frac{19}{9}c_{2})=0.975, \sigma^{2}=9.\]
+Tener presente que
+\[\frac{19 S^{2}}{9} \sim X^{2}(19).\]
+Luego:
+\[\frac{19}{9}c_{1} \sim X^{2}_{0.025;19} \text{y} \frac{19}{9}c_{2}=X^{2}_{0.975;19}.\]
+
+\section{Propiedad}
+Si $n$ es suficientemente grande:
+\[-2\ln(R(\cdot))~_{aprox}X^{2}(r).\]
+Si $H_{0}$ es verdadera.
+
+Luego, se rechaza $H_{0}$ si $R(\cdot) < c$
+\[-2 \ln(R(\cdot))> c.\]
+Dónde $c$ es tal que:
+\[p(-2\ln(R(\cdot)))=\alpha,H_{0} \text{verdadera}.\]
+\[c=X^{2}_{1-\alpha, r}.\]
+Es decir, se rechaza $H_{0}$ si $-2\ln(R(\cdot))<X^{2}_{1-\alpha,r}$, en dónde:
+\[r = \dim(\Theta)-\dim(\Theta_{0}).\]
+
+\section{Ejemplo}
+El ingreso de cierto sector de familias es $X\sim G(\theta_{1},\theta_{2})$. Mediante un contraste de hipótesis analizar si $X\sim \exp(\theta_{2})$. Considerar $n=100$ y $\alpha=0.05$
+
+\[\theta=(\theta_{1},\theta=2).\]
+\[H_{0}:\theta_{1}=1.\]
+\[H_{1}:\theta_{1}\neq 1.\]
+\[\Theta_{0}=\{1\}xR^{+} \text{y} \Theta_{1}=(R^{+}-\{1\})x R^{+}.\]
+Esto quiere decir:
+\[\theta_{1}=1;\theta_{2}>0 \text{y} \theta_{1} \neq 1, \theta_{2} >0.\]
+
+Para procesar la muestra se obtuvieron:
+\[\hat{\theta_{1}}=5.8908.\]
+\[\hat{\theta_{2}}=1.1253.\]
+\[\ln(L(\hat{\theta_{1},\hat{\theta_{2}}}))=-212.8558.\]
+
+Además, se tiene que:
+\[f(x)=\frac{\theta_{2}^{\theta_{1}}}{\Gamma(\theta_{1})}x^{\theta_{1}-1}e^{-\theta_{2}x},x>0.\]
+Bajo $\Theta_{0}=\{1\}, \Theta_{1}=1$
+\[f(x)=\theta_{2}e^{-\theta_{1}x}, x>0.\]
+\[\ln(f(x))=\ln(\theta_{2})-\theta_{2}x\]
+\[l(\theta_{2})=100\ln(\theta_{2})-\theta_{2}\sum X_{j}.\]
+\[=100 \ln(\theta_{2})-100\theta\bar{x}.\]
+\[l^{'}(\theta_{2})=\frac{100}{\theta_{2}}-100\bar{X}.\]
+\[\hat{x_{20}}=\frac{1}{\bar{x}}.\]
+\[l(\hat{\theta_{20}})=100 \ln(\frac{1}{\bar{x}})-100 \frac{1}{\bar{x}}\bar{x}.\]
+\[=-100\ln(\bar{X})-100.\]
+
+Se rechaza $H_{0}$ si:
+\[-2 \ln(R(\cdot))> X^{2}_{1-\alpha,r}.\]
+
+\end{document}
