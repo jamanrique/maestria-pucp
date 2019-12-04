@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2019.11.17)  26 NOV 2019 00:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2019.11.17)  3 DEC 2019 22:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -439,13 +439,13 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip47
 )
-Package hyperref Info: Option `unicode' set `true' on input line 28.
+Package hyperref Info: Option `unicode' set `true' on input line 30.
 (/usr/share/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2019/09/28 v7.00a Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-Package hyperref Info: Option `breaklinks' set `true' on input line 28.
+Package hyperref Info: Option `breaklinks' set `true' on input line 30.
 (/usr/share/texmf-dist/tex/latex/graphics/color.sty
 Package: color 2016/07/10 v1.1e Standard LaTeX Color (DPC)
 (/usr/share/texmf-dist/tex/latex/graphics-cfg/color.cfg
@@ -502,42 +502,42 @@ Package: titling 2009/09/04 v2.1d maketitle typesetting
 ) (./PC3.aux)
 \openout1 = `PC3.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 128.
-LaTeX Font Info:    ... okay on input line 128.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 128.
-LaTeX Font Info:    ... okay on input line 128.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 128.
-LaTeX Font Info:    ... okay on input line 128.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 128.
-LaTeX Font Info:    ... okay on input line 128.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 128.
-LaTeX Font Info:    ... okay on input line 128.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 128.
-LaTeX Font Info:    ... okay on input line 128.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 128.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 132.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 1
-28.
+32.
 (/usr/share/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 128.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 128.
-LaTeX Font Info:    ... okay on input line 128.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 128.
-LaTeX Font Info:    ... okay on input line 128.
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 12
-8.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 132.
+LaTeX Font Info:    ... okay on input line 132.
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 13
+2.
 (/usr/share/texmf-dist/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Info: Redefining \microtypecontext on input line 128.
+LaTeX Info: Redefining \microtypecontext on input line 132.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `basictext'.
-LaTeX Info: Redefining \showhyphens on input line 128.
+LaTeX Info: Redefining \showhyphens on input line 132.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -580,7 +580,7 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \AtBeginShipoutBox=\box30
-Package hyperref Info: Link coloring OFF on input line 128.
+Package hyperref Info: Link coloring OFF on input line 132.
 (/usr/share/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
 (/usr/share/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
@@ -588,9 +588,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count119
 )
-LaTeX Info: Redefining \ref on input line 128.
-LaTeX Info: Redefining \pageref on input line 128.
-LaTeX Info: Redefining \nameref on input line 128.
+LaTeX Info: Redefining \ref on input line 132.
+LaTeX Info: Redefining \pageref on input line 132.
+LaTeX Info: Redefining \nameref on input line 132.
 (./PC3.out) (./PC3.out)
 \@outlinefile=\write4
 \openout4 = `PC3.out'.
@@ -624,39 +624,39 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
-37.
+42.
 (/usr/share/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-37.
+42.
 (/usr/share/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-137.
+142.
 (/usr/share/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-137.
+142.
 (/usr/share/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 137.
+(Font)              <10> on input line 142.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 137.
+(Font)              <7> on input line 142.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 137.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 137
+(Font)              <5> on input line 142.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 142
 .
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/share/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 137
+LaTeX Font Info:    Trying to load font information for U+msb on input line 142
 .
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -666,273 +666,274 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
-74.
+79.
 (/usr/share/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
-94.
+99.
 (/usr/share/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 195.
-<"PC3_files/figure-latex/""unnamed-chunk-3-1".pdf, id=87, 422.57875pt x 248.93p
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 200.
+<"PC3_files/figure-latex/""unnamed-chunk-3-1".pdf, id=88, 422.57875pt x 248.93p
 t>
 File: "PC3_files/figure-latex/""unnamed-chunk-3-1".pdf Graphic file (type pdf)
 <use "PC3_files/figure-latex/""unnamed-chunk-3-1".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-3-1".pdf  used
- on input line 223.
+ on input line 228.
 (pdftex.def)             Requested size: 422.58415pt x 248.93317pt.
-[2 <./PC3_files/figure-latex/unnamed-chunk-3-1.pdf>]
-<"PC3_files/figure-latex/""unnamed-chunk-3-2".pdf, id=104, 422.57875pt x 251.94
-125pt>
+[2]
+<"PC3_files/figure-latex/""unnamed-chunk-3-2".pdf, id=99, 422.57875pt x 251.941
+25pt>
 File: "PC3_files/figure-latex/""unnamed-chunk-3-2".pdf Graphic file (type pdf)
 <use "PC3_files/figure-latex/""unnamed-chunk-3-2".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-3-2".pdf  used
- on input line 231.
+ on input line 236.
 (pdftex.def)             Requested size: 422.57771pt x 251.94063pt.
-<"PC3_files/figure-latex/""unnamed-chunk-3-3".pdf, id=105, 422.57875pt x 251.94
+<"PC3_files/figure-latex/""unnamed-chunk-3-3".pdf, id=100, 422.57875pt x 251.94
 125pt>
 File: "PC3_files/figure-latex/""unnamed-chunk-3-3".pdf Graphic file (type pdf)
 <use "PC3_files/figure-latex/""unnamed-chunk-3-3".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-3-3".pdf  used
- on input line 239.
+ on input line 244.
 (pdftex.def)             Requested size: 422.57771pt x 251.94063pt.
-<"PC3_files/figure-latex/""unnamed-chunk-3-4".pdf, id=106, 422.57875pt x 251.94
+[3 <./PC3_files/figure-latex/unnamed-chunk-3-1.pdf> <./PC3_files/figure-latex/u
+nnamed-chunk-3-2.pdf>]
+<"PC3_files/figure-latex/""unnamed-chunk-3-4".pdf, id=119, 422.57875pt x 251.94
 125pt>
 File: "PC3_files/figure-latex/""unnamed-chunk-3-4".pdf Graphic file (type pdf)
 <use "PC3_files/figure-latex/""unnamed-chunk-3-4".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-3-4".pdf  used
- on input line 247.
+ on input line 252.
 (pdftex.def)             Requested size: 422.57771pt x 251.94063pt.
-[3 <./PC3_files/figure-latex/unnamed-chunk-3-2.pdf> <./PC3_files/figure-latex/u
-nnamed-chunk-3-3.pdf>]
-<"PC3_files/figure-latex/""unnamed-chunk-3-5".pdf, id=125, 422.57875pt x 251.94
+<"PC3_files/figure-latex/""unnamed-chunk-3-5".pdf, id=120, 422.57875pt x 251.94
 125pt>
 File: "PC3_files/figure-latex/""unnamed-chunk-3-5".pdf Graphic file (type pdf)
 <use "PC3_files/figure-latex/""unnamed-chunk-3-5".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-3-5".pdf  used
- on input line 255.
+ on input line 260.
 (pdftex.def)             Requested size: 422.57771pt x 251.94063pt.
-<"PC3_files/figure-latex/""unnamed-chunk-4-1".pdf, id=126, 459.7175pt x 313.17p
+[4 <./PC3_files/figure-latex/unnamed-chunk-3-3.pdf> <./PC3_files/figure-latex/u
+nnamed-chunk-3-4.pdf>]
+<"PC3_files/figure-latex/""unnamed-chunk-4-1".pdf, id=139, 459.7175pt x 313.17p
 t>
 File: "PC3_files/figure-latex/""unnamed-chunk-4-1".pdf Graphic file (type pdf)
 <use "PC3_files/figure-latex/""unnamed-chunk-4-1".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-4-1".pdf  used
- on input line 268.
+ on input line 273.
 (pdftex.def)             Requested size: 459.7304pt x 313.17877pt.
-[4 <./PC3_files/figure-latex/unnamed-chunk-3-4.pdf> <./PC3_files/figure-latex/u
-nnamed-chunk-3-5.pdf>]
-<"PC3_files/figure-latex/""unnamed-chunk-5-1".pdf, id=145, 459.7175pt x 315.177
+[5 <./PC3_files/figure-latex/unnamed-chunk-3-5.pdf> <./PC3_files/figure-latex/u
+nnamed-chunk-4-1.pdf>]
+<"PC3_files/figure-latex/""unnamed-chunk-5-1".pdf, id=158, 459.7175pt x 315.177
 5pt>
 File: "PC3_files/figure-latex/""unnamed-chunk-5-1".pdf Graphic file (type pdf)
 <use "PC3_files/figure-latex/""unnamed-chunk-5-1".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-5-1".pdf  used
- on input line 279.
+ on input line 284.
 (pdftex.def)             Requested size: 459.74442pt x 315.19595pt.
-[5 <./PC3_files/figure-latex/unnamed-chunk-4-1.pdf>]
-<"PC3_files/figure-latex/""unnamed-chunk-5-2".pdf, id=157, 459.7175pt x 313.17p
+<"PC3_files/figure-latex/""unnamed-chunk-5-2".pdf, id=159, 459.7175pt x 313.17p
 t>
 File: "PC3_files/figure-latex/""unnamed-chunk-5-2".pdf Graphic file (type pdf)
 <use "PC3_files/figure-latex/""unnamed-chunk-5-2".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-5-2".pdf  used
- on input line 287.
+ on input line 292.
 (pdftex.def)             Requested size: 459.7304pt x 313.17877pt.
 [6 <./PC3_files/figure-latex/unnamed-chunk-5-1.pdf>]
-<"PC3_files/figure-latex/""unnamed-chunk-5-3".pdf, id=169, 459.7175pt x 313.17p
+<"PC3_files/figure-latex/""unnamed-chunk-5-3".pdf, id=171, 459.7175pt x 313.17p
 t>
 File: "PC3_files/figure-latex/""unnamed-chunk-5-3".pdf Graphic file (type pdf)
 <use "PC3_files/figure-latex/""unnamed-chunk-5-3".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-5-3".pdf  used
- on input line 295.
+ on input line 300.
 (pdftex.def)             Requested size: 459.7304pt x 313.17877pt.
 [7 <./PC3_files/figure-latex/unnamed-chunk-5-2.pdf>]
-<"PC3_files/figure-latex/""unnamed-chunk-5-4".pdf, id=183, 459.7175pt x 313.17p
+<"PC3_files/figure-latex/""unnamed-chunk-5-4".pdf, id=185, 459.7175pt x 313.17p
 t>
 File: "PC3_files/figure-latex/""unnamed-chunk-5-4".pdf Graphic file (type pdf)
 <use "PC3_files/figure-latex/""unnamed-chunk-5-4".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-5-4".pdf  used
- on input line 303.
+ on input line 308.
 (pdftex.def)             Requested size: 459.7304pt x 313.17877pt.
 [8 <./PC3_files/figure-latex/unnamed-chunk-5-3.pdf>]
-<"PC3_files/figure-latex/""unnamed-chunk-6-1".pdf, id=195, 459.7175pt x 315.177
+<"PC3_files/figure-latex/""unnamed-chunk-6-1".pdf, id=197, 459.7175pt x 315.177
 5pt>
 File: "PC3_files/figure-latex/""unnamed-chunk-6-1".pdf Graphic file (type pdf)
 <use "PC3_files/figure-latex/""unnamed-chunk-6-1".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-6-1".pdf  used
- on input line 329.
+ on input line 334.
 (pdftex.def)             Requested size: 459.74442pt x 315.19595pt.
 [9 <./PC3_files/figure-latex/unnamed-chunk-5-4.pdf>]
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-345.
+350.
 (/usr/share/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-<"PC3_files/figure-latex/""unnamed-chunk-7-1".pdf, id=207, 453.695pt x 315.1775
+<"PC3_files/figure-latex/""unnamed-chunk-7-1".pdf, id=209, 453.695pt x 315.1775
 pt>
 File: "PC3_files/figure-latex/""unnamed-chunk-7-1".pdf Graphic file (type pdf)
 <use "PC3_files/figure-latex/""unnamed-chunk-7-1".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-7-1".pdf  used
- on input line 349.
+ on input line 354.
 (pdftex.def)             Requested size: 453.6939pt x 315.17673pt.
 [10 <./PC3_files/figure-latex/unnamed-chunk-6-1.pdf>] [11 <./PC3_files/figure-l
 atex/unnamed-chunk-7-1.pdf>] [12] [13] [14]
-<"PC3_files/figure-latex/""unnamed-chunk-16-1".pdf, id=245, 436.63126pt x 248.9
+<"PC3_files/figure-latex/""unnamed-chunk-16-1".pdf, id=247, 436.63126pt x 248.9
 3pt>
 File: "PC3_files/figure-latex/""unnamed-chunk-16-1".pdf Graphic file (type pdf)
 
 <use "PC3_files/figure-latex/""unnamed-chunk-16-1".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-16-1".pdf  use
-d on input line 668.
+d on input line 673.
 (pdftex.def)             Requested size: 436.63019pt x 248.92938pt.
 [15] [16 <./PC3_files/figure-latex/unnamed-chunk-16-1.pdf>]
-<"PC3_files/figure-latex/""unnamed-chunk-21-1".pdf, id=265, 451.6875pt x 281.05
+<"PC3_files/figure-latex/""unnamed-chunk-21-1".pdf, id=266, 451.6875pt x 281.05
 pt>
 File: "PC3_files/figure-latex/""unnamed-chunk-21-1".pdf Graphic file (type pdf)
 
 <use "PC3_files/figure-latex/""unnamed-chunk-21-1".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-21-1".pdf  use
-d on input line 798.
+d on input line 809.
 (pdftex.def)             Requested size: 451.71394pt x 281.06645pt.
 [17]
-<"PC3_files/figure-latex/""unnamed-chunk-22-1".pdf, id=273, 448.67625pt x 281.0
+<"PC3_files/figure-latex/""unnamed-chunk-22-1".pdf, id=275, 448.67625pt x 281.0
 5pt>
 File: "PC3_files/figure-latex/""unnamed-chunk-22-1".pdf Graphic file (type pdf)
 
 <use "PC3_files/figure-latex/""unnamed-chunk-22-1".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-22-1".pdf  use
-d on input line 810.
+d on input line 821.
 (pdftex.def)             Requested size: 448.68884pt x 281.05788pt.
 [18 <./PC3_files/figure-latex/unnamed-chunk-21-1.pdf> <./PC3_files/figure-latex
 /unnamed-chunk-22-1.pdf>]
-<"PC3_files/figure-latex/""unnamed-chunk-23-1".pdf, id=295, 451.6875pt x 281.05
+<"PC3_files/figure-latex/""unnamed-chunk-23-1".pdf, id=297, 451.6875pt x 281.05
 pt>
 File: "PC3_files/figure-latex/""unnamed-chunk-23-1".pdf Graphic file (type pdf)
 
 <use "PC3_files/figure-latex/""unnamed-chunk-23-1".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-23-1".pdf  use
-d on input line 822.
+d on input line 833.
 (pdftex.def)             Requested size: 451.71394pt x 281.06645pt.
-<"PC3_files/figure-latex/""unnamed-chunk-24-1".pdf, id=296, 445.665pt x 281.05p
+<"PC3_files/figure-latex/""unnamed-chunk-24-1".pdf, id=298, 445.665pt x 281.05p
 t>
 File: "PC3_files/figure-latex/""unnamed-chunk-24-1".pdf Graphic file (type pdf)
 
 <use "PC3_files/figure-latex/""unnamed-chunk-24-1".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-24-1".pdf  use
-d on input line 834.
+d on input line 845.
 (pdftex.def)             Requested size: 445.6707pt x 281.05359pt.
 [19 <./PC3_files/figure-latex/unnamed-chunk-23-1.pdf>] [20 <./PC3_files/figure-
 latex/unnamed-chunk-24-1.pdf>]
-<"PC3_files/figure-latex/""unnamed-chunk-27-1".pdf, id=329, 440.64626pt x 251.9
+<"PC3_files/figure-latex/""unnamed-chunk-27-1".pdf, id=331, 440.64626pt x 251.9
 4125pt>
 File: "PC3_files/figure-latex/""unnamed-chunk-27-1".pdf Graphic file (type pdf)
 
 <use "PC3_files/figure-latex/""unnamed-chunk-27-1".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-27-1".pdf  use
-d on input line 936.
+d on input line 947.
 (pdftex.def)             Requested size: 440.64517pt x 251.94063pt.
 
-Overfull \vbox (1.77306pt too high) detected at line 954
+Overfull \vbox (1.77306pt too high) detected at line 965
  []
 
 [21 <./PC3_files/figure-latex/unnamed-chunk-27-1.pdf>]
-<"PC3_files/figure-latex/""unnamed-chunk-28-1".pdf, id=342, 440.64626pt x 251.9
+<"PC3_files/figure-latex/""unnamed-chunk-28-1".pdf, id=344, 440.64626pt x 251.9
 4125pt>
 File: "PC3_files/figure-latex/""unnamed-chunk-28-1".pdf Graphic file (type pdf)
 
 <use "PC3_files/figure-latex/""unnamed-chunk-28-1".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-28-1".pdf  use
-d on input line 956.
+d on input line 967.
 (pdftex.def)             Requested size: 440.64517pt x 251.94063pt.
-<"PC3_files/figure-latex/""unnamed-chunk-29-1".pdf, id=343, 440.64626pt x 251.9
+<"PC3_files/figure-latex/""unnamed-chunk-29-1".pdf, id=345, 440.64626pt x 251.9
 4125pt>
 File: "PC3_files/figure-latex/""unnamed-chunk-29-1".pdf Graphic file (type pdf)
 
 <use "PC3_files/figure-latex/""unnamed-chunk-29-1".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-29-1".pdf  use
-d on input line 973.
+d on input line 984.
 (pdftex.def)             Requested size: 440.64517pt x 251.94063pt.
 [22 <./PC3_files/figure-latex/unnamed-chunk-28-1.pdf>]
-<"PC3_files/figure-latex/""unnamed-chunk-30-1".pdf, id=355, 440.64626pt x 250.9
+<"PC3_files/figure-latex/""unnamed-chunk-30-1".pdf, id=357, 440.64626pt x 250.9
 375pt>
 File: "PC3_files/figure-latex/""unnamed-chunk-30-1".pdf Graphic file (type pdf)
 
 <use "PC3_files/figure-latex/""unnamed-chunk-30-1".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-30-1".pdf  use
-d on input line 984.
+d on input line 995.
 (pdftex.def)             Requested size: 440.66533pt x 250.94835pt.
 [23 <./PC3_files/figure-latex/unnamed-chunk-29-1.pdf> <./PC3_files/figure-latex
 /unnamed-chunk-30-1.pdf>]
-<"PC3_files/figure-latex/""unnamed-chunk-36-1".pdf, id=374, 440.64626pt x 251.9
+<"PC3_files/figure-latex/""unnamed-chunk-36-1".pdf, id=376, 440.64626pt x 251.9
 4125pt>
 File: "PC3_files/figure-latex/""unnamed-chunk-36-1".pdf Graphic file (type pdf)
 
 <use "PC3_files/figure-latex/""unnamed-chunk-36-1".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-36-1".pdf  use
-d on input line 1087.
+d on input line 1098.
 (pdftex.def)             Requested size: 440.64517pt x 251.94063pt.
 [24]
 
-LaTeX Warning: Command \texttimes invalid in math mode on input line 1090.
+LaTeX Warning: Command \texttimes invalid in math mode on input line 1101.
 
 
-LaTeX Warning: Command \texttimes invalid in math mode on input line 1090.
+LaTeX Warning: Command \texttimes invalid in math mode on input line 1101.
 
-<"PC3_files/figure-latex/""unnamed-chunk-40-1".pdf, id=380, 436.63126pt x 250.9
+<"PC3_files/figure-latex/""unnamed-chunk-40-1".pdf, id=382, 436.63126pt x 250.9
 375pt>
 File: "PC3_files/figure-latex/""unnamed-chunk-40-1".pdf Graphic file (type pdf)
 
 <use "PC3_files/figure-latex/""unnamed-chunk-40-1".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-40-1".pdf  use
-d on input line 1144.
+d on input line 1155.
 (pdftex.def)             Requested size: 436.63019pt x 250.93687pt.
 [25 <./PC3_files/figure-latex/unnamed-chunk-36-1.pdf>]
-<"PC3_files/figure-latex/""unnamed-chunk-40-2".pdf, id=395, 444.66125pt x 248.9
+<"PC3_files/figure-latex/""unnamed-chunk-40-2".pdf, id=397, 444.66125pt x 248.9
 3pt>
 File: "PC3_files/figure-latex/""unnamed-chunk-40-2".pdf Graphic file (type pdf)
 
 <use "PC3_files/figure-latex/""unnamed-chunk-40-2".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-40-2".pdf  use
-d on input line 1152.
+d on input line 1163.
 (pdftex.def)             Requested size: 444.66016pt x 248.92938pt.
-<"PC3_files/figure-latex/""unnamed-chunk-41-1".pdf, id=396, 436.63126pt x 250.9
+<"PC3_files/figure-latex/""unnamed-chunk-41-1".pdf, id=398, 436.63126pt x 250.9
 375pt>
 File: "PC3_files/figure-latex/""unnamed-chunk-41-1".pdf Graphic file (type pdf)
 
 <use "PC3_files/figure-latex/""unnamed-chunk-41-1".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-41-1".pdf  use
-d on input line 1161.
+d on input line 1172.
 (pdftex.def)             Requested size: 436.63019pt x 250.93687pt.
 [26 <./PC3_files/figure-latex/unnamed-chunk-40-1.pdf> <./PC3_files/figure-latex
 /unnamed-chunk-40-2.pdf>]
-<"PC3_files/figure-latex/""unnamed-chunk-41-2".pdf, id=415, 444.66125pt x 258.9
+<"PC3_files/figure-latex/""unnamed-chunk-41-2".pdf, id=417, 444.66125pt x 258.9
 675pt>
 File: "PC3_files/figure-latex/""unnamed-chunk-41-2".pdf Graphic file (type pdf)
 
 <use "PC3_files/figure-latex/""unnamed-chunk-41-2".pdf>
 Package pdftex.def Info: "PC3_files/figure-latex/""unnamed-chunk-41-2".pdf  use
-d on input line 1169.
+d on input line 1180.
 (pdftex.def)             Requested size: 444.66016pt x 258.96684pt.
 [27 <./PC3_files/figure-latex/unnamed-chunk-41-1.pdf> <./PC3_files/figure-latex
 /unnamed-chunk-41-2.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1211.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1222.
 [28]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1211.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1222.
 (./PC3.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1211.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1211.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1222.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1222.
 
 Package rerunfilecheck Info: File `PC3.out' has not changed.
 (rerunfilecheck)             Checksum: 79959FF5477A82CD49BD164653603BFE;1906.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1211.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1222.
  ) 
 Here is how much of TeX's memory you used:
- 13452 strings out of 492167
- 198532 string characters out of 6131557
- 307148 words of memory out of 5000000
- 17515 multiletter control sequences out of 15000+600000
- 32606 words of font info for 68 fonts, out of 8000000 for 9000
+ 13465 strings out of 492167
+ 198716 string characters out of 6131557
+ 307814 words of memory out of 5000000
+ 17520 multiletter control sequences out of 15000+600000
+ 40224 words of font info for 73 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  34i,6n,42p,966b,447s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf-dist/fo
@@ -944,15 +945,17 @@ texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf-dist/fonts/type1/
 public/lm/lmex10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></
 usr/share/texmf-dist/fonts/type1/public/lm/lmmi5.pfb></usr/share/texmf-dist/fon
 ts/type1/public/lm/lmmi7.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr10
-.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr5.pfb></usr/share/texmf-di
-st/fonts/type1/public/lm/lmr7.pfb></usr/share/texmf-dist/fonts/type1/public/lm/
-lmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/share/t
-exmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/share/texmf-dist/fonts/type1/p
-ublic/lm/lmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on PC3.pdf (28 pages, 3636056 bytes).
+.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf-d
+ist/fonts/type1/public/lm/lmr5.pfb></usr/share/texmf-dist/fonts/type1/public/lm
+/lmr7.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/share/t
+exmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf-dist/fonts/type1/p
+ublic/lm/lmsy7.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></us
+r/share/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/share/texmf-dist/font
+s/type1/public/lm/lmtti10.pfb>
+Output written on PC3.pdf (28 pages, 3678139 bytes).
 PDF statistics:
- 510 PDF objects out of 1000 (max. 8388607)
- 384 compressed objects within 4 object streams
+ 518 PDF objects out of 1000 (max. 8388607)
+ 390 compressed objects within 4 object streams
  71 named destinations out of 1000 (max. 500000)
- 6403 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 8451 words of extra memory for PDF output out of 10000 (max. 10000000)
 

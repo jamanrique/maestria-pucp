@@ -1,4 +1,8 @@
 ---
+title: "Práctica 3 - Modelos Lineales 2"
+author: "Justo Manrique Urbina - 20091107; Juan Pablo Moreano - 20184093"
+date: "12/03/2019"
+
 output:
   pdf_document: default
   html_document:
@@ -8,6 +12,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
 
 ## Pregunta 1 
 
