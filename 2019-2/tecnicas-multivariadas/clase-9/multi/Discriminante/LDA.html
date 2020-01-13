@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Dr. Luis Benites" />
+  <title>Análisis discriminante</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="LDA_files/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span. { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="LDA_files/reveal.js-3.3.0.1/css/theme/white.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="logo.css"/>
+    <link rel="stylesheet" href="style.css"/>
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">Análisis discriminante</h1>
+    <h2 class="author">Dr. Luis Benites</h2>
+    <h3 class="date">26 de octubre del 2019 <br> <img id='logopucp' src='logoPUCP.jpg'></h3>
+</section>
+
+<section id="análisis-discriminante-lineal" class="slide level2">
+<h2>Análisis Discriminante Lineal</h2>
+<ul>
+<li>Supongamos que un conjunto de objetos se clasifica en una serie de grupos; el Análisis Discriminante equivale a un análisis de regresión donde la variable dependiente es categórica y tiene como categorías la etiqueta de cada uno de los grupos, y las variables independientes son continuas y determinan a qué grupos pertenecen los objetos.</li>
+</ul>
+</section>
+<section id="análisis-discriminante-lineal-1" class="slide level2">
+<h2>Análisis Discriminante Lineal</h2>
+<ul>
+<li>Se trata de encontrar relaciones lineales entre las variables continuas que mejor discriminen en los grupos dados a los objetos. Además, se trata de definir una regla de decisión que asigne un objeto nuevo, que no sabemos clasificar previamente, a uno de los grupos prefijados.</li>
+</ul>
+</section>
+<section id="análisis-discriminante-lineal-2" class="slide level2">
+<h2>Análisis Discriminante Lineal</h2>
+<ul>
+<li><p>Se presentan una serie de restricciones o supuestos:</p>
+<ul>
+<li>Se tiene una variable categórica y el resto de variables son de intervalo o de razón y son independientes respecto de ella.</li>
+<li>Es necesario que existan al menos dos grupos y para cada grupo se necesitan dos o más casos.</li>
+<li>El número de variables discriminantes debe ser menor que el número de objetos menos dos: <span class="math inline">\(x_1, \ldots , x_p\)</span> donde <span class="math inline">\(p&lt;(n−2)\)</span> y <span class="math inline">\(n\)</span> es el número de objetos.</li>
+</ul></li>
+</ul>
+</section>
+<section id="análisis-discriminante-lineal-3" class="slide level2">
+<h2>Análisis Discriminante Lineal</h2>
+<ul>
+<li><p>Se presentan una serie de restricciones o supuestos:</p>
+<ul>
+<li>Ninguna variable discriminante puede ser combinación lineal de otras variables discriminantes.</li>
+<li>El número máximo de funciones discriminantes es igual al mínimo entre el número de variables y el número de grupos menos 1 (con <span class="math inline">\(q\)</span> grupos, (<span class="math inline">\(q−1\)</span>) funciones discriminantes)</li>
+</ul></li>
+</ul>
+</section>
+<section id="análisis-discriminante-lineal-4" class="slide level2">
+<h2>Análisis Discriminante Lineal</h2>
+<ul>
+<li><p>Las condiciones que se deben cumplir para que un Análisis Discriminante Lineal sea válido son:</p>
+<ul>
+<li>Cada predictor que forma parte del modelo se distribuye de forma normal en cada una de las clases de la variable respuesta. En el caso de múltiples predictores, las observaciones siguen una distribución normal multivariante en todas las clases.</li>
+</ul></li>
+</ul>
+</section>
+<section id="análisis-discriminante-lineal-5" class="slide level2">
+<h2>Análisis Discriminante Lineal</h2>
+<ul>
+<li><p>Las condiciones que se deben cumplir para que un Análisis Discriminante Lineal sea válido son:</p>
+<ul>
+<li>La varianza del predictor es igual en todas las clases de la variable respuesta. En el caso de múltiples predictores, la matriz de covarianza es igual en todas las clases. Si esto no se cumple se recurre a Análisis Discriminante Cuadrático (QDA).</li>
+</ul></li>
+</ul>
+</section>
+<section id="análisis-discriminante-lineal-6" class="slide level2">
+<h2>Análisis Discriminante Lineal</h2>
+<ul>
+<li><p>Las condiciones que se deben cumplir para que un Análisis Discriminante Lineal sea válido son:</p>
+<ul>
+<li>Cuando la condición de normalidad no se cumple, el LDA pierde precisión pero aun así puede llegar a clasificaciones relativamente buenas. Using discriminant analysis for multi-class classification: an experimental investigation (Tao Li, Shenghuo Zhu, Mitsunori Ogihara).</li>
+</ul></li>
+</ul>
+</section>
+<section id="ejemplo-1" class="slide level2" data-transition="zoom">
+<h2>Ejemplo 1</h2>
+<ul>
+<li><p>Se consideran los datos recogidos sobre 32 cráneos en el Tibet.</p></li>
+<li><p>Los datos corresponden a dos tipos raciales diferentes en los que se practicaron diferentes medidas antropométricas de longitudes, anchuras de cráneo y de cara. Se trata de hacer un análisis discriminante sobre los dos tipos raciales.</p></li>
+</ul>
+</section>
+<section id="cargando-el-conjunto-de-datos" class="slide level2">
+<h2>cargando el conjunto de datos</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>craneo &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;craneo.txt&quot;</span>,<span class="dt">header=</span>T)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>craneo</span></code></pre></div>
+<pre><code>##    Longitud Anchura Altura Altura_Cara Anchura_Cara Tipo
+## 1     190.5   152.5  145.0        73.5        136.5  uno
+## 2     172.5   132.0  125.5        63.0        121.0  uno
+## 3     167.0   130.0  125.5        69.5        119.5  uno
+## 4     169.5   150.5  133.5        64.5        128.0  uno
+## 5     175.0   138.5  126.0        77.5        135.5  uno
+## 6     177.5   142.5  142.5        71.5        131.0  uno
+## 7     179.5   142.5  127.5        70.5        134.5  uno
+## 8     179.5   138.0  133.5        73.5        132.5  uno
+## 9     173.5   135.5  130.5        70.0        133.5  uno
+## 10    162.5   139.0  131.0        62.0        126.0  uno
+## 11    178.5   135.0  136.0        71.0        124.0  uno
+## 12    171.5   148.5  132.5        65.0        146.5  uno
+## 13    180.5   139.0  132.0        74.5        134.5  uno
+## 14    183.0   149.0  121.5        76.5        142.0  uno
+## 15    169.5   130.0  131.0        68.0        119.0  uno
+## 16    172.0   140.0  136.0        70.5        133.5  uno
+## 17    170.0   126.5  134.5        66.0        118.5  uno
+## 18    182.5   136.0  138.5        76.0        134.0  dos
+## 19    179.5   135.0  128.5        74.0        132.0  dos
+## 20    191.0   140.5  140.5        72.5        131.5  dos
+## 21    184.5   141.5  134.5        76.5        141.5  dos
+## 22    181.0   142.0  132.5        79.0        136.5  dos
+## 23    173.5   136.5  126.0        71.5        136.5  dos
+## 24    188.5   130.0  143.0        79.5        136.0  dos
+## 25    175.0   153.0  130.0        76.5        142.0  dos
+## 26    196.0   142.5  123.5        76.0        134.0  dos
+## 27    200.0   139.5  143.5        82.5        146.0  dos
+## 28    185.0   134.5  140.0        81.5        137.0  dos
+## 29    174.5   143.5  132.5        74.0        136.5  dos
+## 30    195.5   144.0  138.5        78.5        144.0  dos
+## 31    197.0   131.5  135.0        80.5        139.0  dos
+## 32    182.5   131.0  135.0        68.5        136.0  dos</code></pre>
+</section>
+<section id="exploración-gráfica-de-los-datos" class="slide level2">
+<h2>Exploración gráfica de los datos</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">library</span>(ggpubr)</span>
+<span id="cb3-3"><a href="#cb3-3"></a>p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> craneo, <span class="kw">aes</span>(<span class="dt">x =</span> Longitud, <span class="dt">fill =</span> Tipo)) <span class="op">+</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb3-5"><a href="#cb3-5"></a>p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> craneo, <span class="kw">aes</span>(<span class="dt">x =</span> Anchura, <span class="dt">fill =</span> Tipo)) <span class="op">+</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb3-7"><a href="#cb3-7"></a>p3 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> craneo, <span class="kw">aes</span>(<span class="dt">x =</span> Altura, <span class="dt">fill =</span> Tipo)) <span class="op">+</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb3-9"><a href="#cb3-9"></a>p4 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> craneo, <span class="kw">aes</span>(<span class="dt">x =</span> Altura_Cara, <span class="dt">fill =</span> Tipo)) <span class="op">+</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb3-11"><a href="#cb3-11"></a>p5 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> craneo, <span class="kw">aes</span>(<span class="dt">x =</span> Anchura_Cara, <span class="dt">fill =</span> Tipo)) <span class="op">+</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="kw">ggarrange</span>(p1, p2, p3, p4, p5, <span class="dt">nrow =</span> <span class="dv">5</span>, <span class="dt">common.legend =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+</section>
+<section id="exploración-gráfica-de-los-datos-1" class="slide level2">
+<h2>Exploración gráfica de los datos</h2>
+<p><img src="LDA_files/figure-revealjs/unnamed-chunk-2-1.png" width="768" /></p>
+</section>
+<section id="exploración-gráfica-de-los-datos-2" class="slide level2">
+<h2>Exploración gráfica de los datos</h2>
+<div id="left">
+<p><img src="LDA_files/figure-revealjs/unnamed-chunk-3-1.png" width="768" /></p>
+</div>
+<div id="right">
+<div data-align="justify">
+<font size="6">
+<p class="small">
+<p>A nivel individual, la anchura de la cara parece ser la variable que más se diferencia entre los dos tipos raciales.</p>
+<p>(menor solapamiento entre poblaciones)</p>
+Seguida de las variables altura de la cara y longitud del craneo que también se diferencia entre los dos tipos raciales.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="exploración-gráfica-de-los-datos-3" class="slide level2">
+<h2>Exploración gráfica de los datos</h2>
+<p><img src="LDA_files/figure-revealjs/unnamed-chunk-4-1.png" width="768" /></p>
+</section>
+<section id="exploración-gráfica-de-los-datos-4" class="slide level2">
+<h2>Exploración gráfica de los datos</h2>
+<div id="left">
+<p><img src="LDA_files/figure-revealjs/unnamed-chunk-5-1.png" width="768" /></p>
+</div>
+<div id="right">
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">pairs</span>(<span class="dt">x =</span> craneo[, <span class="kw">c</span>(<span class="st">&quot;Longitud&quot;</span>, <span class="st">&quot;Anchura&quot;</span>, <span class="st">&quot;Altura&quot;</span>, <span class="st">&quot;Altura_Cara&quot;</span>, <span class="st">&quot;Anchura_Cara&quot;</span>)],</span>
+<span id="cb4-2"><a href="#cb4-2"></a>      <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;firebrick&quot;</span>, <span class="st">&quot;green3&quot;</span>)[craneo<span class="op">$</span>Tipo], <span class="dt">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
+<div data-align="justify">
+<font size="5">
+<p class="small">
+<p>Las variables altura de cara y anchura de cara tienen potencial para poder separar los tipos de raza. Sin embargo, parecen estar altamente correlacionadas, por lo que la información que aportan es redundante.</p>
+<p>Las variables altura y altura de cara también tienen potencial para poder separar los tipos de raza.</p>
+<p>La variable longitud cruzada con el resto de variables también muestra potencial para separar los tipos de raza.</p>
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="probabilidades-a-priori" class="slide level2">
+<h2>Probabilidades a priori</h2>
+<div data-align="justify">
+<p>Como no se dispone de información sobre la abundancia relativa de los tipos raciales a nivel poblacional, se considera como probabilidad previa de cada especie el número de observaciones del tipo racial entre el número de observaciones totales.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">table</span>(craneo<span class="op">$</span>Tipo)<span class="op">/</span><span class="kw">nrow</span>(craneo)</span></code></pre></div>
+<pre><code>## 
+##     dos     uno 
+## 0.46875 0.53125</code></pre>
+<p><span class="math display">\[\hat{\pi}_{uno}=0.53 \quad \text{y} \quad \hat{\pi}_{dos}=0.47\]</span></p>
+</div>
+</section>
+<section id="normalidad-univariante" class="slide level2">
+<h2>Normalidad univariante</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># Representación mediante Histograma de cada variable para cada tipo </span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">5</span>))</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>) {</span>
+<span id="cb7-4"><a href="#cb7-4"></a>  j0 &lt;-<span class="st"> </span><span class="kw">names</span>(craneo)[k]</span>
+<span id="cb7-5"><a href="#cb7-5"></a>  x0 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(craneo[, k]), <span class="kw">max</span>(craneo[, k]), <span class="dt">le =</span> <span class="dv">1000</span>)</span>
+<span id="cb7-6"><a href="#cb7-6"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>) {</span>
+<span id="cb7-7"><a href="#cb7-7"></a>    i0 &lt;-<span class="st"> </span><span class="kw">levels</span>(craneo<span class="op">$</span>Tipo)[i]</span>
+<span id="cb7-8"><a href="#cb7-8"></a>    x &lt;-<span class="st"> </span>craneo[craneo<span class="op">$</span>Tipo <span class="op">==</span><span class="st"> </span>i0, j0]</span>
+<span id="cb7-9"><a href="#cb7-9"></a>    <span class="kw">hist</span>(x, <span class="dt">proba =</span> T, <span class="dt">col =</span> <span class="kw">grey</span>(<span class="fl">0.8</span>), <span class="dt">main =</span> <span class="kw">paste</span>(<span class="st">&quot;Tipo&quot;</span>, i0),</span>
+<span id="cb7-10"><a href="#cb7-10"></a>         <span class="dt">xlab =</span> j0)</span>
+<span id="cb7-11"><a href="#cb7-11"></a>    <span class="kw">lines</span>(x0, <span class="kw">dnorm</span>(x0, <span class="kw">mean</span>(x), <span class="kw">sd</span>(x)), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb7-12"><a href="#cb7-12"></a>  }</span>
+<span id="cb7-13"><a href="#cb7-13"></a>}</span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
+</section>
+<section id="normalidad-univariante-1" class="slide level2">
+<h2>Normalidad univariante</h2>
+<p><img src="LDA_files/figure-revealjs/unnamed-chunk-7-1.png" width="768" /></p>
+</section>
+<section id="normalidad-univariante-2" class="slide level2">
+<h2>Normalidad univariante</h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># Representación de cuantiles normales de cada variable para cada tipo</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">5</span>))</span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>) {</span>
+<span id="cb8-5"><a href="#cb8-5"></a>  j0 &lt;-<span class="st"> </span><span class="kw">names</span>(craneo)[k]</span>
+<span id="cb8-6"><a href="#cb8-6"></a>  x0 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(craneo[, k]), <span class="kw">max</span>(craneo[, k]), <span class="dt">le =</span> <span class="dv">1000</span>)</span>
+<span id="cb8-7"><a href="#cb8-7"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>) {</span>
+<span id="cb8-8"><a href="#cb8-8"></a>    i0 &lt;-<span class="st"> </span><span class="kw">levels</span>(craneo<span class="op">$</span>Tipo)[i]</span>
+<span id="cb8-9"><a href="#cb8-9"></a>    x &lt;-<span class="st"> </span>craneo[craneo<span class="op">$</span>Tipo <span class="op">==</span><span class="st"> </span>i0, j0]</span>
+<span id="cb8-10"><a href="#cb8-10"></a>    <span class="kw">qqnorm</span>(x, <span class="dt">main =</span> <span class="kw">paste</span>(<span class="st">&quot;Tipo&quot;</span>, i0, j0), <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb8-11"><a href="#cb8-11"></a>    <span class="kw">qqline</span>(x)</span>
+<span id="cb8-12"><a href="#cb8-12"></a>  }</span>
+<span id="cb8-13"><a href="#cb8-13"></a>}</span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
+</section>
+<section id="normalidad-univariante-3" class="slide level2">
+<h2>Normalidad univariante</h2>
+<p><img src="LDA_files/figure-revealjs/unnamed-chunk-8-1.png" width="768" /></p>
+</section>
+<section id="normalidad-univariante-4" class="slide level2">
+<h2>Normalidad univariante</h2>
+<div data-align="justify">
+<p><span class="math inline">\(H_0:\)</span> El conjunto de datos sigue una distribución normal</p>
+<p><span class="math inline">\(H_1:\)</span> El conjunto de datos no sigue una distribución normal</p>
+</div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># Contraste de normalidad Shapiro-Wilk para cada variable en cada tipo de raza</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="kw">library</span>(reshape2)</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="kw">library</span>(knitr)</span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb9-5"><a href="#cb9-5"></a>datos_tidy &lt;-<span class="st"> </span><span class="kw">melt</span>(craneo, <span class="dt">value.name =</span> <span class="st">&quot;valor&quot;</span>)</span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="kw">kable</span>(datos_tidy <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Tipo, variable) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">p_value_Shapiro.test =</span> <span class="kw">shapiro.test</span>(valor)<span class="op">$</span>p.value))</span></code></pre></div>
+</section>
+<section id="normalidad-univariante-5" class="slide level2">
+<h2>Normalidad univariante</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tipo</th>
+<th style="text-align: left;">variable</th>
+<th style="text-align: right;">p_value_Shapiro.test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">dos</td>
+<td style="text-align: left;">Longitud</td>
+<td style="text-align: right;">0.4003952</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dos</td>
+<td style="text-align: left;">Anchura</td>
+<td style="text-align: right;">0.4665877</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">dos</td>
+<td style="text-align: left;">Altura</td>
+<td style="text-align: right;">0.7850492</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dos</td>
+<td style="text-align: left;">Altura_Cara</td>
+<td style="text-align: right;">0.9395995</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">dos</td>
+<td style="text-align: left;">Anchura_Cara</td>
+<td style="text-align: right;">0.3219514</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">uno</td>
+<td style="text-align: left;">Longitud</td>
+<td style="text-align: right;">0.8900856</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">uno</td>
+<td style="text-align: left;">Anchura</td>
+<td style="text-align: right;">0.6468092</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">uno</td>
+<td style="text-align: left;">Altura</td>
+<td style="text-align: right;">0.6053364</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">uno</td>
+<td style="text-align: left;">Altura_Cara</td>
+<td style="text-align: right;">0.7798472</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">uno</td>
+<td style="text-align: left;">Anchura_Cara</td>
+<td style="text-align: right;">0.4071086</td>
+</tr>
+</tbody>
+</table>
+<div data-align="justify">
+<p><span class="math inline">\(H_0:\)</span> El conjunto de datos sigue una distribución normal</p>
+<p><span class="math inline">\(H_1:\)</span> El conjunto de datos no sigue una distribución normal</p>
+</div>
+</section>
+<section id="normalidad-univariante-6" class="slide level2">
+<h2>Normalidad univariante</h2>
+<div id="left">
+<pre><code>##    Tipo     variable     valor
+## 1   dos     Longitud 0.4003952
+## 2   uno     Longitud 0.8900856
+## 3   dos      Anchura 0.4665877
+## 4   uno      Anchura 0.6468092
+## 5   dos       Altura 0.7850492
+## 6   uno       Altura 0.6053364
+## 7   dos  Altura_Cara 0.9395995
+## 8   uno  Altura_Cara 0.7798472
+## 9   dos Anchura_Cara 0.3219514
+## 10  uno Anchura_Cara 0.4071086</code></pre>
+</div>
+<div id="right">
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Misma operación con aggregate</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">aggregate</span>(<span class="dt">formula =</span> valor <span class="op">~</span><span class="st"> </span>Tipo <span class="op">+</span><span class="st"> </span>variable, <span class="dt">data =</span> datos_tidy,</span>
+<span id="cb11-3"><a href="#cb11-3"></a>          <span class="dt">FUN =</span> <span class="cf">function</span>(x){<span class="kw">shapiro.test</span>(x)<span class="op">$</span>p.value})</span></code></pre></div>
+<div data-align="justify">
+<font size="6">
+<p class="small">
+<p><span class="math inline">\(H_0:\)</span> El conjunto de datos sigue una distribución normal</p>
+<p><span class="math inline">\(H_1:\)</span> El conjunto de datos no sigue una distribución normal</p>
+No hay evidencias de falta de normalidad univariante en ninguna de las variables empleadas como predictores en ninguno de los grupos.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="normalidad-multivariante" class="slide level2">
+<h2>Normalidad multivariante</h2>
+<div data-align="justify">
+<p>El paquete <code>MVN</code> contiene funciones que permiten realizar los tres test de hipótesis comúnmente empleados para evaluar la normalidad multivariante (Mardia, Henze-Zirkler y Royston) y también funciones para identificar outliers que puedan influenciar en el contraste.</p>
+</div>
+</section>
+<section id="normalidad-multivariante-1" class="slide level2">
+<h2>Normalidad multivariante</h2>
+<div id="left">
+<p><img src="LDA_files/figure-revealjs/unnamed-chunk-11-1.png" width="768" /></p>
+</div>
+<div id="right">
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">library</span>(MVN)</span>
+<span id="cb12-2"><a href="#cb12-2"></a>outliers &lt;-<span class="st"> </span><span class="kw">mvn</span>(<span class="dt">data =</span> craneo[,<span class="op">-</span><span class="dv">6</span>], <span class="dt">mvnTest =</span> <span class="st">&quot;hz&quot;</span>, <span class="dt">multivariateOutlierMethod =</span> <span class="st">&quot;quan&quot;</span>)</span></code></pre></div>
+<div data-align="justify">
+<font size="6">
+<p class="small">
+Existen <span class="math inline">\(n=8\)</span> outliers que podrían influenciar en el contraste de normalidad multivariante.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="normalidad-multivariante-2" class="slide level2">
+<h2>Normalidad multivariante</h2>
+<div id="left">
+<p><img src="LDA_files/figure-revealjs/unnamed-chunk-12-1.png" width="768" /></p>
+</div>
+<div id="right">
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>royston_test &lt;-<span class="st"> </span><span class="kw">mvn</span>(<span class="dt">data =</span> craneo[,<span class="op">-</span><span class="dv">6</span>], <span class="dt">mvnTest =</span> <span class="st">&quot;royston&quot;</span>, <span class="dt">multivariatePlot =</span> <span class="st">&quot;qq&quot;</span>)</span></code></pre></div>
+<div data-align="justify">
+<font size="6">
+<p class="small">
+Se pueden apreciar que existen outliers que podrían influenciar en el contraste de normalidad multivariante.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="normalidad-multivariante-3" class="slide level2">
+<h2>Normalidad multivariante</h2>
+<div id="left">
+<pre><code>##      Test        H   p value MVN
+## 1 Royston 4.942764 0.4233818 YES</code></pre>
+<pre><code>##            Test        HZ   p value MVN
+## 1 Henze-Zirkler 0.8261507 0.3755845 YES</code></pre>
+</div>
+<div id="right">
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>royston_test<span class="op">$</span>multivariateNormality</span>
+<span id="cb16-2"><a href="#cb16-2"></a>hz_test &lt;-<span class="st"> </span><span class="kw">mvn</span>(<span class="dt">data =</span> craneo[,<span class="op">-</span><span class="dv">6</span>], <span class="dt">mvnTest =</span> <span class="st">&quot;hz&quot;</span>)</span>
+<span id="cb16-3"><a href="#cb16-3"></a>hz_test<span class="op">$</span>multivariateNormality</span></code></pre></div>
+<div data-align="justify">
+<font size="5">
+<p class="small">
+<p><span class="math inline">\(H_0:\)</span> El conjunto de datos sigue una distribución normal multivariante</p>
+<p><span class="math inline">\(H_1:\)</span> El conjunto de datos no sigue una distribución normal multivariante</p>
+A pesar de los <span class="math inline">\(n=8\)</span> outliers detectados, ninguno de los dos test encuentran evidencias significativas (<span class="math inline">\(\alpha=0.05\)</span>) de falta de normalidad multivariante.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="homogeneidad-de-varianza" class="slide level2">
+<h2>Homogeneidad de Varianza</h2>
+<div data-align="justify">
+<p>El test Box M fue desarrollado por el matemático Box (1949) como una extensión del test de Barttlet para escenarios multivariante y permite contrastar la igualdad de matrices entre grupos. El test Box M es muy sensible a violaciones de la normalidad multivariante, por lo que esta debe ser contrastada con anterioridad. Ocurre con frecuencia, que el resultado de un test Box M resulta significativo debido a la falta de distribución normal multivariante en lugar de por falta de homogeneidad en las matrices de covarianza. Dada la sensibilidad de este test se recomienda emplear un límite de significancia de 0.001 (Tabachnick &amp; Fidell, 2001, y <a href="http://www.real-statistics.com/multivariate-statistics/" class="uri">http://www.real-statistics.com/multivariate-statistics/</a>).</p>
+</div>
+</section>
+<section id="homogeneidad-de-varianza-1" class="slide level2">
+<h2>Homogeneidad de Varianza</h2>
+<div id="left">
+<pre><code>## ---
+## biotools version 3.1</code></pre>
+<pre><code>## 
+##  Box&#39;s M-test for Homogeneity of Covariance Matrices
+## 
+## data:  craneo[, 1:5]
+## Chi-Sq (approx.) = 18.371, df = 15, p-value = 0.2437</code></pre>
+</div>
+<div id="right">
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw">library</span>(biotools)</span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="kw">boxM</span>(<span class="dt">data =</span> craneo[, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">grouping =</span> craneo[, <span class="dv">6</span>])</span></code></pre></div>
+<div data-align="justify">
+<font size="6">
+<p class="small">
+<p><span class="math inline">\(H_0:\)</span> La matriz de covarianza es igual en todos los grupos</p>
+<p><span class="math inline">\(H_1:\)</span> La matriz de covarianza no es igual en todos los grupos</p>
+La prueba de hipotesis no encuentran evidencias significativas (<span class="math inline">\(\alpha=0.05\)</span>) de falta de homogenidad de la matriz de covarianza en todos los grupos.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="análisis-discriminante-lineal2" class="slide level2">
+<h2>Análisis discriminante lineal2</h2>
+<div id="left">
+<pre><code>## Call:
+## lda(Tipo ~ Longitud + Anchura + Altura + Altura_Cara + Anchura_Cara, 
+##     data = craneo)
+## 
+## Prior probabilities of groups:
+##     dos     uno 
+## 0.46875 0.53125 
+## 
+## Group means:
+##     Longitud  Anchura   Altura Altura_Cara Anchura_Cara
+## dos 185.7333 138.7333 134.7667    76.46667     137.5000
+## uno 174.8235 139.3529 132.0000    69.82353     130.3529
+## 
+## Coefficients of linear discriminants:
+##                       LD1
+## Longitud     -0.047726591
+## Anchura       0.083247929
+## Altura        0.002795841
+## Altura_Cara  -0.094695000
+## Anchura_Cara -0.094809401</code></pre>
+</div>
+<div id="right">
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">library</span>(MASS)</span>
+<span id="cb21-2"><a href="#cb21-2"></a>modelo_lda &lt;-<span class="st"> </span><span class="kw">lda</span>(<span class="dt">formula =</span> Tipo <span class="op">~</span><span class="st"> </span>Longitud <span class="op">+</span><span class="st"> </span>Anchura <span class="op">+</span><span class="st"> </span>Altura <span class="op">+</span><span class="st"> </span>Altura_Cara <span class="op">+</span><span class="st"> </span>Anchura_Cara, <span class="dt">data =</span> craneo)</span>
+<span id="cb21-3"><a href="#cb21-3"></a>modelo_lda</span></code></pre></div>
+<div data-align="justify">
+<p>La función <code>lda</code> del paquete <code>MASS</code>. lda realiza la clasificación mediante la aproximación de Fisher.</p>
+</div>
+</div>
+</section>
+<section id="clasificación-de-nuevos-craneos" class="slide level2">
+<h2>Clasificación de nuevos craneos</h2>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>nuevosdatos &lt;-</span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="st">  </span><span class="kw">rbind</span>(<span class="kw">c</span>(<span class="dv">171</span>,<span class="fl">140.5</span>,<span class="fl">127.0</span>,<span class="fl">69.5</span>,<span class="fl">137.0</span>),<span class="kw">c</span>(<span class="fl">179.0</span>,<span class="fl">132.0</span>,<span class="fl">140.0</span>,<span class="fl">72.0</span>,<span class="fl">138.5</span>))</span>
+<span id="cb22-3"><a href="#cb22-3"></a><span class="co"># Asigno a los dos nuevos datos los nombres de las variables</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a><span class="kw">colnames</span>(nuevosdatos) &lt;-<span class="st"> </span><span class="kw">colnames</span>(craneo[,<span class="op">-</span><span class="dv">6</span>])</span>
+<span id="cb22-5"><a href="#cb22-5"></a>nuevosdatos &lt;-<span class="st"> </span><span class="kw">data.frame</span>(nuevosdatos)</span>
+<span id="cb22-6"><a href="#cb22-6"></a>nuevosdatos</span>
+<span id="cb22-7"><a href="#cb22-7"></a><span class="co"># Se predice el grupo de pertenencia de los nuevos datos</span></span>
+<span id="cb22-8"><a href="#cb22-8"></a><span class="kw">predict</span>(modelo_lda,<span class="dt">newdata=</span>nuevosdatos)<span class="op">$</span>class</span>
+<span id="cb22-9"><a href="#cb22-9"></a><span class="kw">predict</span>(modelo_lda,<span class="dt">newdata=</span>nuevosdatos)</span></code></pre></div>
+</section>
+<section id="clasificación-de-nuevos-craneos-1" class="slide level2">
+<h2>Clasificación de nuevos craneos</h2>
+<div id="left">
+<pre><code>##   Longitud Anchura Altura Altura_Cara Anchura_Cara
+## 1      171   140.5    127        69.5        137.0
+## 2      179   132.0    140        72.0        138.5</code></pre>
+<pre><code>## [1] uno dos
+## Levels: dos uno</code></pre>
+<pre><code>## $class
+## [1] uno dos
+## Levels: dos uno
+## 
+## $posterior
+##         dos       uno
+## 1 0.2230540 0.7769460
+## 2 0.8071613 0.1928387
+## 
+## $x
+##          LD1
+## 1  0.5415596
+## 2 -0.8904662</code></pre>
+</div>
+<div id="right">
+<div data-align="justify">
+<font size="5">
+<p class="small">
+Por ejemplo, dos nuevos craneos cuyas medidas sean: <br> Longitud=171, Anchura=140.5, Altura=127, Altura_Cara=69.5, y Anchura_Cara=137.<br> <br> Longitud=179, Anchura=132, Altura=140, Altura_Cara=72, y Anchura_Cara=138.5.<br> <br> La probabilidad posterior de que el primer craneo pertenezca a la raza tipo 1 es del 77.69% frente al 22.31% de que pertenezca a la raza tipo 2. <br> <br> La probabilidad posterior de que el segundo craneo pertenezca a la raza tipo 1 es del 19.28% frente al 80.72% de que pertenezca a la raza tipo 2.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="evaluación-de-los-errores-de-clasificación" class="slide level2">
+<h2>Evaluación de los errores de clasificación</h2>
+<div id="left">
+<pre><code>##           Clase predicha
+## Clase real dos uno
+##        dos  11   4
+##        uno   3  14</code></pre>
+<pre><code>## [1] &quot;trainig_error= 21.875 %&quot;</code></pre>
+<div data-align="justify">
+<font size="5.5">
+<p class="small">
+Empleando las mismas observaciones con las que se ha generado el modelo discriminante (trainig data), la precisión de clasificación es del 78.13%. Evaluar un modelo con los mismos datos con los que se ha creado suele resultar en estimaciones de la precisión demasiado optimistas (training error muy bajo).
+</p>
+<p></font></p>
+</div>
+</div>
+<div id="right">
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>predicciones &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="dt">object =</span> modelo_lda, <span class="dt">newdata =</span> craneo[, <span class="dv">-6</span>],</span>
+<span id="cb28-2"><a href="#cb28-2"></a>                        <span class="dt">method =</span> <span class="st">&quot;predictive&quot;</span>)</span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="kw">table</span>(craneo<span class="op">$</span>Tipo, predicciones<span class="op">$</span>class,</span>
+<span id="cb28-4"><a href="#cb28-4"></a>      <span class="dt">dnn =</span> <span class="kw">c</span>(<span class="st">&quot;Clase real&quot;</span>, <span class="st">&quot;Clase predicha&quot;</span>))</span>
+<span id="cb28-5"><a href="#cb28-5"></a></span>
+<span id="cb28-6"><a href="#cb28-6"></a>trainig_error &lt;-<span class="st"> </span><span class="kw">mean</span>(craneo<span class="op">$</span>Tipo <span class="op">!=</span><span class="st"> </span>predicciones<span class="op">$</span>class) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></span>
+<span id="cb28-7"><a href="#cb28-7"></a><span class="kw">paste</span>(<span class="st">&quot;trainig_error=&quot;</span>, trainig_error, <span class="st">&quot;%&quot;</span>)</span></code></pre></div>
+</div>
+</section>
+<section id="visualización-de-las-clasificaciones" class="slide level2">
+<h2>Visualización de las clasificaciones</h2>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw">library</span>(klaR)</span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="kw">partimat</span>(Tipo <span class="op">~</span><span class="st"> </span>Longitud <span class="op">+</span><span class="st"> </span>Anchura <span class="op">+</span><span class="st"> </span>Altura <span class="op">+</span><span class="st"> </span>Altura_Cara <span class="op">+</span><span class="st"> </span>Anchura_Cara,<span class="dt">data=</span>craneo, <span class="dt">method =</span> <span class="st">&quot;lda&quot;</span>, <span class="dt">prec =</span> <span class="dv">200</span>,</span>
+<span id="cb29-3"><a href="#cb29-3"></a>         <span class="dt">image.colors =</span> <span class="kw">c</span>(<span class="st">&quot;darkgoldenrod1&quot;</span>, <span class="st">&quot;skyblue2&quot;</span>),</span>
+<span id="cb29-4"><a href="#cb29-4"></a>         <span class="dt">col.mean =</span> <span class="st">&quot;firebrick&quot;</span>)</span></code></pre></div>
+</section>
+<section id="visualización-de-las-clasificaciones-1" class="slide level2">
+<h2>Visualización de las clasificaciones</h2>
+<p><img src="LDA_files/figure-revealjs/unnamed-chunk-18-1.png" width="768" /></p>
+<p>Se desea predecir si un paciente pertenece a una de las siguientes cla- ses: Normal (el paciente esta sano), Chemical (el paciente presenta pre-diabetes) y Overt (el paciente presenta diabetes) utilizando tres indicadores de la sangre (glucosa,insulina y sspg).</p>
+</section>
+<section id="ejemplo-2" class="slide level2" data-transition="zoom">
+<h2>Ejemplo 2</h2>
+<div data-align="justify">
+<p>Se desea predecir si un paciente pertenece a una de las siguientes clases: <code>Normal</code> (el paciente esta sano), <code>Chemical</code> (el paciente presenta pre-diabetes) y <code>Overt</code> (el paciente presenta diabetes) utilizando tres indicadores de la sangre (glucosa,insulina y sspg).</p>
+</div>
+</section>
+<section id="cargando-el-conjunto-de-datos-1" class="slide level2">
+<h2>cargando el conjunto de datos</h2>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>diabetes=<span class="kw">read.csv</span>(<span class="st">&quot;DiabetesTrain.csv&quot;</span>)</span>
+<span id="cb30-2"><a href="#cb30-2"></a>diabetes</span></code></pre></div>
+<pre><code>##     glucose insulin sspg    class
+## 1        97     289  117   normal
+## 2       105     319  143   normal
+## 3        90     356  199   normal
+## 4        90     323  240   normal
+## 5        86     381  157   normal
+## 6       100     350  221   normal
+## 7        85     301  186   normal
+## 8        97     379  142   normal
+## 9        97     296  131   normal
+## 10       91     353  221   normal
+## 11       87     306  178   normal
+## 12       78     290  136   normal
+## 13       90     371  200   normal
+## 14       80     393  202   normal
+## 15       90     364  152   normal
+## 16       99     359  185   normal
+## 17       85     296  116   normal
+## 18       90     345  123   normal
+## 19       90     378  136   normal
+## 20       88     304  134   normal
+## 21       90     327  192   normal
+## 22       92     386  279   normal
+## 23       98     365  145   normal
+## 24      100     352  172   normal
+## 25       86     325  179   normal
+## 26       98     321  222   normal
+## 27       70     360  134   normal
+## 28       99     336  143   normal
+## 29       75     352  169   normal
+## 30       90     353  263   normal
+## 31       85     373  174   normal
+## 32       99     376  134   normal
+## 33      100     367  182   normal
+## 34       78     335  241   normal
+## 35      106     396  128   normal
+## 36      102     378  165   normal
+## 37       90     360  282   normal
+## 38       94     291   94   normal
+## 39       80     269  121   normal
+## 40       93     318   73   normal
+## 41       96     356  112   normal
+## 42       88     291  157   normal
+## 43       94     313  200   normal
+## 44       93     306  220   normal
+## 45       86     319  144   normal
+## 46       96     332  151   normal
+## 47       86     323  158   normal
+## 48       89     323   73   normal
+## 49       83     351   81   normal
+## 50       98     478  151 chemical
+## 51      100     398  122   normal
+## 52      110     426  117   normal
+## 53       88     439  208 chemical
+## 54       80     333  131   normal
+## 55       91     436  148 chemical
+## 56       96     418  130   normal
+## 57       95     391  137   normal
+## 58       84     416  146   normal
+## 59      100     385  192   normal
+## 60       86     393  115   normal
+## 61       93     376  195   normal
+## 62      107     403  267   normal
+## 63      112     414  281   normal
+## 64       94     426  213 chemical
+## 65       93     364  156   normal
+## 66       93     391  221   normal
+## 67       90     356  199   normal
+## 68       99     398   76   normal
+## 69       93     393  490   normal
+## 70       85     425  143 chemical
+## 71       89     318   73   normal
+## 72      111     558  748 chemical
+## 73      114     540  188 chemical
+## 74      101     469  607 chemical
+## 75      112     568  232 chemical
+## 76      105     527  480 chemical
+## 77      103     537  622 chemical
+## 78       99     466  287 chemical
+## 79      102     599  266 chemical
+## 80       96     456  326 chemical
+## 81       95     517  564 chemical
+## 82      110     522  325 chemical
+## 83       92     476  433 chemical
+## 84      104     472  180 chemical
+## 85       92     442  109 chemical
+## 86       92     541  313 chemical
+## 87       92     580  132 chemical
+## 88       93     472  285 chemical
+## 89      112     562  139 chemical
+## 90       88     423  212 chemical
+## 91      114     643  155 chemical
+## 92      103     533  120 chemical
+## 93      303    1487   23    overt
+## 94      125     714  232    overt
+## 95      280    1470   54    overt
+## 96      216    1113   81    overt
+## 97      190     972   87    overt
+## 98      303    1364   42    overt
+## 99      173     832  102    overt
+## 100     203     967  138    overt
+## 101     140     613  131    overt
+## 102     275    1373   45    overt
+## 103     260    1133  118    overt
+## 104     233    1183   73    overt
+## 105     146     847  103    overt
+## 106     124     538  460    overt
+## 107     213    1001   42    overt
+## 108     330    1520   13    overt
+## 109     123     557  130    overt
+## 110     130     670   44    overt
+## 111     120     636  314    overt
+## 112     138     741  219    overt
+## 113     188     958  100    overt
+## 114     339    1354   10    overt
+## 115     213    1025   29    overt</code></pre>
+</section>
+<section id="exploración-gráfica-de-los-datos-5" class="slide level2">
+<h2>Exploración gráfica de los datos</h2>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb32-2"><a href="#cb32-2"></a><span class="kw">library</span>(ggpubr)</span>
+<span id="cb32-3"><a href="#cb32-3"></a></span>
+<span id="cb32-4"><a href="#cb32-4"></a>plot1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> diabetes, <span class="kw">aes</span>(<span class="dt">x =</span> glucose)) <span class="op">+</span></span>
+<span id="cb32-5"><a href="#cb32-5"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> class)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span>
+<span id="cb32-6"><a href="#cb32-6"></a>plot2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> diabetes, <span class="kw">aes</span>(<span class="dt">x =</span> insulin)) <span class="op">+</span></span>
+<span id="cb32-7"><a href="#cb32-7"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> class)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span>
+<span id="cb32-8"><a href="#cb32-8"></a>plot3 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> diabetes, <span class="kw">aes</span>(<span class="dt">x =</span> sspg)) <span class="op">+</span></span>
+<span id="cb32-9"><a href="#cb32-9"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> class)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span>
+<span id="cb32-10"><a href="#cb32-10"></a><span class="co"># la función grid.arrange del paquete grid.extra permite ordenar</span></span>
+<span id="cb32-11"><a href="#cb32-11"></a><span class="co"># graficos de ggplot2</span></span>
+<span id="cb32-12"><a href="#cb32-12"></a><span class="kw">ggarrange</span>(plot1, plot2, plot3, <span class="dt">common.legend =</span> <span class="ot">TRUE</span>, <span class="dt">legend =</span> <span class="st">&quot;bottom&quot;</span>)</span></code></pre></div>
+</section>
+<section id="exploración-gráfica-de-los-datos-6" class="slide level2">
+<h2>Exploración gráfica de los datos</h2>
+<p><img src="LDA_files/figure-revealjs/unnamed-chunk-20-1.png" width="768" /></p>
+</section>
+<section id="exploración-gráfica-de-los-datos-7" class="slide level2">
+<h2>Exploración gráfica de los datos</h2>
+<div id="left">
+<p><img src="LDA_files/figure-revealjs/unnamed-chunk-21-1.png" width="768" /></p>
+</div>
+<div id="right">
+<div data-align="justify">
+<font size="6">
+<p class="small">
+La variable sspg presenta asimetría positiva dentro de cada grupo de pacientes.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="exploración-gráfica-de-los-datos-8" class="slide level2">
+<h2>Exploración gráfica de los datos</h2>
+<p><img src="LDA_files/figure-revealjs/unnamed-chunk-22-1.png" width="768" /></p>
+</section>
+<section id="exploración-gráfica-de-los-datos-9" class="slide level2">
+<h2>Exploración gráfica de los datos</h2>
+<div id="left">
+<p><img src="LDA_files/figure-revealjs/unnamed-chunk-23-1.png" width="768" /></p>
+</div>
+<div id="right">
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="kw">pairs</span>(<span class="dt">x =</span> diabetes[, <span class="dv">-4</span>], <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;firebrick&quot;</span>, <span class="st">&quot;green3&quot;</span>, <span class="st">&quot;blue&quot;</span>)[diabetes<span class="op">$</span>class],</span>
+<span id="cb33-2"><a href="#cb33-2"></a>      <span class="dt">pch =</span> <span class="dv">20</span>)</span></code></pre></div>
+<div data-align="justify">
+<font size="6">
+<p class="small">
+<p>Las variables glucosa e insulina son las dos variables con más potencial para poder separar entre clases de pacientes. Sin embargo, están altamente correlacionadas, por lo que la información que aportan es en gran medida redundante.</p>
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="probabilidades-a-priori-1" class="slide level2">
+<h2>Probabilidades a priori</h2>
+<div data-align="justify">
+<p>Como no se dispone de información sobre la abundancia relativa de las clases de pacientes a nivel poblacional, se considera como probabilidad previa de cada clase el número de observaciones por clase de paciente entre el número de observaciones totales.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="kw">table</span>(diabetes[,<span class="dv">4</span>])<span class="op">/</span><span class="kw">nrow</span>(diabetes)</span></code></pre></div>
+<pre><code>## 
+## chemical   normal    overt 
+## 0.226087 0.573913 0.200000</code></pre>
+<p><span class="math display">\[\hat{\pi}_{sano}=0.57\text{,} \quad \hat{\pi}_{pre}=0.23 \quad \text{y} \quad \hat{\pi}_{diab}=0.20\]</span></p>
+</div>
+</section>
+<section id="normalidad-univariante-7" class="slide level2">
+<h2>Normalidad univariante</h2>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="co">#representación mediante histograma de cada variable para cada clase</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a></span>
+<span id="cb36-3"><a href="#cb36-3"></a><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">rep</span>(<span class="dv">3</span>, <span class="dv">3</span>))</span>
+<span id="cb36-4"><a href="#cb36-4"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>) {</span>
+<span id="cb36-5"><a href="#cb36-5"></a>  j0 &lt;-<span class="st"> </span><span class="kw">names</span>(diabetes)[k]</span>
+<span id="cb36-6"><a href="#cb36-6"></a>  x0 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(diabetes[, k]), <span class="kw">max</span>(diabetes[, k]), <span class="dt">le =</span> <span class="dv">1000</span>)</span>
+<span id="cb36-7"><a href="#cb36-7"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>) {</span>
+<span id="cb36-8"><a href="#cb36-8"></a>    i0 &lt;-<span class="st"> </span><span class="kw">levels</span>(diabetes<span class="op">$</span>class)[i]</span>
+<span id="cb36-9"><a href="#cb36-9"></a>    x &lt;-<span class="st"> </span>diabetes[diabetes<span class="op">$</span>class <span class="op">==</span><span class="st"> </span>i0, j0]</span>
+<span id="cb36-10"><a href="#cb36-10"></a>    <span class="kw">hist</span>(x, <span class="dt">proba =</span> T, <span class="dt">col =</span> <span class="kw">grey</span>(<span class="fl">0.8</span>), <span class="dt">main =</span> <span class="kw">paste</span>(<span class="st">&quot;class&quot;</span>, i0),</span>
+<span id="cb36-11"><a href="#cb36-11"></a>         <span class="dt">xlab =</span> j0)</span>
+<span id="cb36-12"><a href="#cb36-12"></a>    <span class="kw">lines</span>(x0, <span class="kw">dnorm</span>(x0, <span class="kw">mean</span>(x), <span class="kw">sd</span>(x)), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb36-13"><a href="#cb36-13"></a>  }</span>
+<span id="cb36-14"><a href="#cb36-14"></a>}</span>
+<span id="cb36-15"><a href="#cb36-15"></a><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
+</section>
+<section id="normalidad-univariante-8" class="slide level2">
+<h2>Normalidad univariante</h2>
+<p><img src="LDA_files/figure-revealjs/unnamed-chunk-25-1.png" width="768" /></p>
+</section>
+<section id="normalidad-univariante-9" class="slide level2">
+<h2>Normalidad univariante</h2>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="co">#representación de cuantiles normales de cada variable para cada clase</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a></span>
+<span id="cb37-3"><a href="#cb37-3"></a><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">3</span>))</span>
+<span id="cb37-4"><a href="#cb37-4"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>) {</span>
+<span id="cb37-5"><a href="#cb37-5"></a>  j0 &lt;-<span class="st"> </span><span class="kw">names</span>(diabetes)[k]</span>
+<span id="cb37-6"><a href="#cb37-6"></a>  x0 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(diabetes[, k]), <span class="kw">max</span>(diabetes[, k]), <span class="dt">le =</span> <span class="dv">1000</span>)</span>
+<span id="cb37-7"><a href="#cb37-7"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>) {</span>
+<span id="cb37-8"><a href="#cb37-8"></a>    i0 &lt;-<span class="st"> </span><span class="kw">levels</span>(diabetes<span class="op">$</span>class)[i]</span>
+<span id="cb37-9"><a href="#cb37-9"></a>    x &lt;-<span class="st"> </span>diabetes[diabetes<span class="op">$</span>class <span class="op">==</span><span class="st"> </span>i0, j0]</span>
+<span id="cb37-10"><a href="#cb37-10"></a>    <span class="kw">qqnorm</span>(x, <span class="dt">main =</span> <span class="kw">paste</span>(i0, j0), <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) </span>
+<span id="cb37-11"><a href="#cb37-11"></a>    <span class="kw">qqline</span>(x)</span>
+<span id="cb37-12"><a href="#cb37-12"></a>  }</span>
+<span id="cb37-13"><a href="#cb37-13"></a>}</span>
+<span id="cb37-14"><a href="#cb37-14"></a><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
+</section>
+<section id="normalidad-univariante-10" class="slide level2">
+<h2>Normalidad univariante</h2>
+<p><img src="LDA_files/figure-revealjs/unnamed-chunk-26-1.png" width="768" /></p>
+</section>
+<section id="normalidad-univariante-11" class="slide level2">
+<h2>Normalidad univariante</h2>
+<div data-align="justify">
+<p><span class="math inline">\(H_0:\)</span> El conjunto de datos sigue una distribución normal</p>
+<p><span class="math inline">\(H_1:\)</span> El conjunto de datos no sigue una distribución normal</p>
+</div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># Contraste de normalidad Shapiro-Wilk para cada variable en cada clase</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a><span class="kw">library</span>(reshape2)</span>
+<span id="cb38-3"><a href="#cb38-3"></a><span class="kw">library</span>(knitr)</span>
+<span id="cb38-4"><a href="#cb38-4"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb38-5"><a href="#cb38-5"></a>datos_tidy &lt;-<span class="st"> </span><span class="kw">melt</span>(diabetes, <span class="dt">value.name =</span> <span class="st">&quot;valor&quot;</span>)</span>
+<span id="cb38-6"><a href="#cb38-6"></a><span class="kw">kable</span>(datos_tidy <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(class, variable) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">p_value_Shapiro.test =</span> <span class="kw">round</span>(<span class="kw">shapiro.test</span>(valor)<span class="op">$</span>p.value,<span class="dv">5</span>)))</span>
+<span id="cb38-7"><a href="#cb38-7"></a></span></code></pre></div>
+</section>
+<section id="normalidad-univariante-12" class="slide level2">
+<h2>Normalidad univariante</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+class
+</th>
+<th style="text-align:left;">
+variable
+</th>
+<th style="text-align:right;">
+p_value_Shapiro.test
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+chemical
+</td>
+<td style="text-align:left;">
+glucose
+</td>
+<td style="text-align:right;">
+0.11551
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+chemical
+</td>
+<td style="text-align:left;">
+insulin
+</td>
+<td style="text-align:right;">
+0.17119
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+chemical
+</td>
+<td style="text-align:left;">
+sspg
+</td>
+<td style="text-align:right;">
+0.00133
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+normal
+</td>
+<td style="text-align:left;">
+glucose
+</td>
+<td style="text-align:right;">
+0.81720
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+normal
+</td>
+<td style="text-align:left;">
+insulin
+</td>
+<td style="text-align:right;">
+0.26450
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+normal
+</td>
+<td style="text-align:left;">
+sspg
+</td>
+<td style="text-align:right;">
+0.00000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+overt
+</td>
+<td style="text-align:left;">
+glucose
+</td>
+<td style="text-align:right;">
+0.05406
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+overt
+</td>
+<td style="text-align:left;">
+insulin
+</td>
+<td style="text-align:right;">
+0.18050
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+overt
+</td>
+<td style="text-align:left;">
+sspg
+</td>
+<td style="text-align:right;">
+0.00031
+</td>
+</tr>
+</tbody>
+</table>
+<div data-align="justify">
+<p><span class="math inline">\(H_0:\)</span> El conjunto de datos sigue una distribución normal</p>
+<p><span class="math inline">\(H_1:\)</span> El conjunto de datos no sigue una distribución normal</p>
+</div>
+</section>
+<section id="normalidad-multivariante-4" class="slide level2">
+<h2>Normalidad multivariante</h2>
+<div id="left">
+<p><img src="LDA_files/figure-revealjs/unnamed-chunk-28-1.png" width="768" /></p>
+</div>
+<div id="right">
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="kw">library</span>(MVN)</span>
+<span id="cb39-2"><a href="#cb39-2"></a>outliers &lt;-<span class="st"> </span><span class="kw">mvn</span>(<span class="dt">data =</span> diabetes[,<span class="op">-</span><span class="dv">4</span>], <span class="dt">mvnTest =</span> <span class="st">&quot;hz&quot;</span>, <span class="dt">multivariateOutlierMethod =</span> <span class="st">&quot;quan&quot;</span>)</span></code></pre></div>
+<div data-align="justify">
+<font size="6">
+<p class="small">
+Existen <span class="math inline">\(n=35\)</span> outliers que prodían influenciar en el contraste de normalidad multivariante.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="normalidad-multivariante-5" class="slide level2">
+<h2>Normalidad multivariante</h2>
+<div id="left">
+<p><img src="LDA_files/figure-revealjs/unnamed-chunk-29-1.png" width="768" /></p>
+</div>
+<div id="right">
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>royston_test &lt;-<span class="st"> </span><span class="kw">mvn</span>(<span class="dt">data =</span> diabetes[,<span class="op">-</span><span class="dv">4</span>], <span class="dt">mvnTest =</span> <span class="st">&quot;royston&quot;</span>, <span class="dt">multivariatePlot =</span> <span class="st">&quot;qq&quot;</span>)</span></code></pre></div>
+<div data-align="justify">
+<font size="6">
+<p class="small">
+Se pueden apreciar que existen outliers que prodían influenciar en el contraste de normalidad multivariante.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="normalidad-multivariante-6" class="slide level2">
+<h2>Normalidad multivariante</h2>
+<div id="left">
+<pre><code>##      Test       H      p value MVN
+## 1 Royston 113.878 2.120468e-25  NO</code></pre>
+<pre><code>##            Test       HZ p value MVN
+## 1 Henze-Zirkler 9.215609       0  NO</code></pre>
+</div>
+<div id="right">
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>royston_test<span class="op">$</span>multivariateNormality</span>
+<span id="cb43-2"><a href="#cb43-2"></a>hz_test &lt;-<span class="st"> </span><span class="kw">mvn</span>(<span class="dt">data =</span> diabetes[,<span class="op">-</span><span class="dv">4</span>], <span class="dt">mvnTest =</span> <span class="st">&quot;hz&quot;</span>)</span>
+<span id="cb43-3"><a href="#cb43-3"></a>hz_test<span class="op">$</span>multivariateNormality</span></code></pre></div>
+<div data-align="justify">
+<font size="5">
+<p class="small">
+<p><span class="math inline">\(H_0:\)</span> El conjunto de datos sigue una distribución normal multivariante</p>
+<p><span class="math inline">\(H_1:\)</span> El conjunto de datos no sigue una distribución normal multivariante</p>
+Ambos test muestran evidencias significativas de falta de normalidad multivariante. El LDA tiene cierta robustez frente a la falta de normalidad multivariante, pero es importante tenerlo en cuenta en la conclusión del análisis.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="homogeneidad-de-varianza-2" class="slide level2">
+<h2>Homogeneidad de Varianza</h2>
+<div id="left">
+<pre><code>## 
+##  Box&#39;s M-test for Homogeneity of Covariance Matrices
+## 
+## data:  diabetes[, -4]
+## Chi-Sq (approx.) = 290.13, df = 12, p-value &lt; 2.2e-16</code></pre>
+</div>
+<div id="right">
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="kw">library</span>(biotools)</span>
+<span id="cb45-2"><a href="#cb45-2"></a><span class="kw">boxM</span>(<span class="dt">data =</span> diabetes[,<span class="op">-</span><span class="dv">4</span>], <span class="dt">grouping =</span> diabetes[,<span class="dv">4</span>])</span></code></pre></div>
+<div data-align="justify">
+<font size="4.99">
+<p class="small">
+<span class="math inline">\(H_0:\)</span> La matriz de covarianza es igual en todos los grupos <br> <span class="math inline">\(H_1:\)</span> La matriz de covarianza no es igual en todos los grupos <br> <br> El test Box’s M muestra evidencias de que la matriz de covarianza no es constante en todos los grupos, lo que a priori descartaría el método LDA en favor del QDA. <br> Sin embargo, como el test Box’s M es muy sensible a la falta de normalidad multivariante, con frecuencia resulta significativo no porque la matriz de covarianza no sea constante sino por la falta de normalidad. <br> Por esta razón se va a asumir que la matriz de covarianza sí es constante y que LDA puede alcanzar una buena precisión en la clasificación.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="análisis-discriminante-lineal2-1" class="slide level2">
+<h2>Análisis discriminante lineal2</h2>
+<div id="left">
+<pre><code>## Call:
+## lda(class ~ ., data = diabetes)
+## 
+## Prior probabilities of groups:
+## chemical   normal    overt 
+## 0.226087 0.573913 0.200000 
+## 
+## Group means:
+##            glucose   insulin     sspg
+## chemical  99.46154  504.1154 291.7692
+## normal    91.98485  351.2121 169.0152
+## overt    207.17391 1002.9565 112.6087
+## 
+## Coefficients of linear discriminants:
+##                  LD1          LD2
+## glucose -0.035130542 -0.056150421
+## insulin  0.013748266  0.009876402
+## sspg     0.001344232  0.005489825
+## 
+## Proportion of trace:
+##    LD1    LD2 
+## 0.8526 0.1474</code></pre>
+</div>
+<div id="right">
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="kw">library</span>(MASS)</span>
+<span id="cb47-2"><a href="#cb47-2"></a>modelo_lda2 &lt;-<span class="st"> </span><span class="kw">lda</span>(class<span class="op">~</span>.,<span class="dt">data=</span>diabetes)</span>
+<span id="cb47-3"><a href="#cb47-3"></a>modelo_lda2</span></code></pre></div>
+<div data-align="justify">
+<p>La función <code>lda</code> del paquete <code>MASS</code>. lda realiza la clasificación mediante la aproximación de Fisher.</p>
+</div>
+</div>
+</section>
+<section id="evaluación-de-los-errores-de-clasificación-1" class="slide level2">
+<h2>Evaluación de los errores de clasificación</h2>
+<div id="left">
+<pre><code>##           Clase predicha
+## Clase real chemical normal overt
+##   chemical       19      7     0
+##   normal          1     65     0
+##   overt           5      2    16</code></pre>
+<pre><code>## [1] &quot;trainig_error = 13.0434782608696 %&quot;</code></pre>
+<div data-align="justify">
+<font size="5.5">
+<p class="small">
+De total de las observaciones 15 de las 115 predicciones que ha realizado el modelo han sido erróneas. El trainig error es de (13.04%). Sin embargo, para validarlo es necesario un nuevo set de datos con el que calcular el test error o recurrir a validación cruzada.
+</p>
+<p></font></p>
+</div>
+</div>
+<div id="right">
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>predicciones &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="dt">object =</span> modelo_lda2, <span class="dt">newdata =</span> diabetes[<span class="op">-</span><span class="dv">4</span>])</span>
+<span id="cb50-2"><a href="#cb50-2"></a><span class="kw">table</span>(diabetes<span class="op">$</span>class, predicciones<span class="op">$</span>class, <span class="dt">dnn =</span> <span class="kw">c</span>(<span class="st">&quot;Clase real&quot;</span>, <span class="st">&quot;Clase predicha&quot;</span>))</span>
+<span id="cb50-3"><a href="#cb50-3"></a></span>
+<span id="cb50-4"><a href="#cb50-4"></a>trainig_error &lt;-<span class="st"> </span><span class="kw">mean</span>(diabetes<span class="op">$</span>class <span class="op">!=</span><span class="st"> </span>predicciones<span class="op">$</span>class) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></span>
+<span id="cb50-5"><a href="#cb50-5"></a><span class="kw">paste</span>(<span class="st">&quot;trainig_error =&quot;</span>, trainig_error, <span class="st">&quot;%&quot;</span>)</span></code></pre></div>
+</div>
+</section>
+<section id="visualización-de-las-clasificaciones-2" class="slide level2">
+<h2>Visualización de las clasificaciones</h2>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="kw">library</span>(klaR)</span>
+<span id="cb51-2"><a href="#cb51-2"></a><span class="kw">partimat</span>(class<span class="op">~</span>.,<span class="dt">data=</span>diabetes, <span class="dt">method =</span> <span class="st">&quot;lda&quot;</span>, <span class="dt">prec =</span> <span class="dv">200</span>,</span>
+<span id="cb51-3"><a href="#cb51-3"></a>         <span class="dt">image.colors =</span> <span class="kw">c</span>(<span class="st">&quot;darkgoldenrod1&quot;</span>, <span class="st">&quot;snow2&quot;</span>, <span class="st">&quot;skyblue2&quot;</span>),</span>
+<span id="cb51-4"><a href="#cb51-4"></a>         <span class="dt">col.mean =</span> <span class="st">&quot;firebrick&quot;</span>,<span class="dt">nplots.hor=</span><span class="dv">3</span>)       </span></code></pre></div>
+<div data-align="justify">
+<font size="6">
+<p class="small">
+La función <code>partimat()</code> del paquete <code>klar</code> permite representar los límites de clasificación de un modelo discriminante lineal o cuadrático para cada par de predictores. Cada color representa una región de clasificación acorde al modelo, se muestra el centroide de cada región y el valor real de las observaciones.
+</p>
+<p></font></p>
+</div>
+</section>
+<section id="visualización-de-las-clasificaciones-3" class="slide level2">
+<h2>Visualización de las clasificaciones</h2>
+<p><img src="LDA_files/figure-revealjs/unnamed-chunk-34-1.png" width="768" /></p>
+</section>
+<section id="ejemplo-3" class="slide level2" data-transition="zoom">
+<h2>Ejemplo 3</h2>
+<div data-align="justify">
+<p>El conjunto de datos, que contiene atributos y resultados en 1000 solicitudes de préstamo, fue proporcionado en 1994 por el Dr. Hans Hofmann, del Institut fuer Statistik und Oekonometrie de la Universidad de Hamburgo. Ha servido como un importante conjunto de datos de prueba para varios algoritmos de calificación crediticia. Las categorias de clasificación son Default(Moroso): 0 (no) and 1 (si)</p>
+</div>
+</section>
+<section id="cargando-el-conjunto-de-datos-2" class="slide level2">
+<h2>Cargando el conjunto de datos</h2>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>credit &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;germancredit.csv&quot;</span>)</span>
+<span id="cb52-2"><a href="#cb52-2"></a><span class="kw">head</span>(credit,<span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##   Default checkingstatus1 duration history purpose amount savings employ
+## 1       0             A11        6     A34     A43   1169     A65    A75
+## 2       1             A12       48     A32     A43   5951     A61    A73
+##   installment status others residence property age otherplans housing cards
+## 1           4    A93   A101         4     A121  67       A143    A152     2
+## 2           2    A92   A101         2     A121  22       A143    A152     1
+##    job liable tele foreign
+## 1 A173      1 A192    A201
+## 2 A173      1 A191    A201</code></pre>
+<div data-align="justify">
+<font size="6">
+<p class="small">
+Como se puede ver, solo las variables: duración (<code>duration</code>), monto (<code>amount</code>), plazo (<code>installment</code>) y edad (<code>age</code>) son numéricas. Con los restantes (indicadores), las suposiciones de una distribución normal serían, en el mejor de los casos, débiles; por lo tanto estas variables no son consideradas aquí.
+</p>
+<p></font></p>
+</div>
+</section>
+<section id="conjunto-de-datos-final" class="slide level2">
+<h2>Conjunto de datos final</h2>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>cred1=credit[, <span class="kw">c</span>(<span class="st">&quot;Default&quot;</span>,<span class="st">&quot;duration&quot;</span>,<span class="st">&quot;amount&quot;</span>,<span class="st">&quot;installment&quot;</span>,<span class="st">&quot;age&quot;</span>)]</span>
+<span id="cb54-2"><a href="#cb54-2"></a><span class="kw">head</span>(cred1)</span></code></pre></div>
+<pre><code>##   Default duration amount installment age
+## 1       0        6   1169           4  67
+## 2       1       48   5951           2  22
+## 3       0       12   2096           2  49
+## 4       0       42   7882           2  45
+## 5       1       24   4870           3  53
+## 6       0       36   9055           2  35</code></pre>
+</section>
+<section id="normalidad-multivariante-7" class="slide level2">
+<h2>Normalidad multivariante</h2>
+<div id="left">
+<p><img src="LDA_files/figure-revealjs/unnamed-chunk-37-1.png" width="768" /></p>
+</div>
+<div id="right">
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="kw">library</span>(MVN)</span>
+<span id="cb56-2"><a href="#cb56-2"></a>outliers &lt;-<span class="st"> </span><span class="kw">mvn</span>(<span class="dt">data =</span> cred1[,<span class="op">-</span><span class="dv">1</span>], <span class="dt">mvnTest =</span> <span class="st">&quot;hz&quot;</span>, <span class="dt">multivariateOutlierMethod =</span> <span class="st">&quot;quan&quot;</span>)</span></code></pre></div>
+<div data-align="justify">
+<font size="6">
+<p class="small">
+Existen <span class="math inline">\(n=117\)</span> outliers que prodían influenciar en el contraste de normalidad multivariante.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="normalidad-multivariante-8" class="slide level2">
+<h2>Normalidad multivariante</h2>
+<div id="left">
+<p><img src="LDA_files/figure-revealjs/unnamed-chunk-38-1.png" width="768" /></p>
+</div>
+<div id="right">
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>royston_test &lt;-<span class="st"> </span><span class="kw">mvn</span>(<span class="dt">data =</span> cred1[,<span class="op">-</span><span class="dv">1</span>], <span class="dt">mvnTest =</span> <span class="st">&quot;royston&quot;</span>, <span class="dt">multivariatePlot =</span> <span class="st">&quot;qq&quot;</span>)</span></code></pre></div>
+<div data-align="justify">
+<font size="6">
+<p class="small">
+Se pueden apreciar que existen outliers que prodían influenciar en el contraste de normalidad multivariante.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="normalidad-multivariante-9" class="slide level2">
+<h2>Normalidad multivariante</h2>
+<div id="left">
+<pre><code>##      Test       H       p value MVN
+## 1 Royston 498.872 1.184884e-106  NO</code></pre>
+<pre><code>##            Test       HZ p value MVN
+## 1 Henze-Zirkler 17.40368       0  NO</code></pre>
+</div>
+<div id="right">
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>royston_test<span class="op">$</span>multivariateNormality</span>
+<span id="cb60-2"><a href="#cb60-2"></a>hz_test &lt;-<span class="st"> </span><span class="kw">mvn</span>(<span class="dt">data =</span> cred1[,<span class="op">-</span><span class="dv">1</span>], <span class="dt">mvnTest =</span> <span class="st">&quot;hz&quot;</span>)</span>
+<span id="cb60-3"><a href="#cb60-3"></a>hz_test<span class="op">$</span>multivariateNormality</span></code></pre></div>
+<div data-align="justify">
+<font size="5">
+<p class="small">
+<p><span class="math inline">\(H_0:\)</span> El conjunto de datos sigue una distribución normal multivariante</p>
+<p><span class="math inline">\(H_1:\)</span> El conjunto de datos no sigue una distribución normal multivariante</p>
+Los datos no siguen una distribución normal multivariante, lo que tiene implicaciones directas en la precisión del QDA.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="homogeneidad-de-varianza-3" class="slide level2">
+<h2>Homogeneidad de Varianza</h2>
+<div id="left">
+<pre><code>## 
+##  Box&#39;s M-test for Homogeneity of Covariance Matrices
+## 
+## data:  cred1[, -1]
+## Chi-Sq (approx.) = 160.06, df = 10, p-value &lt; 2.2e-16</code></pre>
+</div>
+<div id="right">
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="kw">library</span>(biotools)</span>
+<span id="cb62-2"><a href="#cb62-2"></a><span class="kw">boxM</span>(<span class="dt">data =</span> cred1[,<span class="op">-</span><span class="dv">1</span>], <span class="dt">grouping =</span> cred1[,<span class="dv">1</span>])</span></code></pre></div>
+<div data-align="justify">
+<font size="6">
+<p class="small">
+<span class="math inline">\(H_0:\)</span> La matriz de covarianza es igual en todos los grupos <br> <span class="math inline">\(H_1:\)</span> La matriz de covarianza no es igual en todos los grupos <br> <br> El test Box’s M muestra mucha evidencia de que la matriz de covarianza no es constante en todos los grupos, esta condición hace que el QDA sea más adecuado.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="anáslisis-de-discriminante-cuadrático" class="slide level2">
+<h2>Anáslisis de discriminante cuadrático</h2>
+<div id="left">
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="kw">library</span>(MASS)</span>
+<span id="cb63-2"><a href="#cb63-2"></a>modelo_qda &lt;-<span class="st"> </span><span class="kw">qda</span>(<span class="dt">formula =</span> Default<span class="op">~</span>., <span class="dt">data =</span> cred1)</span>
+<span id="cb63-3"><a href="#cb63-3"></a>modelo_qda</span></code></pre></div>
+</div>
+<div id="right">
+<pre><code>## Call:
+## qda(Default ~ ., data = cred1)
+## 
+## Prior probabilities of groups:
+##   0   1 
+## 0.7 0.3 
+## 
+## Group means:
+##   duration   amount installment      age
+## 0 19.20714 2985.457    2.920000 36.22429
+## 1 24.86000 3938.127    3.096667 33.96333</code></pre>
+</div>
+</section>
+<section id="clasificación-de-nuevas-observaciones" class="slide level2">
+<h2>Clasificación de nuevas observaciones</h2>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a>zqua=<span class="kw">qda</span>(Default<span class="op">~</span>.,cred1)</span>
+<span id="cb65-2"><a href="#cb65-2"></a><span class="kw">predict</span>(zqua,<span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">duration=</span><span class="dv">6</span>,<span class="dt">amount=</span><span class="dv">1100</span>,<span class="dt">installment=</span><span class="dv">4</span>,<span class="dt">age=</span><span class="dv">67</span>))</span></code></pre></div>
+<pre><code>## $class
+## [1] 0
+## Levels: 0 1
+## 
+## $posterior
+##           0          1
+## 1 0.9375556 0.06244441</code></pre>
+<div data-align="justify">
+<p>La probabilidad posterior de que el cliente sea moroso del 6.24% frente al 93.76% de que no sea moroso.</p>
+</div>
+</section>
+<section id="evaluación-de-los-errores-de-clasificación-2" class="slide level2">
+<h2>Evaluación de los errores de clasificación</h2>
+<div id="left">
+<pre><code>##           Clase predicha
+## Clase real   0   1
+##          0 628  72
+##          1 221  79</code></pre>
+<pre><code>## [1] &quot;trainig_error = 29.3 %&quot;</code></pre>
+<div data-align="justify">
+<font size="5.5">
+<p class="small">
+De total de las observaciones 293 de las 1000 predicciones que ha realizado el modelo han sido erróneas. El trainig error es de (29.3%). Sin embargo, para validarlo es necesario un nuevo set de datos con el que calcular el test error o recurrir a validación cruzada.
+</p>
+</font>
+</div>
+</div>
+<div id="right">
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a>predicciones &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="dt">object =</span> modelo_qda, <span class="dt">newdata =</span> cred1)</span>
+<span id="cb69-2"><a href="#cb69-2"></a><span class="kw">table</span>(cred1<span class="op">$</span>Default, predicciones<span class="op">$</span>class,</span>
+<span id="cb69-3"><a href="#cb69-3"></a>      <span class="dt">dnn =</span> <span class="kw">c</span>(<span class="st">&quot;Clase real&quot;</span>, <span class="st">&quot;Clase predicha&quot;</span>))</span>
+<span id="cb69-4"><a href="#cb69-4"></a></span>
+<span id="cb69-5"><a href="#cb69-5"></a>trainig_error &lt;-<span class="st"> </span><span class="kw">mean</span>(cred1<span class="op">$</span>Default <span class="op">!=</span><span class="st"> </span>predicciones<span class="op">$</span>class) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></span>
+<span id="cb69-6"><a href="#cb69-6"></a><span class="kw">paste</span>(<span class="st">&quot;trainig_error =&quot;</span>, trainig_error, <span class="st">&quot;%&quot;</span>)</span></code></pre></div>
+</div>
+</section>
+<section id="referencias" class="slide level2">
+<h2>Referencias</h2>
+<ul>
+<li><p><a href="http://halweb.uc3m.es/esp/Personal/personas/jmmarin/esp/DM/tema1dm.pdf" class="uri">http://halweb.uc3m.es/esp/Personal/personas/jmmarin/esp/DM/tema1dm.pdf</a></p></li>
+<li><p><a href="https://rstudio-pubs-static.s3.amazonaws.com/35817_2552e05f1d4e4db8ba87b334101a43da.html" class="uri">https://rstudio-pubs-static.s3.amazonaws.com/35817_2552e05f1d4e4db8ba87b334101a43da.html</a></p></li>
+<li><p><a href="https://rpubs.com/Joaquin_AR/233932" class="uri">https://rpubs.com/Joaquin_AR/233932</a></p></li>
+</ul>
+</section>
+    </div>
+  </div>
+
+  <script src="LDA_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="LDA_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: true,
+        // Transition style
+        transition: 'fade', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'LDA_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
+          { src: 'LDA_files/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

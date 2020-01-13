@@ -1,0 +1,1350 @@
+---
+title: "Análisis discriminante"
+author: "Dr. Luis Benites"
+date: "26 de octubre del 2019 <br> <img id='logopucp' src='logoPUCP.jpg'>"
+logo: "logo"
+output: 
+  revealjs::revealjs_presentation:
+    css: [logo.css, style.css]
+    theme: white
+    highlight: kate
+    center: true
+    transition: fade
+    self_contained: false
+    reveal_plugins: ["zoom","notes"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Análisis Discriminante Lineal
+
+- Supongamos que un conjunto de objetos se clasifica en una serie de grupos; el
+Análisis Discriminante equivale a un análisis de regresión donde la variable dependiente es categórica y tiene como categorías la etiqueta de cada uno de los grupos, y las variables independientes son continuas y determinan a qué grupos pertenecen los objetos. 
+
+## Análisis Discriminante Lineal
+
+- Se trata de encontrar relaciones lineales entre las variables continuas que mejor discriminen en los grupos dados a los objetos. Además, se trata de definir una regla de decisión que asigne un objeto nuevo, que no sabemos clasificar previamente, a uno de los grupos prefijados.
+
+
+## Análisis Discriminante Lineal
+
+- Se presentan una serie de restricciones o supuestos:
+
+    + Se tiene una variable categórica y el resto de variables son de intervalo o de razón y son independientes respecto de ella.
+    + Es necesario que existan al menos dos grupos y para cada grupo se necesitan dos o más casos.
+    + El número de variables discriminantes debe ser menor que el número de objetos menos dos: $x_1, \ldots , x_p$ donde $p<(n−2)$ y $n$ es el número de objetos.
+
+    
+## Análisis Discriminante Lineal
+
+- Se presentan una serie de restricciones o supuestos:
+
+    + Ninguna variable discriminante puede ser combinación lineal de otras variables discriminantes.
+    + El número máximo de funciones discriminantes es igual al mínimo entre el número de variables y el número de grupos menos 1 (con $q$ grupos, ($q−1$) funciones discriminantes)
+    
+## Análisis Discriminante Lineal
+
+- Las condiciones que se deben cumplir para que un Análisis Discriminante Lineal sea válido son:
+
+    + Cada predictor que forma parte del modelo se distribuye de forma normal en cada una de las clases de la variable respuesta. En el caso de múltiples predictores, las observaciones siguen una distribución normal multivariante en todas las clases.
+
+## Análisis Discriminante Lineal
+
+- Las condiciones que se deben cumplir para que un Análisis Discriminante Lineal sea válido son:
+
+    + La varianza del predictor es igual en todas las clases de la variable respuesta. En el caso de múltiples predictores, la matriz de covarianza es igual en todas las clases. Si esto no se cumple se recurre a Análisis Discriminante Cuadrático (QDA).
+
+## Análisis Discriminante Lineal
+
+- Las condiciones que se deben cumplir para que un Análisis Discriminante Lineal sea válido son:
+
+    + Cuando la condición de normalidad no se cumple, el LDA pierde precisión pero aun así puede llegar a clasificaciones relativamente buenas. Using discriminant analysis for multi-class classification: an experimental investigation (Tao Li, Shenghuo Zhu, Mitsunori Ogihara). 
+
+
+## Ejemplo 1 {data-transition="zoom"}
+
+- Se consideran los datos recogidos sobre 32 cráneos en el Tibet. 
+
+- Los datos corresponden a dos tipos raciales diferentes en los que se practicaron diferentes medidas antropométricas de longitudes, anchuras de cráneo y de cara. Se trata de hacer un análisis discriminante sobre los dos tipos raciales.
+
+
+## cargando el conjunto de datos 
+
+```r
+craneo <- read.table("craneo.txt",header=T)
+craneo
+```
+```{r echo=FALSE}
+setwd("~/Documents/maestria-pucp/2019-2/tecnicas-multivariadas/clase-9/multi/Discriminante")
+craneo <- read.table("craneo.txt",header=T)
+craneo
+```
+
+## Exploración gráfica de los datos
+
+```r
+library(ggplot2)
+library(ggpubr)
+p1 <- ggplot(data = craneo, aes(x = Longitud, fill = Tipo)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+p2 <- ggplot(data = craneo, aes(x = Anchura, fill = Tipo)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+p3 <- ggplot(data = craneo, aes(x = Altura, fill = Tipo)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+p4 <- ggplot(data = craneo, aes(x = Altura_Cara, fill = Tipo)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+p5 <- ggplot(data = craneo, aes(x = Anchura_Cara, fill = Tipo)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+ggarrange(p1, p2, p3, p4, p5, nrow = 5, common.legend = TRUE)
+
+```
+
+## Exploración gráfica de los datos
+
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(ggplot2)
+library(ggpubr)
+p1 <- ggplot(data = craneo, aes(x = Longitud, fill = Tipo)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+p2 <- ggplot(data = craneo, aes(x = Anchura, fill = Tipo)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+p3 <- ggplot(data = craneo, aes(x = Altura, fill = Tipo)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+p4 <- ggplot(data = craneo, aes(x = Altura_Cara, fill = Tipo)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+p5 <- ggplot(data = craneo, aes(x = Anchura_Cara, fill = Tipo)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+ggarrange(p1, p2, p3, p4, p5, nrow = 5, common.legend = TRUE)
+
+```
+
+
+## Exploración gráfica de los datos
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(ggplot2)
+library(ggpubr)
+p1 <- ggplot(data = craneo, aes(x = Longitud, fill = Tipo)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+p2 <- ggplot(data = craneo, aes(x = Anchura, fill = Tipo)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+p3 <- ggplot(data = craneo, aes(x = Altura, fill = Tipo)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+p4 <- ggplot(data = craneo, aes(x = Altura_Cara, fill = Tipo)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+p5 <- ggplot(data = craneo, aes(x = Anchura_Cara, fill = Tipo)) +
+  geom_histogram(position = "identity", alpha = 0.5)
+ggarrange(p1, p2, p3, p4, p5, nrow = 5, common.legend = TRUE)
+
+```
+
+
+</div>
+<div id="right">
+<div align="justify">
+<font size="6">
+<p class="small">
+A nivel individual, la anchura de la cara parece ser la variable que más se diferencia entre los dos tipos raciales. 
+
+(menor solapamiento entre poblaciones)
+
+Seguida de las variables altura de la cara y longitud del craneo que también se diferencia entre los dos tipos raciales.
+</p>
+</font>
+</div> 
+</div>
+
+
+## Exploración gráfica de los datos
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+pairs(x = craneo[, c("Longitud", "Anchura", "Altura", "Altura_Cara", "Anchura_Cara")],
+      col = c("firebrick", "green3")[craneo$Tipo], pch = 19)
+
+```
+
+
+## Exploración gráfica de los datos
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+pairs(x = craneo[, c("Longitud", "Anchura", "Altura", "Altura_Cara", "Anchura_Cara")],
+      col = c("firebrick", "green3")[craneo$Tipo], pch = 19)
+
+```
+
+
+</div>
+<div id="right">
+```r
+pairs(x = craneo[, c("Longitud", "Anchura", "Altura", "Altura_Cara", "Anchura_Cara")],
+      col = c("firebrick", "green3")[craneo$Tipo], pch = 19)
+
+```
+ <div align="justify">
+  <font size="5">
+   <p class="small">
+Las variables altura de cara y anchura de cara tienen potencial para poder separar los tipos de raza. Sin embargo, parecen estar altamente correlacionadas, por lo que la información que aportan es redundante. 
+
+Las variables altura y altura de cara también tienen potencial para poder separar los tipos de raza.
+
+La variable longitud cruzada con el resto de variables también muestra potencial para separar los tipos de raza.
+
+</p>
+</font>
+</div> 
+</div>
+
+## Probabilidades a priori
+
+<div align="justify">
+Como no se dispone de información sobre la abundancia relativa de los tipos raciales a nivel poblacional, se considera como probabilidad previa de cada especie el número de observaciones del tipo racial entre el número de observaciones totales.
+
+```r
+table(craneo$Tipo)/nrow(craneo)
+
+```
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+table(craneo$Tipo)/nrow(craneo)
+
+```
+
+$$\hat{\pi}_{uno}=0.53 \quad \text{y} \quad \hat{\pi}_{dos}=0.47$$
+
+</div>
+
+## Normalidad univariante
+
+```r
+# Representación mediante Histograma de cada variable para cada tipo 
+par(mfcol = c(2, 5))
+for (k in 1:5) {
+  j0 <- names(craneo)[k]
+  x0 <- seq(min(craneo[, k]), max(craneo[, k]), le = 1000)
+  for (i in 1:2) {
+    i0 <- levels(craneo$Tipo)[i]
+    x <- craneo[craneo$Tipo == i0, j0]
+    hist(x, proba = T, col = grey(0.8), main = paste("Tipo", i0),
+         xlab = j0)
+    lines(x0, dnorm(x0, mean(x), sd(x)), col = "red", lwd = 2)
+  }
+}
+par(mfcol = c(1, 1))
+
+```
+
+## Normalidad univariante
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# Representación mediante Histograma de cada variable para cada tipo 
+par(mfcol = c(2, 5))
+for (k in 1:5) {
+  j0 <- names(craneo)[k]
+  x0 <- seq(min(craneo[, k]), max(craneo[, k]), le = 1000)
+  for (i in 1:2) {
+    i0 <- levels(craneo$Tipo)[i]
+    x <- craneo[craneo$Tipo == i0, j0]
+    hist(x, proba = T, col = grey(0.8), main = paste("Tipo", i0),
+         xlab = j0)
+    lines(x0, dnorm(x0, mean(x), sd(x)), col = "red", lwd = 2)
+  }
+}
+par(mfcol = c(1, 1))
+
+```
+
+## Normalidad univariante
+
+```r
+# Representación de cuantiles normales de cada variable para cada tipo
+
+par(mfcol = c(2, 5))
+for (k in 1:5) {
+  j0 <- names(craneo)[k]
+  x0 <- seq(min(craneo[, k]), max(craneo[, k]), le = 1000)
+  for (i in 1:2) {
+    i0 <- levels(craneo$Tipo)[i]
+    x <- craneo[craneo$Tipo == i0, j0]
+    qqnorm(x, main = paste("Tipo", i0, j0), pch = 19, col = i + 1)
+    qqline(x)
+  }
+}
+par(mfcol = c(1, 1))
+
+```
+
+## Normalidad univariante
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# Representación de cuantiles normales de cada variable para cada tipo
+
+par(mfcol = c(2, 5))
+for (k in 1:5) {
+  j0 <- names(craneo)[k]
+  x0 <- seq(min(craneo[, k]), max(craneo[, k]), le = 1000)
+  for (i in 1:2) {
+    i0 <- levels(craneo$Tipo)[i]
+    x <- craneo[craneo$Tipo == i0, j0]
+    qqnorm(x, main = paste("Tipo", i0, j0), pch = 19, col = i + 1)
+    qqline(x)
+  }
+}
+par(mfcol = c(1, 1))
+
+
+```
+
+
+## Normalidad univariante
+<div align="justify">
+$H_0:$ El conjunto de datos sigue una distribución normal
+
+$H_1:$ El conjunto de datos no sigue una distribución normal
+</div>
+
+```r
+# Contraste de normalidad Shapiro-Wilk para cada variable en cada tipo de raza
+library(reshape2)
+library(knitr)
+library(dplyr)
+datos_tidy <- melt(craneo, value.name = "valor")
+kable(datos_tidy %>% group_by(Tipo, variable) %>% summarise(p_value_Shapiro.test = shapiro.test(valor)$p.value))
+
+```
+
+## Normalidad univariante
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# Contraste de normalidad Shapiro-Wilk para cada variable en cada tipo de raza
+library(reshape2)
+library(knitr)
+library(dplyr)
+datos_tidy <- melt(craneo, value.name = "valor")
+kable(datos_tidy %>% group_by(Tipo, variable) %>% summarise(p_value_Shapiro.test = shapiro.test(valor)$p.value))
+
+```
+
+<div align="justify">
+$H_0:$ El conjunto de datos sigue una distribución normal
+
+$H_1:$ El conjunto de datos no sigue una distribución normal
+</div>
+
+## Normalidad univariante
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# Misma operación con aggregate
+aggregate(formula = valor ~ Tipo + variable, data = datos_tidy,
+          FUN = function(x){shapiro.test(x)$p.value})
+
+```
+
+</div>
+<div id="right">
+```r
+# Misma operación con aggregate
+aggregate(formula = valor ~ Tipo + variable, data = datos_tidy,
+          FUN = function(x){shapiro.test(x)$p.value})
+
+```
+
+ <div align="justify">
+ 
+  <font size="6">
+  <p class="small">
+
+$H_0:$ El conjunto de datos sigue una distribución normal
+
+$H_1:$ El conjunto de datos no sigue una distribución normal
+
+
+No hay evidencias de falta de normalidad univariante en ninguna de las variables empleadas como predictores en ninguno de los grupos.
+</p>
+</font>
+</div> 
+</div>
+
+## Normalidad multivariante
+
+ <div align="justify">
+El paquete `MVN` contiene funciones que permiten realizar los tres test de hipótesis comúnmente empleados para evaluar la normalidad multivariante (Mardia, Henze-Zirkler y Royston) y también funciones para identificar outliers que puedan influenciar en el contraste. 
+</div> 
+
+## Normalidad multivariante
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(MVN)
+outliers <- mvn(data = craneo[,-6], mvnTest = "hz", multivariateOutlierMethod = "quan")
+
+```
+
+</div>
+<div id="right">
+```r
+library(MVN)
+outliers <- mvn(data = craneo[,-6], mvnTest = "hz", multivariateOutlierMethod = "quan")
+
+```
+
+ <div align="justify">
+ 
+  <font size="6">
+  <p class="small">
+Existen $n=8$ outliers que podrían influenciar en el contraste de normalidad multivariante.
+</p>
+</font>
+</div> 
+</div>
+
+## Normalidad multivariante
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+royston_test <- mvn(data = craneo[,-6], mvnTest = "royston", multivariatePlot = "qq")
+
+```
+
+</div>
+<div id="right">
+```r
+royston_test <- mvn(data = craneo[,-6], mvnTest = "royston", multivariatePlot = "qq")
+
+```
+
+ <div align="justify">
+ 
+  <font size="6">
+  <p class="small">
+Se pueden apreciar que existen outliers que podrían influenciar en el contraste de normalidad multivariante.
+</p>
+</font>
+</div> 
+</div>
+
+## Normalidad multivariante
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+royston_test$multivariateNormality
+hz_test <- mvn(data = craneo[,-6], mvnTest = "hz")
+hz_test$multivariateNormality
+
+```
+
+</div>
+<div id="right">
+```r
+royston_test$multivariateNormality
+hz_test <- mvn(data = craneo[,-6], mvnTest = "hz")
+hz_test$multivariateNormality
+
+```
+
+ <div align="justify">
+ 
+  <font size="5">
+  <p class="small">
+$H_0:$ El conjunto de datos sigue una distribución normal multivariante
+
+$H_1:$ El conjunto de datos no sigue una distribución normal multivariante
+
+A pesar de los $n=8$ outliers detectados, ninguno de los dos test encuentran evidencias significativas ($\alpha=0.05$) de falta de normalidad multivariante.
+</p>
+</font>
+</div> 
+</div>
+
+## Homogeneidad de Varianza
+ <div align="justify">
+ 
+El test Box M fue desarrollado por el matemático Box (1949) como una extensión del test de Barttlet para escenarios multivariante y permite contrastar la igualdad de matrices entre grupos. El test Box M es muy sensible a violaciones de la normalidad multivariante, por lo que esta debe ser contrastada con anterioridad. Ocurre con frecuencia, que el resultado de un test Box M resulta significativo debido a la falta de distribución normal multivariante en lugar de por falta de homogeneidad en las matrices de covarianza. Dada la sensibilidad de este test se recomienda emplear un límite de significancia de 0.001 (Tabachnick & Fidell, 2001, y http://www.real-statistics.com/multivariate-statistics/).
+
+</div>
+
+## Homogeneidad de Varianza
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(biotools)
+boxM(data = craneo[, 1:5], grouping = craneo[, 6])
+```
+
+</div>
+<div id="right">
+```r
+library(biotools)
+boxM(data = craneo[, 1:5], grouping = craneo[, 6])
+```
+
+<div align="justify">
+ 
+<font size="6">
+<p class="small">
+$H_0:$ La matriz de covarianza es igual en todos los grupos
+
+$H_1:$ La matriz de covarianza no es igual en todos los grupos
+
+La prueba de hipotesis no encuentran evidencias significativas ($\alpha=0.05$) de falta de homogenidad de la matriz de covarianza en todos los grupos.
+</p>
+</font>
+</div> 
+</div>
+
+## Análisis discriminante lineal2
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(MASS)
+modelo_lda <- lda(formula = Tipo ~ Longitud + Anchura + Altura + Altura_Cara + Anchura_Cara, data = craneo)
+modelo_lda
+```
+
+</div>
+
+<div id="right">
+```r
+library(MASS)
+modelo_lda <- lda(formula = Tipo ~ Longitud + Anchura + Altura + Altura_Cara + Anchura_Cara, data = craneo)
+modelo_lda
+```
+
+<div align="justify">
+La función `lda` del paquete `MASS`. lda realiza la clasificación mediante la aproximación de Fisher.
+</div> 
+</div>
+
+## Clasificación de nuevos craneos
+
+```r
+nuevosdatos <-
+  rbind(c(171,140.5,127.0,69.5,137.0),c(179.0,132.0,140.0,72.0,138.5))
+# Asigno a los dos nuevos datos los nombres de las variables
+colnames(nuevosdatos) <- colnames(craneo[,-6])
+nuevosdatos <- data.frame(nuevosdatos)
+nuevosdatos
+# Se predice el grupo de pertenencia de los nuevos datos
+predict(modelo_lda,newdata=nuevosdatos)$class
+predict(modelo_lda,newdata=nuevosdatos)
+```
+
+## Clasificación de nuevos craneos
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+nuevosdatos <-
+  rbind(c(171,140.5,127.0,69.5,137.0),c(179.0,132.0,140.0,72.0,138.5))
+# Asigno a los dos nuevos datos los nombres de las variables
+colnames(nuevosdatos) <- colnames(craneo[,-6])
+nuevosdatos <- data.frame(nuevosdatos)
+nuevosdatos
+# Se predice el grupo de pertenencia de los nuevos datos
+predict(modelo_lda,newdata=nuevosdatos)$class
+predict(modelo_lda,newdata=nuevosdatos)
+```
+
+</div>
+<div id="right">
+<div align="justify">
+  <font size="5">
+  <p class="small">
+Por ejemplo, dos nuevos craneos cuyas medidas sean: <br>
+Longitud=171,  Anchura=140.5,   Altura=127, Altura_Cara=69.5, y Anchura_Cara=137.<br> <br>
+Longitud=179,  Anchura=132,   Altura=140, Altura_Cara=72, y Anchura_Cara=138.5.<br> <br>
+La probabilidad posterior de que el primer craneo pertenezca a la raza tipo 1 es del 77.69% frente al 22.31% de que pertenezca a la raza tipo 2. <br> <br>
+La probabilidad posterior de que el segundo craneo pertenezca a la raza tipo 1 es del 19.28% frente al 80.72% de que pertenezca a la raza tipo 2. 
+</p>
+</font>
+</div> 
+</div>
+
+## Evaluación de los errores de clasificación
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+predicciones <- predict(object = modelo_lda, newdata = craneo[, -6],
+                        method = "predictive")
+table(craneo$Tipo, predicciones$class,
+      dnn = c("Clase real", "Clase predicha"))
+
+trainig_error <- mean(craneo$Tipo != predicciones$class) * 100
+paste("trainig_error=", trainig_error, "%")
+
+```
+<div align="justify">
+  <font size="5.5">
+  <p class="small">
+Empleando las mismas observaciones con las que se ha generado el modelo discriminante (trainig data), la precisión de clasificación es del 78.13%. Evaluar un modelo con los mismos datos con los que se ha creado suele resultar en estimaciones de la precisión demasiado optimistas (training error muy bajo). 
+</p>
+</font>
+</div> 
+</div>
+<div id="right">
+```r
+predicciones <- predict(object = modelo_lda, newdata = craneo[, -6],
+                        method = "predictive")
+table(craneo$Tipo, predicciones$class,
+      dnn = c("Clase real", "Clase predicha"))
+
+trainig_error <- mean(craneo$Tipo != predicciones$class) * 100
+paste("trainig_error=", trainig_error, "%")
+
+```
+</div>
+
+## Visualización de las clasificaciones
+
+```r
+library(klaR)
+partimat(Tipo ~ Longitud + Anchura + Altura + Altura_Cara + Anchura_Cara,data=craneo, method = "lda", prec = 200,
+         image.colors = c("darkgoldenrod1", "skyblue2"),
+         col.mean = "firebrick")
+
+```
+
+## Visualización de las clasificaciones
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(klaR)
+partimat(Tipo ~ Longitud + Anchura + Altura + Altura_Cara + Anchura_Cara,data=craneo, method = "lda", prec = 200,
+         image.colors = c("darkgoldenrod1", "skyblue2"),
+         col.mean = "firebrick")
+
+```
+           
+Se desea predecir si un paciente pertenece a una de las siguientes cla-
+ses: Normal (el paciente esta sano), Chemical (el paciente presenta
+pre-diabetes) y Overt (el paciente presenta diabetes) utilizando tres
+indicadores de la sangre (glucosa,insulina y sspg).
+
+## Ejemplo 2 {data-transition="zoom"}
+<div align="justify">
+Se desea predecir si un paciente pertenece a una de las siguientes clases: `Normal` (el paciente esta sano), `Chemical` (el paciente presenta
+pre-diabetes) y `Overt` (el paciente presenta diabetes) utilizando tres
+indicadores de la sangre (glucosa,insulina y sspg).
+</div>
+
+
+## cargando el conjunto de datos 
+
+```r
+diabetes=read.csv("DiabetesTrain.csv")
+diabetes
+```
+```{r echo=FALSE}
+diabetes=read.csv("DiabetesTrain.csv")
+diabetes
+```
+
+## Exploración gráfica de los datos
+
+```r
+library(ggplot2)
+library(ggpubr)
+
+plot1 <- ggplot(data = diabetes, aes(x = glucose)) +
+  geom_density(aes(colour = class)) + theme_bw()
+plot2 <- ggplot(data = diabetes, aes(x = insulin)) +
+  geom_density(aes(colour = class)) + theme_bw()
+plot3 <- ggplot(data = diabetes, aes(x = sspg)) +
+  geom_density(aes(colour = class)) + theme_bw()
+# la función grid.arrange del paquete grid.extra permite ordenar
+# graficos de ggplot2
+ggarrange(plot1, plot2, plot3, common.legend = TRUE, legend = "bottom")
+
+```
+
+## Exploración gráfica de los datos
+
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(ggplot2)
+library(ggpubr)
+
+plot1 <- ggplot(data = diabetes, aes(x = glucose)) +
+  geom_density(aes(colour = class)) + theme_bw()
+plot2 <- ggplot(data = diabetes, aes(x = insulin)) +
+  geom_density(aes(colour = class)) + theme_bw()
+plot3 <- ggplot(data = diabetes, aes(x = sspg)) +
+  geom_density(aes(colour = class)) + theme_bw()
+# la función grid.arrange del paquete grid.extra permite ordenar
+# graficos de ggplot2
+ggarrange(plot1, plot2, plot3, common.legend = TRUE, legend = "bottom")
+
+```
+
+
+## Exploración gráfica de los datos
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(ggplot2)
+library(ggpubr)
+
+plot1 <- ggplot(data = diabetes, aes(x = glucose)) +
+  geom_density(aes(colour = class)) + theme_bw()
+plot2 <- ggplot(data = diabetes, aes(x = insulin)) +
+  geom_density(aes(colour = class)) + theme_bw()
+plot3 <- ggplot(data = diabetes, aes(x = sspg)) +
+  geom_density(aes(colour = class)) + theme_bw()
+# la función grid.arrange del paquete grid.extra permite ordenar
+# graficos de ggplot2
+ggarrange(plot1, plot2, plot3, common.legend = TRUE, legend = "bottom")
+
+```
+
+
+</div>
+<div id="right">
+ <div align="justify">
+  <font size="6">
+   <p class="small">
+La variable sspg presenta asimetría positiva dentro de cada grupo de pacientes.
+</p>
+</font>
+</div> 
+</div>
+
+
+## Exploración gráfica de los datos
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+pairs(x = diabetes[, -4], col = c("firebrick", "green3", "blue")[diabetes$class],
+      pch = 20)
+
+```
+
+
+## Exploración gráfica de los datos
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+pairs(x = diabetes[, -4], col = c("firebrick", "green3", "blue")[diabetes$class],
+      pch = 20)
+
+```
+
+
+</div>
+<div id="right">
+```r
+pairs(x = diabetes[, -4], col = c("firebrick", "green3", "blue")[diabetes$class],
+      pch = 20)
+
+```
+ <div align="justify">
+  <font size="6">
+   <p class="small">
+Las variables glucosa e insulina son las dos variables con más potencial para poder separar entre clases de pacientes. Sin embargo, están altamente correlacionadas, por lo que la información que aportan es en gran medida redundante. 
+
+</p>
+</font>
+</div> 
+</div>
+
+## Probabilidades a priori
+
+<div align="justify">
+Como no se dispone de información sobre la abundancia relativa de las clases de pacientes a nivel poblacional, se considera como probabilidad previa de cada clase el número de observaciones por clase de paciente entre el número de observaciones totales.
+
+```r
+table(diabetes[,4])/nrow(diabetes)
+
+```
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+table(diabetes[,4])/nrow(diabetes)
+
+```
+
+$$\hat{\pi}_{sano}=0.57\text{,} \quad \hat{\pi}_{pre}=0.23 \quad \text{y} \quad \hat{\pi}_{diab}=0.20$$
+
+</div>
+
+## Normalidad univariante
+
+```r
+#representación mediante histograma de cada variable para cada clase
+
+par(mar = rep(3, 3))
+for (k in 1:3) {
+  j0 <- names(diabetes)[k]
+  x0 <- seq(min(diabetes[, k]), max(diabetes[, k]), le = 1000)
+  for (i in 1:3) {
+    i0 <- levels(diabetes$class)[i]
+    x <- diabetes[diabetes$class == i0, j0]
+    hist(x, proba = T, col = grey(0.8), main = paste("class", i0),
+         xlab = j0)
+    lines(x0, dnorm(x0, mean(x), sd(x)), col = "red", lwd = 2)
+  }
+}
+par(mar = rep(1, 1))
+
+```
+
+## Normalidad univariante
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+#representación mediante histograma de cada variable para cada clase
+
+par(mfcol = c(3, 3))
+for (k in 1:3) {
+  j0 <- names(diabetes)[k]
+  x0 <- seq(min(diabetes[, k]), max(diabetes[, k]), le = 1000)
+  for (i in 1:3) {
+    i0 <- levels(diabetes$class)[i]
+    x <- diabetes[diabetes$class == i0, j0]
+    hist(x, proba = T, col = grey(0.8), main = paste("class", i0),
+         xlab = j0)
+    lines(x0, dnorm(x0, mean(x), sd(x)), col = "red", lwd = 2)
+  }
+}
+par(mfcol = c(1, 1))
+
+```
+
+## Normalidad univariante
+
+```r
+#representación de cuantiles normales de cada variable para cada clase
+
+par(mfcol = c(3, 3))
+for (k in 1:3) {
+  j0 <- names(diabetes)[k]
+  x0 <- seq(min(diabetes[, k]), max(diabetes[, k]), le = 1000)
+  for (i in 1:3) {
+    i0 <- levels(diabetes$class)[i]
+    x <- diabetes[diabetes$class == i0, j0]
+    qqnorm(x, main = paste(i0, j0), pch = 19, col = i + 1) 
+    qqline(x)
+  }
+}
+par(mfcol = c(1, 1))
+
+```
+
+## Normalidad univariante
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+#representación de cuantiles normales de cada variable para cada clase
+
+par(mfcol = c(3, 3))
+for (k in 1:3) {
+  j0 <- names(diabetes)[k]
+  x0 <- seq(min(diabetes[, k]), max(diabetes[, k]), le = 1000)
+  for (i in 1:3) {
+    i0 <- levels(diabetes$class)[i]
+    x <- diabetes[diabetes$class == i0, j0]
+    qqnorm(x, main = paste(i0, j0), pch = 19, col = i + 1) 
+    qqline(x)
+  }
+}
+par(mfcol = c(1, 1))
+
+
+```
+
+
+## Normalidad univariante
+<div align="justify">
+$H_0:$ El conjunto de datos sigue una distribución normal
+
+$H_1:$ El conjunto de datos no sigue una distribución normal
+</div>
+
+```r
+# Contraste de normalidad Shapiro-Wilk para cada variable en cada clase
+library(reshape2)
+library(knitr)
+library(dplyr)
+datos_tidy <- melt(diabetes, value.name = "valor")
+kable(datos_tidy %>% group_by(class, variable) %>% summarise(p_value_Shapiro.test = round(shapiro.test(valor)$p.value,5)))
+
+
+```
+
+## Normalidad univariante
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# Contraste de normalidad Shapiro-Wilk para cada variable en cada clase
+library(reshape2)
+library(knitr)
+library(dplyr)
+datos_tidy <- melt(diabetes, value.name = "valor")
+kable(datos_tidy %>% group_by(class, variable) %>% summarise(p_value_Shapiro.test = round(shapiro.test(valor)$p.value,5)))
+
+
+```
+
+<div align="justify">
+$H_0:$ El conjunto de datos sigue una distribución normal
+
+$H_1:$ El conjunto de datos no sigue una distribución normal
+</div>
+
+
+## Normalidad multivariante
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(MVN)
+outliers <- mvn(data = diabetes[,-4], mvnTest = "hz", multivariateOutlierMethod = "quan")
+
+
+```
+
+</div>
+<div id="right">
+```r
+library(MVN)
+outliers <- mvn(data = diabetes[,-4], mvnTest = "hz", multivariateOutlierMethod = "quan")
+
+```
+
+ <div align="justify">
+ 
+  <font size="6">
+  <p class="small">
+Existen $n=35$ outliers que prodían influenciar en el contraste de normalidad multivariante.
+</p>
+</font>
+</div> 
+</div>
+
+## Normalidad multivariante
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+royston_test <- mvn(data = diabetes[,-4], mvnTest = "royston", multivariatePlot = "qq")
+
+```
+
+</div>
+<div id="right">
+```r
+royston_test <- mvn(data = diabetes[,-4], mvnTest = "royston", multivariatePlot = "qq")
+
+```
+
+ <div align="justify">
+ 
+  <font size="6">
+  <p class="small">
+Se pueden apreciar que existen outliers que prodían influenciar en el contraste de normalidad multivariante.
+</p>
+</font>
+</div> 
+</div>
+
+## Normalidad multivariante
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+royston_test$multivariateNormality
+hz_test <- mvn(data = diabetes[,-4], mvnTest = "hz")
+hz_test$multivariateNormality
+
+```
+
+</div>
+<div id="right">
+```r
+royston_test$multivariateNormality
+hz_test <- mvn(data = diabetes[,-4], mvnTest = "hz")
+hz_test$multivariateNormality
+
+```
+
+ <div align="justify">
+ 
+  <font size="5">
+  <p class="small">
+$H_0:$ El conjunto de datos sigue una distribución normal multivariante
+
+$H_1:$ El conjunto de datos no sigue una distribución normal multivariante
+
+Ambos test muestran evidencias significativas de falta de normalidad multivariante. El LDA tiene cierta robustez frente a la falta de normalidad multivariante, pero es importante tenerlo en cuenta en la conclusión del análisis.
+</p>
+</font>
+</div> 
+</div>
+
+
+## Homogeneidad de Varianza
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(biotools)
+boxM(data = diabetes[,-4], grouping = diabetes[,4])
+
+```
+
+</div>
+<div id="right">
+```r
+library(biotools)
+boxM(data = diabetes[,-4], grouping = diabetes[,4])
+
+```
+
+ <div align="justify">
+ 
+  <font size="4.99">
+  <p class="small">
+$H_0:$ La matriz de covarianza es igual en todos los grupos <br>
+$H_1:$ La matriz de covarianza no es igual en todos los grupos <br> <br>
+El test Box’s M muestra evidencias de que la matriz de covarianza no es constante en todos los grupos, lo que a priori descartaría el método LDA en favor del QDA. <br>
+Sin embargo, como el test Box’s M es muy sensible a la falta de normalidad multivariante, con frecuencia resulta significativo no porque la matriz de covarianza no sea constante sino por la falta de normalidad. <br>
+Por esta razón se va a asumir que la matriz de covarianza sí es constante y que LDA puede alcanzar una buena precisión en la clasificación. 
+</p>
+</font>
+</div> 
+</div>
+
+## Análisis discriminante lineal2
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(MASS)
+modelo_lda2 <- lda(class~.,data=diabetes)
+modelo_lda2
+
+```
+
+</div>
+<div id="right">
+```r
+library(MASS)
+modelo_lda2 <- lda(class~.,data=diabetes)
+modelo_lda2
+
+```
+
+<div align="justify">
+La función `lda` del paquete `MASS`. lda realiza la clasificación mediante la aproximación de Fisher.
+</div> 
+</div>
+
+
+## Evaluación de los errores de clasificación
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+predicciones <- predict(object = modelo_lda2, newdata = diabetes[-4])
+table(diabetes$class, predicciones$class, dnn = c("Clase real", "Clase predicha"))
+
+trainig_error <- mean(diabetes$class != predicciones$class) * 100
+paste("trainig_error =", trainig_error, "%")
+
+```
+<div align="justify">
+  <font size="5.5">
+  <p class="small">
+De total de las observaciones  15 de las 115 predicciones que ha realizado el modelo han sido erróneas. El trainig error es de (13.04%). Sin embargo, para validarlo es necesario un nuevo set de datos con el que calcular el test error o recurrir a validación cruzada. 
+</p>
+</font>
+</div> 
+</div>
+<div id="right">
+```r
+predicciones <- predict(object = modelo_lda2, newdata = diabetes[-4])
+table(diabetes$class, predicciones$class, dnn = c("Clase real", "Clase predicha"))
+
+trainig_error <- mean(diabetes$class != predicciones$class) * 100
+paste("trainig_error =", trainig_error, "%")
+
+```
+</div>
+
+## Visualización de las clasificaciones
+
+```r
+library(klaR)
+partimat(class~.,data=diabetes, method = "lda", prec = 200,
+         image.colors = c("darkgoldenrod1", "snow2", "skyblue2"),
+         col.mean = "firebrick",nplots.hor=3)       
+
+```
+<div align="justify">
+  <font size="6">
+  <p class="small">
+La función `partimat()` del paquete `klar` permite representar los límites de clasificación de un modelo discriminante lineal o cuadrático para cada par de predictores. Cada color representa una región de clasificación acorde al modelo, se muestra el centroide de cada región y el valor real de las observaciones.
+  </p>
+  </font>
+</div>
+
+## Visualización de las clasificaciones
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(klaR)
+library(klaR)
+partimat(class~.,data=diabetes, method = "lda", prec = 200,
+         image.colors = c("darkgoldenrod1", "snow2", "skyblue2"),
+         col.mean = "firebrick",nplots.hor=3)
+
+```
+
+## Ejemplo 3 {data-transition="zoom"}   
+<div align="justify">
+El conjunto de datos, que contiene atributos y resultados en 1000 solicitudes de préstamo, fue proporcionado en 1994 por el Dr. Hans Hofmann, del Institut fuer Statistik und Oekonometrie de la Universidad de Hamburgo. Ha servido como un importante conjunto de datos de prueba para varios algoritmos de calificación crediticia. Las categorias de clasificación son Default(Moroso): 0 (no) and 1 (si)
+</div>
+
+## Cargando el conjunto de datos
+
+```r
+credit <- read.csv("germancredit.csv")
+head(credit,2)
+
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+credit <- read.csv("germancredit.csv")
+head(credit,2)
+
+```
+
+<div align="justify">
+  <font size="6">
+  <p class="small">
+Como se puede ver, solo las variables: duración (`duration`), monto (`amount`), plazo (`installment`) y edad (`age`) son numéricas. Con los restantes (indicadores), las suposiciones de una distribución normal serían, en el mejor de los casos, débiles; por lo tanto estas variables no son consideradas aquí.
+ </p>
+  </font>
+</div>
+
+## Conjunto de datos final
+
+
+```r
+cred1=credit[, c("Default","duration","amount","installment","age")]
+head(cred1)
+
+```
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+cred1=credit[, c("Default","duration","amount","installment","age")]
+head(cred1)
+
+```
+
+
+## Normalidad multivariante
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(MVN)
+outliers <- mvn(data = cred1[,-1], mvnTest = "hz", multivariateOutlierMethod = "quan")
+
+
+```
+
+</div>
+<div id="right">
+```r
+library(MVN)
+outliers <- mvn(data = cred1[,-1], mvnTest = "hz", multivariateOutlierMethod = "quan")
+
+```
+
+ <div align="justify">
+ 
+  <font size="6">
+  <p class="small">
+Existen $n=117$ outliers que prodían influenciar en el contraste de normalidad multivariante.
+</p>
+</font>
+</div> 
+</div>
+
+## Normalidad multivariante
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+royston_test <- mvn(data = cred1[,-1], mvnTest = "royston", multivariatePlot = "qq")
+
+```
+
+</div>
+<div id="right">
+```r
+royston_test <- mvn(data = cred1[,-1], mvnTest = "royston", multivariatePlot = "qq")
+
+```
+
+ <div align="justify">
+ 
+  <font size="6">
+  <p class="small">
+Se pueden apreciar que existen outliers que prodían influenciar en el contraste de normalidad multivariante.
+</p>
+</font>
+</div> 
+</div>
+
+## Normalidad multivariante
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+royston_test$multivariateNormality
+hz_test <- mvn(data = cred1[,-1], mvnTest = "hz")
+hz_test$multivariateNormality
+
+```
+
+</div>
+<div id="right">
+```r
+royston_test$multivariateNormality
+hz_test <- mvn(data = cred1[,-1], mvnTest = "hz")
+hz_test$multivariateNormality
+
+```
+
+ <div align="justify">
+ 
+  <font size="5">
+  <p class="small">
+$H_0:$ El conjunto de datos sigue una distribución normal multivariante
+
+$H_1:$ El conjunto de datos no sigue una distribución normal multivariante
+
+Los datos no siguen una distribución normal multivariante, lo que tiene implicaciones directas en la precisión del QDA.
+</p>
+</font>
+</div> 
+</div>
+
+
+## Homogeneidad de Varianza
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(biotools)
+boxM(data = cred1[,-1], grouping = cred1[,1])
+
+```
+
+</div>
+<div id="right">
+```r
+library(biotools)
+boxM(data = cred1[,-1], grouping = cred1[,1])
+
+```
+
+ <div align="justify">
+ 
+  <font size="6">
+  <p class="small">
+$H_0:$ La matriz de covarianza es igual en todos los grupos <br>
+$H_1:$ La matriz de covarianza no es igual en todos los grupos <br> <br>
+El test Box’s M muestra mucha evidencia de que la matriz de covarianza no es constante en todos los grupos, esta condición hace que el QDA sea más adecuado. 
+</p>
+</font>
+</div> 
+</div>
+
+## Anáslisis de discriminante cuadrático
+
+<div id="left">
+  
+```r
+library(MASS)
+modelo_qda <- qda(formula = Default~., data = cred1)
+modelo_qda
+
+```
+</div>
+  <div id="right">
+  
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(MASS)
+modelo_qda <- qda(formula = Default~., data = cred1)
+modelo_qda
+
+```
+
+</div>
+
+## Clasificación de nuevas observaciones
+  
+```r
+zqua=qda(Default~.,cred1)
+predict(zqua,newdata=data.frame(duration=6,amount=1100,installment=4,age=67))
+
+```
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+zqua=qda(Default~.,cred1)
+predict(zqua,newdata=data.frame(duration=6,amount=1100,installment=4,age=67))
+
+```
+
+<div align="justify">
+La probabilidad posterior de que el cliente sea moroso del 6.24% frente al 93.76% de que no sea moroso.
+</div>
+
+## Evaluación de los errores de clasificación
+
+<div id="left">
+  
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+predicciones <- predict(object = modelo_qda, newdata = cred1)
+table(cred1$Default, predicciones$class,
+      dnn = c("Clase real", "Clase predicha"))
+
+trainig_error <- mean(cred1$Default != predicciones$class) * 100
+paste("trainig_error =", trainig_error, "%")
+
+```
+
+<div align="justify">
+  <font size="5.5">
+  <p class="small">
+  De total de las observaciones  293 de las 1000 predicciones que ha realizado el modelo han sido erróneas. El trainig error es de (29.3%). Sin embargo, para validarlo es necesario un nuevo set de datos con el que calcular el test error o recurrir a validación cruzada. 
+</p>
+  </font>
+  </div> 
+  </div>
+  <div id="right">
+```r
+predicciones <- predict(object = modelo_qda, newdata = cred1)
+table(cred1$Default, predicciones$class,
+      dnn = c("Clase real", "Clase predicha"))
+
+trainig_error <- mean(cred1$Default != predicciones$class) * 100
+paste("trainig_error =", trainig_error, "%")
+```
+</div>
+
+
+## Referencias
+
+- http://halweb.uc3m.es/esp/Personal/personas/jmmarin/esp/DM/tema1dm.pdf
+
+- https://rstudio-pubs-static.s3.amazonaws.com/35817_2552e05f1d4e4db8ba87b334101a43da.html
+
+- https://rpubs.com/Joaquin_AR/233932

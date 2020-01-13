@@ -1,7 +1,7 @@
 ---
 title: "Técnicas de Análisis Multivariado - Trabajo 1"
 author: "Justo Manrique Urbina - 20091107"
-date: "01/12/2019"
+date: "12/14/2019"
 output: pdf_document
 ---
 
@@ -21,17 +21,9 @@ Ver a continuación el uso de cada técnica.
 
 # Análisis de Componentes Principales
 
-## Introducción
+## Introducción y Datos
 
-<<Descripción del problema>>. 
-
-Los objetivos del presente estudio son:
-
-- Conocer si existen grupos de autos con perfiles de rendimiento similares e identificar si existen autos de distinta clase.
-- Identificar aquellos autos que lideran cada clase.
-
-
-## Datos
+La base de datos sobre la cual aplicaremos el análisis de componentes principales proviene dentro de la instalación base del programa R. La base de datos es conocida como "mtcars" y consiste en aspectos de diseño y rendimiento para 32 automóviles. Dicha base de datos proviene de un estudio del año 1981 de Henderson y Velleman. Dicho estudio fue publicado en el journal \textit{Biometrics}. Mayor información al respecto se puede encontrar en https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html.
 
 Los datos provienen de la revista \textit{Motor Trend}, edición 1974. Dicha base de datos tiene las siguientes variables:
 
@@ -47,6 +39,11 @@ Los datos provienen de la revista \textit{Motor Trend}, edición 1974. Dicha bas
 - gear: Cantidad de marchas hacia adelante.
 - carb: Número de carburadores.
 
+Los objetivos del presente estudio son:
+
+- Conocer si existen grupos de autos con perfiles de rendimiento similares e identificar si existen autos de distinta clase.
+- Identificar aquellos autos que lideran cada clase.
+
 Con el propósito de ejecutar el análisis de los datos, realizamos la carga de librerías e importamos los datos. Posteriormente, realizamos un preprocesamiento de los datos para convertir los valores binarios en variables cualitativas.
 
 ```{r}
@@ -54,6 +51,13 @@ Con el propósito de ejecutar el análisis de los datos, realizamos la carga de 
 library(FactoMineR)
 library(dplyr)
 library(psych)
+library(reshape2)
+library(knitr)
+library(tidyverse)
+library(biotools)
+library(MASS)
+library(caret)
+library(klaR)
 
 data("mtcars")
 
@@ -155,20 +159,195 @@ En base al análisis presentado, y en relación a los objetos de estudio, se con
 
 # Análisis Discriminante
 
-## Introducción
+## Introducción y Datos
 
-## Datos
+La base de datos sobre la cual aplicaremos análisis discriminante proviene de Edgar Anderson, quien publicó en el \textit{Bulletin of the American Iris Society} una base de datos sobre las distintas especies de la planta isis. Esta base de datos ha sido muy estudiada dentro de la comunidad de \textit{machine learning} e inteligencia artificial. Esta base de datos ha sido estudiada por Ronald Fisher en el año 1936, quien publicó su estudio en la revista \textit{Annals of Eugenics}.
+
+La base de datos viene por defecto en la instalación base del programa R. Dicha base de datos tiene las siguientes variables:
+
+- Sepal.Length: El largo del sépalo de una hoja.
+- Sepal.Width: El ancho del sépalo de una hoja.
+- Petal.Length: El largo del pétalo de una hoja.
+- Petal.Width: El ancho del pétalo de una hoja.
+- Species: La especie de la planta.
+
+Los objetivos del presente estudio son:
+
+- Crear un clasificador que permita discriminar las especies de plantas a través de sus atributos.
+- Identificar si dicho clasificador es lo suficientemente bueno para ser evaluado a posterior con nuevos datos.
+
+Con el propósito de ejecutar el análisis de los datos, realizamos la carga de librerías e importamos los datos. Posteriormente, realizamos un preprocesamiento de los datos para continuar con el estudio. Este preprocesamiento consiste en particionar los datos en datos de entrenamiento y prueba. Ver a continuación:
+
+```{r}
+set.seed(4830201)
+data("iris")
+
+index_set <- createDataPartition(iris$Species,times=1,p=0.7,list =F)
+train_iris <- iris[index_set,]
+test_iris <- iris[-index_set,]
+```
+
+Con el próposito de entender la distribución de los datos y la relación entre ellos (así como identificar posibles "reglas de separación" entre clases), realizamos un análisis exploratorio a través del siguiente código:
+```{r}
+pairs.panels(train_iris[1:4],bg = c("black","yellow","red")[train_iris$Species],pch=21,ellipses = F)
+```
+
+Se observa lo siguiente:
+
+- Se observa que la clase "setosa" está asociada a menor largo y anchura del pétalo.
+- Se observa que la clase "versicolor" y "virginica" están asociadas a un mayor largo del pétalo y sépalo. Entre ellos dos, la clase "virginica" está asociada a valores más altos.
+- Se observa una separación entre la clase "setosa" y las otras dos clases a lo largo de los gráficos de dispersión.
 
 ## Resultados
 
+Con el propósito de utilizar el análisis discriminante, primero se validarán los siguientes supuestos:
+
+- La matriz de covarianza es igual en todas las clases y de forma general.
+- Las variables asociadas a cada clase se distribuyen de forma normal univariada y multivariada.
+
+Para ello, utilizamos los tests de Shapiro-Wilks, Box y de normalidad multivariante. Ver resultados a continuación y posteriormente un análisis del mismo:
+
+```{r}
+train_iris_m <- melt(train_iris)
+train_iris_m %>% group_by(Species,variable) %>% summarise(pv_shapiro = round(shapiro.test(value)$p.value,5))
+
+MVN::mvn(data = train_iris[,1:4],multivariateOutlierMethod = "quan")
+test_mvn_st <- MVN::mvn(data = train_iris[,1:4],mvnTest="hz")
+test_mvn_st$multivariateNormality
+
+test_box <- boxM(train_iris[,1:4], grouping = train_iris$Species)
+test_box
+```
+
+Sobre lo anterior, se observa lo siguiente:
+
+- La variable "Petal.Width" no se distribuye de forma normal univariada en las clases "setosa" y "versicolor", pues tiene un p-valor menor a 0.05.
+- Se identificaron 9 puntos anómalos que podrían influenciar en el contraste de normalidad multivariante (ver gŕafico)
+- Se observa que, de acuerdo al test Henze-Zirkler, el conjunto de datos no sigue una distribución normal univariante. Ello podría deberse a la variable "Petal.Width" por lo anteriormente explicado.
+- Se observa que, de acuerdo al test de Box, cada clase tiene una matriz de covarianza distinta a las otras (pues se rechaza la hipótesis nula).
+
+Dado que el conjunto de datos no tiene una distribución normal multivariante, el análisis discriminante perderá precisión en el resultado. No obstante, aún puede ser un buen clasificador. Para ello, analizaremos el rendimiento del clasificador una vez realizado.
+
+El clasificador a utilizar será el análisis discriminante cuadrático, pues de acuerdo al text de Box cada clase tiene una matriz de covarianza distinta. Ver código a continuación:
+
+```{r}
+qda_train <- qda(formula = Species ~., data = train_iris)
+qda_train
+```
+
+Se observa que las probabilidades a priori del clasificador es 0.33 para cada una de las clases.
+
+Posteriormente se evaluará el rendimiento del clasificador utilizando la partición de prueba del conjunto de datos. Ver a continuación el código:
+
+```{r}
+test_predict <- predict(qda_train,test_iris)
+table(test_iris$Species,test_predict$class,dnn = c("Clase real","Clase predicha"))
+
+error <- mean(test_iris$Species != test_predict$class) * 100
+paste("Error del clasificador: ",error,"%")
+```
+
+Finalmente, realizaremos un análisis gráfico de las particiones por clase, para observar las fonteras de decisión.
+
+```{r}
+partimat(Species~.,data = train_iris,method="qda",prec=200,nplots.hor=3,image.colors = c("darkgoldenrod1", "snow2", "skyblue2"),col.mean = "firebrick")
+```
+
+Sobre ello, se observa lo siguiente:
+
+- Nuevas observaciones serán clasificadas como "setosa" si tienen un bajo valor en el ancho y largo de sus pétalos. Asimismo, serán clasificadas como tal si tienen una baja medición en el ancho de los pétalos y alto valor en el ancho del sépalo.
+- Las especies "virginica" y "versicolor" tienen valores muy cercanos en su frontera de decisión, por lo que es más probable que el error de clasificación provenga de dichas clases.
+
 ## Discusión y conclusiones
+
+En base al análisis presentado, y en relación a los objetos de estudio, se concluye lo siguiente:
+
+- La clase setosa tiene el menor ancho y largo de pétalo que las otras dos clases.
+- Las clases restantes tienen menor diferencia entre sus promedios por clase por lo que podría existir mayor dificultad diferenciándolas a futuro (observado a través del rendimiento del clasificador).
+- El análisis discriminante cuadrático es un buen clasificador para las 3 clases, pues su error de clasificación es del 0%.
 
 # Análisis Factorial
 
-## Introducción
+## Introducción y Datos
 
-## Datos
+Los datos corresponden a un test de personalidad proveniente de la \textit{International Personality Item Pool}. Los datos corresponden a 2800 sujetos, los cuales realizaron el test. La base de datos viene por defecto en la instalación base del programa R. 
+
+En dicho test de personalidad, se indicaron 25 afirmaciones, las cuales cada persona indicó sentirse identificada o no (en una escala del 1 al 10). Estas 25 afirmaciones estaban agrupadas en conjuntos de 5, y cada conjunto intenta medir lo siguiente:
+
+- Grupo 1: Amabilidad.
+- Grupo 2: Escruposibilidad.
+- Grupo 3: extroversión.
+- Grupo 4: Neuroticismo.
+- Grupo 5: Apertura hacia otros.
+
+Los objetivos del presente estudio son:
+
+- Identificar si las preguntas de un test de personalidad, las cuales han sido determinadas por el investigador para medir diversos rasgos de personalidad en específico, están correlacionadas entre ellas (por cada rasgo de personalidad).
+- Identificar si los factores encontrados en los datos están asociados a cada rasgo de personalidad que el investigador desea encontrar.
+
+Con el propósito de ejecutar el análisis de los datos, realizamos la carga de librerías e importamos los datos. Posteriormente, realizamos un preprocesamiento de los datos para continuar con el estudio. Ver código a continuación:
+
+```{r}
+data("bfi")
+
+## Pre-procesamiento de datos ##
+
+bfi=bfi[complete.cases(bfi),]
+bfi$education = as.factor(bfi$education)
+bfi$gender = as.factor(bfi$gender)
+
+cor_bfi <- cor(bfi[,-c(26,27)])
+```
 
 ## Resultados
 
+Con el objetivo de aplicar análisis factorial, evaluaremos los supuestos de normalidad multivariante. Este supuesto define el método a través del cual extraeremos los factores. 
+
+```{r}
+test_mvn_af <- MVN::mvn(data = bfi[,-c(26,27)],mvnTest="hz")
+test_mvn_af$multivariateNormality
+```
+
+Se observa que, de acuerdo al test Henze-Zirkler, el conjunto de datos no se distribuye de forma normal multivariada. Por lo tanto, utilizaremos el método de máxima verosimilitud para la extracción de factores.
+
+Por otro lado, verificaremos a través del contraste de esfericidad de Bartlett, si hace sentido aplicar el análisis factorial. La hipótesis nula de dicho test es que los coeficientes de correlación para cada tipo de variable son nulos. Ver test a continuación:
+
+```{r}
+test_bart_af <- cortest.bartlett(cor_bfi,n=dim(bfi)[1])
+test_bart_af
+```
+
+Se aprecia que la hipótesis nula puede rechazarse, por lo que es posible seguir trabajando en el análisis factorial.
+
+Posteriormente, se utiliza la medida de adecuación muestral de Kaiser-Meyer-Olkin con el propósito de entender si los datos son adecuados a un modelo de análisis factorial. Ver código a continuación:
+
+```{r}
+KMO(cor_bfi)
+```
+
+Se observa que el índice KMO es de 0.84, lo cual es "Meritorio" de acuerdo a la tabla mostrada en clase.
+
+Finalmente, realizaremos el análisis factorial en base a 5 factores, pues los grupos de pregundas denotados en los datos son 5. Dado que deseamos entender si los factores están específicamente relacionados con las preguntas del investigador por grupo, haremos la rotación varimax .Ver código a continuación:
+
+```{r}
+fit.ml.rot <- fa(cor_bfi,nfactors = 5,rotate = "varimax",fm="ml",n.obs = dim(bfi)[1])
+
+fit.ml.rot
+
+```
+
+Se observa lo siguiente:
+
+- La media cuadrática de los residuos es de 0.03. Esto es aceptable, pues mientras más cerca a 0, mejor. Asimismo, se observa que el valor corregido es de 0.04, lo cual está debajo del umbral de 0.05 denotado en clase.
+- El índice de Lewis Index es de 0.872, valor el cual está ligeramente por debajo del umbral de 0.9. Por lo tanto, podemos considerar que el valor es aceptable, sin embargo abre la posibilidad de investigar si existen factores adicionales a considerar.
+
+En relación a los factores, se observa que:
+
+- Se observa que las preguntas relacionadas al rasgo de personalidad amabilidad están fuertemente asociadas con el factor 5.
+- Se observa que las preguntas relacionadas al rasgo de personalidad escruposibilidad están fuertemente asociadas con el factor 3.
+- Se observa que las preguntas relacionadas a la extroversión están fuertemente asociadas con el factor 2.
+- Se observa que las preguntas relacionadas al neuroticismo están fuertemente asociadas con el factor 1.
+- Se observa que las preguntas relacionadas a la apertura están fuertemente asociadas con el factor 4.
+
 ## Discusión y conclusiones
+En base a los resultados mostrados, se observa que cada pregunta está relacionada a un factor específico. Por lo tanto, podríamos asegurar que las preguntas determinadas por el investigador están asociadas fuertemente con el rasgo de personalidad que desean investigar.

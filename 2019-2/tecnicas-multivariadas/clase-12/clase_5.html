@@ -1,0 +1,5214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Dra. Rocío Maehara" />
+  <title>Análisis conjunto</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="clase_5_files/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #ffffff; color: #1f1c1b; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; background-color: #ffffff; color: #a0a0a0; border-right: 1px solid #a0a0a0; }
+td.sourceCode { padding-left: 5px; }
+pre, code { color: #1f1c1b; background-color: #ffffff; }
+code > span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code > span.dt { color: #0057ae; } /* DataType */
+code > span.dv { color: #b08000; } /* DecVal */
+code > span.bn { color: #b08000; } /* BaseN */
+code > span.fl { color: #b08000; } /* Float */
+code > span.cn { color: #aa5500; } /* Constant */
+code > span.ch { color: #924c9d; } /* Char */
+code > span.sc { color: #3daee9; } /* SpecialChar */
+code > span.st { color: #bf0303; } /* String */
+code > span.vs { color: #bf0303; } /* VerbatimString */
+code > span.ss { color: #ff5500; } /* SpecialString */
+code > span.im { color: #ff5500; } /* Import */
+code > span.co { color: #898887; } /* Comment */
+code > span.do { color: #607880; } /* Documentation */
+code > span.an { color: #ca60ca; } /* Annotation */
+code > span.cv { color: #0095ff; } /* CommentVar */
+code > span.ot { color: #006e28; } /* Other */
+code > span.fu { color: #644a9b; } /* Function */
+code > span.va { color: #0057ae; } /* Variable */
+code > span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #1f1c1b; } /* Operator */
+code > span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code > span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code > span.pp { color: #006e28; } /* Preprocessor */
+code > span.at { color: #0057ae; } /* Attribute */
+code > span.re { color: #0057ae; } /* RegionMarker */
+code > span.in { color: #b08000; } /* Information */
+code > span.wa { color: #bf0303; } /* Warning */
+code > span.al { color: #bf0303; font-weight: bold; } /* Alert */
+code > span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code > span. { color: #1f1c1b; } /* Normal */
+</style>
+
+<link rel="stylesheet" href="clase_5_files/reveal.js-3.3.0.1/css/theme/white.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="logo.css"/>
+    <link rel="stylesheet" href="style.css"/>
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title"><strong>Análisis conjunto</strong></h1>
+    <h2 class="author">Dra. Rocío Maehara</h2>
+    <h3 class="date">16 de noviembre de 2019 <br> <img id='logopucp' src='logoPUCP.jpg'></h3>
+</section>
+
+<section id="introduccion" class="slide level2">
+<h2>Introducción</h2>
+<div align="justify">
+<p>MDSConjoint (Marketing Data Science Conjoint) tiene como objetivo mostrar cómo analizar los datos procedenes de un análisis del conjunto de los atributos de un producto (CA).</p>
+</div>
+</section>
+<section id="introduccion-1" class="slide level2">
+<h2>Introducción</h2>
+<div align="justify">
+<p>Esto es, pone énfasis en la estimación de las utilidades parciales, la medida de la importancia de los atributos y la toma de decisiones basadas en datos a partir de la simulación de las cuotas de mercado que cualquier definición del nuevo producto puede obtener en el mercado dados los perfiles de producto existentes en el mercado, la búsqueda del perfil de producto que maximiza la cuota de mercado o el perfil de producto que maximiza el margen de contribución dada la estructura del mercado (Green, Krieger &amp; Wind 2001).</p>
+</div>
+</section>
+<section id="introduccion-2" class="slide level2">
+<h2>Introducción</h2>
+<div align="justify">
+<p>Todo análisis conjunto se inicia con la identificación de los atributos y niveles relevantes (mediante reuniones con un grupo de consumidores, por ejemplo), el diseño de un experimento que nos permita estimar las utilidades parciales de los niveles y tal vez algunas interacciones entre atributos relevantes, como la marca y el nivel de precio, aunque todo ello con un número de perfiles de producto reducido.</p>
+</div>
+</section>
+<section id="introduccion-3" class="slide level2">
+<h2>Introducción</h2>
+<ul>
+<li>Después se realiza el trabajo de campo (evaluación de los perfiles de producto por parte de los individuos), finalmente se realiza la estimación de las utilidades parciales y la simulación de resultados probables con el objeto de facilitar la toma de decisiones. (ver la documentación del programa SAS sobre marketing)</li>
+</ul>
+</section>
+<section id="introduccion-4" class="slide level2">
+<h2>Introducción</h2>
+<ul>
+<li><p>El objetivo de MDSConjoint es facilitar las tareas estimación de las utilidades parciales de los niveles de los atributos, la importancia de los atributos, y la simulación de los resultados orientados a la toma de decisiones.</p></li>
+<li><p>Existen otros paquetes en R, como el paquete <code>conjoint</code>, <code>faisalconjoint</code> o <code>support.CEs</code>.</p></li>
+</ul>
+</section>
+<section id="introduccion-5" class="slide level2">
+<h2>Introducción</h2>
+<ul>
+<li>Los dos primeros (<code>conjoint</code> y <code>faisalconjoint</code>) no abordan la toma de decisiones -la optimización de cuota de mercado o del margen de contribución- y no es fácil la estimación de las utilidades parciales de unos datos que no han sido generados por el propio programa.</li>
+</ul>
+</section>
+<section id="introduccion-6" class="slide level2">
+<h2>Introducción</h2>
+<ul>
+<li>El último, <code>support.CEs</code>, está orientado un una clase de modelos de análisis conjunto denominados modelos de elección discreta o choice base conjoint models (Aizaki 2012).</li>
+</ul>
+</section>
+<section id="diseno-de-un-nuevo-producto-basado-en-el-analisis-conjunto" class="slide level2">
+<h2>Diseño de un nuevo producto basado en el análisis conjunto</h2>
+<ul>
+<li>El modelo métrico del análisis de conjunto de atributos de un producto (metric conjoint analysis, MCA) se propone medir la utilidad que los diferentes niveles de los atributos de un producto aportan a un individuo o consumidor (Green &amp; Srinivassan 1978).</li>
+</ul>
+</section>
+<section id="diseno-de-un-nuevo-producto-basado-en-el-analisis-conjunto-1" class="slide level2">
+<h2>Diseño de un nuevo producto basado en el análisis conjunto</h2>
+<ul>
+<li>Durante el trabajo de campo los investigadores presentan a los individuos un conjunto de productos definidos por los niveles de los atributos que lo componen, que llamaremos perfiles de producto, y se les pide que valoren la utilidad (o probablidad de compra) que cada perfil de producto les reportaría (en el modelo métrico) o bien que ordene de mayor a menor su preferencia por los productos que le han presentado (modelo no métrico, NMCA).</li>
+</ul>
+</section>
+<section id="diseno-de-un-nuevo-producto-basado-en-el-analisis-conjunto-2" class="slide level2">
+<h2>Diseño de un nuevo producto basado en el análisis conjunto</h2>
+<ul>
+<li>Para medir la apartación de cada nivel de atributo a la utilidad de cada individuo, estimamos un modelo lineal donde regresamos la utilidad o probabilidad de compra sobre los niveles de los atributos.</li>
+</ul>
+</section>
+<section id="diseno-de-un-nuevo-producto-basado-en-el-analisis-conjunto-3" class="slide level2">
+<h2>Diseño de un nuevo producto basado en el análisis conjunto</h2>
+<ul>
+<li>De hecho cuando todos los atributos son nominales, el modelo lineal es equivalente a un modelo anova de efectos principales (Venables &amp; RIPLEY 2002, chapter 6) con los resultados presentados de cierta manera.</li>
+</ul>
+</section>
+<section id="diseno-de-un-nuevo-producto-basado-en-el-analisis-conjunto-4" class="slide level2">
+<h2>Diseño de un nuevo producto basado en el análisis conjunto</h2>
+<div align="justify">
+<font size="6">
+<p class="small">
+En el modelo MCA los niveles de los atributos toman el papel de variables independientes y las valoraciones que realizan cada uno de los individuos son la variable dependiente, la utilidad, los coeficientes estimados nos proporcionan la utilidad parcial con la que cada nivel contribuye a la utilidad (o probabilidad de compra) de cada perfil de producto: <span class="math display">\[U_i = X\beta  + \varepsilon_i\]</span> Para facilitar la interpretación de los parámetros del modelo, en la estimación de los coeficientes del modelo, para cada atributo, la suma de los parámetros <span class="math inline">\(\beta\)</span> se restringe a cero: <span class="math display">\[\sum \beta_{1j}=\sum \beta_{2j}=\ldots=\sum \beta_{al}=0\]</span>
+</p>
+<p></font></p>
+</div>
+</section>
+<section id="diseno-de-un-nuevo-producto-basado-en-el-analisis-conjunto-5" class="slide level2">
+<h2>Diseño de un nuevo producto basado en el análisis conjunto</h2>
+<ul>
+<li>De esa manera, <span class="math inline">\(\beta_0\)</span> se interpreta como la utilidad media general que aportan los perfiles de producto al individuo (o la probabilidad media de compra), y los parámetros de cada nivel de atributo, que llamaremos utilidades parciales, indican las variaciones en la utilidad media por el hecho de que el producto incorpore ese nivel en su perfil.</li>
+</ul>
+</section>
+<section id="diseno-de-un-nuevo-producto-basado-en-el-analisis-conjunto-6" class="slide level2">
+<h2>Diseño de un nuevo producto basado en el análisis conjunto</h2>
+<ul>
+<li>La variación máxima en el nivel de utilidad dentro de cada atributo es la aportacion del atributo a la utilidad del individuo. Finalmente, <span class="math inline">\(\varepsilon_i\)</span> es el error del modelo en la predicción de las utilidades de individuo i, esto es, la diferencia entre las utilidades reportadas por el individuos y las que predice el modelo.</li>
+</ul>
+</section>
+<section id="diseno-de-un-nuevo-producto-basado-en-el-analisis-conjunto-7" class="slide level2">
+<h2>Diseño de un nuevo producto basado en el análisis conjunto</h2>
+<ul>
+<li>Cuando los individuos, en lugar de reportar la utilidad que creen obtener de cada perfil de producto, únicamente ordenan el listado de perfiles de producto, de mayor a menor preferencia, decimos que estamos ante un caso de un modelo no métrico de análisis conjunto, NMCA.</li>
+</ul>
+</section>
+<section id="diseno-de-un-nuevo-producto-basado-en-el-analisis-conjunto-8" class="slide level2">
+<h2>Diseño de un nuevo producto basado en el análisis conjunto</h2>
+<div align="justify">
+<font size="6">
+<p class="small">
+<p>En este caso, en lugar de estimar un modelo de regresión ordinario, realizamos una transformación monótona de la ordenación de los perfiles en niveles de utilidades.</p>
+<span class="math display">\[\gamma(y_i) = X\beta + \varepsilon_i\]</span> Concretamente realizamos la transformación que proponen en el informe técnico de SAS (SAS, 1993). Debido a la transformación realizada, el ajuste del modelo no métrico siempre será tan bueno o mejor que el ajuste de un modelo métrico con los mismos datos (Young, 1981; Gifi, 1990).
+</p>
+<p></font></p>
+</div>
+</section>
+<section id="ejemplo" class="slide level2">
+<h2>Ejemplo</h2>
+<ul>
+<li>Veamos un ejemplo. En este paquete hemos incorporado los que proporciona el programa SAS sobre el diseño de un neumático. Se consideran cuatro atributos: Brand, Price, Life, Hazard. (<a href="http://support.sas.com/documentation/cdl/en/statug/63033/HTML/default/viewer.htm#statug_transreg_sect062.htm">SAS tire data exemple</a>)</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#library(devtools)</span>
+<span class="co">#install.packages(&quot;remotes&quot;)</span>
+<span class="co">#remotes::install_github(&quot;jlopezsi/MDSConjoint&quot;)</span>
+<span class="kw">library</span>(MDSConjoint)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;MDSConjointData&quot;</span>)
+<span class="kw">names</span>(MDSConjointData)</code></pre></div>
+<pre><code>## [1] &quot;osc&quot;  &quot;tire&quot;</code></pre>
+</section>
+<section id="ejemplo-1" class="slide level2">
+<h2>Ejemplo</h2>
+<ul>
+<li>Veamos el conjunto de datos</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">MDSConjointData</code></pre></div>
+<pre><code>## $osc
+## $osc$bundles
+##            Location OfficeSupplies Furniture            Computers
+## Bundle1  Less2Miles   VLAssortment       Yes          NoComputers
+## Bundle2  Less2Miles    LAssortment        No             Software
+## Bundle3  Less2Miles  LimAssortment        No SoftwareAndComputers
+## Bundle4  Less2Miles    LAssortment       Yes             Software
+## Bundle5   W2-5Miles   VLAssortment       Yes             Software
+## Bundle6   W2-5Miles    LAssortment        No          NoComputers
+## Bundle7   W2-5Miles  LimAssortment        No             Software
+## Bundle8   W2-5Miles    LAssortment       Yes SoftwareAndComputers
+## Bundle9  W5-10Miles   VLAssortment        No SoftwareAndComputers
+## Bundle10 W5-10Miles    LAssortment       Yes             Software
+## Bundle11 W5-10Miles  LimAssortment       Yes          NoComputers
+## Bundle12 W5-10Miles    LAssortment        No             Software
+## Bundle13  W2-5Miles   VLAssortment        No             Software
+## Bundle14  W2-5Miles   VLAssortment       Yes SoftwareAndComputers
+## Bundle15  W2-5Miles  LimAssortment       Yes             Software
+## Bundle16  W2-5Miles    LAssortment        No          NoComputers
+## 
+## $osc$design
+## $osc$design$Location
+## [1] &quot;Less2Miles&quot; &quot;W2-5Miles&quot;  &quot;W5-10Miles&quot;
+## 
+## $osc$design$OfficeSupplies
+## [1] &quot;VLAssortment&quot;  &quot;LAssortment&quot;   &quot;LimAssortment&quot;
+## 
+## $osc$design$Furniture
+## [1] &quot;Yes&quot; &quot;No&quot; 
+## 
+## $osc$design$Computers
+## [1] &quot;NoComputers&quot;          &quot;Software&quot;             &quot;SoftwareAndComputers&quot;
+## 
+## 
+## $osc$ratings
+##              Bundle1 Bundle2 Bundle3 Bundle4 Bundle5 Bundle6 Bundle7
+## Respondent1       90      50      50      80      85      40      40
+## Respondent2       50      55      95      50      50      40      40
+## Respondent3       40      60      90      60      45      35      45
+## Respondent4       75      80      60      70      90      65      60
+## Respondent5       90      80      70      70      80      75      50
+## Respondent6       95      70      70      80      80      50      50
+## Respondent7       95      55      55      80      80      45      40
+## Respondent8       45      50      90      45      55      45      35
+## Respondent9       45      60      95      60      50      40      50
+## Respondent10      80      80      65      65      85      65      65
+## Respondent11      95      85      65      65      80      90      55
+## Respondent12      90      75      75      80      75      55      45
+## Respondent13      85      45      45      75      80      35      35
+## Respondent14      55      60      90      55      45      45      35
+## Respondent15      40      55      95      65      40      45      50
+## Respondent16      70      70      65      75      85      70      65
+## Respondent17      85      80      75      70      65      70      55
+## Respondent18      95      75      65      85      80      55      45
+## Respondent19      80      70      75      80      70      60      55
+## Respondent20      85      75      70      75      65      65      50
+##              Bundle8 Bundle9 Bundle10 Bundle11 Bundle12 Bundle13 Bundle14
+## Respondent1       90      30       60       60       30       30       90
+## Respondent2       85      75       35       20       25       25       85
+## Respondent3       85      80       55       40       45       50       85
+## Respondent4       85      85       70       55       60       90       85
+## Respondent5       75      80       75       50       60       80       75
+## Respondent6       70      40       60       55       50       60       70
+## Respondent7       85      35       60       65       40       25       85
+## Respondent8       75      80       40       25       30       20       75
+## Respondent9       80      75       55       35       40       55       80
+## Respondent10      80      80       75       60       65       85       90
+## Respondent11      70      85       70       55       65       85       70
+## Respondent12      65      45       65       60       55       55       65
+## Respondent13      85      30       55       55       35       25       85
+## Respondent14      90      80       30       25       30       30       90
+## Respondent15      75      85       40       45       45       55       70
+## Respondent16      80      90       75       50       60       85       75
+## Respondent17      70      85       80       45       65       85       70
+## Respondent18      65      45       60       50       55       65       70
+## Respondent19      80      60       70       55       65       70       80
+## Respondent20      85      65       75       55       60       75       85
+##              Bundle15 Bundle16
+## Respondent1        80       40
+## Respondent2        35       45
+## Respondent3        50       35
+## Respondent4        70       65
+## Respondent5        50       75
+## Respondent6        50       55
+## Respondent7        75       45
+## Respondent8        30       45
+## Respondent9        45       40
+## Respondent10       75       70
+## Respondent11       55       90
+## Respondent12       45       55
+## Respondent13       75       35
+## Respondent14       30       45
+## Respondent15       60       50
+## Respondent16       70       70
+## Respondent17       45       65
+## Respondent18       45       55
+## Respondent19       60       65
+## Respondent20       65       70
+## 
+## $osc$market.profiles
+##                  Location OfficeSupplies Furniture            Computers
+## OfficeEquipment W2-5Miles    LAssortment       Yes SoftwareAndComputers
+## DepartmentStore W2-5Miles  LimAssortment        No             Software
+## 
+## $osc$full
+##      Location OfficeSupplies Furniture            Computers
+## 1  Less2Miles   VLAssortment       Yes          NoComputers
+## 2   W2-5Miles   VLAssortment       Yes          NoComputers
+## 3  W5-10Miles   VLAssortment       Yes          NoComputers
+## 4  Less2Miles    LAssortment       Yes          NoComputers
+## 5   W2-5Miles    LAssortment       Yes          NoComputers
+## 6  W5-10Miles    LAssortment       Yes          NoComputers
+## 7  Less2Miles  LimAssortment       Yes          NoComputers
+## 8   W2-5Miles  LimAssortment       Yes          NoComputers
+## 9  W5-10Miles  LimAssortment       Yes          NoComputers
+## 10 Less2Miles   VLAssortment        No          NoComputers
+## 11  W2-5Miles   VLAssortment        No          NoComputers
+## 12 W5-10Miles   VLAssortment        No          NoComputers
+## 13 Less2Miles    LAssortment        No          NoComputers
+## 14  W2-5Miles    LAssortment        No          NoComputers
+## 15 W5-10Miles    LAssortment        No          NoComputers
+## 16 Less2Miles  LimAssortment        No          NoComputers
+## 17  W2-5Miles  LimAssortment        No          NoComputers
+## 18 W5-10Miles  LimAssortment        No          NoComputers
+## 19 Less2Miles   VLAssortment       Yes             Software
+## 20  W2-5Miles   VLAssortment       Yes             Software
+## 21 W5-10Miles   VLAssortment       Yes             Software
+## 22 Less2Miles    LAssortment       Yes             Software
+## 23  W2-5Miles    LAssortment       Yes             Software
+## 24 W5-10Miles    LAssortment       Yes             Software
+## 25 Less2Miles  LimAssortment       Yes             Software
+## 26  W2-5Miles  LimAssortment       Yes             Software
+## 27 W5-10Miles  LimAssortment       Yes             Software
+## 28 Less2Miles   VLAssortment        No             Software
+## 29  W2-5Miles   VLAssortment        No             Software
+## 30 W5-10Miles   VLAssortment        No             Software
+## 31 Less2Miles    LAssortment        No             Software
+## 32  W2-5Miles    LAssortment        No             Software
+## 33 W5-10Miles    LAssortment        No             Software
+## 34 Less2Miles  LimAssortment        No             Software
+## 35  W2-5Miles  LimAssortment        No             Software
+## 36 W5-10Miles  LimAssortment        No             Software
+## 37 Less2Miles   VLAssortment       Yes SoftwareAndComputers
+## 38  W2-5Miles   VLAssortment       Yes SoftwareAndComputers
+## 39 W5-10Miles   VLAssortment       Yes SoftwareAndComputers
+## 40 Less2Miles    LAssortment       Yes SoftwareAndComputers
+## 41  W2-5Miles    LAssortment       Yes SoftwareAndComputers
+## 42 W5-10Miles    LAssortment       Yes SoftwareAndComputers
+## 43 Less2Miles  LimAssortment       Yes SoftwareAndComputers
+## 44  W2-5Miles  LimAssortment       Yes SoftwareAndComputers
+## 45 W5-10Miles  LimAssortment       Yes SoftwareAndComputers
+## 46 Less2Miles   VLAssortment        No SoftwareAndComputers
+## 47  W2-5Miles   VLAssortment        No SoftwareAndComputers
+## 48 W5-10Miles   VLAssortment        No SoftwareAndComputers
+## 49 Less2Miles    LAssortment        No SoftwareAndComputers
+## 50  W2-5Miles    LAssortment        No SoftwareAndComputers
+## 51 W5-10Miles    LAssortment        No SoftwareAndComputers
+## 52 Less2Miles  LimAssortment        No SoftwareAndComputers
+## 53  W2-5Miles  LimAssortment        No SoftwareAndComputers
+## 54 W5-10Miles  LimAssortment        No SoftwareAndComputers
+## 
+## $osc$constrains
+##                Level1 Level2 Level3
+## Location            1      1      1
+## OfficeSupplies      1      1      1
+## Furniture           1      1     NA
+## Computers           1      1      1
+## 
+## $osc$revenue
+##                Level1 Level2 Level3
+## Location            0     10     30
+## OfficeSupplies      0      5     15
+## Furniture           0     30     NA
+## Computers          25     20      0
+## 
+## 
+## $tire
+## $tire$ratings
+##       bundle1 bundle2 bundle3 bundle4 bundle5 bundle6 bundle7 bundle8
+## Subj1       3       6       6       4       7       9       3       3
+## Subj2       5       8       3       4       4       8       1       5
+## Subj3       1       2       7       7       9       9       3       1
+## Subj4       3       3       5       8       6       9       1       4
+## Subj5       3       6       6       3       7       9       2       3
+##       bundle9 bundle10 bundle11 bundle12 bundle13 bundle14 bundle15
+## Subj1       8        2        3        6        6        9        5
+## Subj2       7        1        4        9        6        6        6
+## Subj3       6        2        6        4        5        7        5
+## Subj4       5        1        9        3        5        6        7
+## Subj5       8        2        4        6        6        8        5
+##       bundle16 bundle17 bundle18
+## Subj1        2        2        8
+## Subj2        2        2        8
+## Subj3        4        4        8
+## Subj4        4        4        9
+## Subj5        2        2        9
+## 
+## $tire$bundles
+##              Brand   Price    Life Hazard
+## bundle1  Machismo  $74.99  50000km    No 
+## bundle2  Goodstone $69.99  50000km    No 
+## bundle3    Pirogi  $74.99  70000km    No 
+## bundle4  Goodstone $79.99  70000km    Yes
+## bundle5    Pirogi  $74.99  70000km    No 
+## bundle6  Machismo  $69.99  70000km    Yes
+## bundle7    Pirogi  $79.99  50000km    Yes
+## bundle8  Machismo  $74.99  50000km    Yes
+## bundle9    Pirogi  $69.99  60000km    No 
+## bundle10   Pirogi  $79.99  50000km    Yes
+## bundle11 Goodstone $79.99  70000km    No 
+## bundle12 Goodstone $69.99  50000km    No 
+## bundle13 Goodstone $74.99  60000km    Yes
+## bundle14   Pirogi  $69.99  60000km    Yes
+## bundle15 Goodstone $74.99  60000km    Yes
+## bundle16 Machismo  $79.99  60000km    No 
+## bundle17 Machismo  $79.99  60000km    No 
+## bundle18 Machismo  $69.99  70000km    Yes
+## 
+## $tire$design
+## $tire$design$Brand
+## [1] &quot;Goodstone&quot; &quot;Pirogi&quot;    &quot;Machismo&quot; 
+## 
+## $tire$design$Price
+## [1] &quot;$69,99&quot; &quot;S79,99&quot; &quot;$89,99&quot;
+## 
+## $tire$design$Life
+## [1] &quot;50000km&quot; &quot;60000km&quot; &quot;70000km&quot;
+## 
+## $tire$design$Hazard
+## [1] &quot;Yes&quot; &quot;No&quot;</code></pre>
+</section>
+<section id="ejemplo-2" class="slide level2">
+<h2>Ejemplo</h2>
+<ul>
+<li>Consideramos tres niveles para el atribudo Brand, (Goodstone, Pirogi, Machismo), tres niveles para el atribudo Price, (<code>$</code>69.99, <code>$</code>79.99, <code>$</code>89.99), tres para la vida media del neumático Life, (50000km, 60000km, 70000km), y dos niveles para la garantía Hazard, (Yes, No)</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tire&lt;-MDSConjointData<span class="op">$</span>tire
+tire<span class="op">$</span>design</code></pre></div>
+</section>
+<section id="ejemplo-3" class="slide level2">
+<h2>Ejemplo</h2>
+<pre><code>## $Brand
+## [1] &quot;Goodstone&quot; &quot;Pirogi&quot;    &quot;Machismo&quot; 
+## 
+## $Price
+## [1] &quot;$69,99&quot; &quot;S79,99&quot; &quot;$89,99&quot;
+## 
+## $Life
+## [1] &quot;50000km&quot; &quot;60000km&quot; &quot;70000km&quot;
+## 
+## $Hazard
+## [1] &quot;Yes&quot; &quot;No&quot;</code></pre>
+</section>
+<section id="ejemplo-4" class="slide level2">
+<h2>Ejemplo</h2>
+<ul>
+<li><p>Para medir los efectos principales de los niveles de los atributos y los efectos de todas las interacciones entre los niveles es necesario que el consumidor valore todas las combinaciones posibles, en este caso: 3x3x3x2=54.</p></li>
+<li><p>Pero es un número muy elevado de perfiles de producto. La función <code>expand.grid()</code> nos proporciona todas las combinaciones posibles entre los niveles de producto.</p></li>
+</ul>
+</section>
+<section id="ejemplo-5" class="slide level2">
+<h2>Ejemplo</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">experiment =<span class="st"> </span><span class="kw">expand.grid</span>(
+  tire<span class="op">$</span>design
+)
+<span class="kw">class</span>(experiment)</code></pre></div>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+</section>
+<section id="ejemplo-6" class="slide level2">
+<h2>Ejemplo</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(experiment)</code></pre></div>
+<pre><code>##       Brand  Price    Life Hazard
+## 1 Goodstone $69,99 50000km    Yes
+## 2    Pirogi $69,99 50000km    Yes
+## 3  Machismo $69,99 50000km    Yes
+## 4 Goodstone S79,99 50000km    Yes
+## 5    Pirogi S79,99 50000km    Yes
+## 6  Machismo S79,99 50000km    Yes</code></pre>
+</section>
+<section id="ejemplo-7" class="slide level2">
+<h2>Ejemplo</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tail</span>(experiment)</code></pre></div>
+<pre><code>##        Brand  Price    Life Hazard
+## 49 Goodstone S79,99 70000km     No
+## 50    Pirogi S79,99 70000km     No
+## 51  Machismo S79,99 70000km     No
+## 52 Goodstone $89,99 70000km     No
+## 53    Pirogi $89,99 70000km     No
+## 54  Machismo $89,99 70000km     No</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(experiment)</code></pre></div>
+<pre><code>## [1] 4</code></pre>
+</section>
+<section id="ejemplo-8" class="slide level2">
+<h2>Ejemplo</h2>
+<ul>
+<li>Esto es lo que llamamos el experimento completo, full design. Para reducirlo buscamos una fracción del experimento completo que tenga la propiedad de que las variables sean independientes, es decir, que su correlación sea cero.</li>
+</ul>
+</section>
+<section id="ejemplo-9" class="slide level2">
+<h2>Ejemplo</h2>
+<ul>
+<li>Por ello normalmente se busca el número de perfiles necesario para poder estimar los efectos principales de los niveles de los atributos y en algunos casos, tambien, las interacciones de primer nivel entre los niveles de algunos atributos, como puede ser la marca y el precio.</li>
+</ul>
+</section>
+<section id="ejemplo-10" class="slide level2">
+<h2>Ejemplo</h2>
+<ul>
+<li>Para estimar los efectos principales de los niveles de los atributos en la utilidad del consumidor escogemos los perfiles de producto necesarios para estimarlos de manera que el error sea mínimo una vez elminadas las interacciones que no queremos estimar.</li>
+</ul>
+</section>
+<section id="ejemplo-11" class="slide level2">
+<h2>Ejemplo</h2>
+<ul>
+<li>Este experimento reducido nos lo proporciona una fracción de perfiles de producto que tienen la propiedad de que las variables son independientes.</li>
+</ul>
+</section>
+<section id="ejemplo-12" class="slide level2">
+<h2>Ejemplo</h2>
+<ul>
+<li>Utilizamos la función <code>Lma.design()</code> del paquete <code>support.CEs</code>. La función <code>Lma.desgin()</code> nos proporciona un conjunto ortogonal de perfiles de producto que nos permite estimar los efectos principales de los niveles de los atributos. El resultado lo guardamos en el objeto <code>tire.survey</code>.</li>
+</ul>
+</section>
+<section id="ejemplo-13" class="slide level2">
+<h2>Ejemplo</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># generar un conjunto equilibrado de perfiles de productos para la encuesta</span>
+<span class="co"># install.packages(&quot;DoE.base&quot;, dependencies = TRUE)</span>
+<span class="co"># install.packages(&quot;support.CEs&quot;, dependencies = TRUE)</span>
+<span class="kw">library</span>(support.CEs)
+tire.survey &lt;-<span class="st"> </span><span class="kw">Lma.design</span>(<span class="dt">attribute.names =</span> tire<span class="op">$</span>design, <span class="dt">nalternatives =</span> <span class="dv">1</span>, <span class="dt">nblocks=</span><span class="dv">1</span>, <span class="dt">seed=</span><span class="dv">9999</span>)</code></pre></div>
+</section>
+<section id="ejemplo-14" class="slide level2">
+<h2>Ejemplo</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(tire.survey)</code></pre></div>
+<pre><code>## [1] &quot;alternatives&quot;       &quot;candidate&quot;          &quot;design.information&quot;</code></pre>
+</section>
+<section id="ejemplo-15" class="slide level2">
+<h2>Ejemplo</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tire.survey</code></pre></div>
+<pre><code>## 
+## Choice sets:
+## alternative 1 in each choice set
+##    BLOCK QES ALT     Brand  Price    Life Hazard
+## 1      1   1   1    Pirogi $89,99 50000km     No
+## 2      1   2   1    Pirogi S79,99 70000km    Yes
+## 3      1   3   1    Pirogi S79,99 60000km    Yes
+## 4      1   4   1 Goodstone S79,99 50000km    Yes
+## 5      1   5   1  Machismo S79,99 60000km     No
+## 6      1   6   1  Machismo $69,99 70000km    Yes
+## 7      1   7   1  Machismo $89,99 70000km    Yes
+## 8      1   8   1 Goodstone S79,99 70000km     No
+## 9      1   9   1    Pirogi $69,99 50000km     No
+## 10     1  10   1 Goodstone $69,99 50000km    Yes
+## 11     1  11   1  Machismo S79,99 50000km     No
+## 12     1  12   1  Machismo $89,99 50000km    Yes
+## 13     1  13   1 Goodstone $89,99 60000km     No
+## 14     1  14   1 Goodstone $69,99 60000km    Yes
+## 15     1  15   1    Pirogi $89,99 60000km    Yes
+## 16     1  16   1 Goodstone $89,99 70000km     No
+## 17     1  17   1    Pirogi $69,99 70000km     No
+## 18     1  18   1  Machismo $69,99 60000km     No
+## 
+## Candidate design:
+##    A B C D
+## 1  2 3 2 1
+## 2  3 3 3 1
+## 3  3 2 1 2
+## 4  1 2 1 1
+## 5  1 2 3 2
+## 6  1 1 2 1
+## 7  3 2 2 2
+## 8  3 3 1 1
+## 9  3 1 2 2
+## 10 2 1 1 2
+## 11 1 3 2 2
+## 12 2 3 1 2
+## 13 2 2 2 1
+## 14 1 1 1 1
+## 15 3 1 3 1
+## 16 2 1 3 2
+## 17 1 3 3 2
+## 18 2 2 3 1
+## class=design, type= oa 
+## 
+## Design information:
+## number of blocks = 1 
+## number of questions per block = 18 
+## number of alternatives per choice set = 1 
+## number of attributes per alternative = 4</code></pre>
+</section>
+<section id="ejemplo-16" class="slide level2">
+<h2>Ejemplo</h2>
+<ul>
+<li>El paquete <code>support.CEs</code>, además, nos proportiona un función para elaborar el questionario que utilizaremos para que los consumidores valoren el conjunto de perfiles.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">questionnaire</span>(tire.survey))  <span class="co">#visualizando el diseño de la encuesta de  para su revisión</span></code></pre></div>
+</section>
+<section id="ejemplo-17" class="slide level2">
+<h2>Ejemplo</h2>
+<pre><code>## 
+## Block 1 
+##  
+## Question 1 
+##        alt.1    
+## Brand  &quot;Pirogi&quot; 
+## Price  &quot;$89,99&quot; 
+## Life   &quot;50000km&quot;
+## Hazard &quot;No&quot;     
+## 
+## Question 2 
+##        alt.1    
+## Brand  &quot;Pirogi&quot; 
+## Price  &quot;S79,99&quot; 
+## Life   &quot;70000km&quot;
+## Hazard &quot;Yes&quot;    
+## 
+## Question 3 
+##        alt.1    
+## Brand  &quot;Pirogi&quot; 
+## Price  &quot;S79,99&quot; 
+## Life   &quot;60000km&quot;
+## Hazard &quot;Yes&quot;    
+## 
+## Question 4 
+##        alt.1      
+## Brand  &quot;Goodstone&quot;
+## Price  &quot;S79,99&quot;   
+## Life   &quot;50000km&quot;  
+## Hazard &quot;Yes&quot;      
+## 
+## Question 5 
+##        alt.1     
+## Brand  &quot;Machismo&quot;
+## Price  &quot;S79,99&quot;  
+## Life   &quot;60000km&quot; 
+## Hazard &quot;No&quot;      
+## 
+## Question 6 
+##        alt.1     
+## Brand  &quot;Machismo&quot;
+## Price  &quot;$69,99&quot;  
+## Life   &quot;70000km&quot; 
+## Hazard &quot;Yes&quot;     
+## 
+## Question 7 
+##        alt.1     
+## Brand  &quot;Machismo&quot;
+## Price  &quot;$89,99&quot;  
+## Life   &quot;70000km&quot; 
+## Hazard &quot;Yes&quot;     
+## 
+## Question 8 
+##        alt.1      
+## Brand  &quot;Goodstone&quot;
+## Price  &quot;S79,99&quot;   
+## Life   &quot;70000km&quot;  
+## Hazard &quot;No&quot;       
+## 
+## Question 9 
+##        alt.1    
+## Brand  &quot;Pirogi&quot; 
+## Price  &quot;$69,99&quot; 
+## Life   &quot;50000km&quot;
+## Hazard &quot;No&quot;     
+## 
+## Question 10 
+##        alt.1      
+## Brand  &quot;Goodstone&quot;
+## Price  &quot;$69,99&quot;   
+## Life   &quot;50000km&quot;  
+## Hazard &quot;Yes&quot;      
+## 
+## Question 11 
+##        alt.1     
+## Brand  &quot;Machismo&quot;
+## Price  &quot;S79,99&quot;  
+## Life   &quot;50000km&quot; 
+## Hazard &quot;No&quot;      
+## 
+## Question 12 
+##        alt.1     
+## Brand  &quot;Machismo&quot;
+## Price  &quot;$89,99&quot;  
+## Life   &quot;50000km&quot; 
+## Hazard &quot;Yes&quot;     
+## 
+## Question 13 
+##        alt.1      
+## Brand  &quot;Goodstone&quot;
+## Price  &quot;$89,99&quot;   
+## Life   &quot;60000km&quot;  
+## Hazard &quot;No&quot;       
+## 
+## Question 14 
+##        alt.1      
+## Brand  &quot;Goodstone&quot;
+## Price  &quot;$69,99&quot;   
+## Life   &quot;60000km&quot;  
+## Hazard &quot;Yes&quot;      
+## 
+## Question 15 
+##        alt.1    
+## Brand  &quot;Pirogi&quot; 
+## Price  &quot;$89,99&quot; 
+## Life   &quot;60000km&quot;
+## Hazard &quot;Yes&quot;    
+## 
+## Question 16 
+##        alt.1      
+## Brand  &quot;Goodstone&quot;
+## Price  &quot;$89,99&quot;   
+## Life   &quot;70000km&quot;  
+## Hazard &quot;No&quot;       
+## 
+## Question 17 
+##        alt.1    
+## Brand  &quot;Pirogi&quot; 
+## Price  &quot;$69,99&quot; 
+## Life   &quot;70000km&quot;
+## Hazard &quot;No&quot;     
+## 
+## Question 18 
+##        alt.1     
+## Brand  &quot;Machismo&quot;
+## Price  &quot;$69,99&quot;  
+## Life   &quot;60000km&quot; 
+## Hazard &quot;No&quot;      
+## 
+## NULL</code></pre>
+</section>
+<section id="la-evaluacion-de-los-perfiles-valorados-por-los-consumidores" class="slide level2">
+<h2>La evaluación de los perfiles valorados por los consumidores</h2>
+<ul>
+<li>Esos <code>nrows(tire.survey$alternatives)</code> perfiles de producto pueden ser evaluados de diferentes maneras. Los individuos pueden simplemente ordenar la lista de mayor a menor preferencia, de manera que el perfil que está en la primera posición del ranking es el perfil de producto con mayor preferencia. Esta forma de evaluar los perfiles de producto daría lugar a un análisis conjunto no métrico.</li>
+</ul>
+</section>
+<section id="la-evaluacion-de-los-perfiles-valorados-por-los-consumidores-1" class="slide level2">
+<h2>La evaluación de los perfiles valorados por los consumidores</h2>
+<ul>
+<li>Por otro lado, los individuos también pueden evaluar los perfiles en función de la utilidad que creen que les reportaran, repartiendo, por ejemplo 100 puntos entre los perfiles de producto evaluados.</li>
+</ul>
+</section>
+<section id="la-evaluacion-de-los-perfiles-valorados-por-los-consumidores-2" class="slide level2">
+<h2>La evaluación de los perfiles valorados por los consumidores</h2>
+<ul>
+<li>El programa TRANSREG del paquete de analisis de datos SAS, en cambio, propone evaluar los perfiles en función de la probablidad de compra, que es equivalente a distribuir 100 puntos entre los perfiles de productos evaluados. <a href="http://support.sas.com/documentation/cdl/en/statug/63033/HTML/default/viewer.htm#statug_transreg_sect062.htm">ver</a></li>
+</ul>
+</section>
+<section id="la-estimacion-de-las-las-utilidades-parciales-de-los-niveles-de-los-atributos" class="slide level2">
+<h2>La estimación de las las utilidades parciales de los niveles de los atributos</h2>
+<ul>
+<li>El modelo de análisis conjunto se estima para cada individuo de la muestra. La función <code>conjoint.estimation()</code> estima un modelo lineal para cada uno de los individuos y reporta el resutlado detallado de la estimación del modelo lineal.</li>
+</ul>
+</section>
+<section id="la-estimacion-de-las-las-utilidades-parciales-de-los-niveles-de-los-atributos-1" class="slide level2">
+<h2>La estimación de las las utilidades parciales de los niveles de los atributos</h2>
+<ul>
+<li>Después muestra una tabla de datos resumen de los parámetros estimados para toda la muestra y finalmente una tabla resumen las utilidades parciales de cada uno de los niveles de los atributos incorporados en el modelo así como una tabla con las utilidades (o probablidades) teóricas que predice el modelo.</li>
+</ul>
+</section>
+<section id="la-estimacion-de-las-las-utilidades-parciales-de-los-niveles-de-los-atributos-2" class="slide level2">
+<h2>La estimación de las las utilidades parciales de los niveles de los atributos</h2>
+<ul>
+<li>La correlación entre esta última tabla y la tabla con las valoraciones empíricas proporcionadas por los individuos nos da una medida del ajuste medio de las estimaciones.</li>
+</ul>
+</section>
+<section id="estimacion-del-modelo-para-toda-la-muestra-individuos" class="slide level2">
+<h2>Estimación del modelo para toda la muestra individuos</h2>
+<ul>
+<li>La función<code>conjoint.estimation</code> <code>(ratings, bundles, design.l)</code> toma como argumentos:</li>
+</ul>
+<ol type="1">
+<li>Una base de datos rectangular con las valoraciones de los individuos de los perfiles de producto, que llamamos ratings, con tantas filas como individuos han valorado el conjunto de perfiles de producto, n, y tantas columnas como perfiles de producto hayamos presentado a los individuos, p. Esta tabla de datos tendrá un formato de `data frame y una dimensión de n,p.</li>
+</ol>
+</section>
+<section id="estimacion-del-modelo-para-toda-la-muestra-individuos-1" class="slide level2">
+<h2>Estimación del modelo para toda la muestra individuos</h2>
+<ol start="2" type="1">
+<li>Una base de datos con los perfiles de productos que han valorado los individuos, que llamamos bundles, con tantas filas como perfiles de producto hayan valorado los individuos, p, y tantas columnas como atributos tengan los perfiles de producto, a. Esta matriz que tendrá un formato de <code>data frame</code> y una dimensión de p,a.</li>
+</ol>
+</section>
+<section id="estimacion-del-modelo-para-toda-la-muestra-individuos-2" class="slide level2">
+<h2>Estimación del modelo para toda la muestra individuos</h2>
+<ol start="3" type="1">
+<li>Una lista con los atributos y niveles de los atributos que forman los perfiles valorados. Esta lista que tendrá un formato de <code>list</code>.</li>
+</ol>
+</section>
+<section id="estimacion-del-modelo-para-toda-la-muestra-individuos-3" class="slide level2">
+<h2>Estimación del modelo para toda la muestra individuos</h2>
+<ol start="4" type="1">
+<li>Finalmente si las valoraciones de los indiviudos toman la forma de una ordenación de preferencias, entonces <code>rank=1</code> indica al programa que estamos ante un modelo no métrico y es necesario realizar una transformación de las preferencias en utilidades. Si el modelo es métrico, entonces no es necesario indicar nada.</li>
+</ol>
+</section>
+<section id="estimacion-del-modelo-para-toda-la-muestra-individuos-4" class="slide level2">
+<h2>Estimación del modelo para toda la muestra individuos</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tires.partWorthsAll&lt;-<span class="kw">conjoint.estimation</span>(tire<span class="op">$</span>ratings, tire<span class="op">$</span>bundles, tire<span class="op">$</span>design, <span class="dt">rs=</span><span class="dv">1</span>) 
+<span class="kw">names</span>(tires.partWorthsAll)</code></pre></div>
+<pre><code>## [1] &quot;summary&quot;     &quot;fit&quot;         &quot;part.worths&quot; &quot;prediction&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(tires.partWorthsAll<span class="op">$</span>summary)</code></pre></div>
+<pre><code>## [1] &quot;Subj1&quot; &quot;Subj2&quot; &quot;Subj3&quot; &quot;Subj4&quot; &quot;Subj5&quot;</code></pre>
+</section>
+<section id="estimacion-del-modelo-para-toda-la-muestra-individuos-5" class="slide level2">
+<h2>Estimación del modelo para toda la muestra individuos</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(tires.partWorthsAll<span class="op">$</span>summary<span class="op">$</span>Subj2)</code></pre></div>
+<pre><code>##  [1] &quot;Subj1&quot;         &quot;call&quot;          &quot;terms&quot;         &quot;residuals&quot;    
+##  [5] &quot;coefficients&quot;  &quot;aliased&quot;       &quot;sigma&quot;         &quot;df&quot;           
+##  [9] &quot;r.squared&quot;     &quot;adj.r.squared&quot; &quot;fstatistic&quot;    &quot;cov.unscaled&quot;</code></pre>
+</section>
+<section id="estimacion-del-modelo-para-toda-la-muestra-individuos-6" class="slide level2">
+<h2>Estimación del modelo para toda la muestra individuos</h2>
+<ul>
+<li><p>La función <code>conjoint.estimation()</code> nos devuelve un objeto con formato list y cuatro objetos: summary, fit, part.worths, prediction.</p></li>
+<li><p>El objeto summary, al que se puede acceder con la orden <code>tires.partWorthsAll$Summary</code>, nos proporciona los resutlados detallados del modelo para cada uno de los individuos. Para acceder a ellos sólo es necesario añadir el nombre del individuo a la orden anterior: <code>tires.partWorthsAll$Summary$Subj1</code> en este ejemplo.</p></li>
+</ul>
+</section>
+<section id="estimacion-del-modelo-para-toda-la-muestra-individuos-7" class="slide level2">
+<h2>Estimación del modelo para toda la muestra individuos</h2>
+<ul>
+<li>Sí únicamente queremos acceder a los coeficientes estimados, tenemos que añadir <code>$coefficients</code> a la orden anterior: <code>tires.partWorthsAll$Summary</code> <code>$Subj1$coefficients</code>. En la tabla siguiente se pueden observar los resutlados para el individuo Subj2:</li>
+</ul>
+</section>
+<section id="estimacion-del-modelo-para-toda-la-muestra-individuos-8" class="slide level2">
+<h2>Estimación del modelo para toda la muestra individuos</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(knitr)
+<span class="kw">library</span>(kableExtra)
+<span class="kw">kable</span>(tires.partWorthsAll<span class="op">$</span>summary<span class="op">$</span>Subj2<span class="op">$</span>coefficients, <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Coeficientes del modelo estimado para el individuos Subj2&#39;</span> )</code></pre></div>
+<table>
+<caption>
+Coeficientes del modelo estimado para el individuos Subj2
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+Std. Error
+</th>
+<th style="text-align:right;">
+t value
+</th>
+<th style="text-align:right;">
+Pr(&gt;|t|)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+4.94
+</td>
+<td style="text-align:right;">
+0.11
+</td>
+<td style="text-align:right;">
+44.50
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Brand1
+</td>
+<td style="text-align:right;">
+1.22
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:right;">
+7.78
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Brand2
+</td>
+<td style="text-align:right;">
+0.06
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:right;">
+0.35
+</td>
+<td style="text-align:right;">
+0.73
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Price1
+</td>
+<td style="text-align:right;">
+2.72
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:right;">
+17.32
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Price2
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:right;">
+-0.71
+</td>
+<td style="text-align:right;">
+0.50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Life1
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:right;">
+-0.71
+</td>
+<td style="text-align:right;">
+0.50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Life2
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:right;">
+-0.71
+</td>
+<td style="text-align:right;">
+0.50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hazard1
+</td>
+<td style="text-align:right;">
+-0.06
+</td>
+<td style="text-align:right;">
+0.11
+</td>
+<td style="text-align:right;">
+-0.50
+</td>
+<td style="text-align:right;">
+0.63
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="estimacion-del-modelo-para-toda-la-muestra-individuos-9" class="slide level2">
+<h2>Estimación del modelo para toda la muestra individuos</h2>
+<ul>
+<li>Si queremos acceder a todos los demás objetos que forman los resultados del modelo, sólo tenemos que sustituir <code>coefficients</code> por el nombre del resultado que queremos inspeccionar (ver el resultado de Subj1, call, terms, residuals, coefficients, aliased, sigma, df, r.squared, adj.r.squared, fstatistic, cov.unscaled).</li>
+</ul>
+</section>
+<section id="resumen-de-las-estimaciones" class="slide level2">
+<h2>Resumen de las estimaciones</h2>
+<ul>
+<li>La tabla de datos con el resumen de los coeficientes estimados para toda la muestra se muestran en el objeto fit. Para acceder sólo tenemos que utilizar la orden siguiente: <code>tires.partWorthsAll$fit</code>.</li>
+</ul>
+</section>
+<section id="resumen-de-las-estimaciones-1" class="slide level2">
+<h2>Resumen de las estimaciones</h2>
+<ul>
+<li>Nos proporciona una base de datos con tantas filas como individuos han valorado el conjunto de perfiles de producto y tantas columnas como niveles de los atributos menos uno.</li>
+</ul>
+</section>
+<section id="resumen-de-las-estimaciones-2" class="slide level2">
+<h2>Resumen de las estimaciones</h2>
+<ul>
+<li>En este ejemplo, tendríamos (3-1)+(3-1)+(3-1)+(2-1)+1=8. Si no queremos ver toda la base de datos podemos inspeccionar su inicio y final con las funciones <code>head()</code> y <code>tail()</code>, y en entre paréntesis sólo tenemos que poner el nombre del objeto, <code>tires.partWorthsAll$fit</code> en este caso. Utilizamos la función <code>kable()</code> para dar formato a la tabla de datos.</li>
+</ul>
+</section>
+<section id="resumen-de-las-estimaciones-3" class="slide level2">
+<h2>Resumen de las estimaciones</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(tires.partWorthsAll<span class="op">$</span>fit, <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Estimaciones: Resultados de los 6 primeros individuos&#39;</span> )</code></pre></div>
+<table>
+<caption>
+Estimaciones: Resultados de los 6 primeros individuos
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+(Intercept)
+</th>
+<th style="text-align:right;">
+Brand1
+</th>
+<th style="text-align:right;">
+Brand2
+</th>
+<th style="text-align:right;">
+Price1
+</th>
+<th style="text-align:right;">
+Price2
+</th>
+<th style="text-align:right;">
+Life1
+</th>
+<th style="text-align:right;">
+Life2
+</th>
+<th style="text-align:right;">
+Hazard1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Subj1
+</td>
+<td style="text-align:right;">
+5.11
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+-0.61
+</td>
+<td style="text-align:right;">
+2.56
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+-1.28
+</td>
+<td style="text-align:right;">
+0.22
+</td>
+<td style="text-align:right;">
+-0.33
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Subj2
+</td>
+<td style="text-align:right;">
+4.94
+</td>
+<td style="text-align:right;">
+1.22
+</td>
+<td style="text-align:right;">
+0.06
+</td>
+<td style="text-align:right;">
+2.72
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+-0.06
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Subj3
+</td>
+<td style="text-align:right;">
+5.00
+</td>
+<td style="text-align:right;">
+-0.17
+</td>
+<td style="text-align:right;">
+-0.50
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+-0.33
+</td>
+<td style="text-align:right;">
+-2.83
+</td>
+<td style="text-align:right;">
+0.17
+</td>
+<td style="text-align:right;">
+-0.22
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Subj4
+</td>
+<td style="text-align:right;">
+5.11
+</td>
+<td style="text-align:right;">
+0.72
+</td>
+<td style="text-align:right;">
+0.39
+</td>
+<td style="text-align:right;">
+0.72
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+-2.61
+</td>
+<td style="text-align:right;">
+0.06
+</td>
+<td style="text-align:right;">
+-0.44
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Subj5
+</td>
+<td style="text-align:right;">
+5.06
+</td>
+<td style="text-align:right;">
+-0.06
+</td>
+<td style="text-align:right;">
+-0.39
+</td>
+<td style="text-align:right;">
+2.61
+</td>
+<td style="text-align:right;">
+-0.06
+</td>
+<td style="text-align:right;">
+-1.39
+</td>
+<td style="text-align:right;">
+0.11
+</td>
+<td style="text-align:right;">
+-0.17
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="estimacion-de-las-utilidades-parciales" class="slide level2">
+<h2>Estimación de las utilidades parciales</h2>
+<ul>
+<li>Para completar los resultados de las estimaciones, la funcion <code>conjoint.estimation()</code> nos proporciona una base de datos con las utilidades parciales de cada uno de los niveles, incluidos los que se han eliminado para poder estimar el modelo (si no los hubieramos eliminados, el modelo no se podría haber estimado).</li>
+</ul>
+</section>
+<section id="estimacion-de-las-utilidades-parciales-1" class="slide level2">
+<h2>Estimación de las utilidades parciales</h2>
+<ul>
+<li>La tabla de datos tiene tantas filas como perfiles de producto, p, y tantas columnas como niveles de atributos hemos considerado en el análisis: 3+3+3+2=11 en este caso de los neumáticos.</li>
+<li>Esta forma de mostrar las utilidades parciales de cada nivel nos facilita el cálculo de la importancia de cada atributo como veremos después. De nuevo utilizamos la función <code>kable()</code> para dar formato a la tabla de datos.</li>
+</ul>
+</section>
+<section id="estimacion-de-las-utilidades-parciales-2" class="slide level2">
+<h2>Estimación de las utilidades parciales</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(tires.partWorthsAll<span class="op">$</span>part.worths, <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Estimaciones: Resultados de los 5 primeros individuos&#39;</span> )</code></pre></div>
+<table>
+<caption>
+Estimaciones: Resultados de los 5 primeros individuos
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Goodstone
+</th>
+<th style="text-align:right;">
+Pirogi
+</th>
+<th style="text-align:right;">
+Machismo
+</th>
+<th style="text-align:right;">
+$69,99
+</th>
+<th style="text-align:right;">
+S79,99
+</th>
+<th style="text-align:right;">
+$89,99
+</th>
+<th style="text-align:right;">
+50000km
+</th>
+<th style="text-align:right;">
+60000km
+</th>
+<th style="text-align:right;">
+70000km
+</th>
+<th style="text-align:right;">
+Yes
+</th>
+<th style="text-align:right;">
+No
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Subj1
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+-0.61
+</td>
+<td style="text-align:right;">
+0.72
+</td>
+<td style="text-align:right;">
+2.56
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+-2.44
+</td>
+<td style="text-align:right;">
+-1.28
+</td>
+<td style="text-align:right;">
+0.22
+</td>
+<td style="text-align:right;">
+1.06
+</td>
+<td style="text-align:right;">
+-0.33
+</td>
+<td style="text-align:right;">
+0.33
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Subj2
+</td>
+<td style="text-align:right;">
+1.22
+</td>
+<td style="text-align:right;">
+0.06
+</td>
+<td style="text-align:right;">
+-1.28
+</td>
+<td style="text-align:right;">
+2.72
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+-2.61
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+0.22
+</td>
+<td style="text-align:right;">
+-0.06
+</td>
+<td style="text-align:right;">
+0.06
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Subj3
+</td>
+<td style="text-align:right;">
+-0.17
+</td>
+<td style="text-align:right;">
+-0.50
+</td>
+<td style="text-align:right;">
+0.67
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+-0.33
+</td>
+<td style="text-align:right;">
+-0.67
+</td>
+<td style="text-align:right;">
+-2.83
+</td>
+<td style="text-align:right;">
+0.17
+</td>
+<td style="text-align:right;">
+2.67
+</td>
+<td style="text-align:right;">
+-0.22
+</td>
+<td style="text-align:right;">
+0.22
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Subj4
+</td>
+<td style="text-align:right;">
+0.72
+</td>
+<td style="text-align:right;">
+0.39
+</td>
+<td style="text-align:right;">
+-1.11
+</td>
+<td style="text-align:right;">
+0.72
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+-0.61
+</td>
+<td style="text-align:right;">
+-2.61
+</td>
+<td style="text-align:right;">
+0.06
+</td>
+<td style="text-align:right;">
+2.56
+</td>
+<td style="text-align:right;">
+-0.44
+</td>
+<td style="text-align:right;">
+0.44
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Subj5
+</td>
+<td style="text-align:right;">
+-0.06
+</td>
+<td style="text-align:right;">
+-0.39
+</td>
+<td style="text-align:right;">
+0.44
+</td>
+<td style="text-align:right;">
+2.61
+</td>
+<td style="text-align:right;">
+-0.06
+</td>
+<td style="text-align:right;">
+-2.56
+</td>
+<td style="text-align:right;">
+-1.39
+</td>
+<td style="text-align:right;">
+0.11
+</td>
+<td style="text-align:right;">
+1.28
+</td>
+<td style="text-align:right;">
+-0.17
+</td>
+<td style="text-align:right;">
+0.17
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="estimacion-de-las-utilidades-parciales-3" class="slide level2">
+<h2>Estimación de las utilidades parciales</h2>
+<ul>
+<li>Finalmente la tabla de datos con las predicciones teóricas de la utilidad que reportan los perfiles de producto para toda la muestra se pueden obtener con el objeto <code>prediction</code>. Para acceder sólo tenemos que utilizar la orden siguiente: <code>tires.partWorthsAll$prediction</code>.</li>
+</ul>
+</section>
+<section id="estimacion-de-las-utilidades-parciales-4" class="slide level2">
+<h2>Estimación de las utilidades parciales</h2>
+<ul>
+<li>Nos proporciona una tabla de datos con tantas filas como individuos han valorado el conjunto de perfiles de producto, n, y tantas columnas como niveles com perfiles han valorado, p.</li>
+</ul>
+</section>
+<section id="estimacion-de-las-utilidades-parciales-5" class="slide level2">
+<h2>Estimación de las utilidades parciales</h2>
+<ul>
+<li>Si no queremos ver toda la base de datos podemos inspeccionar su inicio y final con las funciones <code>head()</code> y <code>tail()</code>, y en entre paréntesis sólo tenemos que poner el nombre del objeto, <code>tires.partWorthsAll$prediction</code> en este caso. Utilizamos la función <code>kable()</code> para dar formato a la tabla de datos.</li>
+</ul>
+</section>
+<section id="estimacion-de-las-utilidades-parciales-6" class="slide level2">
+<h2>Estimación de las utilidades parciales</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(<span class="kw">head</span>(<span class="kw">t</span>(tires.partWorthsAll<span class="op">$</span>prediction)), <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Estimaciones: Resultados de los 6 primeros individuos&#39;</span> )</code></pre></div>
+<table>
+<caption>
+Estimaciones: Resultados de los 6 primeros individuos
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Subj1
+</th>
+<th style="text-align:right;">
+Subj2
+</th>
+<th style="text-align:right;">
+Subj3
+</th>
+<th style="text-align:right;">
+Subj4
+</th>
+<th style="text-align:right;">
+Subj5
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+bundle1
+</td>
+<td style="text-align:right;">
+2.78
+</td>
+<td style="text-align:right;">
+4.72
+</td>
+<td style="text-align:right;">
+1.11
+</td>
+<td style="text-align:right;">
+2.33
+</td>
+<td style="text-align:right;">
+3.06
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bundle2
+</td>
+<td style="text-align:right;">
+5.94
+</td>
+<td style="text-align:right;">
+8.72
+</td>
+<td style="text-align:right;">
+2.78
+</td>
+<td style="text-align:right;">
+3.50
+</td>
+<td style="text-align:right;">
+6.06
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bundle3
+</td>
+<td style="text-align:right;">
+6.44
+</td>
+<td style="text-align:right;">
+3.72
+</td>
+<td style="text-align:right;">
+7.78
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+6.56
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bundle4
+</td>
+<td style="text-align:right;">
+3.94
+</td>
+<td style="text-align:right;">
+3.83
+</td>
+<td style="text-align:right;">
+7.06
+</td>
+<td style="text-align:right;">
+8.22
+</td>
+<td style="text-align:right;">
+3.89
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bundle5
+</td>
+<td style="text-align:right;">
+6.44
+</td>
+<td style="text-align:right;">
+3.72
+</td>
+<td style="text-align:right;">
+7.78
+</td>
+<td style="text-align:right;">
+6.00
+</td>
+<td style="text-align:right;">
+6.56
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bundle6
+</td>
+<td style="text-align:right;">
+8.44
+</td>
+<td style="text-align:right;">
+8.00
+</td>
+<td style="text-align:right;">
+8.39
+</td>
+<td style="text-align:right;">
+9.22
+</td>
+<td style="text-align:right;">
+8.72
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="estimacion-de-las-utilidades-parciales-7" class="slide level2">
+<h2>Estimación de las utilidades parciales</h2>
+<ul>
+<li>La función <code>conjoint.estimation()</code> también se puede utilizar para estimar el modelo sólo para un individuo o para un grupo de invidiuos. Esta posibilidad es interesante para valorar las utilidades parciales de un determinado segmento.</li>
+</ul>
+</section>
+<section id="estimacion-de-las-utilidades-parciales-8" class="slide level2">
+<h2>Estimación de las utilidades parciales</h2>
+<ul>
+<li>Sólo tenemos que indicar que únicamente queremos que estime el modelo para un indiviuo en concreto o para un grupo de invidividuos, por ejemplo para el primer individuo de la muestra. Para ello utilizamos los corchetes y dentro de ellos indicamos la fila en la que está el individuo y una coma que indicada que utilizaremos todas las columnas de la base de datos: [1,].</li>
+</ul>
+</section>
+<section id="estimacion-de-las-utilidades-parciales-9" class="slide level2">
+<h2>Estimación de las utilidades parciales</h2>
+<ul>
+<li>La estimación del modelo con devuelve los mismos objetos: una lista con los resultados detallados, una tabla de datos con los coeficientes de la estimación, otra lista de datos con las utilidades parciales de cada nivel de atributo para el individuo o el subconjunto de invidiuos, y una tabla de datos con las predicciones del modelo, o utilidades teóricas.</li>
+</ul>
+</section>
+<section id="estimacion-de-las-utilidades-parciales-10" class="slide level2">
+<h2>Estimación de las utilidades parciales</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tires.partWorths1&lt;-<span class="kw">conjoint.estimation</span>(tire<span class="op">$</span>ratings[<span class="dv">1</span>,], tire<span class="op">$</span>bundles, tire<span class="op">$</span>design, <span class="dt">rs=</span><span class="dv">1</span>)
+<span class="kw">names</span>(tires.partWorths1)</code></pre></div>
+<pre><code>## [1] &quot;summary&quot;     &quot;fit&quot;         &quot;part.worths&quot; &quot;prediction&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(tires.partWorths1<span class="op">$</span>summary<span class="op">$</span>Subj1)</code></pre></div>
+<pre><code>##  [1] &quot;call&quot;          &quot;terms&quot;         &quot;residuals&quot;     &quot;coefficients&quot; 
+##  [5] &quot;aliased&quot;       &quot;sigma&quot;         &quot;df&quot;            &quot;r.squared&quot;    
+##  [9] &quot;adj.r.squared&quot; &quot;fstatistic&quot;    &quot;cov.unscaled&quot;</code></pre>
+</section>
+<section id="estimacion-de-las-utilidades-parciales-11" class="slide level2">
+<h2>Estimación de las utilidades parciales</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(tires.partWorths1<span class="op">$</span>summary<span class="op">$</span>Subj1<span class="op">$</span>coefficients, <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Coeficientes del modelo estimado para el individuos Subj1&#39;</span> )</code></pre></div>
+<table>
+<caption>
+Coeficientes del modelo estimado para el individuos Subj1
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+Std. Error
+</th>
+<th style="text-align:right;">
+t value
+</th>
+<th style="text-align:right;">
+Pr(&gt;|t|)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+5.11
+</td>
+<td style="text-align:right;">
+0.12
+</td>
+<td style="text-align:right;">
+43.86
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Brand1
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:right;">
+-0.67
+</td>
+<td style="text-align:right;">
+0.52
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Brand2
+</td>
+<td style="text-align:right;">
+-0.61
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:right;">
+-3.71
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Price1
+</td>
+<td style="text-align:right;">
+2.56
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:right;">
+15.51
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Price2
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:right;">
+-0.67
+</td>
+<td style="text-align:right;">
+0.52
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Life1
+</td>
+<td style="text-align:right;">
+-1.28
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:right;">
+-7.75
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Life2
+</td>
+<td style="text-align:right;">
+0.22
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:right;">
+1.35
+</td>
+<td style="text-align:right;">
+0.21
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hazard1
+</td>
+<td style="text-align:right;">
+-0.33
+</td>
+<td style="text-align:right;">
+0.12
+</td>
+<td style="text-align:right;">
+-2.86
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="estimacion-de-las-utilidades-parciales-12" class="slide level2">
+<h2>Estimación de las utilidades parciales</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(tires.partWorths1<span class="op">$</span>fit), <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Estimaciones: Resultados de *j* individuos&#39;</span> )</code></pre></div>
+<table>
+<caption>
+Estimaciones: Resultados de <em>j</em> individuos
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+(Intercept)
+</th>
+<th style="text-align:right;">
+Brand1
+</th>
+<th style="text-align:right;">
+Brand2
+</th>
+<th style="text-align:right;">
+Price1
+</th>
+<th style="text-align:right;">
+Price2
+</th>
+<th style="text-align:right;">
+Life1
+</th>
+<th style="text-align:right;">
+Life2
+</th>
+<th style="text-align:right;">
+Hazard1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Subj1
+</td>
+<td style="text-align:right;">
+5.11
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+-0.61
+</td>
+<td style="text-align:right;">
+2.56
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+-1.28
+</td>
+<td style="text-align:right;">
+0.22
+</td>
+<td style="text-align:right;">
+-0.33
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="estimacion-de-las-utilidades-parciales-13" class="slide level2">
+<h2>Estimación de las utilidades parciales</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(<span class="kw">t</span>(tires.partWorths1<span class="op">$</span>part.worths)), <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Utilidades parciales: Resultados de *j* individuos&#39;</span> )</code></pre></div>
+<table>
+<caption>
+Utilidades parciales: Resultados de <em>j</em> individuos
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Subj1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Goodstone
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pirogi
+</td>
+<td style="text-align:right;">
+-0.61
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Machismo
+</td>
+<td style="text-align:right;">
+0.72
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+$69,99
+</td>
+<td style="text-align:right;">
+2.56
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S79,99
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+$89,99
+</td>
+<td style="text-align:right;">
+-2.44
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="calculo-de-la-importancia-de-los-atributos" class="slide level2">
+<h2>Cálculo de la importancia de los atributos</h2>
+<ul>
+<li>La función <code>importance.of.attributes()</code> nos proporciona tres tablas de datos. La primera es el resumen de los coeficientes estimados, <code>fit</code>, la segunda es la tabla de las utilidades parciales, <code>part.worths</code>, y la tercera la tabla resumen de la importancia de los atributos para los individuos de la muestra, imp.</li>
+</ul>
+</section>
+<section id="calculo-de-la-importancia-de-los-atributos-1" class="slide level2">
+<h2>Cálculo de la importancia de los atributos</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tires.imp &lt;-<span class="st"> </span><span class="kw">importance.of.attributes</span>(tire<span class="op">$</span>ratings, tire<span class="op">$</span>bundles, tire<span class="op">$</span>design)
+<span class="kw">names</span>(tires.imp)</code></pre></div>
+<pre><code>## [1] &quot;fit&quot;         &quot;part.worths&quot; &quot;imp&quot;</code></pre>
+<ul>
+<li>En este momento nos interesan las dos últimas tablas. La tabla <code>part-worths</code> y la tabla <code>imp</code>.</li>
+</ul>
+</section>
+<section id="calculo-de-la-importancia-de-los-atributos-2" class="slide level2">
+<h2>Cálculo de la importancia de los atributos</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(tires.imp<span class="op">$</span>part.worths), <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Utilidades parciales: Resultados de los 5 primeros individuos&#39;</span> )</code></pre></div>
+<table>
+<caption>
+Utilidades parciales: Resultados de los 5 primeros individuos
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Goodstone
+</th>
+<th style="text-align:right;">
+Pirogi
+</th>
+<th style="text-align:right;">
+Machismo
+</th>
+<th style="text-align:right;">
+$69,99
+</th>
+<th style="text-align:right;">
+S79,99
+</th>
+<th style="text-align:right;">
+$89,99
+</th>
+<th style="text-align:right;">
+50000km
+</th>
+<th style="text-align:right;">
+60000km
+</th>
+<th style="text-align:right;">
+70000km
+</th>
+<th style="text-align:right;">
+Yes
+</th>
+<th style="text-align:right;">
+No
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Subj1
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+-0.61
+</td>
+<td style="text-align:right;">
+0.72
+</td>
+<td style="text-align:right;">
+2.56
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+-2.44
+</td>
+<td style="text-align:right;">
+-1.28
+</td>
+<td style="text-align:right;">
+0.22
+</td>
+<td style="text-align:right;">
+1.06
+</td>
+<td style="text-align:right;">
+-0.33
+</td>
+<td style="text-align:right;">
+0.33
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Subj2
+</td>
+<td style="text-align:right;">
+1.22
+</td>
+<td style="text-align:right;">
+0.06
+</td>
+<td style="text-align:right;">
+-1.28
+</td>
+<td style="text-align:right;">
+2.72
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+-2.61
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+0.22
+</td>
+<td style="text-align:right;">
+-0.06
+</td>
+<td style="text-align:right;">
+0.06
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Subj3
+</td>
+<td style="text-align:right;">
+-0.17
+</td>
+<td style="text-align:right;">
+-0.50
+</td>
+<td style="text-align:right;">
+0.67
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+-0.33
+</td>
+<td style="text-align:right;">
+-0.67
+</td>
+<td style="text-align:right;">
+-2.83
+</td>
+<td style="text-align:right;">
+0.17
+</td>
+<td style="text-align:right;">
+2.67
+</td>
+<td style="text-align:right;">
+-0.22
+</td>
+<td style="text-align:right;">
+0.22
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Subj4
+</td>
+<td style="text-align:right;">
+0.72
+</td>
+<td style="text-align:right;">
+0.39
+</td>
+<td style="text-align:right;">
+-1.11
+</td>
+<td style="text-align:right;">
+0.72
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+<td style="text-align:right;">
+-0.61
+</td>
+<td style="text-align:right;">
+-2.61
+</td>
+<td style="text-align:right;">
+0.06
+</td>
+<td style="text-align:right;">
+2.56
+</td>
+<td style="text-align:right;">
+-0.44
+</td>
+<td style="text-align:right;">
+0.44
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Subj5
+</td>
+<td style="text-align:right;">
+-0.06
+</td>
+<td style="text-align:right;">
+-0.39
+</td>
+<td style="text-align:right;">
+0.44
+</td>
+<td style="text-align:right;">
+2.61
+</td>
+<td style="text-align:right;">
+-0.06
+</td>
+<td style="text-align:right;">
+-2.56
+</td>
+<td style="text-align:right;">
+-1.39
+</td>
+<td style="text-align:right;">
+0.11
+</td>
+<td style="text-align:right;">
+1.28
+</td>
+<td style="text-align:right;">
+-0.17
+</td>
+<td style="text-align:right;">
+0.17
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="importancia-de-los-atributos" class="slide level2">
+<h2>Importancia de los atributos</h2>
+<ul>
+<li><p>La primera tabla nos permite calcular la importancia de los atributos como la diferencia en el valor mínimo y el máximo de las utilidades parciales reportadas por los niveles de cada atributo.</p></li>
+<li><p>La tabla <code>imp</code> nos proporciona el resumen para todos los individuos, en porcentaje.</p></li>
+</ul>
+</section>
+<section id="importancia-de-los-atributos-1" class="slide level2">
+<h2>Importancia de los atributos</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(tires.imp<span class="op">$</span>imp),<span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Importancia de los atributos: Resultados de los 5 primeros individuos&#39;</span> )</code></pre></div>
+<table>
+<caption>
+Importancia de los atributos: Resultados de los 5 primeros individuos
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Brand
+</th>
+<th style="text-align:right;">
+Price
+</th>
+<th style="text-align:right;">
+Life
+</th>
+<th style="text-align:right;">
+Hazard
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Subj1
+</td>
+<td style="text-align:right;">
+14.29
+</td>
+<td style="text-align:right;">
+53.57
+</td>
+<td style="text-align:right;">
+25.00
+</td>
+<td style="text-align:right;">
+7.14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Subj2
+</td>
+<td style="text-align:right;">
+30.20
+</td>
+<td style="text-align:right;">
+64.43
+</td>
+<td style="text-align:right;">
+4.03
+</td>
+<td style="text-align:right;">
+1.34
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Subj3
+</td>
+<td style="text-align:right;">
+13.29
+</td>
+<td style="text-align:right;">
+18.99
+</td>
+<td style="text-align:right;">
+62.66
+</td>
+<td style="text-align:right;">
+5.06
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Subj4
+</td>
+<td style="text-align:right;">
+19.88
+</td>
+<td style="text-align:right;">
+14.46
+</td>
+<td style="text-align:right;">
+56.02
+</td>
+<td style="text-align:right;">
+9.64
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Subj5
+</td>
+<td style="text-align:right;">
+9.26
+</td>
+<td style="text-align:right;">
+57.41
+</td>
+<td style="text-align:right;">
+29.63
+</td>
+<td style="text-align:right;">
+3.70
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="importancia-de-los-atributos-2" class="slide level2">
+<h2>Importancia de los atributos</h2>
+<ul>
+<li><p>Finalmente si queremos conocer la importancia media para toda la muestra, sólo tenemos que calcular la media de las columnas de la tabla imp.</p></li>
+<li><p>Para ello utilizamos la función <code>apply()</code> y como armentos la tabla de datos <code>tires.imp$imp</code>, el número <code>2</code> que indica que queremos trabajar con las columnas de la tabla, y la función mean para indicar que queremos calcular la media de las columnas.</p></li>
+<li><p>Utilizamos la función <code>kable()</code> para dar formato a la tabla.</p></li>
+</ul>
+</section>
+<section id="importancia-de-los-atributos-3" class="slide level2">
+<h2>Importancia de los atributos</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(tires.imp<span class="op">$</span>imp<span class="op">$</span>Brand)</code></pre></div>
+<pre><code>## [1] 17.38339</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(tires.imp<span class="op">$</span>imp<span class="op">$</span>Brand)</code></pre></div>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+</section>
+<section id="importancia-de-los-atributos-4" class="slide level2">
+<h2>Importancia de los atributos</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">apply</span>(tires.imp<span class="op">$</span>imp, <span class="dv">2</span>, mean),<span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Importancia media de los atributos&#39;</span> )</code></pre></div>
+<table>
+<caption>
+Importancia media de los atributos
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+x
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Brand
+</td>
+<td style="text-align:right;">
+17.38
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Price
+</td>
+<td style="text-align:right;">
+41.77
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Life
+</td>
+<td style="text-align:right;">
+35.47
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hazard
+</td>
+<td style="text-align:right;">
+5.38
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="visualizacion-de-la-importancia" class="slide level2">
+<h2>Visualización de la importancia</h2>
+<ul>
+<li>Finalmente podemos visualizar la importancia media de los atributos con la función <code>visualize.importance</code> que necesita como argumentos la tabla de datos con las utilidades parciales, <code>tires.imp$part.worths</code>, la tabla de datos con las importancias en porcentajes, <code>tires.imp$imp</code>, y la lista con los nombres de los atributos y niveles, <code>tires$design</code>.</li>
+</ul>
+</section>
+<section id="visualizacion-de-la-importancia-1" class="slide level2">
+<h2>Visualización de la importancia</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">visualize.importance</span>(tires.imp<span class="op">$</span>part.worths,tires.imp<span class="op">$</span>imp, tire<span class="op">$</span>design)</code></pre></div>
+<p><img src="clase_5_files/figure-revealjs/unnamed-chunk-30-1.png" width="768" /><img src="clase_5_files/figure-revealjs/unnamed-chunk-30-2.png" width="768" /><img src="clase_5_files/figure-revealjs/unnamed-chunk-30-3.png" width="768" /><img src="clase_5_files/figure-revealjs/unnamed-chunk-30-4.png" width="768" /><img src="clase_5_files/figure-revealjs/unnamed-chunk-30-5.png" width="768" /></p>
+</section>
+<section id="simulacion-de-la-respuesta-del-mercado" class="slide level2">
+<h2>Simulación de la respuesta del mercado</h2>
+<ul>
+<li>El paquete MDSConjoint también nos proporciona un conjunto de funciones para tomar decisiones con los resultados del análsis conjunto.</li>
+</ul>
+</section>
+<section id="simulacion-de-la-respuesta-del-mercado-1" class="slide level2">
+<h2>Simulación de la respuesta del mercado</h2>
+<ul>
+<li><p>Concretamente podemos simular las cuotas de mercado que ciertos perfiles de producto obtedrían en el mercado, e identificar el perfil de producto que maximizaría la cuota de mercado de la empresa, dados los perfiles de producto existentes en el mercado.</p></li>
+<li><p>Veámoslo con el ejemplo sintético de Office System que proporciona el libro Marketing Engineering (Lilien &amp; Ramaswamy 2003)</p></li>
+</ul>
+</section>
+<section id="descripcion-de-datos-del-sistema-de-oficina" class="slide level2">
+<h2>Descripción de datos del sistema de oficina</h2>
+<ul>
+<li><p>Estos datos artificiales se refieren al diseño de una tienda de oficina, el tipo de productos que se ofrecen, suministros de oficina, muebles, computadoras y software, y la ubicación de la tienda.</p></li>
+<li><p>Los niveles de cada atributo se pueden examinar con el objeto de diseño de la lista osc.</p></li>
+</ul>
+</section>
+<section id="descripcion-de-datos-del-sistema-de-oficina-1" class="slide level2">
+<h2>Descripción de datos del sistema de oficina</h2>
+<ul>
+<li>Primero seleccionaremos los datos del ejemplo Office System asignándolos al objeto osc, y después obtenemos los datos del diseño.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">osc&lt;-MDSConjointData<span class="op">$</span>osc
+osc<span class="op">$</span>design</code></pre></div>
+<pre><code>## $Location
+## [1] &quot;Less2Miles&quot; &quot;W2-5Miles&quot;  &quot;W5-10Miles&quot;
+## 
+## $OfficeSupplies
+## [1] &quot;VLAssortment&quot;  &quot;LAssortment&quot;   &quot;LimAssortment&quot;
+## 
+## $Furniture
+## [1] &quot;Yes&quot; &quot;No&quot; 
+## 
+## $Computers
+## [1] &quot;NoComputers&quot;          &quot;Software&quot;             &quot;SoftwareAndComputers&quot;</code></pre>
+</section>
+<section id="estimacion-del-modelo" class="slide level2">
+<h2>Estimación del modelo</h2>
+<ul>
+<li>Seguidamente estimaremos el modelo para todos los individuos de la muestra utilizando la función <code>conjoint.estimation()</code> y como argumentos las valoraciones de los individuos, <code>osc$ratings</code>, la descripción de los perfiles de producto valorados, <code>osc$bundles</code>, y la descripción de los atributos y niveles, <code>osc$design</code>.</li>
+</ul>
+</section>
+<section id="estimacion-del-modelo-1" class="slide level2">
+<h2>Estimación del modelo</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">osc.partWorthsAll&lt;-<span class="kw">conjoint.estimation</span>(osc<span class="op">$</span>ratings, osc<span class="op">$</span>bundles, osc<span class="op">$</span>design, <span class="dt">rs =</span> <span class="dv">1</span>) 
+<span class="kw">class</span>(osc.partWorthsAll)</code></pre></div>
+<pre><code>## [1] &quot;list&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(osc.partWorthsAll)</code></pre></div>
+<pre><code>## [1] &quot;summary&quot;     &quot;fit&quot;         &quot;part.worths&quot; &quot;prediction&quot;</code></pre>
+</section>
+<section id="estimacion-del-modelo-2" class="slide level2">
+<h2>Estimación del modelo</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(osc.partWorthsAll<span class="op">$</span>summary)</code></pre></div>
+<pre><code>##  [1] &quot;Respondent1&quot;  &quot;Respondent2&quot;  &quot;Respondent3&quot;  &quot;Respondent4&quot; 
+##  [5] &quot;Respondent5&quot;  &quot;Respondent6&quot;  &quot;Respondent7&quot;  &quot;Respondent8&quot; 
+##  [9] &quot;Respondent9&quot;  &quot;Respondent10&quot; &quot;Respondent11&quot; &quot;Respondent12&quot;
+## [13] &quot;Respondent13&quot; &quot;Respondent14&quot; &quot;Respondent15&quot; &quot;Respondent16&quot;
+## [17] &quot;Respondent17&quot; &quot;Respondent18&quot; &quot;Respondent19&quot; &quot;Respondent20&quot;</code></pre>
+</section>
+<section id="estimacion-del-modelo-3" class="slide level2">
+<h2>Estimación del modelo</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(osc.partWorthsAll<span class="op">$</span>summary)</code></pre></div>
+<pre><code>##  [1] &quot;Respondent1&quot;  &quot;Respondent2&quot;  &quot;Respondent3&quot;  &quot;Respondent4&quot; 
+##  [5] &quot;Respondent5&quot;  &quot;Respondent6&quot;  &quot;Respondent7&quot;  &quot;Respondent8&quot; 
+##  [9] &quot;Respondent9&quot;  &quot;Respondent10&quot; &quot;Respondent11&quot; &quot;Respondent12&quot;
+## [13] &quot;Respondent13&quot; &quot;Respondent14&quot; &quot;Respondent15&quot; &quot;Respondent16&quot;
+## [17] &quot;Respondent17&quot; &quot;Respondent18&quot; &quot;Respondent19&quot; &quot;Respondent20&quot;</code></pre>
+</section>
+<section id="estimacion-del-modelo-4" class="slide level2">
+<h2>Estimación del modelo</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(osc.partWorthsAll<span class="op">$</span>summary<span class="op">$</span>Respondent1)</code></pre></div>
+<pre><code>##  [1] &quot;call&quot;          &quot;terms&quot;         &quot;residuals&quot;     &quot;coefficients&quot; 
+##  [5] &quot;aliased&quot;       &quot;sigma&quot;         &quot;df&quot;            &quot;r.squared&quot;    
+##  [9] &quot;adj.r.squared&quot; &quot;fstatistic&quot;    &quot;cov.unscaled&quot;</code></pre>
+</section>
+<section id="estimacion-del-modelo-5" class="slide level2">
+<h2>Estimación del modelo</h2>
+<ul>
+<li><p>Ahora vamos a observar los resultados para el individuos número 1, <code>Respondent1</code>, utilizando la orden <code>osc.partWorthsAll$summary$Respondent1</code>.</p></li>
+<li><p>Para inspeccionar únicamente los coeficientes estimados utilizamos la orden <code>osc.partWorthsAll$summary$Respondent1$coefficients</code>. Los resultados los podemos ver en la siguiente tabla.</p></li>
+</ul>
+</section>
+<section id="estimacion-del-modelo-6" class="slide level2">
+<h2>Estimación del modelo</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(osc.partWorthsAll<span class="op">$</span>summary<span class="op">$</span>Respondent1<span class="op">$</span>coefficients, <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Estimación del modelo lineal: coeficientes del primer individuo&#39;</span> )</code></pre></div>
+<table>
+<caption>
+Estimación del modelo lineal: coeficientes del primer individuo
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+Std. Error
+</th>
+<th style="text-align:right;">
+t value
+</th>
+<th style="text-align:right;">
+Pr(&gt;|t|)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+58.64
+</td>
+<td style="text-align:right;">
+1.63
+</td>
+<td style="text-align:right;">
+35.93
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Location1
+</td>
+<td style="text-align:right;">
+9.34
+</td>
+<td style="text-align:right;">
+2.26
+</td>
+<td style="text-align:right;">
+4.13
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Location2
+</td>
+<td style="text-align:right;">
+3.81
+</td>
+<td style="text-align:right;">
+1.95
+</td>
+<td style="text-align:right;">
+1.96
+</td>
+<td style="text-align:right;">
+0.09
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OfficeSupplies1
+</td>
+<td style="text-align:right;">
+1.05
+</td>
+<td style="text-align:right;">
+2.02
+</td>
+<td style="text-align:right;">
+0.52
+</td>
+<td style="text-align:right;">
+0.62
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OfficeSupplies2
+</td>
+<td style="text-align:right;">
+-1.35
+</td>
+<td style="text-align:right;">
+2.23
+</td>
+<td style="text-align:right;">
+-0.60
+</td>
+<td style="text-align:right;">
+0.56
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Furniture1
+</td>
+<td style="text-align:right;">
+-20.36
+</td>
+<td style="text-align:right;">
+1.46
+</td>
+<td style="text-align:right;">
+-13.94
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Computers1
+</td>
+<td style="text-align:right;">
+-2.35
+</td>
+<td style="text-align:right;">
+2.28
+</td>
+<td style="text-align:right;">
+-1.03
+</td>
+<td style="text-align:right;">
+0.33
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Computers2
+</td>
+<td style="text-align:right;">
+-2.98
+</td>
+<td style="text-align:right;">
+1.95
+</td>
+<td style="text-align:right;">
+-1.53
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="resumimos-las-estimaciones-en-una-tabla-de-datos" class="slide level2">
+<h2>Resumimos las estimaciones en una tabla de datos</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(osc.partWorthsAll<span class="op">$</span>fit), <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Estimaciones: Resultados de los 6 primeros individuos&#39;</span> )</code></pre></div>
+<table>
+<caption>
+Estimaciones: Resultados de los 6 primeros individuos
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+(Intercept)
+</th>
+<th style="text-align:right;">
+Location1
+</th>
+<th style="text-align:right;">
+Location2
+</th>
+<th style="text-align:right;">
+OfficeSupplies1
+</th>
+<th style="text-align:right;">
+OfficeSupplies2
+</th>
+<th style="text-align:right;">
+Furniture1
+</th>
+<th style="text-align:right;">
+Computers1
+</th>
+<th style="text-align:right;">
+Computers2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Respondent1
+</td>
+<td style="text-align:right;">
+58.64
+</td>
+<td style="text-align:right;">
+9.34
+</td>
+<td style="text-align:right;">
+3.81
+</td>
+<td style="text-align:right;">
+1.05
+</td>
+<td style="text-align:right;">
+-1.35
+</td>
+<td style="text-align:right;">
+-20.36
+</td>
+<td style="text-align:right;">
+-2.35
+</td>
+<td style="text-align:right;">
+-2.98
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Respondent2
+</td>
+<td style="text-align:right;">
+53.85
+</td>
+<td style="text-align:right;">
+11.74
+</td>
+<td style="text-align:right;">
+0.27
+</td>
+<td style="text-align:right;">
+2.90
+</td>
+<td style="text-align:right;">
+-2.60
+</td>
+<td style="text-align:right;">
+-0.82
+</td>
+<td style="text-align:right;">
+-15.89
+</td>
+<td style="text-align:right;">
+-15.27
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Respondent3
+</td>
+<td style="text-align:right;">
+58.56
+</td>
+<td style="text-align:right;">
+5.28
+</td>
+<td style="text-align:right;">
+-3.05
+</td>
+<td style="text-align:right;">
+1.59
+</td>
+<td style="text-align:right;">
+0.19
+</td>
+<td style="text-align:right;">
+-1.46
+</td>
+<td style="text-align:right;">
+-20.70
+</td>
+<td style="text-align:right;">
+-6.95
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Respondent4
+</td>
+<td style="text-align:right;">
+70.71
+</td>
+<td style="text-align:right;">
+0.07
+</td>
+<td style="text-align:right;">
+3.62
+</td>
+<td style="text-align:right;">
+-0.32
+</td>
+<td style="text-align:right;">
+-10.92
+</td>
+<td style="text-align:right;">
+-1.46
+</td>
+<td style="text-align:right;">
+-6.54
+</td>
+<td style="text-align:right;">
+2.21
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Respondent5
+</td>
+<td style="text-align:right;">
+70.86
+</td>
+<td style="text-align:right;">
+6.58
+</td>
+<td style="text-align:right;">
+-1.92
+</td>
+<td style="text-align:right;">
+3.29
+</td>
+<td style="text-align:right;">
+-14.61
+</td>
+<td style="text-align:right;">
+0.81
+</td>
+<td style="text-align:right;">
+1.29
+</td>
+<td style="text-align:right;">
+-3.08
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Respondent6
+</td>
+<td style="text-align:right;">
+63.24
+</td>
+<td style="text-align:right;">
+15.45
+</td>
+<td style="text-align:right;">
+-3.41
+</td>
+<td style="text-align:right;">
+0.14
+</td>
+<td style="text-align:right;">
+-6.16
+</td>
+<td style="text-align:right;">
+-6.82
+</td>
+<td style="text-align:right;">
+1.32
+</td>
+<td style="text-align:right;">
+0.07
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="resumimos-las-utilidades-parciales-en-una-tabla-de-datos" class="slide level2">
+<h2>Resumimos las utilidades parciales en una tabla de datos</h2>
+<ul>
+<li>El tercer objeto que nos proporciona la función <code>conjoint.estimation()</code> es la tabla de datos con las utilidades parciales de los 6 primeros individuos si utilizamos la función <code>head()</code>.</li>
+</ul>
+</section>
+<section id="resumimos-las-utilidades-parciales-en-una-tabla-de-datos-1" class="slide level2">
+<h2>Resumimos las utilidades parciales en una tabla de datos</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(osc.partWorthsAll<span class="op">$</span>part.worths), <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Estimaciones: Resultados de los 6 primeros individuos&#39;</span> )</code></pre></div>
+<table>
+<caption>
+Estimaciones: Resultados de los 6 primeros individuos
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Less2Miles
+</th>
+<th style="text-align:right;">
+W2-5Miles
+</th>
+<th style="text-align:right;">
+W5-10Miles
+</th>
+<th style="text-align:right;">
+VLAssortment
+</th>
+<th style="text-align:right;">
+LAssortment
+</th>
+<th style="text-align:right;">
+LimAssortment
+</th>
+<th style="text-align:right;">
+Yes
+</th>
+<th style="text-align:right;">
+No
+</th>
+<th style="text-align:right;">
+NoComputers
+</th>
+<th style="text-align:right;">
+Software
+</th>
+<th style="text-align:right;">
+SoftwareAndComputers
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Respondent1
+</td>
+<td style="text-align:right;">
+9.34
+</td>
+<td style="text-align:right;">
+3.81
+</td>
+<td style="text-align:right;">
+-13.16
+</td>
+<td style="text-align:right;">
+1.05
+</td>
+<td style="text-align:right;">
+-1.35
+</td>
+<td style="text-align:right;">
+0.29
+</td>
+<td style="text-align:right;">
+-20.36
+</td>
+<td style="text-align:right;">
+20.36
+</td>
+<td style="text-align:right;">
+-2.35
+</td>
+<td style="text-align:right;">
+-2.98
+</td>
+<td style="text-align:right;">
+5.34
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Respondent2
+</td>
+<td style="text-align:right;">
+11.74
+</td>
+<td style="text-align:right;">
+0.27
+</td>
+<td style="text-align:right;">
+-12.01
+</td>
+<td style="text-align:right;">
+2.90
+</td>
+<td style="text-align:right;">
+-2.60
+</td>
+<td style="text-align:right;">
+-0.30
+</td>
+<td style="text-align:right;">
+-0.82
+</td>
+<td style="text-align:right;">
+0.82
+</td>
+<td style="text-align:right;">
+-15.89
+</td>
+<td style="text-align:right;">
+-15.27
+</td>
+<td style="text-align:right;">
+31.16
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Respondent3
+</td>
+<td style="text-align:right;">
+5.28
+</td>
+<td style="text-align:right;">
+-3.05
+</td>
+<td style="text-align:right;">
+-2.22
+</td>
+<td style="text-align:right;">
+1.59
+</td>
+<td style="text-align:right;">
+0.19
+</td>
+<td style="text-align:right;">
+-1.77
+</td>
+<td style="text-align:right;">
+-1.46
+</td>
+<td style="text-align:right;">
+1.46
+</td>
+<td style="text-align:right;">
+-20.70
+</td>
+<td style="text-align:right;">
+-6.95
+</td>
+<td style="text-align:right;">
+27.64
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Respondent4
+</td>
+<td style="text-align:right;">
+0.07
+</td>
+<td style="text-align:right;">
+3.62
+</td>
+<td style="text-align:right;">
+-3.69
+</td>
+<td style="text-align:right;">
+-0.32
+</td>
+<td style="text-align:right;">
+-10.92
+</td>
+<td style="text-align:right;">
+11.24
+</td>
+<td style="text-align:right;">
+-1.46
+</td>
+<td style="text-align:right;">
+1.46
+</td>
+<td style="text-align:right;">
+-6.54
+</td>
+<td style="text-align:right;">
+2.21
+</td>
+<td style="text-align:right;">
+4.32
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Respondent5
+</td>
+<td style="text-align:right;">
+6.58
+</td>
+<td style="text-align:right;">
+-1.92
+</td>
+<td style="text-align:right;">
+-4.66
+</td>
+<td style="text-align:right;">
+3.29
+</td>
+<td style="text-align:right;">
+-14.61
+</td>
+<td style="text-align:right;">
+11.33
+</td>
+<td style="text-align:right;">
+0.81
+</td>
+<td style="text-align:right;">
+-0.81
+</td>
+<td style="text-align:right;">
+1.29
+</td>
+<td style="text-align:right;">
+-3.08
+</td>
+<td style="text-align:right;">
+1.78
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Respondent6
+</td>
+<td style="text-align:right;">
+15.45
+</td>
+<td style="text-align:right;">
+-3.41
+</td>
+<td style="text-align:right;">
+-12.05
+</td>
+<td style="text-align:right;">
+0.14
+</td>
+<td style="text-align:right;">
+-6.16
+</td>
+<td style="text-align:right;">
+6.02
+</td>
+<td style="text-align:right;">
+-6.82
+</td>
+<td style="text-align:right;">
+6.82
+</td>
+<td style="text-align:right;">
+1.32
+</td>
+<td style="text-align:right;">
+0.07
+</td>
+<td style="text-align:right;">
+-1.40
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="importancia-de-los-atributos-5" class="slide level2">
+<h2>Importancia de los atributos</h2>
+<ul>
+<li><p>Como en el ejemplo de los neumáticos, la función <code>importance.of.attributes()</code> nos proporciona tres tablas de datos, una con el resumen de los coeficientes estimados, <code>fit</code>, otra con las utilidades parciales, <code>part.worths</code>, y la tercera con la importancia de cada atributo para cada individuo, en porcentje.</p></li>
+<li><p>Con la función <code>kable()</code>del paquete knitr podemos presentarlos en una tabla bien formateada.</p></li>
+</ul>
+</section>
+<section id="importancia-de-los-atributos-6" class="slide level2">
+<h2>Importancia de los atributos</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">osc.imp &lt;-<span class="st"> </span><span class="kw">importance.of.attributes</span>(osc<span class="op">$</span>ratings, osc<span class="op">$</span>bundles, osc<span class="op">$</span>design)
+<span class="kw">names</span>(osc.imp)</code></pre></div>
+<pre><code>## [1] &quot;fit&quot;         &quot;part.worths&quot; &quot;imp&quot;</code></pre>
+</section>
+<section id="importancia-de-los-atributos-7" class="slide level2">
+<h2>Importancia de los atributos</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(osc.imp<span class="op">$</span>imp),<span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Importancia de los atributos: Resultados de los 5 primeros individuos&#39;</span> )</code></pre></div>
+<table>
+<caption>
+Importancia de los atributos: Resultados de los 5 primeros individuos
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Location
+</th>
+<th style="text-align:right;">
+OfficeSupplies
+</th>
+<th style="text-align:right;">
+Furniture
+</th>
+<th style="text-align:right;">
+Computers
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Respondent1
+</td>
+<td style="text-align:right;">
+30.43
+</td>
+<td style="text-align:right;">
+3.25
+</td>
+<td style="text-align:right;">
+55.08
+</td>
+<td style="text-align:right;">
+11.25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Respondent2
+</td>
+<td style="text-align:right;">
+30.47
+</td>
+<td style="text-align:right;">
+7.06
+</td>
+<td style="text-align:right;">
+2.12
+</td>
+<td style="text-align:right;">
+60.36
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Respondent3
+</td>
+<td style="text-align:right;">
+13.23
+</td>
+<td style="text-align:right;">
+5.34
+</td>
+<td style="text-align:right;">
+4.64
+</td>
+<td style="text-align:right;">
+76.79
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Respondent4
+</td>
+<td style="text-align:right;">
+16.89
+</td>
+<td style="text-align:right;">
+51.23
+</td>
+<td style="text-align:right;">
+6.77
+</td>
+<td style="text-align:right;">
+25.11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Respondent5
+</td>
+<td style="text-align:right;">
+25.75
+</td>
+<td style="text-align:right;">
+59.38
+</td>
+<td style="text-align:right;">
+3.73
+</td>
+<td style="text-align:right;">
+11.14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Respondent6
+</td>
+<td style="text-align:right;">
+49.07
+</td>
+<td style="text-align:right;">
+21.73
+</td>
+<td style="text-align:right;">
+24.34
+</td>
+<td style="text-align:right;">
+4.85
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="importancia-de-los-atributos-8" class="slide level2">
+<h2>Importancia de los atributos</h2>
+<ul>
+<li>Para obtener la importancia media de cada uno de los atributos que dan forma a los perfiles de producto valorados, sólo tenemos que calcular la media de las columnas de la tabla <code>imp</code>.</li>
+</ul>
+</section>
+<section id="importancia-de-los-atributos-9" class="slide level2">
+<h2>Importancia de los atributos</h2>
+<ul>
+<li><p>Para ello utilizamos la función <code>apply()</code> y como argumentos la tabla de datos <code>tires.imp$imp</code>, el número <code>2</code> que indica que queremos trabajar con las columnas de la tabla, y la función mean para decir que queremos calcular la media de las columnas.</p></li>
+<li><p>Utilizamos la función <code>kable()</code> para dar formato a la tabla.</p></li>
+</ul>
+</section>
+<section id="importancia-de-los-atributos-10" class="slide level2">
+<h2>Importancia de los atributos</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(osc.imp<span class="op">$</span>imp<span class="op">$</span>Location)</code></pre></div>
+<pre><code>## [1] 27.29945</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(osc.imp<span class="op">$</span>imp<span class="op">$</span>Location)</code></pre></div>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+</section>
+<section id="importancia-de-los-atributos-11" class="slide level2">
+<h2>Importancia de los atributos</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">apply</span>(osc.imp<span class="op">$</span>imp, <span class="dv">2</span>, mean), <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Resumen importancia atributos&#39;</span> )</code></pre></div>
+<table>
+<caption>
+Resumen importancia atributos
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+x
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Location
+</td>
+<td style="text-align:right;">
+27.30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OfficeSupplies
+</td>
+<td style="text-align:right;">
+25.15
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Furniture
+</td>
+<td style="text-align:right;">
+16.47
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Computers
+</td>
+<td style="text-align:right;">
+31.08
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="visualizacion-importancia-atributos" class="slide level2">
+<h2>Visualización importancia atributos</h2>
+<ul>
+<li>Finalmente podemos visualizar la importancia media de los atributos con la función <code>visualize.importance()</code> que necesita como argumentos la tabla de datos con las utilidades parciales, <code>osc.imp$part.worths</code>, la tabla de datos con las importancias en procentajes, <code>osc.imp$imp</code>, y la lista con los nombres de los atributos y niveles, <code>osc$design</code>.</li>
+</ul>
+</section>
+<section id="visualizacion-importancia-atributos-1" class="slide level2">
+<h2>Visualización importancia atributos</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">visualize.importance</span>(osc.imp<span class="op">$</span>part.worths, osc.imp<span class="op">$</span>imp, osc<span class="op">$</span>design)</code></pre></div>
+<p><img src="clase_5_files/figure-revealjs/unnamed-chunk-45-1.png" width="768" /><img src="clase_5_files/figure-revealjs/unnamed-chunk-45-2.png" width="768" /><img src="clase_5_files/figure-revealjs/unnamed-chunk-45-3.png" width="768" /><img src="clase_5_files/figure-revealjs/unnamed-chunk-45-4.png" width="768" /><img src="clase_5_files/figure-revealjs/unnamed-chunk-45-5.png" width="768" /></p>
+</section>
+<section id="simulacion-de-las-cuotas-de-mercado" class="slide level2">
+<h2>Simulación de las cuotas de mercado</h2>
+<ul>
+<li>Para simular las cuotas de mercado necesitamos información acerca de los perfiles de producto de la competencia existentes en el mercado, <code>osc$market.profiles</code> en este caso.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(osc<span class="op">$</span>market.profiles)</code></pre></div>
+<pre><code>## [1] 2 4</code></pre>
+</section>
+<section id="simulacion-de-las-cuotas-de-mercado-1" class="slide level2">
+<h2>Simulación de las cuotas de mercado</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(osc<span class="op">$</span>market.profiles, <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Market profiles&#39;</span>)</code></pre></div>
+<table>
+<caption>
+Market profiles
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Location
+</th>
+<th style="text-align:left;">
+OfficeSupplies
+</th>
+<th style="text-align:left;">
+Furniture
+</th>
+<th style="text-align:left;">
+Computers
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+OfficeEquipment
+</td>
+<td style="text-align:left;">
+W2-5Miles
+</td>
+<td style="text-align:left;">
+LAssortment
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:left;">
+SoftwareAndComputers
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DepartmentStore
+</td>
+<td style="text-align:left;">
+W2-5Miles
+</td>
+<td style="text-align:left;">
+LimAssortment
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+Software
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="simulacion-de-las-cuotas-de-mercado-2" class="slide level2">
+<h2>Simulación de las cuotas de mercado</h2>
+<ul>
+<li>También necesitamos la tabla de datos con la descripción de los perfiles de producto valorados por los individuos, <code>osc$bundles</code> en este caso.</li>
+</ul>
+</section>
+<section id="simulacion-de-las-cuotas-de-mercado-3" class="slide level2">
+<h2>Simulación de las cuotas de mercado</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(osc<span class="op">$</span>bundles, <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Bundles of attributes to be rated&#39;</span>)</code></pre></div>
+<table>
+<caption>
+Bundles of attributes to be rated
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Location
+</th>
+<th style="text-align:left;">
+OfficeSupplies
+</th>
+<th style="text-align:left;">
+Furniture
+</th>
+<th style="text-align:left;">
+Computers
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Bundle1
+</td>
+<td style="text-align:left;">
+Less2Miles
+</td>
+<td style="text-align:left;">
+VLAssortment
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:left;">
+NoComputers
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle2
+</td>
+<td style="text-align:left;">
+Less2Miles
+</td>
+<td style="text-align:left;">
+LAssortment
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+Software
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle3
+</td>
+<td style="text-align:left;">
+Less2Miles
+</td>
+<td style="text-align:left;">
+LimAssortment
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+SoftwareAndComputers
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle4
+</td>
+<td style="text-align:left;">
+Less2Miles
+</td>
+<td style="text-align:left;">
+LAssortment
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:left;">
+Software
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle5
+</td>
+<td style="text-align:left;">
+W2-5Miles
+</td>
+<td style="text-align:left;">
+VLAssortment
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:left;">
+Software
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle6
+</td>
+<td style="text-align:left;">
+W2-5Miles
+</td>
+<td style="text-align:left;">
+LAssortment
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+NoComputers
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle7
+</td>
+<td style="text-align:left;">
+W2-5Miles
+</td>
+<td style="text-align:left;">
+LimAssortment
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+Software
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle8
+</td>
+<td style="text-align:left;">
+W2-5Miles
+</td>
+<td style="text-align:left;">
+LAssortment
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:left;">
+SoftwareAndComputers
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle9
+</td>
+<td style="text-align:left;">
+W5-10Miles
+</td>
+<td style="text-align:left;">
+VLAssortment
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+SoftwareAndComputers
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle10
+</td>
+<td style="text-align:left;">
+W5-10Miles
+</td>
+<td style="text-align:left;">
+LAssortment
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:left;">
+Software
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle11
+</td>
+<td style="text-align:left;">
+W5-10Miles
+</td>
+<td style="text-align:left;">
+LimAssortment
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:left;">
+NoComputers
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle12
+</td>
+<td style="text-align:left;">
+W5-10Miles
+</td>
+<td style="text-align:left;">
+LAssortment
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+Software
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle13
+</td>
+<td style="text-align:left;">
+W2-5Miles
+</td>
+<td style="text-align:left;">
+VLAssortment
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+Software
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle14
+</td>
+<td style="text-align:left;">
+W2-5Miles
+</td>
+<td style="text-align:left;">
+VLAssortment
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:left;">
+SoftwareAndComputers
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle15
+</td>
+<td style="text-align:left;">
+W2-5Miles
+</td>
+<td style="text-align:left;">
+LimAssortment
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:left;">
+Software
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle16
+</td>
+<td style="text-align:left;">
+W2-5Miles
+</td>
+<td style="text-align:left;">
+LAssortment
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+NoComputers
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="simulacion-de-las-cuotas-de-mercado-4" class="slide level2">
+<h2>Simulación de las cuotas de mercado</h2>
+<ul>
+<li>Para completar los datos necesitamos también la valoración que han realizado los consumidores de los perfiles de productos, <code>osc$ratings</code>.</li>
+</ul>
+</section>
+<section id="simulacion-de-las-cuotas-de-mercado-5" class="slide level2">
+<h2>Simulación de las cuotas de mercado</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">t</span>(<span class="kw">head</span>(osc<span class="op">$</span>ratings)), <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Ratings of bundles by individulas&#39;</span>)</code></pre></div>
+<table>
+<caption>
+Ratings of bundles by individulas
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Respondent1
+</th>
+<th style="text-align:right;">
+Respondent2
+</th>
+<th style="text-align:right;">
+Respondent3
+</th>
+<th style="text-align:right;">
+Respondent4
+</th>
+<th style="text-align:right;">
+Respondent5
+</th>
+<th style="text-align:right;">
+Respondent6
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Bundle1
+</td>
+<td style="text-align:right;">
+90
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:right;">
+90
+</td>
+<td style="text-align:right;">
+95
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle2
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+55
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:right;">
+70
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle3
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+90
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:right;">
+70
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle4
+</td>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:right;">
+80
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle5
+</td>
+<td style="text-align:right;">
+85
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:right;">
+90
+</td>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:right;">
+80
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle6
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+65
+</td>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:right;">
+50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle7
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle8
+</td>
+<td style="text-align:right;">
+90
+</td>
+<td style="text-align:right;">
+85
+</td>
+<td style="text-align:right;">
+85
+</td>
+<td style="text-align:right;">
+85
+</td>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:right;">
+70
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle9
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:right;">
+85
+</td>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:right;">
+40
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle10
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+55
+</td>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:right;">
+60
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle11
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+55
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+55
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle12
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle13
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+90
+</td>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:right;">
+60
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle14
+</td>
+<td style="text-align:right;">
+90
+</td>
+<td style="text-align:right;">
+85
+</td>
+<td style="text-align:right;">
+85
+</td>
+<td style="text-align:right;">
+85
+</td>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:right;">
+70
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle15
+</td>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bundle16
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+45
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+65
+</td>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:right;">
+55
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="simulacion-de-las-cuotas-de-mercado-6" class="slide level2">
+<h2>Simulación de las cuotas de mercado</h2>
+<ul>
+<li>La función <code>utilities.of.profiles()</code> nos predice la utilidad que obtedría cada uno de los perfiles de producto de la competencia existente en el mercado.</li>
+</ul>
+</section>
+<section id="simulacion-de-las-cuotas-de-mercado-7" class="slide level2">
+<h2>Simulación de las cuotas de mercado</h2>
+<ul>
+<li>Esta función proporciona una tabla de datos con tantas filas como individuos tenemos en la muestra, n, y tantas columnas como marcas, m, tenemos en el objeto <code>osc$market.profiles</code>.</li>
+</ul>
+</section>
+<section id="simulacion-de-las-cuotas-de-mercado-8" class="slide level2">
+<h2>Simulación de las cuotas de mercado</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(<span class="kw">utilities.of.profiles</span>(osc<span class="op">$</span>market.profiles, osc<span class="op">$</span>ratings, osc<span class="op">$</span>bundles))</code></pre></div>
+<pre><code>## [1] 20  2</code></pre>
+</section>
+<section id="simulacion-de-las-cuotas-de-mercado-9" class="slide level2">
+<h2>Simulación de las cuotas de mercado</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(<span class="kw">utilities.of.profiles</span>(osc<span class="op">$</span>market.profiles, osc<span class="op">$</span>ratings, osc<span class="op">$</span>bundles)), <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Ratings of bundles by individulas&#39;</span>)</code></pre></div>
+<table>
+<caption>
+Ratings of bundles by individulas
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+OfficeEquipment
+</th>
+<th style="text-align:right;">
+DepartmentStore
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Respondent1
+</td>
+<td style="text-align:right;">
+89.2
+</td>
+<td style="text-align:right;">
+37.77
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Respondent2
+</td>
+<td style="text-align:right;">
+89.0
+</td>
+<td style="text-align:right;">
+35.42
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Respondent3
+</td>
+<td style="text-align:right;">
+86.2
+</td>
+<td style="text-align:right;">
+47.29
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Respondent4
+</td>
+<td style="text-align:right;">
+79.8
+</td>
+<td style="text-align:right;">
+64.16
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Respondent5
+</td>
+<td style="text-align:right;">
+73.2
+</td>
+<td style="text-align:right;">
+52.06
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Respondent6
+</td>
+<td style="text-align:right;">
+65.4
+</td>
+<td style="text-align:right;">
+46.93
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="simulacion-de-las-cuotas-de-mercado-10" class="slide level2">
+<h2>Simulación de las cuotas de mercado</h2>
+<ul>
+<li>Para predecir las cuotas de mercado primero tenemos que decidir qué regla de elección con mayor probabilidad utilizarán los consumidores a la hora de realizar sus elecciones: la regla de la máxima utilidad (primera elección), la regla de la cuota de preferencia (también denominada BTL), y la regla logit.</li>
+</ul>
+</section>
+<section id="simulacion-de-las-cuotas-de-mercado-11" class="slide level2">
+<h2>Simulación de las cuotas de mercado</h2>
+<ul>
+<li>Para el primer caso disponemos de la función <code>ms.fe.conjoint()</code>, para le segundo, <code>ms.us.conjoint()</code>, y para el tercero, <code>ms.logit.conjoint()</code> (Green &amp; Krieger 1995).</li>
+</ul>
+</section>
+<section id="simulacion-de-las-cuotas-de-mercado-12" class="slide level2">
+<h2>Simulación de las cuotas de mercado</h2>
+<ul>
+<li>Las tres funciones necesitan como argumento tres tablas de datos, la tabla con los perfiles de mercado para los que vamos a simular las cuotas de mercado, <code>osc$market.profiles</code>, la base de datos con las valoraciones realizadas por los individios, <code>osc$ratings</code>, y la base de datos con la descripción de los perfiles de producto valorados, <code>osc$bundles</code>, en este caso.</li>
+</ul>
+</section>
+<section id="simulacion-de-las-cuotas-de-mercado-13" class="slide level2">
+<h2>Simulación de las cuotas de mercado</h2>
+<ul>
+<li>En el caso de la máxima utilidad o primera elección la cuota de mercado para las dos marcas existentes en el mercado es:</li>
+</ul>
+</section>
+<section id="simulacion-de-las-cuotas-de-mercado-14" class="slide level2">
+<h2>Simulación de las cuotas de mercado</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">ms.fe.conjoint</span>(osc<span class="op">$</span>market.profiles, osc<span class="op">$</span>ratings, osc<span class="op">$</span>bundles), <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Regla de la maxima utildad&#39;</span>)</code></pre></div>
+<table>
+<caption>
+Regla de la maxima utildad
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+ms
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+OfficeEquipment
+</td>
+<td style="text-align:right;">
+100
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DepartmentStore
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="simulacion-de-las-cuotas-de-mercado-15" class="slide level2">
+<h2>Simulación de las cuotas de mercado</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ms.fe.conjoint</span>(osc<span class="op">$</span>market.profiles, osc<span class="op">$</span>ratings, osc<span class="op">$</span>bundles)</code></pre></div>
+<pre><code>##                  ms
+## OfficeEquipment 100
+## DepartmentStore   0</code></pre>
+<ul>
+<li>Si los individuos utilizaran la regla de la cuota de preferencia, las cuotas serían:</li>
+</ul>
+</section>
+<section id="simulacion-de-las-cuotas-de-mercado-16" class="slide level2">
+<h2>Simulación de las cuotas de mercado</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">ms.us.conjoint</span>(osc<span class="op">$</span>market.profiles, osc<span class="op">$</span>ratings, osc<span class="op">$</span>bundles), <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Regla de la cuota de preferencia&#39;</span>)</code></pre></div>
+<table>
+<caption>
+Regla de la cuota de preferencia
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+ms
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+OfficeEquipment
+</td>
+<td style="text-align:right;">
+62
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DepartmentStore
+</td>
+<td style="text-align:right;">
+38
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="simulacion-de-las-cuotas-de-mercado-17" class="slide level2">
+<h2>Simulación de las cuotas de mercado</h2>
+<ul>
+<li>Si los individuos utilizaran la regla logit, las cuotas estimadas serían:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">ms.logit.conjoint</span>(osc<span class="op">$</span>market.profiles, osc<span class="op">$</span>ratings, osc<span class="op">$</span>bundles), <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Regla logit&#39;</span>)</code></pre></div>
+<table>
+<caption>
+Regla logit
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+ms
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+OfficeEquipment
+</td>
+<td style="text-align:right;">
+100
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DepartmentStore
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="busqueda-del-producto-que-maximiza-el-la-cuota-de-mercado" class="slide level2">
+<h2>Búsqueda del producto que maximiza el la cuota de mercado</h2>
+<ul>
+<li>Si estamos interesados en identificar el perfil que maximiza la cuota de mercado de la empresa dados los perfiles de producto de la competencia, disponemos de las funciones <code>optim.ms.first.choice()</code>, <code>optim.ms.utility.share()</code> y <code>optim.ms.logit()</code> que utilizaremos en función de la regla de decisión que utilicen los individuos.</li>
+</ul>
+</section>
+<section id="busqueda-del-producto-que-maximiza-el-la-cuota-de-mercado-1" class="slide level2">
+<h2>Búsqueda del producto que maximiza el la cuota de mercado</h2>
+<ul>
+<li>En todos los casos, la función necesita como argumentos las valoraciones de los consumidores, <code>osc$ratings</code>, la descripción de los perfiles valorados, <code>osc$bundles</code>, los perfiles de producto de la competencia, <code>osc$market.profiles</code>, la descripción de todos los posibles perfiles de producto, <code>osc$full</code>, y el argumento hide progress bar, hpb=1, en el caso de que no queramos ver la barra de progreso (la identificación del óptimo puede tardar un poco dependiendo de la capacidad de proceso del ordenador).</li>
+</ul>
+</section>
+<section id="busqueda-del-producto-que-maximiza-el-la-cuota-de-mercado-2" class="slide level2">
+<h2>Búsqueda del producto que maximiza el la cuota de mercado</h2>
+<ul>
+<li><p>Este último argumento es interesante cuando utilizamos la función en un documento rmarkdown.</p></li>
+<li><p>La función nos devuelve una lista con dos objetos. El primero nos muestra la descripción del perfil óptimo y el segundo la cuota de mercado que obtendría la competencia y el producto que maximiza la cuota de mercado.</p></li>
+</ul>
+</section>
+<section id="first-election-or-maximum-utilitiy" class="slide level2">
+<h2>First election or maximum utilitiy</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">osc.ms.op.1choice&lt;-<span class="kw">optim.ms.first.choice</span>(osc<span class="op">$</span>ratings, osc<span class="op">$</span>bundles, osc<span class="op">$</span>market.profiles, osc<span class="op">$</span>design, <span class="dt">hpb=</span><span class="dv">1</span>)
+knitr<span class="op">::</span><span class="kw">kable</span>(osc.ms.op.1choice, <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Regla máxima utilidad&#39;</span>)</code></pre></div>
+<table class="kable_wrapper">
+<caption>
+Regla máxima utilidad
+</caption>
+<tbody>
+<tr>
+<td>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Location
+</th>
+<th style="text-align:left;">
+OfficeSupplies
+</th>
+<th style="text-align:left;">
+Furniture
+</th>
+<th style="text-align:left;">
+Computers
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+37
+</td>
+<td style="text-align:left;">
+Less2Miles
+</td>
+<td style="text-align:left;">
+VLAssortment
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:left;">
+SoftwareAndComputers
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+x
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+OfficeEquipment
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DepartmentStore
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Optim
+</td>
+<td style="text-align:right;">
+100
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="market-share" class="slide level2">
+<h2>Market share</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">osc.ms.op.us&lt;-<span class="kw">optim.ms.utility.share</span>(osc<span class="op">$</span>ratings, osc<span class="op">$</span>bundles, osc<span class="op">$</span>market.profiles, osc<span class="op">$</span>design, <span class="dt">hpb=</span><span class="dv">1</span>)
+knitr<span class="op">::</span><span class="kw">kable</span>(osc.ms.op.us, <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Regla de la cuota de preferencia&#39;</span>)</code></pre></div>
+<table class="kable_wrapper">
+<caption>
+Regla de la cuota de preferencia
+</caption>
+<tbody>
+<tr>
+<td>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Location
+</th>
+<th style="text-align:left;">
+OfficeSupplies
+</th>
+<th style="text-align:left;">
+Furniture
+</th>
+<th style="text-align:left;">
+Computers
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+37
+</td>
+<td style="text-align:left;">
+Less2Miles
+</td>
+<td style="text-align:left;">
+VLAssortment
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:left;">
+SoftwareAndComputers
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+x
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+OfficeEquipment
+</td>
+<td style="text-align:right;">
+36.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DepartmentStore
+</td>
+<td style="text-align:right;">
+22.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Optim
+</td>
+<td style="text-align:right;">
+41.5
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="logit-rule" class="slide level2">
+<h2>Logit rule</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">osc.ms.op.logit&lt;-<span class="kw">optim.ms.logit</span>(osc<span class="op">$</span>ratings, osc<span class="op">$</span>bundles, osc<span class="op">$</span>market.profiles, osc<span class="op">$</span>design, <span class="dt">hpb=</span><span class="dv">1</span>)
+knitr<span class="op">::</span><span class="kw">kable</span>(osc.ms.op.logit, <span class="dt">digits=</span><span class="dv">2</span>, <span class="dt">caption =</span> <span class="st">&#39;Regla de la cuota de preferencia&#39;</span>)</code></pre></div>
+<table class="kable_wrapper">
+<caption>
+Regla de la cuota de preferencia
+</caption>
+<tbody>
+<tr>
+<td>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Location
+</th>
+<th style="text-align:left;">
+OfficeSupplies
+</th>
+<th style="text-align:left;">
+Furniture
+</th>
+<th style="text-align:left;">
+Computers
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+37
+</td>
+<td style="text-align:left;">
+Less2Miles
+</td>
+<td style="text-align:left;">
+VLAssortment
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:left;">
+SoftwareAndComputers
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+x
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+OfficeEquipment
+</td>
+<td style="text-align:right;">
+0.33
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DepartmentStore
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Optim
+</td>
+<td style="text-align:right;">
+99.67
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="conclusiones" class="slide level2">
+<h2>Conclusiones</h2>
+<ul>
+<li>Esta primer versión del paquete MDSConjoint nos proporciona herramientas para facilitar la toma de decisiones, la simulación de la cuota de mercado de cualquier perfil de producto, dada la competencia, la obtención del perfiil que maximiza la cuota de mercado o el margen de contribución (Green, Carroll, &amp; Goldberg, 1981; Green &amp; Krieger, 1995).</li>
+</ul>
+</section>
+<section id="conclusiones-1" class="slide level2">
+<h2>Conclusiones</h2>
+<ul>
+<li>Futuras versiones introducirán algoritmos basados en programación dinámica con el objeto de utilizar algoritmos más eficiente en la obtención del producto óptimo (Kohli &amp; Krishnamurthy 1989).</li>
+</ul>
+</section>
+<section id="conclusiones-2" class="slide level2">
+<h2>Conclusiones</h2>
+<ul>
+<li>Otras mejoras están orientadas a incrementar la funcionalidad del paquete en la toma de decisiones comerciales, como la configuración de una línea de productos (Green &amp; Krieger 1992; Michalek, Ebbes, Adigüzel, Feinberg, and Papalambros 2011), la simulación de de cuotas de mercado para niveles de producto, como el precio, que no se han considerado expresamente en el diseño del análisis conjunto (Pekelman &amp; Sen 1979), segmentación de mercados según las utilidades parciales (Green &amp; Krieger 1991), o las decisiones de precios (Kohli &amp; Mahajan 1991), etc.</li>
+</ul>
+</section>
+    </div>
+  </div>
+
+  <script src="clase_5_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="clase_5_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: true,
+        // Transition style
+        transition: 'fade', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'clase_5_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
+          { src: 'clase_5_files/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

@@ -1,0 +1,545 @@
+---
+title: "**Análisis Factorial Exploratorio**"
+author: "Dra. Rocío Maehara"
+date: "2 de noviembre de 2019 <br> <img id='logopucp' src='logoPUCP.jpg'>"
+logo: "logo"
+output: 
+  revealjs::revealjs_presentation:
+    css: [logo.css, style.css]
+    theme: white
+    highlight: kate
+    center: true
+    transition: fade
+    self_contained: false
+    reveal_plugins: ["zoom","notes"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introducción
+
+<div align="justify">
+El objetivo básico del EFA es <span style="color:red">describir las covarianzas</span> entre <span style="color:blue">variables observadas en función</span> de otras no observables que subyacen bajo ellas, denominadas <span style="color:green">factores</span>.
+
+Si un grupo de variables manifiestas guarda una fuerte correlación entre ellas pero a su vez la correlación con otro grupo de variables es relativamente baja, es sensato pensar que cada grupo pueda ser reflejo de un factor subyacente que cause ese comportamiento diferenciado.
+</div>
+
+## Ejemplo 1
+
+<div align="justify">
+A continuación se presenta la <span style="color:red">matriz de correlaciones</span> entre las notas de <span style="color:blue">$n=220$ estudiantes</span> en $p=6$ asignaturas. La cuestión que se plantea es si esas <span style="color:red">notas se deben a un único factor subyacente</span>, que podría denominarse "inteligencia general", o <span style="color:blue">existen varios factores</span> que pueden explicar <span style="color:blue">distintos tipos de inteligencia</span>.
+</div>
+
+## Ejemplo 1
+
+<div align="justify">
+```
+r <- c(1.00,
+       0.439,1.00,
+       0.410,0.351,1.000,
+       0.288, 0.354,0.164,1.000,
+       0.329,0.320,0.190,0.595,1.000,
+       0.248,0.329,0.181,0.470,0.464,1.000)
+# cargamos la libreria lavaan
+library(lavaan)
+# convertimos el vector r en la matrix R
+R <- lav_matrix_lower2full(r)
+# Etiquetamos a las variables de la matriz
+colnames(R)<-rownames(R)<-
+ c("Gae","Eng","His","Ari","Alg","Geo")
+R 
+
+```
+</div>
+
+## Ejemplo 1
+
+<div align="justify">
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+r <- c(1.00,
+       0.439,1.00,
+       0.410,0.351,1.000,
+       0.288, 0.354,0.164,1.000,
+       0.329,0.320,0.190,0.595,1.000,
+       0.248,0.329,0.181,0.470,0.464,1.000)
+# cargamos la libreria lavaan
+library(lavaan)
+# convertimos el vector r en la matrix R
+R <- lav_matrix_lower2full(r)
+# Etiquetamos a las variables de la matriz
+colnames(R)<-rownames(R)<-
+ c("Gae","Eng","His","Ari","Alg","Geo")
+R 
+
+```
+</div>
+
+## Ejemplo 1
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# obtenemos los autovalores y autovectores
+auto<-svd(R)
+auto
+```
+
+</div>
+<div id="right">
+```
+# obtenemos los autovalores y autovectores
+auto<-svd(R)
+auto
+```
+
+ <div align="justify">
+  <font size="6">
+   <p class="small">
+Para obtener la matriz con las cargas debemos multiplicar los autovectores (`auto$u`) con la raíz cuadrada de la matriz diagonal con los autovalores (`diag(auto$d)`)
+</p>
+</font>
+</div> 
+</div>
+
+## Ejemplo 1 
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# generamos la matriz diagonal de los autovalores
+av<-diag(auto$d)
+av
+# obtenemos la matriz LAMBDA cpn las cargas factoriales
+LAMBDA<-auto$u%*%sqrt(av)
+LAMBDA
+```
+
+</div>
+<div id="right">
+```
+# generamos la matriz diagonal de los autovalores
+av<-diag(auto$d)
+av
+# obtenemos la matriz LAMBDA cpn las cargas factoriales
+LAMBDA<-auto$u%*%sqrt(av)
+LAMBDA
+```
+
+ <div align="justify">
+  <font size="6">
+   <p class="small">
+`LAMBDA` es la matriz con las cargas factoriales ($\boldsymbol{\Lambda}$) obtenida usando el método de componentes principales
+</p>
+</font>
+</div> 
+</div>
+
+## Ejemplo 1
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+#cargando la libreria para obtener el EFA
+library(psych)
+#estimación del EFA mediante el método de componentes principales
+fit.pca <- principal(R,nfactors=2,rotate="none")
+fit.pca
+```
+
+</div>
+<div id="right">
+```
+#cargando la libreria para obtener el EFA
+library(psych)
+#estimación del EFA mediante el método de componentes principales
+fit.pca <- principal(R,nfactors=2,rotate="none")
+fit.pca
+```
+
+ <div align="justify">
+  <font size="6">
+   <p class="small">
+Lo anterior puede ser obtenido facilmente usando la libreria `psych`
+</p>
+</font>
+</div> 
+</div>
+
+## Ejemplo 1
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+#estimación del EFA por el metodos de componentes principales iteradas o ejes principales
+fit.pa <- fa(R,nfactors=2,fm="pa",rotate="none",n.obs=220)
+fit.pa
+```
+
+</div>
+<div id="right">
+```
+#estimación del EFA por el metodos de componentes principales iteradas o ejes principales
+fit.pa <- fa(R,nfactors=2,fm="pa",rotate="none",n.obs=220)
+fit.pa
+```
+
+ <div align="justify">
+  <font size="5">
+   <p class="small">
+* La media cuadrática de los residuos (RMSR) es 0.01. Esto es aceptable ya que este valor debería estar más cerca de 0. A continuación, debemos verificar el índice RMSEA (error cuadrático medio de aproximación). Su valor, 0 muestra un buen ajuste del modelo, ya que está por debajo de 0.05. Finalmente, el índice de Tucker-Lewis (TLI) es 1.021, un valor aceptable si se considera que está por encima de 0.9.
+</p>
+</font>
+</div> 
+</div>
+
+## Ejemplo 1
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+#estimación del EFA mediante el método de máxima verosimilitud
+
+```
+
+</div>
+<div id="right">
+```
+#estimación del EFA mediante el método de máxima verosimilitud
+fit.ml <- fa(R,nfactors=2,fm="ml",rotate="none",n.obs=220)
+fit.ml
+```
+
+ <div align="justify">
+  <font size="5">
+   <p class="small">
+* La media cuadrática de los residuos (RMSR) es 0.01. Esto es aceptable ya que este valor debería estar más cerca de 0. A continuación, debemos verificar el índice RMSEA (error cuadrático medio de aproximación). Su valor, 0 muestra un buen ajuste del modelo, ya que está por debajo de 0.05. Finalmente, el índice de Tucker-Lewis (TLI) es 1.021, un valor aceptable si se considera que está por encima de 0.9.
+</p>
+</font>
+</div> 
+</div>
+
+
+## Ejemplo 1
+
+<div align="justify">
+*¿Qué método elegir?*
+
+* Cualquiera cuando la estructura factorial es clara y se cumple la normalidad multivariante.
+
+* Cuando no se cumplen los supuestos la mejor opción es máxima verosimilitud.  
+</div>
+
+## Ejemplo 1
+
+<div align="justify">
+Para representar las cargas factoriales usando los tres métodos de extracción son:
+```
+#representación gráfica de las tres estimaciones
+plot(fit.pca,labels=row.names(R),cex=0.7,ylim=c(-0.8,0.8))
+plot(fit.pa,labels=row.names(R),cex=0.7,ylim=c(-0.8,0.8))
+plot(fit.ml,labels=row.names(R),cex=0.7,ylim=c(-0.8,0.8))
+```
+</div>
+
+## Ejemplo 1
+
+## Ejemplo 1
+
+<div id="left">
+
+
+</div>
+<div id="right">
+ <div align="justify">
+  <font size="6">
+   <p class="small">
+Las figuras que representan las cargas de los tres métodos de extracción producen resultados prácticamente idénticos.
+</p>
+</font>
+</div> 
+</div>
+
+## Ejemplo 1
+
+<div align="justify">
+<font size="6">
+*Número de factores a retener*
+
+* El análisis paralelo es propuesto como una alternativa a considerar solo los autovalores superiores a la unidad y como una forma de objetivar el gráfico de sedimentación.
+
+* Primero se generan conjuntos de datos aleatorios con el mismo número de casos y variables que el original. Se realizan análisis PCA repetidos sobre cada uno de esos conjuntos de datos aleatorios de datos anotándose los autovalores de cada análisis. Se calcula la media de esos autovalores en los conjuntos de datos aleatorios de datos para cada factor y se comparan con los del conjunto real de datos.
+
+* El criterio es retener solo aquellos autovalores cuyo promedio supere el aletorio.
+</font>
+</div>
+
+## Ejemplo 1
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# considerando autovalor>1, sedimentación, paralelo
+fa.parallel(R,fm="pa",n.obs=220,ylabel="Eigenvalues")
+```
+
+</div>
+<div id="right">
+```
+# considerando autovalor>1, sedimentación, paralelo
+fa.parallel(R,fm="pa",n.obs=220,ylabel="Eigenvalues")
+```
+
+ <div align="justify">
+  <font size="6">
+   <p class="small">
+Se puede apreciar que para el método de componentes principales retener dos factores es la solución más adecuada.
+</p>
+</font>
+</div> 
+</div>
+
+## Ejemplo 1
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# considerando autovalor>1, sedimentación, paralelo
+fa.parallel(R,fm="ml",n.obs=220,ylabel="Eigenvalues")
+```
+
+</div>
+<div id="right">
+```
+# considerando autovalor>1, sedimentación, paralelo
+fa.parallel(R,fm="ml",n.obs=220,ylabel="Eigenvalues")
+```
+
+ <div align="justify">
+  <font size="6">
+   <p class="small">
+Se puede apreciar que para el método de extracción de máxima verosimilitud retener dos factores es la solución más adecuada. 
+</p>
+</font>
+</div> 
+</div>
+
+## Ejemplo 1
+
+<div align="justify">
+*Rotación ortogonal*
+
+* En la rotación ortogonal, los ejes se rotan de forma que quede preservada la incorrelación entre los factores.
+
+* Los nuevos ejes son perpendiculares de igual forma que los son los factores sin rotar.
+
+* Después de aplicada la rotación "Varimax"" queda inalterada tanto la varianza total explicada como la comunalidad de las variables.
+
+</div>
+
+## Ejemplo 1 (solución sin rotar)
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+#estimación del EFA por el metodos de componentes principales iteradas o ejes principales
+fit.pa <- fa(R,nfactors=2,fm="pa",rotate="none",n.obs=220)
+fit.pa
+```
+
+</div>
+<div id="right">
+```
+#estimación del EFA por el metodos de componentes principales iteradas o ejes principales
+fit.pa <- fa(R,nfactors=2,fm="pa",rotate="none",n.obs=220)
+fit.pa
+```
+
+ <div align="justify">
+  <font size="6">
+   <p class="small">
+Vemos que en el segundo factor las correlaciones no son muy altas en varios cursos y la interpretación se dificulta. Con esta solución se podría pensar que el factor uno se puede catalogar como inteligencia general.
+</p>
+</font>
+</div> 
+</div>
+
+## Ejemplo 1 (Rotación Varimax)
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# rotación ortogonal Varimax
+fit.pa.rot.ort <- fa(R,nfactors=2,fm="pa",rotate="varimax",n.obs=220)
+fit.pa.rot.ort
+```
+
+</div>
+<div id="right">
+```
+# rotación ortogonal Varimax
+fit.pa.rot.ort <- fa(R,nfactors=2,fm="pa",rotate="varimax",n.obs=220)
+fit.pa.rot.ort
+```
+
+ <div align="justify">
+  <font size="6">
+   <p class="small">
+Se puede apreciar que para el nuevo factor uno las correlaciones de los cursos geometría, algebra y aritmética aumentó.<br>
+El primer factor se podría denominar "habilidad matemática" y el segundo "habilidad verbal" (gaélico, ingles e historia).
+</p>
+</font>
+</div> 
+</div>
+
+## Ejemplo 1
+
+<div align="justify">
+*Rotación oblicua*
+
+* Los factores ya no estaran incorrelados. Sin embargo, puede compensarse esta pérdida, si, a cambio se consigue una asociación más nítida de cada una de las variables con el factor correspondiente.
+
+* Afecta a la matriz factorial que contiene las cargas factoriales y que son distintas a la solución original.
+
+
+</div>
+
+## Ejemplo 1 (Rotación Oblimin)
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# rotación oblicua
+fit.pa.rot.obl <- fa(R,nfactors=2,fm="pa",rotate="oblimin",n.obs=220)
+fit.pa.rot.obl
+```
+
+</div>
+<div id="right">
+```
+# rotación oblicua
+fit.pa.rot.obl <- fa(R,nfactors=2,fm="pa",rotate="oblimin",n.obs=220)
+fit.pa.rot.obl
+```
+
+ <div align="justify">
+  <font size="6">
+   <p class="small">
+Se puede apreciar que para el nuevo factor uno las correlaciones de los cursos geometría, algebra y aritmética aumentó mucho más que con la rotación varimax.<br>
+
+</p>
+</font>
+</div> 
+</div>
+
+## Ejemplo 1
+
+<div align="justify">
+*Contraste de esfericidad de Bartlett*
+
+* ¿Están correlacionadas entre sí las variables originales? Si no lo estuvieran, no existirian factores comunes y, por lo tanto, no tendría sentido aplicar el análisis factorial. 
+
+* En este contraste la hipótesis nula que hay que contrastar es que todos los coeficientes de correlación entre cada para de variables son nulos.
+
+## Ejemplo 1 
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# contraste de esfericidad de Bartlett
+cortest.bartlett(R,n=220)
+```
+
+</div>
+<div id="right">
+```
+# contraste de esfericidad de Bartlett
+cortest.bartlett(R,n=220)
+```
+
+ <div align="justify">
+  <font size="6">
+   <p class="small">
+Se puede apreciar que la hipótesis nula puede rechazarse para cualquier nivel de significación.
+
+</p>
+</font>
+</div> 
+</div>
+
+## Ejemplo 1
+
+<div align="justify">
+*Medidas de adecuación muestral de Kaiser-Meyer-Olkin*
+
+* En el caso que exista adecuación de los datos a un modelos de análisis factorial, la medida KMO estará próxima a 1. 
+
+*Medidas de adecuación muestral individual MSA (Measure of Sampling Adecuacy)*
+
+* Un valor próximo a 1 de $MSA_j$ indicará que la variable $x_j$ es adecuada para su tratamiento en el análisis factorial con el resto de variables.
+
+## Ejemplo 1
+
+```{r fig3, echo = FALSE, out.width = "80%", fig.align='center'}
+knitr::include_graphics("images/kmo.JPG")
+```
+
+## Ejemplo 1 
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# medidas KMO de adecuación muestral general e individual
+KMO(R)
+```
+
+</div>
+<div id="right">
+```
+# medidas KMO de adecuación muestral general e individual
+KMO(R)
+```
+
+ <div align="justify">
+  <font size="6">
+   <p class="small">
+El KMO de 0.77 se puede catalogar como "mediano"" y las medidas de adecuación individual de las variables son superiores a 0.7.
+
+</p>
+</font>
+</div> 
+</div>
+
+## Ejemplo 1
+
+<div align="justify">
+*Puntuaciones factoriales*
+
+Por ejemplo, si el investigador queria realizar un análisis de regresión  utilizando como variables independientes las variables $x_1$ a $x_6$ de nuestro ejemplo y se encontró con un problema de multicolinealidad, si efectua un EFA con una rotación ortogonal y guarda las puntuaciones factoriales, éstas estarán incorrelacionadas y podrá utilizarlas como variables independientes en su regresión (siempre y cuando haya sido capaz de dar una interpretación razonable a los factores).
+
+## Ejemplo 1 
+
+<div id="left">
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# puntuaciones factoriales
+factor.scores(R,fit.pca,method = "Thurstone")$weights
+```
+
+</div>
+<div id="right">
+```
+# puntuaciones factoriales
+factor.scores(R,fit.pca,method = "Thurstone")$weights
+```
+
+ <div align="justify">
+  <font size="6">
+   <p class="small">
+Puntuaciones factoriales para nuestro ejemplo.
+
+</p>
+</font>
+</div> 
+</div>
+

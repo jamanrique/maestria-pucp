@@ -1,0 +1,52 @@
+---
+title: "Tutorial de R"
+output: 
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(FactoMineR)
+naranja <- read.table("http://factominer.free.fr/libra/naranja.csv",header=TRUE, sep=";", dec=".", row.names=1)
+res.pca <- PCA(naranja,quanti.sup=8:14,quali.sup=15:16)
+```
+
+## *Análisis de componentes principales*
+
+**Ejemplo 1**
+
+Estos datos se han obtenido en el ámbito de trabajos de estudiantes del Agrocampus. Un jurado integrado por estudiantes evaluó los seis jugos de naranja según siete variables sensoriales (intensidad del olor, tipo de olor, carácter pulposo, intensidad del sabor, carácter ácido, carácter amargo, carácter azucarado). 
+
+Primero cargamos el paquete `FactoMineR` y luego importamos los datos precisando que el nombre de los individuos está en la primera columna (`row.names=1`)
+
+```
+library(FactoMineR)
+naranja <- read.table("http://factominer.free.fr/libra/naranja.csv",header=TRUE, sep=";", dec=".", row.names=1)
+```
+
+```{r code1, exercise=TRUE} 
+naranja
+```
+
+Podemos apreciar que la matriz de correlación reagrupa los 21 coeficientes de correlación. Se pueden reagrupar las variables muy correlacionades por paquetes pero, incluso para este número reducido de variables, esta reagrupación es
+fastidiosa.
+
+```{r code2, exercise=TRUE} 
+cor(naranja[,1:7])
+```
+
+El ACP se obtiene precisando que aquí las variables de 8 a 14 son cuantitativas suplementarias y las variables 15 y 16 son cualitativas suplementarias:
+
+```
+res.pca <- PCA(naranja,quanti.sup=8:14,quali.sup=15:16)`
+```
+
+```{r code3, exercise=TRUE} 
+windows()
+plot(res.pca, invisible="quali")
+```
+
+

@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Dra. Rocío Maehara" />
+  <title>Análisis Factorial Exploratorio</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="clase3_files/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="clase3_files/reveal.js-3.3.0.1/css/theme/white.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="logo.css"/>
+    <link rel="stylesheet" href="style.css"/>
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title"><strong>Análisis Factorial Exploratorio</strong></h1>
+    <h2 class="author">Dra. Rocío Maehara</h2>
+    <h3 class="date">2 de noviembre de 2019 <br> <img id='logopucp' src='logoPUCP.jpg'></h3>
+</section>
+
+<section id="introduccion" class="slide level2">
+<h2>Introducción</h2>
+<div align="justify">
+<p>El objetivo básico del EFA es <span style="color:red">describir las covarianzas</span> entre <span style="color:blue">variables observadas en función</span> de otras no observables que subyacen bajo ellas, denominadas <span style="color:green">factores</span>.</p>
+<p>Si un grupo de variables manifiestas guarda una fuerte correlación entre ellas pero a su vez la correlación con otro grupo de variables es relativamente baja, es sensato pensar que cada grupo pueda ser reflejo de un factor subyacente que cause ese comportamiento diferenciado.</p>
+</div>
+</section>
+<section id="ejemplo-1" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div align="justify">
+<p>A continuación se presenta la <span style="color:red">matriz de correlaciones</span> entre las notas de <span style="color:blue"><span class="math inline">\(n=220\)</span> estudiantes</span> en <span class="math inline">\(p=6\)</span> asignaturas. La cuestión que se plantea es si esas <span style="color:red">notas se deben a un único factor subyacente</span>, que podría denominarse “inteligencia general”, o <span style="color:blue">existen varios factores</span> que pueden explicar <span style="color:blue">distintos tipos de inteligencia</span>.</p>
+</div>
+</section>
+<section id="ejemplo-1-1" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div align="justify">
+<pre><code>r &lt;- c(1.00,
+       0.439,1.00,
+       0.410,0.351,1.000,
+       0.288, 0.354,0.164,1.000,
+       0.329,0.320,0.190,0.595,1.000,
+       0.248,0.329,0.181,0.470,0.464,1.000)
+# cargamos la libreria lavaan
+library(lavaan)
+# convertimos el vector r en la matrix R
+R &lt;- lav_matrix_lower2full(r)
+# Etiquetamos a las variables de la matriz
+colnames(R)&lt;-rownames(R)&lt;-
+ c(&quot;Gae&quot;,&quot;Eng&quot;,&quot;His&quot;,&quot;Ari&quot;,&quot;Alg&quot;,&quot;Geo&quot;)
+R 
+</code></pre>
+</div>
+</section>
+<section id="ejemplo-1-2" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div align="justify">
+<pre><code>##       Gae   Eng   His   Ari   Alg   Geo
+## Gae 1.000 0.439 0.410 0.288 0.329 0.248
+## Eng 0.439 1.000 0.351 0.354 0.320 0.329
+## His 0.410 0.351 1.000 0.164 0.190 0.181
+## Ari 0.288 0.354 0.164 1.000 0.595 0.470
+## Alg 0.329 0.320 0.190 0.595 1.000 0.464
+## Geo 0.248 0.329 0.181 0.470 0.464 1.000</code></pre>
+</div>
+</section>
+<section id="ejemplo-1-3" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div id="left">
+<pre><code>## $d
+## [1] 2.7328841 1.1297704 0.6151739 0.6012219 0.5247969 0.3961529
+## 
+## $u
+##            [,1]       [,2]          [,3]        [,4]       [,5]
+## [1,] -0.3979211  0.4224739  0.2378797843 -0.44697886  0.6205763
+## [2,] -0.4164293  0.2732052  0.6497850613  0.40590321 -0.3699525
+## [3,] -0.3129591  0.5996225 -0.6713466822  0.09898664 -0.2855052
+## [4,] -0.4466126 -0.3885864 -0.0008312812 -0.23224145 -0.3517809
+## [5,] -0.4499766 -0.3532281 -0.1360853358 -0.40242630 -0.1217941
+## [6,] -0.4103173 -0.3340032 -0.2279611918  0.64013367  0.5078616
+##             [,6]
+## [1,] -0.14725080
+## [2,]  0.16763850
+## [3,] -0.02217036
+## [4,] -0.68691430
+## [5,]  0.69097829
+## [6,] -0.02051222
+## 
+## $v
+##            [,1]       [,2]          [,3]        [,4]       [,5]
+## [1,] -0.3979211  0.4224739  0.2378797843 -0.44697886  0.6205763
+## [2,] -0.4164293  0.2732052  0.6497850613  0.40590321 -0.3699525
+## [3,] -0.3129591  0.5996225 -0.6713466822  0.09898664 -0.2855052
+## [4,] -0.4466126 -0.3885864 -0.0008312812 -0.23224145 -0.3517809
+## [5,] -0.4499766 -0.3532281 -0.1360853358 -0.40242630 -0.1217941
+## [6,] -0.4103173 -0.3340032 -0.2279611918  0.64013367  0.5078616
+##             [,6]
+## [1,] -0.14725080
+## [2,]  0.16763850
+## [3,] -0.02217036
+## [4,] -0.68691430
+## [5,]  0.69097829
+## [6,] -0.02051222</code></pre>
+</div>
+<div id="right">
+<pre><code># obtenemos los autovalores y autovectores
+auto&lt;-svd(R)
+auto</code></pre>
+<div align="justify">
+<font size="6">
+<p class="small">
+Para obtener la matriz con las cargas debemos multiplicar los autovectores (<code>auto$u</code>) con la raíz cuadrada de la matriz diagonal con los autovalores (<code>diag(auto$d)</code>)
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="ejemplo-1-4" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div id="left">
+<pre><code>##          [,1]    [,2]      [,3]      [,4]      [,5]      [,6]
+## [1,] 2.732884 0.00000 0.0000000 0.0000000 0.0000000 0.0000000
+## [2,] 0.000000 1.12977 0.0000000 0.0000000 0.0000000 0.0000000
+## [3,] 0.000000 0.00000 0.6151739 0.0000000 0.0000000 0.0000000
+## [4,] 0.000000 0.00000 0.0000000 0.6012219 0.0000000 0.0000000
+## [5,] 0.000000 0.00000 0.0000000 0.0000000 0.5247969 0.0000000
+## [6,] 0.000000 0.00000 0.0000000 0.0000000 0.0000000 0.3961529</code></pre>
+<pre><code>##            [,1]       [,2]         [,3]        [,4]        [,5]
+## [1,] -0.6578207  0.4490503  0.186576299 -0.34658069  0.44956326
+## [2,] -0.6884175  0.2903916  0.509646048  0.31473125 -0.26800419
+## [3,] -0.5173663  0.6373427 -0.526557479  0.07675275 -0.20682814
+## [4,] -0.7383147 -0.4130310 -0.000651999 -0.18007653 -0.25484019
+## [5,] -0.7438760 -0.3754484 -0.106735839 -0.31203531 -0.08823116
+## [6,] -0.6783135 -0.3550142 -0.178796848  0.49635004  0.36790950
+##             [,6]
+## [1,] -0.09268065
+## [2,]  0.10551281
+## [3,] -0.01395417
+## [4,] -0.43234852
+## [5,]  0.43490643
+## [6,] -0.01291053</code></pre>
+</div>
+<div id="right">
+<pre><code># generamos la matriz diagonal de los autovalores
+av&lt;-diag(auto$d)
+av
+# obtenemos la matriz LAMBDA cpn las cargas factoriales
+LAMBDA&lt;-auto$u%*%sqrt(av)
+LAMBDA</code></pre>
+<div align="justify">
+<font size="6">
+<p class="small">
+<code>LAMBDA</code> es la matriz con las cargas factoriales (<span class="math inline">\(\boldsymbol{\Lambda}\)</span>) obtenida usando el método de componentes principales
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="ejemplo-1-5" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div id="left">
+<pre><code>## Principal Components Analysis
+## Call: principal(r = R, nfactors = 2, rotate = &quot;none&quot;)
+## Standardized loadings (pattern matrix) based upon correlation matrix
+##      PC1   PC2   h2   u2 com
+## Gae 0.66  0.45 0.63 0.37 1.8
+## Eng 0.69  0.29 0.56 0.44 1.3
+## His 0.52  0.64 0.67 0.33 1.9
+## Ari 0.74 -0.41 0.72 0.28 1.6
+## Alg 0.74 -0.38 0.69 0.31 1.5
+## Geo 0.68 -0.36 0.59 0.41 1.5
+## 
+##                        PC1  PC2
+## SS loadings           2.73 1.13
+## Proportion Var        0.46 0.19
+## Cumulative Var        0.46 0.64
+## Proportion Explained  0.71 0.29
+## Cumulative Proportion 0.71 1.00
+## 
+## Mean item complexity =  1.6
+## Test of the hypothesis that 2 components are sufficient.
+## 
+## The root mean square of the residuals (RMSR) is  0.11 
+## 
+## Fit based upon off diagonal values = 0.9</code></pre>
+</div>
+<div id="right">
+<pre><code>#cargando la libreria para obtener el EFA
+library(psych)
+#estimación del EFA mediante el método de componentes principales
+fit.pca &lt;- principal(R,nfactors=2,rotate=&quot;none&quot;)
+fit.pca</code></pre>
+<div align="justify">
+<font size="6">
+<p class="small">
+Lo anterior puede ser obtenido facilmente usando la libreria <code>psych</code>
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="ejemplo-1-6" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div id="left">
+<pre><code>## Factor Analysis using method =  pa
+## Call: fa(r = R, nfactors = 2, n.obs = 220, rotate = &quot;none&quot;, fm = &quot;pa&quot;)
+## Standardized loadings (pattern matrix) based upon correlation matrix
+##      PA1   PA2   h2   u2 com
+## Gae 0.59  0.38 0.49 0.51 1.7
+## Eng 0.59  0.24 0.41 0.59 1.3
+## His 0.43  0.41 0.36 0.64 2.0
+## Ari 0.71 -0.33 0.62 0.38 1.4
+## Alg 0.70 -0.28 0.57 0.43 1.3
+## Geo 0.58 -0.18 0.38 0.62 1.2
+## 
+##                        PA1  PA2
+## SS loadings           2.22 0.59
+## Proportion Var        0.37 0.10
+## Cumulative Var        0.37 0.47
+## Proportion Explained  0.79 0.21
+## Cumulative Proportion 0.79 1.00
+## 
+## Mean item complexity =  1.5
+## Test of the hypothesis that 2 factors are sufficient.
+## 
+## The degrees of freedom for the null model are  15  and the objective function was  1.44 with Chi Square of  310.84
+## The degrees of freedom for the model are 4  and the objective function was  0.01 
+## 
+## The root mean square of the residuals (RMSR) is  0.01 
+## The df corrected root mean square of the residuals is  0.03 
+## 
+## The harmonic number of observations is  220 with the empirical chi square  1.32  with prob &lt;  0.86 
+## The total number of observations was  220  with Likelihood Chi Square =  2.35  with prob &lt;  0.67 
+## 
+## Tucker Lewis Index of factoring reliability =  1.021
+## RMSEA index =  0  and the 90 % confidence intervals are  0 0.08
+## BIC =  -19.22
+## Fit based upon off diagonal values = 1
+## Measures of factor score adequacy             
+##                                                    PA1  PA2
+## Correlation of (regression) scores with factors   0.90 0.73
+## Multiple R square of scores with factors          0.82 0.53
+## Minimum correlation of possible factor scores     0.64 0.07</code></pre>
+</div>
+<div id="right">
+<pre><code>#estimación del EFA por el metodos de componentes principales iteradas o ejes principales
+fit.pa &lt;- fa(R,nfactors=2,fm=&quot;pa&quot;,rotate=&quot;none&quot;,n.obs=220)
+fit.pa</code></pre>
+<div align="justify">
+<font size="5">
+<p class="small">
+<ul>
+<li>La media cuadrática de los residuos (RMSR) es 0.01. Esto es aceptable ya que este valor debería estar más cerca de 0. A continuación, debemos verificar el índice RMSEA (error cuadrático medio de aproximación). Su valor, 0 muestra un buen ajuste del modelo, ya que está por debajo de 0.05. Finalmente, el índice de Tucker-Lewis (TLI) es 1.021, un valor aceptable si se considera que está por encima de 0.9.</li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="ejemplo-1-7" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div id="left">
+<pre><code>## Factor Analysis using method =  ml
+## Call: fa(r = R, nfactors = 2, n.obs = 220, rotate = &quot;none&quot;, fm = &quot;ml&quot;)
+## Standardized loadings (pattern matrix) based upon correlation matrix
+##      ML1   ML2   h2   u2 com
+## Gae 0.55  0.43 0.49 0.51 1.9
+## Eng 0.57  0.29 0.41 0.59 1.5
+## His 0.39  0.45 0.36 0.64 2.0
+## Ari 0.74 -0.27 0.62 0.38 1.3
+## Alg 0.72 -0.21 0.57 0.43 1.2
+## Geo 0.60 -0.13 0.37 0.63 1.1
+## 
+##                        ML1  ML2
+## SS loadings           2.21 0.61
+## Proportion Var        0.37 0.10
+## Cumulative Var        0.37 0.47
+## Proportion Explained  0.78 0.22
+## Cumulative Proportion 0.78 1.00
+## 
+## Mean item complexity =  1.5
+## Test of the hypothesis that 2 factors are sufficient.
+## 
+## The degrees of freedom for the null model are  15  and the objective function was  1.44 with Chi Square of  310.84
+## The degrees of freedom for the model are 4  and the objective function was  0.01 
+## 
+## The root mean square of the residuals (RMSR) is  0.01 
+## The df corrected root mean square of the residuals is  0.03 
+## 
+## The harmonic number of observations is  220 with the empirical chi square  1.34  with prob &lt;  0.86 
+## The total number of observations was  220  with Likelihood Chi Square =  2.33  with prob &lt;  0.67 
+## 
+## Tucker Lewis Index of factoring reliability =  1.021
+## RMSEA index =  0  and the 90 % confidence intervals are  0 0.079
+## BIC =  -19.24
+## Fit based upon off diagonal values = 1
+## Measures of factor score adequacy             
+##                                                    ML1  ML2
+## Correlation of (regression) scores with factors   0.91 0.73
+## Multiple R square of scores with factors          0.82 0.53
+## Minimum correlation of possible factor scores     0.64 0.07</code></pre>
+</div>
+<div id="right">
+<pre><code>#estimación del EFA mediante el método de máxima verosimilitud
+fit.ml &lt;- fa(R,nfactors=2,fm=&quot;ml&quot;,rotate=&quot;none&quot;,n.obs=220)
+fit.ml</code></pre>
+<div align="justify">
+<font size="5">
+<p class="small">
+<ul>
+<li>La media cuadrática de los residuos (RMSR) es 0.01. Esto es aceptable ya que este valor debería estar más cerca de 0. A continuación, debemos verificar el índice RMSEA (error cuadrático medio de aproximación). Su valor, 0 muestra un buen ajuste del modelo, ya que está por debajo de 0.05. Finalmente, el índice de Tucker-Lewis (TLI) es 1.021, un valor aceptable si se considera que está por encima de 0.9.</li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="ejemplo-1-8" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div align="justify">
+<p><em>¿Qué método elegir?</em></p>
+<ul>
+<li><p>Cualquiera cuando la estructura factorial es clara y se cumple la normalidad multivariante.</p></li>
+<li>Cuando no se cumplen los supuestos la mejor opción es máxima verosimilitud.<br />
+</li>
+</ul>
+</div>
+</section>
+<section id="ejemplo-1-9" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div align="justify">
+<p>Para representar las cargas factoriales usando los tres métodos de extracción son:</p>
+<pre><code>#representación gráfica de las tres estimaciones
+plot(fit.pca,labels=row.names(R),cex=0.7,ylim=c(-0.8,0.8))
+plot(fit.pa,labels=row.names(R),cex=0.7,ylim=c(-0.8,0.8))
+plot(fit.ml,labels=row.names(R),cex=0.7,ylim=c(-0.8,0.8))</code></pre>
+</div>
+</section>
+<section id="ejemplo-1-10" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div id="left">
+<p><img src="clase3_files/figure-revealjs/unnamed-chunk-7-1.png" width="768" /></p>
+</div>
+<div id="right">
+<p><img src="clase3_files/figure-revealjs/unnamed-chunk-8-1.png" width="768" /></p>
+</div>
+</section>
+<section id="ejemplo-1-11" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div id="left">
+<p><img src="clase3_files/figure-revealjs/unnamed-chunk-9-1.png" width="768" /></p>
+</div>
+<div id="right">
+<div align="justify">
+<font size="6">
+<p class="small">
+Las figuras que representan las cargas de los tres métodos de extracción producen resultados prácticamente idénticos.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="ejemplo-1-12" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div align="justify">
+<p><font size="6"> <em>Número de factores a retener</em></p>
+<ul>
+<li><p>El análisis paralelo es propuesto como una alternativa a considerar solo los autovalores superiores a la unidad y como una forma de objetivar el gráfico de sedimentación.</p></li>
+<li><p>Primero se generan conjuntos de datos aleatorios con el mismo número de casos y variables que el original. Se realizan análisis PCA repetidos sobre cada uno de esos conjuntos de datos aleatorios de datos anotándose los autovalores de cada análisis. Se calcula la media de esos autovalores en los conjuntos de datos aleatorios de datos para cada factor y se comparan con los del conjunto real de datos.</p></li>
+<li>El criterio es retener solo aquellos autovalores cuyo promedio supere el aletorio. </font></li>
+</ul>
+</div>
+</section>
+<section id="ejemplo-1-13" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div id="left">
+<p><img src="clase3_files/figure-revealjs/unnamed-chunk-10-1.png" width="768" /></p>
+<pre><code>## Parallel analysis suggests that the number of factors =  2  and the number of components =  1</code></pre>
+</div>
+<div id="right">
+<pre><code># considerando autovalor&gt;1, sedimentación, paralelo
+fa.parallel(R,fm=&quot;pa&quot;,n.obs=220,ylabel=&quot;Eigenvalues&quot;)</code></pre>
+<div align="justify">
+<font size="6">
+<p class="small">
+Se puede apreciar que para el método de componentes principales retener dos factores es la solución más adecuada.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="ejemplo-1-14" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div id="left">
+<p><img src="clase3_files/figure-revealjs/unnamed-chunk-11-1.png" width="768" /></p>
+<pre><code>## Parallel analysis suggests that the number of factors =  2  and the number of components =  1</code></pre>
+</div>
+<div id="right">
+<pre><code># considerando autovalor&gt;1, sedimentación, paralelo
+fa.parallel(R,fm=&quot;ml&quot;,n.obs=220,ylabel=&quot;Eigenvalues&quot;)</code></pre>
+<div align="justify">
+<font size="6">
+<p class="small">
+Se puede apreciar que para el método de extracción de máxima verosimilitud retener dos factores es la solución más adecuada.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="ejemplo-1-15" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div align="justify">
+<p><em>Rotación ortogonal</em></p>
+<ul>
+<li><p>En la rotación ortogonal, los ejes se rotan de forma que quede preservada la incorrelación entre los factores.</p></li>
+<li><p>Los nuevos ejes son perpendiculares de igual forma que los son los factores sin rotar.</p></li>
+<li><p>Después de aplicada la rotación “Varimax”&quot; queda inalterada tanto la varianza total explicada como la comunalidad de las variables.</p></li>
+</ul>
+</div>
+</section>
+<section id="ejemplo-1-solucion-sin-rotar" class="slide level2">
+<h2>Ejemplo 1 (solución sin rotar)</h2>
+<div id="left">
+<pre><code>## Factor Analysis using method =  pa
+## Call: fa(r = R, nfactors = 2, n.obs = 220, rotate = &quot;none&quot;, fm = &quot;pa&quot;)
+## Standardized loadings (pattern matrix) based upon correlation matrix
+##      PA1   PA2   h2   u2 com
+## Gae 0.59  0.38 0.49 0.51 1.7
+## Eng 0.59  0.24 0.41 0.59 1.3
+## His 0.43  0.41 0.36 0.64 2.0
+## Ari 0.71 -0.33 0.62 0.38 1.4
+## Alg 0.70 -0.28 0.57 0.43 1.3
+## Geo 0.58 -0.18 0.38 0.62 1.2
+## 
+##                        PA1  PA2
+## SS loadings           2.22 0.59
+## Proportion Var        0.37 0.10
+## Cumulative Var        0.37 0.47
+## Proportion Explained  0.79 0.21
+## Cumulative Proportion 0.79 1.00
+## 
+## Mean item complexity =  1.5
+## Test of the hypothesis that 2 factors are sufficient.
+## 
+## The degrees of freedom for the null model are  15  and the objective function was  1.44 with Chi Square of  310.84
+## The degrees of freedom for the model are 4  and the objective function was  0.01 
+## 
+## The root mean square of the residuals (RMSR) is  0.01 
+## The df corrected root mean square of the residuals is  0.03 
+## 
+## The harmonic number of observations is  220 with the empirical chi square  1.32  with prob &lt;  0.86 
+## The total number of observations was  220  with Likelihood Chi Square =  2.35  with prob &lt;  0.67 
+## 
+## Tucker Lewis Index of factoring reliability =  1.021
+## RMSEA index =  0  and the 90 % confidence intervals are  0 0.08
+## BIC =  -19.22
+## Fit based upon off diagonal values = 1
+## Measures of factor score adequacy             
+##                                                    PA1  PA2
+## Correlation of (regression) scores with factors   0.90 0.73
+## Multiple R square of scores with factors          0.82 0.53
+## Minimum correlation of possible factor scores     0.64 0.07</code></pre>
+</div>
+<div id="right">
+<pre><code>#estimación del EFA por el metodos de componentes principales iteradas o ejes principales
+fit.pa &lt;- fa(R,nfactors=2,fm=&quot;pa&quot;,rotate=&quot;none&quot;,n.obs=220)
+fit.pa</code></pre>
+<div align="justify">
+<font size="6">
+<p class="small">
+Vemos que en el segundo factor las correlaciones no son muy altas en varios cursos y la interpretación se dificulta. Con esta solución se podría pensar que el factor uno se puede catalogar como inteligencia general.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="ejemplo-1-rotacion-varimax" class="slide level2">
+<h2>Ejemplo 1 (Rotación Varimax)</h2>
+<div id="left">
+<pre><code>## Factor Analysis using method =  pa
+## Call: fa(r = R, nfactors = 2, n.obs = 220, rotate = &quot;varimax&quot;, fm = &quot;pa&quot;)
+## Standardized loadings (pattern matrix) based upon correlation matrix
+##      PA1  PA2   h2   u2 com
+## Gae 0.23 0.66 0.49 0.51 1.2
+## Eng 0.32 0.55 0.41 0.59 1.6
+## His 0.08 0.59 0.36 0.64 1.0
+## Ari 0.76 0.18 0.62 0.38 1.1
+## Alg 0.72 0.22 0.57 0.43 1.2
+## Geo 0.57 0.22 0.38 0.62 1.3
+## 
+##                        PA1  PA2
+## SS loadings           1.60 1.21
+## Proportion Var        0.27 0.20
+## Cumulative Var        0.27 0.47
+## Proportion Explained  0.57 0.43
+## Cumulative Proportion 0.57 1.00
+## 
+## Mean item complexity =  1.2
+## Test of the hypothesis that 2 factors are sufficient.
+## 
+## The degrees of freedom for the null model are  15  and the objective function was  1.44 with Chi Square of  310.84
+## The degrees of freedom for the model are 4  and the objective function was  0.01 
+## 
+## The root mean square of the residuals (RMSR) is  0.01 
+## The df corrected root mean square of the residuals is  0.03 
+## 
+## The harmonic number of observations is  220 with the empirical chi square  1.32  with prob &lt;  0.86 
+## The total number of observations was  220  with Likelihood Chi Square =  2.35  with prob &lt;  0.67 
+## 
+## Tucker Lewis Index of factoring reliability =  1.021
+## RMSEA index =  0  and the 90 % confidence intervals are  0 0.08
+## BIC =  -19.22
+## Fit based upon off diagonal values = 1
+## Measures of factor score adequacy             
+##                                                    PA1  PA2
+## Correlation of (regression) scores with factors   0.86 0.79
+## Multiple R square of scores with factors          0.73 0.62
+## Minimum correlation of possible factor scores     0.47 0.24</code></pre>
+</div>
+<div id="right">
+<pre><code># rotación ortogonal Varimax
+fit.pa.rot.ort &lt;- fa(R,nfactors=2,fm=&quot;pa&quot;,rotate=&quot;varimax&quot;,n.obs=220)
+fit.pa.rot.ort</code></pre>
+<div align="justify">
+<font size="6">
+<p class="small">
+Se puede apreciar que para el nuevo factor uno las correlaciones de los cursos geometría, algebra y aritmética aumentó.<br> El primer factor se podría denominar “habilidad matemática” y el segundo “habilidad verbal” (gaélico, ingles e historia).
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="ejemplo-1-16" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div align="justify">
+<p><em>Rotación oblicua</em></p>
+<ul>
+<li><p>Los factores ya no estaran incorrelados. Sin embargo, puede compensarse esta pérdida, si, a cambio se consigue una asociación más nítida de cada una de las variables con el factor correspondiente.</p></li>
+<li><p>Afecta a la matriz factorial que contiene las cargas factoriales y que son distintas a la solución original.</p></li>
+</ul>
+</div>
+</section>
+<section id="ejemplo-1-rotacion-oblimin" class="slide level2">
+<h2>Ejemplo 1 (Rotación Oblimin)</h2>
+<div id="left">
+<pre><code>## Factor Analysis using method =  pa
+## Call: fa(r = R, nfactors = 2, n.obs = 220, rotate = &quot;oblimin&quot;, fm = &quot;pa&quot;)
+## Standardized loadings (pattern matrix) based upon correlation matrix
+##       PA1   PA2   h2   u2 com
+## Gae  0.03  0.68 0.49 0.51 1.0
+## Eng  0.17  0.53 0.41 0.59 1.2
+## His -0.11  0.65 0.36 0.64 1.1
+## Ari  0.80 -0.03 0.62 0.38 1.0
+## Alg  0.74  0.02 0.57 0.43 1.0
+## Geo  0.57  0.07 0.38 0.62 1.0
+## 
+##                        PA1  PA2
+## SS loadings           1.61 1.21
+## Proportion Var        0.27 0.20
+## Cumulative Var        0.27 0.47
+## Proportion Explained  0.57 0.43
+## Cumulative Proportion 0.57 1.00
+## 
+##  With factor correlations of 
+##      PA1  PA2
+## PA1 1.00 0.53
+## PA2 0.53 1.00
+## 
+## Mean item complexity =  1.1
+## Test of the hypothesis that 2 factors are sufficient.
+## 
+## The degrees of freedom for the null model are  15  and the objective function was  1.44 with Chi Square of  310.84
+## The degrees of freedom for the model are 4  and the objective function was  0.01 
+## 
+## The root mean square of the residuals (RMSR) is  0.01 
+## The df corrected root mean square of the residuals is  0.03 
+## 
+## The harmonic number of observations is  220 with the empirical chi square  1.32  with prob &lt;  0.86 
+## The total number of observations was  220  with Likelihood Chi Square =  2.35  with prob &lt;  0.67 
+## 
+## Tucker Lewis Index of factoring reliability =  1.021
+## RMSEA index =  0  and the 90 % confidence intervals are  0 0.08
+## BIC =  -19.22
+## Fit based upon off diagonal values = 1
+## Measures of factor score adequacy             
+##                                                    PA1  PA2
+## Correlation of (regression) scores with factors   0.89 0.84
+## Multiple R square of scores with factors          0.79 0.70
+## Minimum correlation of possible factor scores     0.59 0.40</code></pre>
+</div>
+<div id="right">
+<pre><code># rotación oblicua
+fit.pa.rot.obl &lt;- fa(R,nfactors=2,fm=&quot;pa&quot;,rotate=&quot;oblimin&quot;,n.obs=220)
+fit.pa.rot.obl</code></pre>
+<div align="justify">
+<font size="6">
+<p class="small">
+<p>Se puede apreciar que para el nuevo factor uno las correlaciones de los cursos geometría, algebra y aritmética aumentó mucho más que con la rotación varimax.<br></p>
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="ejemplo-1-17" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div align="justify">
+<p><em>Contraste de esfericidad de Bartlett</em></p>
+<ul>
+<li><p>¿Están correlacionadas entre sí las variables originales? Si no lo estuvieran, no existirian factores comunes y, por lo tanto, no tendría sentido aplicar el análisis factorial.</p></li>
+<li><p>En este contraste la hipótesis nula que hay que contrastar es que todos los coeficientes de correlación entre cada para de variables son nulos.</p></li>
+</ul>
+</section>
+<section id="ejemplo-1-18" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div id="left">
+<pre><code>## $chisq
+## [1] 310.8409
+## 
+## $p.value
+## [1] 3.110695e-57
+## 
+## $df
+## [1] 15</code></pre>
+</div>
+<div id="right">
+<pre><code># contraste de esfericidad de Bartlett
+cortest.bartlett(R,n=220)</code></pre>
+<div align="justify">
+<font size="6">
+<p class="small">
+<p>Se puede apreciar que la hipótesis nula puede rechazarse para cualquier nivel de significación.</p>
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="ejemplo-1-19" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div align="justify">
+<p><em>Medidas de adecuación muestral de Kaiser-Meyer-Olkin</em></p>
+<ul>
+<li>En el caso que exista adecuación de los datos a un modelos de análisis factorial, la medida KMO estará próxima a 1.</li>
+</ul>
+<p><em>Medidas de adecuación muestral individual MSA (Measure of Sampling Adecuacy)</em></p>
+<ul>
+<li>Un valor próximo a 1 de <span class="math inline">\(MSA_j\)</span> indicará que la variable <span class="math inline">\(x_j\)</span> es adecuada para su tratamiento en el análisis factorial con el resto de variables.</li>
+</ul>
+</section>
+<section id="ejemplo-1-20" class="slide level2">
+<h2>Ejemplo 1</h2>
+<p><img src="images/kmo.JPG" width="80%" style="display: block; margin: auto;" /></p>
+</section>
+<section id="ejemplo-1-21" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div id="left">
+<pre><code>## Kaiser-Meyer-Olkin factor adequacy
+## Call: KMO(r = R)
+## Overall MSA =  0.77
+## MSA for each item = 
+##  Gae  Eng  His  Ari  Alg  Geo 
+## 0.77 0.81 0.76 0.74 0.75 0.83</code></pre>
+</div>
+<div id="right">
+<pre><code># medidas KMO de adecuación muestral general e individual
+KMO(R)</code></pre>
+<div align="justify">
+<font size="6">
+<p class="small">
+<p>El KMO de 0.77 se puede catalogar como “mediano”&quot; y las medidas de adecuación individual de las variables son superiores a 0.7.</p>
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="ejemplo-1-22" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div align="justify">
+<p><em>Puntuaciones factoriales</em></p>
+<p>Por ejemplo, si el investigador queria realizar un análisis de regresión utilizando como variables independientes las variables <span class="math inline">\(x_1\)</span> a <span class="math inline">\(x_6\)</span> de nuestro ejemplo y se encontró con un problema de multicolinealidad, si efectua un EFA con una rotación ortogonal y guarda las puntuaciones factoriales, éstas estarán incorrelacionadas y podrá utilizarlas como variables independientes en su regresión (siempre y cuando haya sido capaz de dar una interpretación razonable a los factores).</p>
+</section>
+<section id="ejemplo-1-23" class="slide level2">
+<h2>Ejemplo 1</h2>
+<div id="left">
+<pre><code>##           PC1        PC2
+## Gae 0.2407057  0.3974704
+## Eng 0.2519015  0.2570359
+## His 0.1893115  0.5641347
+## Ari 0.2701595 -0.3655885
+## Alg 0.2721945 -0.3323228
+## Geo 0.2482043 -0.3142357</code></pre>
+</div>
+<div id="right">
+<pre><code># puntuaciones factoriales
+factor.scores(R,fit.pca,method = &quot;Thurstone&quot;)$weights</code></pre>
+<div align="justify">
+<font size="6">
+<p class="small">
+<p>Puntuaciones factoriales para nuestro ejemplo.</p>
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+    </div>
+  </div>
+
+  <script src="clase3_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="clase3_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: true,
+        // Transition style
+        transition: 'fade', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'clase3_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
+          { src: 'clase3_files/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

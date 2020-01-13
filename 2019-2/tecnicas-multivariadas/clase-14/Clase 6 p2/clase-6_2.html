@@ -1,0 +1,1811 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Dra. Rocío Maehara" />
+  <title>Introducción al Análisis Factorial Confirmatorio</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="clase-6_2_files/reveal.js-3.3.0.1/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="clase-6_2_files/reveal.js-3.3.0.1/css/theme/white.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="logo.css"/>
+    <link rel="stylesheet" href="style.css"/>
+
+<!-- Printing and PDF exports -->
+<script id="paper-css" type="application/dynamic-css">
+
+/* Default Print Stylesheet Template
+   by Rob Glazebrook of CSSnewbie.com
+   Last Updated: June 4, 2008
+
+   Feel free (nay, compelled) to edit, append, and
+   manipulate this file as you see fit. */
+
+
+@media print {
+
+	/* SECTION 1: Set default width, margin, float, and
+	   background. This prevents elements from extending
+	   beyond the edge of the printed page, and prevents
+	   unnecessary background images from printing */
+	html {
+		background: #fff;
+		width: auto;
+		height: auto;
+		overflow: visible;
+	}
+	body {
+		background: #fff;
+		font-size: 20pt;
+		width: auto;
+		height: auto;
+		border: 0;
+		margin: 0 5%;
+		padding: 0;
+		overflow: visible;
+		float: none !important;
+	}
+
+	/* SECTION 2: Remove any elements not needed in print.
+	   This would include navigation, ads, sidebars, etc. */
+	.nestedarrow,
+	.controls,
+	.fork-reveal,
+	.share-reveal,
+	.state-background,
+	.reveal .progress,
+	.reveal .backgrounds {
+		display: none !important;
+	}
+
+	/* SECTION 3: Set body font face, size, and color.
+	   Consider using a serif font for readability. */
+	body, p, td, li, div {
+		font-size: 20pt!important;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		color: #000;
+	}
+
+	/* SECTION 4: Set heading font face, sizes, and color.
+	   Differentiate your headings from your body text.
+	   Perhaps use a large sans-serif for distinction. */
+	h1,h2,h3,h4,h5,h6 {
+		color: #000!important;
+		height: auto;
+		line-height: normal;
+		font-family: Georgia, "Times New Roman", Times, serif !important;
+		text-shadow: 0 0 0 #000 !important;
+		text-align: left;
+		letter-spacing: normal;
+	}
+	/* Need to reduce the size of the fonts for printing */
+	h1 { font-size: 28pt !important;  }
+	h2 { font-size: 24pt !important; }
+	h3 { font-size: 22pt !important; }
+	h4 { font-size: 22pt !important; font-variant: small-caps; }
+	h5 { font-size: 21pt !important; }
+	h6 { font-size: 20pt !important; font-style: italic; }
+
+	/* SECTION 5: Make hyperlinks more usable.
+	   Ensure links are underlined, and consider appending
+	   the URL to the end of the link for usability. */
+	a:link,
+	a:visited {
+		color: #000 !important;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	/*
+	.reveal a:link:after,
+	.reveal a:visited:after {
+		content: " (" attr(href) ") ";
+		color: #222 !important;
+		font-size: 90%;
+	}
+	*/
+
+
+	/* SECTION 6: more reveal.js specific additions by @skypanther */
+	ul, ol, div, p {
+		visibility: visible;
+		position: static;
+		width: auto;
+		height: auto;
+		display: block;
+		overflow: visible;
+		margin: 0;
+		text-align: left !important;
+	}
+	.reveal pre,
+	.reveal table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.reveal pre code {
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+	.reveal blockquote {
+		margin: 20px 0;
+	}
+	.reveal .slides {
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+		zoom: 1 !important;
+
+		overflow: visible !important;
+		display: block !important;
+
+		text-align: left !important;
+		-webkit-perspective: none;
+		   -moz-perspective: none;
+		    -ms-perspective: none;
+		        perspective: none;
+
+		-webkit-perspective-origin: 50% 50%;
+		   -moz-perspective-origin: 50% 50%;
+		    -ms-perspective-origin: 50% 50%;
+		        perspective-origin: 50% 50%;
+	}
+	.reveal .slides section {
+		visibility: visible !important;
+		position: static !important;
+		width: auto !important;
+		height: auto !important;
+		display: block !important;
+		overflow: visible !important;
+
+		left: 0 !important;
+		top: 0 !important;
+		margin-left: 0 !important;
+		margin-top: 0 !important;
+		padding: 60px 20px !important;
+		z-index: auto !important;
+
+		opacity: 1 !important;
+
+		page-break-after: always !important;
+
+		-webkit-transform-style: flat !important;
+		   -moz-transform-style: flat !important;
+		    -ms-transform-style: flat !important;
+		        transform-style: flat !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+
+		-webkit-transition: none !important;
+		   -moz-transition: none !important;
+		    -ms-transition: none !important;
+		        transition: none !important;
+	}
+	.reveal .slides section.stack {
+		padding: 0 !important;
+	}
+	.reveal section:last-of-type {
+		page-break-after: avoid !important;
+	}
+	.reveal section .fragment {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		-webkit-transform: none !important;
+		   -moz-transform: none !important;
+		    -ms-transform: none !important;
+		        transform: none !important;
+	}
+	.reveal section img {
+		display: block;
+		margin: 15px 0px;
+		background: rgba(255,255,255,1);
+		border: 1px solid #666;
+		box-shadow: none;
+	}
+
+	.reveal section small {
+		font-size: 0.8em;
+	}
+
+}  
+</script>
+
+
+<script id="pdf-css" type="application/dynamic-css">
+    
+/**
+ * This stylesheet is used to print reveal.js
+ * presentations to PDF.
+ *
+ * https://github.com/hakimel/reveal.js#pdf-export
+ */
+
+* {
+	-webkit-print-color-adjust: exact;
+}
+
+body {
+	margin: 0 auto !important;
+	border: 0;
+	padding: 0;
+	float: none !important;
+	overflow: visible;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+/* Remove any elements not needed in print. */
+.nestedarrow,
+.reveal .controls,
+.reveal .progress,
+.reveal .playback,
+.reveal.overview,
+.fork-reveal,
+.share-reveal,
+.state-background {
+	display: none !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-shadow: 0 0 0 #000 !important;
+}
+
+.reveal pre code {
+	overflow: hidden !important;
+	font-family: Courier, 'Courier New', monospace !important;
+}
+
+ul, ol, div, p {
+	visibility: visible;
+	position: static;
+	width: auto;
+	height: auto;
+	display: block;
+	overflow: visible;
+	margin: auto;
+}
+.reveal {
+	width: auto !important;
+	height: auto !important;
+	overflow: hidden !important;
+}
+.reveal .slides {
+	position: static;
+	width: 100%;
+	height: auto;
+
+	left: auto;
+	top: auto;
+	margin: 0 !important;
+	padding: 0 !important;
+
+	overflow: visible;
+	display: block;
+
+	-webkit-perspective: none;
+	   -moz-perspective: none;
+	    -ms-perspective: none;
+	        perspective: none;
+
+	-webkit-perspective-origin: 50% 50%; /* there isn't a none/auto value but 50-50 is the default */
+	   -moz-perspective-origin: 50% 50%;
+	    -ms-perspective-origin: 50% 50%;
+	        perspective-origin: 50% 50%;
+}
+
+.reveal .slides section {
+	page-break-after: always !important;
+
+	visibility: visible !important;
+	position: relative !important;
+	display: block !important;
+	position: relative !important;
+
+	margin: 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+	min-height: 1px;
+
+	opacity: 1 !important;
+
+	-webkit-transform-style: flat !important;
+	   -moz-transform-style: flat !important;
+	    -ms-transform-style: flat !important;
+	        transform-style: flat !important;
+
+	-webkit-transform: none !important;
+	   -moz-transform: none !important;
+	    -ms-transform: none !important;
+	        transform: none !important;
+}
+
+.reveal section.stack {
+	margin: 0 !important;
+	padding: 0 !important;
+	page-break-after: avoid !important;
+	height: auto !important;
+	min-height: auto !important;
+}
+
+.reveal img {
+	box-shadow: none;
+}
+
+.reveal .roll {
+	overflow: visible;
+	line-height: 1em;
+}
+
+/* Slide backgrounds are placed inside of their slide when exporting to PDF */
+.reveal section .slide-background {
+	display: block !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+/* All elements should be above the slide-background */
+.reveal section>* {
+	position: relative;
+	z-index: 1;
+}
+
+/* Display slide speaker notes when 'showNotes' is enabled */
+.reveal .speaker-notes-pdf {
+	display: block;
+	width: 100%;
+	max-height: none;
+	left: auto;
+	top: auto;
+	z-index: 100;
+}
+
+/* Display slide numbers when 'slideNumber' is enabled */
+.reveal .slide-number-pdf {
+	display: block;
+	position: absolute;
+	font-size: 14px;
+}
+
+</script>
+
+
+<script>
+var style = document.createElement( 'style' );
+style.type = 'text/css';
+var style_script_id = window.location.search.match( /print-pdf/gi ) ? 'pdf-css' : 'paper-css';
+var style_script = document.getElementById(style_script_id).text;
+style.innerHTML = style_script;
+document.getElementsByTagName('head')[0].appendChild(style);
+</script>
+
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title"><strong>Introducción al Análisis Factorial Confirmatorio</strong></h1>
+    <h2 class="author">Dra. Rocío Maehara</h2>
+    <h3 class="date">7 de diciembre de 2019 <br> <img id='logopucp' src='logoPUCP.jpg'></h3>
+</section>
+
+<section id="introducción" class="slide level2">
+<h2>Introducción</h2>
+<div align="justify">
+<p>
+<ul>
+<li>Supongamos que un investigador ha recogido las notas de 275 alumnos de secundaria en seis asignaturas: lengua (L), filosofía (FSF), historia (H), matemáticas (M), física (FSC) y química (Q).</li>
+<li>Nuestro investigador se plantea una cuestión a la que quiere dar respuesta. Asumiendo que las notas de un alumno miden su <span style="color:blue">inteligencia</span> (I), desearía saber si estas se agrupan en un <span style="color:blue">único factor</span> (la inteligencia) o, por el contrario, miden distintos aspectos de la misma, por ejemplo, la <span style="color:green">inteligencia cuantitativa</span> (IQ) y la <span style="color:green">inteligencia verbal</span> (IV).</li>
+</ul>
+</p>
+</div>
+</section>
+<section id="introducción-1" class="slide level2">
+<h2>Introducción</h2>
+<div id="left">
+<p><img src="images/AFE.JPG" width="100%" /></p>
+</div>
+<div id="right">
+<div align="justify">
+<font size="6">
+<p class="small">
+Asumimos que el investigador <span style="color:blue">no tiene una hipótesis a priori</span> acerca de qué estructura es la adecuada (un único componente de la inteligencia o dos), decidirá efectuar un <span style="color:blue">análisis factorial exploratorio</span> para ver cuántos factores obtiene.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="introducción-2" class="slide level2">
+<h2>Introducción</h2>
+<div id="left">
+<p><img src="images/AFE.JPG" width="100%" /></p>
+</div>
+<div id="right">
+<div align="justify">
+<font size="6">
+<p class="small">
+<ul>
+<li>Las <span style="color:blue">variables observadas</span> o <span style="color:blue">manifiestas</span> o <span style="color:blue">indicadores</span>, es decir, aquellas que se han medido (las <span style="color:blue">notas de los alumnos</span>), aparecen insertadas en un cuadrado para señalar que tienen este carácter y las hemos denotado como <span style="color:blue"><span class="math inline">\(x_1,\ldots,x_6\)</span></span>.</li>
+<li>Las <span style="color:green">variables latentes</span>, esto es las no observables o subyacentes (por ejemplo, factores como la inteligencia, en <span style="color:brown">general</span>, o la inteligencia <span style="color:brown">verbal</span> o <span style="color:brown">cuantitativa</span>, en particular), aparecen <span style="color:green">rodeadas por círculos</span>.</li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="introducción-3" class="slide level2">
+<h2>Introducción</h2>
+<div id="left">
+<p><img src="images/AFE.JPG" width="100%" /></p>
+</div>
+<div id="right">
+<div align="justify">
+<font size="6">
+<p class="small">
+<ul>
+<li>Una <span style="color:blue">flecha recta</span> desde una <span style="color:blue">variable latente</span> a una <span style="color:blue">variable observada</span> indica una relación de <span style="color:red">influencia directa</span>.</li>
+<li>Asi el <span style="color:green">factor <span class="math inline">\(\xi\)</span></span> esta <span style="color:green">“causando”</span> las <span style="color:green">notas de los alumnos</span> en las seis asignaturas, es decir, la <span style="color:brown">mayor o menor</span> inteligencia <span style="color:brown">“cuantitativa”</span> provoca que los alumnos tengan <span style="color:brown">notas diferentes</span>.</li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="introducción-4" class="slide level2">
+<h2>Introducción</h2>
+<div id="left">
+<p><img src="images/AFE.JPG" width="100%" /></p>
+</div>
+<div id="right">
+<div align="justify">
+<font size="5.9">
+<p class="small">
+<ul>
+<li>El término <span style="color:blue"><span class="math inline">\(\lambda\)</span></span> que aparece en cada una de las <span style="color:blue">relaciones causales</span> o <em>paths</em> es el parámetro que <span style="color:blue">mide la intensidad de la relación</span>, esto es, el término que hemos denominado <span style="color:red">carga factorial</span> en un análisis factorial exploratorio y cuya denominación mantendremos en el confirmatorio.</li>
+<li>Las <span style="color:brown">variables latentes</span> son de <span style="color:brown">dos tipos</span>: los mencionados <span style="color:green">factores comunes (<span class="math inline">\(\xi\)</span>)</span>, que son <span style="color:green">comunes</span> en cuanto que sus <span style="color:green">efectos</span> son <span style="color:green">compartidos</span> por mas de una variable observada, y los <span style="color:blue">factores específicos o errores (<span class="math inline">\(\delta\)</span>)</span> .</li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="introducción-5" class="slide level2">
+<h2>Introducción</h2>
+<div id="left">
+<p><img src="images/AFE.JPG" width="100%" /></p>
+</div>
+<div id="right">
+<div align="justify">
+<font size="6">
+<p class="small">
+<ul>
+<li>Cada uno de estos factores afecta solamente a una variable observada, y son <span style="color:blue">errores aleatorios</span> que se pueden haber producido en la <span style="color:blue">medida de la variable observada</span> (el estudiante puede ser <span style="color:brown">bueno copiando</span> en el examen o el profesor <span style="color:brown">equivocarse al corregir</span>).</li>
+<li>Finalmente, la <span style="color:green">flecha curva</span> con dos puntas que <span style="color:green">une a los factores comunes</span> indica que estas <span style="color:brown">variables</span> pueden estar <span style="color:brown">correlacionadas</span> con una <span style="color:brown">intensidad <span class="math inline">\(\phi\)</span></span>.</li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="introducción-6" class="slide level2">
+<h2>Introducción</h2>
+<div id="left">
+<p><img src="images/AFC.JPG" width="100%" /></p>
+</div>
+<div id="right">
+<div align="justify">
+<font size="5.9">
+<p class="small">
+Ahora bien, el investigador, basándose en <span style="color:blue">estudios previos</span> o en una <span style="color:blue">revisión de la literatura</span> existente, puede considerar la hipótesis, por ejemplo, de que no existe una medida global de la inteligencia sino dos tipos alternativos de la misma: <span style="color:blue">inteligencia verbal</span> (que explicaría las calificaciones en lengua, filosofía e historia) e <span style="color:blue">inteligencia cuantitativa</span> (que explicaría las obtenidas en matemáticas, física y química). Si este es el caso, el análisis exploratorio ya no tiene sentido, ya que el investigador lo que pretende es <span style="color:blue">confirmar o no la verosimilitud de su hipótesis</span>.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="formalización" class="slide level2">
+<h2>Formalización</h2>
+<div align="justify">
+<font size="6"> La <span style="color:blue">relación</span> entre las <span style="color:green">variables observadas</span> y las <span style="color:green">latentes</span> puede expresarse:
+<center>
+<img src="images/relacion.JPG" width="20%" />
+</center>
+Si recurrimos a la <span style="color:blue">notación matricial</span>, la anterior expresión adoptaría la forma:
+<center>
+<img src="images/matricial.JPG" width="30%" />
+</center>
+<p></font></p>
+</div>
+</section>
+<section id="formalización-1" class="slide level2">
+<h2>Formalización</h2>
+<div align="justify">
+<p><font size="6"> o de manera compacta: <span class="math display">\[\boldsymbol{x}=\boldsymbol{\Lambda} \xi+\delta\]</span> donde, en general y no solo para este modelo, <span style="color:blue"><span class="math inline">\(\boldsymbol{x}\)</span></span> es un vector <span class="math inline">\(q \times 1\)</span> que contiene las <span class="math inline">\(q\)</span> <span style="color:blue">variables observadas</span> o indicadores, <span style="color:green"><span class="math inline">\(\xi\)</span></span> es un vector <span class="math inline">\(s \times 1\)</span> que contiene los <span class="math inline">\(s\)</span> <span style="color:green">factores comunes</span>, <span style="color:brown"><span class="math inline">\(\boldsymbol{\Lambda}\)</span></span> es una matriz <span class="math inline">\(q \times s\)</span> que contiene las <span style="color:brown">cargas factoriales</span> y <span style="color:blue"><span class="math inline">\(\delta\)</span> </span> es el vector <span class="math inline">\(q \times 1\)</span> de los <span style="color:blue">factores especificos o errores</span>. Asumimos que el <span style="color:green">número de variables observadas</span> será <span style="color:green">siempre mayor</span> que el de <span style="color:green">factores comunes</span> o, lo que es lo mismo, que <span class="math inline">\(q &gt; s\)</span>. </font></p>
+</div>
+</section>
+<section id="formalización-2" class="slide level2">
+<h2>Formalización</h2>
+<div align="justify">
+<p><font size="6"> Si denotamos como <span class="math inline">\(\Sigma\)</span> a la matriz de varianzas y covarianzas entre las variables observadas (vector <span class="math inline">\(\boldsymbol{x}\)</span>) resulta que: <span class="math display">\[\Sigma=E(\boldsymbol{x} \boldsymbol{x}^\top)=E\left[(\boldsymbol{\Lambda} \xi+\delta)(\boldsymbol{\Lambda} \xi+\delta)^\top\right]\]</span> que puede expresarse de la siguiente forma: <span class="math display">\[\Sigma=\boldsymbol{\Lambda} \boldsymbol{\Phi} \boldsymbol{\Lambda}^\top+\boldsymbol{\Theta}\]</span> donde <span class="math inline">\(\boldsymbol{\Phi}=E[\xi\xi^\top]\)</span>, <span class="math inline">\(\boldsymbol{\Theta}=E[\delta \delta^\top]\)</span> y asumimos que <span class="math inline">\(\delta\)</span> y <span class="math inline">\(\phi\)</span> estan incorrelacionados. </font></p>
+</div>
+</section>
+<section id="formalización-3" class="slide level2">
+<h2>Formalización</h2>
+<div align="justify">
+<font size="6"> Aplicado a nuestro ejemplo, las matrices que contienen los parámetros que se deben estimar adoptaran la forma siguiente:
+<center>
+<img src="images/matejemplo.JPG" width="30%" />
+</center>
+y
+<center>
+<img src="images/matejemplo2.JPG" width="30%" />
+</center>
+<p></font></p>
+</div>
+</section>
+<section id="finalidad-del-cfa" class="slide level2">
+<h2>Finalidad del CFA</h2>
+<div align="justify">
+<p><font size="6"> La <span style="color:blue">finalidad de este método</span> es obtener <span style="color:blue">estimaciones</span> para los parámetros que contienen las matrices <span class="math inline">\(\boldsymbol{\Lambda}\)</span>, <span class="math inline">\(\boldsymbol{\Theta}\)</span> y <span class="math inline">\(\boldsymbol{\Phi}\)</span> que hagan que la <span style="color:green">matriz de varianzas y covarianzas poblacional <span class="math inline">\(\Sigma\)</span> estimada</span>, obtenida a partir de ellas, sea lo <span style="color:green">más parecida</span> posible a la <span style="color:green">matriz de varianzas y covarianzas muestral</span> <span class="math inline">\(\boldsymbol{S}\)</span> que se obtiene a partir de los valores muestrales de las variables observadas. </font></p>
+</div>
+</section>
+<section id="la-identificación-del-modelo-en-un-cfa" class="slide level2">
+<h2>La identificación del modelo en un CFA</h2>
+<div align="justify">
+<font size="6">
+<p>
+<ul>
+<li>1 correlación <span class="math inline">\(\phi_{12}\)</span> entre los factores <span class="math inline">\(\xi_1\)</span> y <span class="math inline">\(\xi_2\)</span>.</li>
+<li>2 varianzas de los factores <span class="math inline">\(\xi_1\)</span> y <span class="math inline">\(\xi_2\)</span>, esto es, <span class="math inline">\(\phi_{11}\)</span> y <span class="math inline">\(\phi_{22}\)</span>.</li>
+<li>6 cargas factoriales <span class="math inline">\(\lambda_{ij}\)</span> que unen los factores <span class="math inline">\(\xi_1\)</span> y <span class="math inline">\(\xi_2\)</span> con los 6 indicadores <span class="math inline">\(x_i\)</span>.</li>
+<li>6 coeficientes de regresión entre los términos de error y los indicadores.</li>
+<li>6 varianzas de los términos de error <span class="math inline">\(\delta_i\)</span>, que hemos denotado como <span class="math inline">\(\theta_{11} \ldots \theta_{66}\)</span>.</li>
+<li>15 covarianzas entre los términos de error <span class="math inline">\(\delta_i\)</span>, que ya hemos apuntado fijaremos a 0 inicialmente en el proceso de identificación.</li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</section>
+<section id="decisiones-de-identificación-en-ejemplo" class="slide level2">
+<h2>Decisiones de identificación en ejemplo</h2>
+<div align="justify">
+<font size="6">
+<p>
+<ul>
+<li>Hemos establecido la <span style="color:blue">escala de medida de cada factor</span> fijando a <span style="color:blue">1 la varianza del mismo</span>.</li>
+<li>Hemos <span style="color:blue">fijado a cero</span> las <span style="color:blue">15 correlaciones</span> entre los <span style="color:blue">términos de error</span>.</li>
+<li>Hemos <span style="color:blue">fijado a 1</span> los <span style="color:blue">6 coeficientes de regresión</span> entre los <span style="color:blue">términos de error y los indicadores</span>.</li>
+<li>Se ha permitido que las <span style="color:blue">covarianzas entre los factores sean no nulas</span> (la única existente, <span class="math inline">\(\phi_{12}\)</span>, aparece con un * para ser estimada).</li>
+<li>Vamos a comprobar que contamos con grados de libertad, es decir, tenemos <span style="color:blue">más datos</span> (varianzas y covarianzas muestrales) <span style="color:blue">que parámetros para estimar</span> y en nuestro caso contamos con 8 grados de libertad.</li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</section>
+<section id="paquetes-en-r-a-utilizar-en-el-ejemplo" class="slide level2">
+<h2>Paquetes en R a utilizar en el ejemplo</h2>
+<pre><code>library (lavaan)
+library(semTools)
+library(semPlot)
+library(ggplot2)
+</code></pre>
+<p>Luego se procederá a ingresar la matriz de correlaciones de las notas de los 275 estudiantes</p>
+</section>
+<section id="datos-a-ingresar" class="slide level2">
+<h2>Datos a ingresar</h2>
+<pre><code>#Conversión del vector de correlaciones en una matriz que llamamos datos.cor
+#Definimos el vector que llamamos x
+
+x &lt;- c(1.000,
+       .493,1.000,
+       .401,.314,1.000,
+       .278,.347,.147,1.000,
+       .317,.318,.183,.587,1.000,
+       .284,.327,.179,.463,.453,1.000)
+
+#Convertimos el vector x en la matriz datos.cor
+datos.cor&lt;-lav_matrix_lower2full(x)
+
+#Etiquetamos a las variables de la matriz
+
+colnames(datos.cor) &lt;- rownames(datos.cor) &lt;- 
+  c(&quot;L&quot;,&quot;FSF&quot;, &quot;H&quot;,&quot;M&quot;,&quot;FSC&quot;,&quot;Q&quot;)
+</code></pre>
+</section>
+<section id="datos-a-ingresar-1" class="slide level2">
+<h2>Datos a ingresar</h2>
+<pre><code>#Pedimos la visualización de la matriz datos.cor
+datos.cor
+</code></pre>
+<pre><code>##         L   FSF     H     M   FSC     Q
+## L   1.000 0.493 0.401 0.278 0.317 0.284
+## FSF 0.493 1.000 0.314 0.347 0.318 0.327
+## H   0.401 0.314 1.000 0.147 0.183 0.179
+## M   0.278 0.347 0.147 1.000 0.587 0.463
+## FSC 0.317 0.318 0.183 0.587 1.000 0.453
+## Q   0.284 0.327 0.179 0.463 0.453 1.000</code></pre>
+</section>
+<section id="datos-a-ingresar-2" class="slide level2">
+<h2>Datos a ingresar</h2>
+<pre><code>#Introducimos las desviaciones típicas SD
+datos.sd &lt;- c(1.090, 0.590, 0.980, 1.100, 0.410, 1.110)
+
+names(datos.sd) &lt;-
+  c(&quot;L&quot;,&quot;FSF&quot;, &quot;H&quot;,&quot;M&quot;,&quot;FSC&quot;,&quot;Q&quot;)
+
+#Pedimos la visualización de la matriz datos.cor
+datos.sd
+</code></pre>
+<pre><code>##    L  FSF    H    M  FSC    Q 
+## 1.09 0.59 0.98 1.10 0.41 1.11</code></pre>
+</section>
+<section id="datos-a-ingresar-3" class="slide level2">
+<h2>Datos a ingresar</h2>
+<div align="justify">
+<font size="6">
+<p>
+El <span style="color:blue">CFA </span> se <span style="color:blue">estima</span> ajustando las <span style="color:blue">matrices de varianzas y covarianzas</span>, no de correlaciones, por lo que es necesario pasar de una a otra. Pero solo se pueden obtener las covarianzas a partir de las correlaciones si se conocen las desviaciones típicas, como es el caso. Las vamos a introducir como un vector al que llamamos <code>datos.sd</code>. Finalmente utilizamos la función <code>cor2cov{lavaan}</code> para <span style="color:blue">convertir</span> la <span style="color:green">matriz de correlaciones</span> en <span style="color:green">matriz de varianzas y covarianzas</span> dadas las desviaciones típicas.
+</p>
+<p></font></p>
+</div>
+</section>
+<section id="datos-a-ingresar-4" class="slide level2">
+<h2>Datos a ingresar</h2>
+<pre><code>#Convertimos las correlaciones y desviaciones típicas en varianzas y covarianzas
+datos.cov&lt;-cor2cov(datos.cor,datos.sd)
+
+#Pedimos la visualización de la matriz datos.cor
+datos.cov
+</code></pre>
+<pre><code>##             L       FSF         H        M       FSC         Q
+## L   1.1881000 0.3170483 0.4283482 0.333322 0.1416673 0.3436116
+## FSF 0.3170483 0.3481000 0.1815548 0.225203 0.0769242 0.2141523
+## H   0.4283482 0.1815548 0.9604000 0.158466 0.0735294 0.1947162
+## M   0.3333220 0.2252030 0.1584660 1.210000 0.2647370 0.5653230
+## FSC 0.1416673 0.0769242 0.0735294 0.264737 0.1681000 0.2061603
+## Q   0.3436116 0.2141523 0.1947162 0.565323 0.2061603 1.2321000</code></pre>
+</section>
+<section id="planteamiento-del-modelo-cfa-en-r" class="slide level2">
+<h2>Planteamiento del modelo CFA en R</h2>
+<pre><code>modelo.cfa &lt;- &#39;
+
+# Modelo de medida
+
+IV  =~ L+FSF+H
+IQ  =~ M+FSC+Q
+
+
+#Varianzas de los factores
+
+IV~~1*IV
+IQ~~1*IQ
+
+#Covarianzas
+
+IV~~IQ
+
+#Varianzas de los términos de error
+
+L~~L
+FSF~~FSF
+H~~H
+M~~M
+FSC~~FSC
+Q~~Q
+&#39;
+</code></pre>
+</section>
+<section id="planteamiento-del-modelo-cfa-en-r-1" class="slide level2">
+<h2>Planteamiento del modelo CFA en R</h2>
+<div align="justify">
+<pre><code>IV  =~ L+FSF+H
+IQ  =~ M+FSC+Q
+</code></pre>
+<font size="6">
+<p>
+<ul>
+<li>El <span style="color:blue">investigador</span> decide el <span style="color:blue">nombre</span> que le quiere dar a los <span style="color:blue">factores</span>, mientras que los <span style="color:green">indicadores</span> han de conservar el <span style="color:green">nombre de la base de datos</span>.</li>
+<li>El <span style="color:blue">factor</span>, a la izquierda del <code>=~</code> viene definido por la suma de los indicadores a la derecha del signo (p.ej. <code>IV =~ L+FSF+H</code>).</li>
+<li>Obsérvese que no se añaden los términos de error, el paquete los asume por defecto.</li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</section>
+<section id="planteamiento-del-modelo-cfa-en-r-2" class="slide level2">
+<h2>Planteamiento del modelo CFA en R</h2>
+<div align="justify">
+<font size="6">
+<p>
+<ul>
+<li>Las <span style="color:blue">varianzas de los factores</span>, se señalan separando el nombre del factor de sí mismo por el signo <code>~~</code> (p.ej. <code>IV~~IV</code>).</li>
+<li>Las <span style="color:blue">varianzas de los errores</span> siguen la misma terminología, con la diferencia de que los elementos separados por el <code>~~</code> son ahora indicadores, no factores (p.ej. <code>FSF~~FSF</code>).</li>
+<li>También el signo <code>~~</code> separa las <span style="color:blue">covarianzas</span> (e.g. <code>IV~~IQ</code>), pero no puede haber confusión porque lo que separa el signo son ahora factores distintos (en las varianzas a los dos lados esta el mismo factor, como es lógico).</li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</section>
+<section id="proceso-de-identificación-en-la-síntaxis" class="slide level2">
+<h2>Proceso de identificación en la síntaxis</h2>
+<div align="justify">
+<font size="6">
+<p>
+<ul>
+<li>Están las covarianzas.</li>
+<li>No hay covarianzas entre los errores.</li>
+<li>Al no aparecer el término de error en las ecuaciones, se asume que su coeficiente de regresión esta fijado a 1.</li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</section>
+<section id="proceso-de-identificación-en-la-síntaxis-1" class="slide level2">
+<h2>Proceso de identificación en la síntaxis</h2>
+<div align="justify">
+<pre><code>IV~~1*IV
+IQ~~1*IQ</code></pre>
+<p><font size="6"> La imagen muestra como se hace para fijar a 1 la varianza de los factores </font></p>
+</div>
+</section>
+<section id="modelo-mal-especificado" class="slide level2">
+<h2>Modelo mal especificado</h2>
+<div align="justify">
+<font size="6"> Algunos indicadores que nos pueden hacer sospechar que el modelo esta incorrectamente identificado:
+<p>
+<ul>
+<li><span style="color:blue">Errores estándar muy grandes</span> para la estimación de <span style="color:blue">algunos coeficientes</span>.</li>
+<li><span style="color:blue">Incapacidad del programa para invertir la matriz</span> que, como veremos inmediatamente, es necesario en el proceso de estimación (se suele indicar señalando que no es definida positiva).</li>
+<li><span style="color:blue">Estimaciones teóricamente imposibles</span> como <span style="color:green">varianzas negativas</span> y valores estandarizados de cargas y <span style="color:green">correlaciones fuera del rango [—1, +1]</span>.</li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</section>
+<section id="métodos-de-estimación-del-modelo" class="slide level2">
+<h2>Métodos de estimación del modelo</h2>
+<div align="justify">
+<font size="6">
+<p>
+<ul>
+<li>Mínimos cuadrados no ponderados (ULS)</li>
+<li>Mínimos cuadrados generalizados (GLS)</li>
+<li>Máxima verosimilitud (ML)</li>
+<li>Estimación por la teoría de la distribución elíptica (EDT)</li>
+<li>Estimación con libre distribución asintótica (ADF)</li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</section>
+<section id="comparación-de-los-distintos-procedimientos-de-estimación" class="slide level2">
+<h2>Comparación de los distintos procedimientos de estimación</h2>
+<div align="justify">
+<font size="6">
+<p>
+<ul>
+<li>Los métodos de <span style="color:blue">ML</span> y <span style="color:blue">GLS</span> son la mejor opción con <span style="color:blue">pequeñas muestras</span> siempre que sea <span style="color:blue">plausible</span> la asunción de <span style="color:blue">normalidad e independencia</span>.</li>
+<li>La <span style="color:blue">normalidad</span> es necesaria para que los <span style="color:green">errores estándar sean fiables</span> y el <span style="color:green">estadístico t</span> que utilizamos para calcular la <span style="color:green">significatividad de los parámetros sea confiable</span></li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</section>
+<section id="estimación-del-modelo" class="slide level2">
+<h2>Estimación del modelo</h2>
+<div id="left">
+<pre><code>#Estimación del modelo
+
+fit &lt;- lavaan(modelo.cfa, sample.cov=datos.cov, sample.nobs=275, std.lv=TRUE, mimic=&quot;eqs&quot;, estimator=&quot;ML&quot;, verbose=TRUE, warn=TRUE) 
+</code></pre>
+<pre><code>## Quasi-Newton steps using NLMINB:
+## Objective function  = 0.1794828591678592
+## Objective function  =                Inf
+## Objective function  = 0.1944143060713350
+## Objective function  = 0.1608197853265394
+## Objective function  = 0.1495320259164989
+## Objective function  = 0.1384821809646946
+## Objective function  = 0.1103076041768203
+## Objective function  = 0.0890871616054318
+## Objective function  = 0.0578672691479714
+## Objective function  = 0.0692800360634891
+## Objective function  = 0.0650127892485592
+## Objective function  = 0.0492237104896027
+## Objective function  = 0.0361316131553093
+## Objective function  = 0.0186487906784718
+## Objective function  = 0.0200745023021440
+## Objective function  = 0.0168622789969266
+## Objective function  = 0.0177823238205805
+## Objective function  = 0.0164868229537500
+## Objective function  = 0.0163138276099870
+## Objective function  = 0.0161702214851784
+## Objective function  = 0.0161433773084365
+## Objective function  = 0.0161370787734079
+## Objective function  = 0.0161360640508117
+## Objective function  = 0.0161350641384708
+## Objective function  = 0.0161350182058762
+## Objective function  = 0.0161350111344101
+## Objective function  = 0.0161350107470448
+## Objective function  = 0.0161350107116456
+## Objective function  = 0.0161350107054812
+## Objective function  = 0.0161350107049500
+## Objective function  = 0.0161350107049500
+## convergence status (0=ok):  0 
+## nlminb message says:  relative convergence (4) 
+## number of iterations:  20 
+## number of function evaluations [objective, gradient]:  30 21 
+## Computing VCOV for se = standard ... done.
+## Computing TEST for test(s) = standard ... done.
+## Fitting baseline model ...  done.</code></pre>
+</div>
+<div id="right">
+<div align="justify">
+<font size="5.9">
+<p class="small">
+<ul>
+<li>En primer lugar, se crea un objeto de <code>R</code>, con el nombre de <code>fit</code>, que va a recoger toda la información de la estimación.</li>
+<li>La instrucción <code>lavaan()</code> pide que se estime el modelo y su estructura es la siguiente: <code>modelo.cfa</code> es el modelo que hemos definido, <code>datos.cov</code> son los datos que se van a utilizar, como hemos ingresado la matriz de varianza covarianza tenemos que indicar el tamaño del conjunto de datos <code>sample.nobs=275</code>, <code>estimator=&quot;ML&quot;</code> para indicar que método de estimación utilizará y <code>warn=TRUE</code> nos avisa si ha habido algún problema en el proceso de estimación. Usar <code>std.lv=TRUE</code> es más eficiente que la especificación de la varianza en el modelo.</li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="estimación-del-modelo-1" class="slide level2">
+<h2>Estimación del modelo</h2>
+<div id="left">
+<pre><code>#Petición de elementos en la salida
+summary (fit, fit.measures=TRUE, standardized=TRUE, rsquare=TRUE)</code></pre>
+<pre><code>## lavaan 0.6-5 ended normally after 20 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of free parameters                         13
+##                                                       
+##   Number of observations                           275
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 8.842
+##   Degrees of freedom                                 8
+##   P-value (Chi-square)                           0.356
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                               392.818
+##   Degrees of freedom                                15
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.998
+##   Tucker-Lewis Index (TLI)                       0.996
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -1831.324
+##   Loglikelihood unrestricted model (H1)      -1826.887
+##                                                       
+##   Akaike (AIC)                                3688.648
+##   Bayesian (BIC)                              3735.666
+##   Sample-size adjusted Bayesian (BIC)         3694.445
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.020
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.075
+##   P-value RMSEA &lt;= 0.05                          0.758
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.031
+## 
+## Parameter Estimates:
+## 
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+##   Standard errors                             Standard
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   IV =~                                                                 
+##     L                 0.797    0.073   10.882    0.000    0.797    0.731
+##     FSF               0.406    0.039   10.309    0.000    0.406    0.689
+##     H                 0.481    0.066    7.327    0.000    0.481    0.491
+##   IQ =~                                                                 
+##     M                 0.835    0.067   12.488    0.000    0.835    0.759
+##     FSC               0.312    0.025   12.501    0.000    0.312    0.760
+##     Q                 0.682    0.069    9.921    0.000    0.682    0.615
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   IV ~~                                                                 
+##     IQ                0.583    0.064    9.120    0.000    0.583    0.583
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##     IV                1.000                               1.000    1.000
+##     IQ                1.000                               1.000    1.000
+##    .L                 0.553    0.088    6.264    0.000    0.553    0.465
+##    .FSF               0.183    0.025    7.287    0.000    0.183    0.526
+##    .H                 0.729    0.071   10.283    0.000    0.729    0.759
+##    .M                 0.512    0.075    6.828    0.000    0.512    0.423
+##    .FSC               0.071    0.010    6.810    0.000    0.071    0.422
+##    .Q                 0.767    0.079    9.655    0.000    0.767    0.622
+## 
+## R-Square:
+##                    Estimate
+##     L                 0.535
+##     FSF               0.474
+##     H                 0.241
+##     M                 0.577
+##     FSC               0.578
+##     Q                 0.378</code></pre>
+</div>
+<div id="right">
+<div align="justify">
+<font size="6">
+<p class="small">
+<ul>
+<li><code>fit.measures=TRUE</code> pide que se amplie el número de indicadores de ajuste que se muestran por defecto.</li>
+<li><code>standardized=TRUE</code> pide que junto con las estimaciones no estandarizadas de los parámetros ofrezca también las estandarizadas.</li>
+<li><code>rsquare=TRUE</code> pide que para la ecuación de cada indicador nos indique el porcentaje de varianza que explica el factor del mismo.</li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="estimación-del-modelo-2" class="slide level2">
+<h2>Estimación del modelo</h2>
+<div id="left">
+<pre><code>#Petición de elementos en la salida
+resid(fit, type=&quot;cor&quot;)
+</code></pre>
+<pre><code>## $type
+## [1] &quot;cor.bentler&quot;
+## 
+## $cov
+##     L      FSF    H      M      FSC    Q     
+## L    0.000                                   
+## FSF -0.011  0.000                            
+## H    0.042 -0.024  0.000                     
+## M   -0.046  0.042 -0.070  0.000              
+## FSC -0.007  0.013 -0.035  0.010  0.000       
+## Q    0.022  0.080  0.003 -0.004 -0.014  0.000</code></pre>
+</div>
+<div id="right">
+<div align="justify">
+<font size="6">
+<p class="small">
+<code>resid(fit,type=&quot;cor&quot;)</code> solicita que se muestren las diferencias para cada elemento de la matriz de varianzas y covarianzas entre el valor muestral y el estimado.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="estimación-del-modelo-3" class="slide level2">
+<h2>Estimación del modelo</h2>
+<div id="left">
+<pre><code>#Petición de elementos en la salida
+summary (fit, fit.measures=TRUE, standardized=TRUE, rsquare=TRUE)</code></pre>
+<pre><code>## lavaan 0.6-5 ended normally after 20 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of free parameters                         13
+##                                                       
+##   Number of observations                           275
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 8.842
+##   Degrees of freedom                                 8
+##   P-value (Chi-square)                           0.356
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                               392.818
+##   Degrees of freedom                                15
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.998
+##   Tucker-Lewis Index (TLI)                       0.996
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -1831.324
+##   Loglikelihood unrestricted model (H1)      -1826.887
+##                                                       
+##   Akaike (AIC)                                3688.648
+##   Bayesian (BIC)                              3735.666
+##   Sample-size adjusted Bayesian (BIC)         3694.445
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.020
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.075
+##   P-value RMSEA &lt;= 0.05                          0.758
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.031
+## 
+## Parameter Estimates:
+## 
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+##   Standard errors                             Standard
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   IV =~                                                                 
+##     L                 0.797    0.073   10.882    0.000    0.797    0.731
+##     FSF               0.406    0.039   10.309    0.000    0.406    0.689
+##     H                 0.481    0.066    7.327    0.000    0.481    0.491
+##   IQ =~                                                                 
+##     M                 0.835    0.067   12.488    0.000    0.835    0.759
+##     FSC               0.312    0.025   12.501    0.000    0.312    0.760
+##     Q                 0.682    0.069    9.921    0.000    0.682    0.615
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   IV ~~                                                                 
+##     IQ                0.583    0.064    9.120    0.000    0.583    0.583
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##     IV                1.000                               1.000    1.000
+##     IQ                1.000                               1.000    1.000
+##    .L                 0.553    0.088    6.264    0.000    0.553    0.465
+##    .FSF               0.183    0.025    7.287    0.000    0.183    0.526
+##    .H                 0.729    0.071   10.283    0.000    0.729    0.759
+##    .M                 0.512    0.075    6.828    0.000    0.512    0.423
+##    .FSC               0.071    0.010    6.810    0.000    0.071    0.422
+##    .Q                 0.767    0.079    9.655    0.000    0.767    0.622
+## 
+## R-Square:
+##                    Estimate
+##     L                 0.535
+##     FSF               0.474
+##     H                 0.241
+##     M                 0.577
+##     FSC               0.578
+##     Q                 0.378</code></pre>
+</div>
+<div id="right">
+<center>
+<img src="images/matrizLambda.JPG" width="40%" />
+</center>
+<div align="justify">
+<font size="5.9">
+<p class="small">
+<ul>
+<li>La primera información importante contiene la matriz con las cargas estimadas <span class="math inline">\(\widehat{\boldsymbol{\Lambda}}\)</span></li>
+<li>El cuadro nos muestra la estimación no estandarizada de las cargas (<code>Estimate</code>), el error estándar de la estimación y, derivado de ello, el valor del estadístico t, que etiqueta como <code>z-value</code> (<span class="math inline">\(t=\widehat{\lambda}/SE\)</span>), a continuación ofrece la significatividad de ese parámetro o <code>P(&gt;|z|)</code> y el valor estandarizado de la carga <code>Std.all</code>.</li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="estimación-del-modelo-4" class="slide level2">
+<h2>Estimación del modelo</h2>
+<div id="left">
+<pre><code>#Petición de elementos en la salida
+summary (fit, fit.measures=TRUE, standardized=TRUE, rsquare=TRUE)</code></pre>
+<pre><code>## lavaan 0.6-5 ended normally after 20 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of free parameters                         13
+##                                                       
+##   Number of observations                           275
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 8.842
+##   Degrees of freedom                                 8
+##   P-value (Chi-square)                           0.356
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                               392.818
+##   Degrees of freedom                                15
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.998
+##   Tucker-Lewis Index (TLI)                       0.996
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -1831.324
+##   Loglikelihood unrestricted model (H1)      -1826.887
+##                                                       
+##   Akaike (AIC)                                3688.648
+##   Bayesian (BIC)                              3735.666
+##   Sample-size adjusted Bayesian (BIC)         3694.445
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.020
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.075
+##   P-value RMSEA &lt;= 0.05                          0.758
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.031
+## 
+## Parameter Estimates:
+## 
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+##   Standard errors                             Standard
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   IV =~                                                                 
+##     L                 0.797    0.073   10.882    0.000    0.797    0.731
+##     FSF               0.406    0.039   10.309    0.000    0.406    0.689
+##     H                 0.481    0.066    7.327    0.000    0.481    0.491
+##   IQ =~                                                                 
+##     M                 0.835    0.067   12.488    0.000    0.835    0.759
+##     FSC               0.312    0.025   12.501    0.000    0.312    0.760
+##     Q                 0.682    0.069    9.921    0.000    0.682    0.615
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   IV ~~                                                                 
+##     IQ                0.583    0.064    9.120    0.000    0.583    0.583
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##     IV                1.000                               1.000    1.000
+##     IQ                1.000                               1.000    1.000
+##    .L                 0.553    0.088    6.264    0.000    0.553    0.465
+##    .FSF               0.183    0.025    7.287    0.000    0.183    0.526
+##    .H                 0.729    0.071   10.283    0.000    0.729    0.759
+##    .M                 0.512    0.075    6.828    0.000    0.512    0.423
+##    .FSC               0.071    0.010    6.810    0.000    0.071    0.422
+##    .Q                 0.767    0.079    9.655    0.000    0.767    0.622
+## 
+## R-Square:
+##                    Estimate
+##     L                 0.535
+##     FSF               0.474
+##     H                 0.241
+##     M                 0.577
+##     FSC               0.578
+##     Q                 0.378</code></pre>
+</div>
+<div id="right">
+<center>
+<img src="images/phi_theta.JPG" width="100%" />
+</center>
+<div align="justify">
+<font size="5.9">
+<p class="small">
+<ul>
+<li>El valor de la covarianza entre los factores es 0.583. Los elementos etiquetados como .L .FSF .H .M .FSC y .Q son las varianzas de los términos de error de los indicadores.</li>
+<li>Por lo tanto, las matrices <span class="math inline">\(\widehat{\Phi}\)</span> y la matriz <span class="math inline">\(\widehat{\Theta}\)</span> quedan como en la figura.</li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="bondad-de-ajuste-del-modelo-estimado" class="slide level2">
+<h2>Bondad de ajuste del modelo estimado</h2>
+<div id="left">
+<pre><code>#Petición de elementos en la salida
+summary (fit, fit.measures=TRUE, standardized=TRUE, rsquare=TRUE)</code></pre>
+<pre><code>## lavaan 0.6-5 ended normally after 20 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of free parameters                         13
+##                                                       
+##   Number of observations                           275
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 8.842
+##   Degrees of freedom                                 8
+##   P-value (Chi-square)                           0.356
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                               392.818
+##   Degrees of freedom                                15
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.998
+##   Tucker-Lewis Index (TLI)                       0.996
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -1831.324
+##   Loglikelihood unrestricted model (H1)      -1826.887
+##                                                       
+##   Akaike (AIC)                                3688.648
+##   Bayesian (BIC)                              3735.666
+##   Sample-size adjusted Bayesian (BIC)         3694.445
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.020
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.075
+##   P-value RMSEA &lt;= 0.05                          0.758
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.031
+## 
+## Parameter Estimates:
+## 
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+##   Standard errors                             Standard
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   IV =~                                                                 
+##     L                 0.797    0.073   10.882    0.000    0.797    0.731
+##     FSF               0.406    0.039   10.309    0.000    0.406    0.689
+##     H                 0.481    0.066    7.327    0.000    0.481    0.491
+##   IQ =~                                                                 
+##     M                 0.835    0.067   12.488    0.000    0.835    0.759
+##     FSC               0.312    0.025   12.501    0.000    0.312    0.760
+##     Q                 0.682    0.069    9.921    0.000    0.682    0.615
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   IV ~~                                                                 
+##     IQ                0.583    0.064    9.120    0.000    0.583    0.583
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##     IV                1.000                               1.000    1.000
+##     IQ                1.000                               1.000    1.000
+##    .L                 0.553    0.088    6.264    0.000    0.553    0.465
+##    .FSF               0.183    0.025    7.287    0.000    0.183    0.526
+##    .H                 0.729    0.071   10.283    0.000    0.729    0.759
+##    .M                 0.512    0.075    6.828    0.000    0.512    0.423
+##    .FSC               0.071    0.010    6.810    0.000    0.071    0.422
+##    .Q                 0.767    0.079    9.655    0.000    0.767    0.622
+## 
+## R-Square:
+##                    Estimate
+##     L                 0.535
+##     FSF               0.474
+##     H                 0.241
+##     M                 0.577
+##     FSC               0.578
+##     Q                 0.378</code></pre>
+</div>
+<div id="right">
+<center>
+</center>
+<div align="justify">
+<font size="6">
+<p class="small">
+<span style="color:blue">Estadístico <span class="math inline">\(\mathcal{X}^2\)</span></span> <br> - La <span style="color:blue">hipótesis nula es que la matriz de varianzas y covarianzas muestral y la teórica son iguales </span>(lo que implicaría ajuste perfecto). <br> - El nivel de significancia <span style="color:green"><span class="math inline">\((p = 0.356)\)</span> no nos permite rechazar la hipótesis nula de igualdad entre las matrices</span> y, por lo tanto, confirma el <span style="color:brown">buen ajuste del modelo</span>.
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="bondad-de-ajuste-del-modelo-estimado-1" class="slide level2">
+<h2>Bondad de ajuste del modelo estimado</h2>
+<div id="left">
+<pre><code>#Petición de elementos en la salida
+summary (fit, fit.measures=TRUE, standardized=TRUE, rsquare=TRUE)</code></pre>
+<pre><code>## lavaan 0.6-5 ended normally after 20 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of free parameters                         13
+##                                                       
+##   Number of observations                           275
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 8.842
+##   Degrees of freedom                                 8
+##   P-value (Chi-square)                           0.356
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                               392.818
+##   Degrees of freedom                                15
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.998
+##   Tucker-Lewis Index (TLI)                       0.996
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -1831.324
+##   Loglikelihood unrestricted model (H1)      -1826.887
+##                                                       
+##   Akaike (AIC)                                3688.648
+##   Bayesian (BIC)                              3735.666
+##   Sample-size adjusted Bayesian (BIC)         3694.445
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.020
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.075
+##   P-value RMSEA &lt;= 0.05                          0.758
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.031
+## 
+## Parameter Estimates:
+## 
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+##   Standard errors                             Standard
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   IV =~                                                                 
+##     L                 0.797    0.073   10.882    0.000    0.797    0.731
+##     FSF               0.406    0.039   10.309    0.000    0.406    0.689
+##     H                 0.481    0.066    7.327    0.000    0.481    0.491
+##   IQ =~                                                                 
+##     M                 0.835    0.067   12.488    0.000    0.835    0.759
+##     FSC               0.312    0.025   12.501    0.000    0.312    0.760
+##     Q                 0.682    0.069    9.921    0.000    0.682    0.615
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   IV ~~                                                                 
+##     IQ                0.583    0.064    9.120    0.000    0.583    0.583
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##     IV                1.000                               1.000    1.000
+##     IQ                1.000                               1.000    1.000
+##    .L                 0.553    0.088    6.264    0.000    0.553    0.465
+##    .FSF               0.183    0.025    7.287    0.000    0.183    0.526
+##    .H                 0.729    0.071   10.283    0.000    0.729    0.759
+##    .M                 0.512    0.075    6.828    0.000    0.512    0.423
+##    .FSC               0.071    0.010    6.810    0.000    0.071    0.422
+##    .Q                 0.767    0.079    9.655    0.000    0.767    0.622
+## 
+## R-Square:
+##                    Estimate
+##     L                 0.535
+##     FSF               0.474
+##     H                 0.241
+##     M                 0.577
+##     FSC               0.578
+##     Q                 0.378</code></pre>
+</div>
+<div id="right">
+<center>
+</center>
+<div align="justify">
+<font size="6">
+<p class="small">
+<ul>
+<li>El SRMR (Standardized Root Mean Residual) es un <span style="color:blue">indicador de ajuste absoluto</span>, en la medida en que evalúa la <span style="color:green">plausibilidad</span> de que las <span style="color:green">matrices de varianzas y covarianzas muestral y estimada sean la misma</span>.</li>
+<li>Cuanto <span style="color:brown">mas pequeño</span> sea el valor del SRMR, <span style="color:brown">mejor será el ajuste</span>.</li>
+<li>Valores <span style="color:blue">inferiores a 0.08</span> denotan un <span style="color:blue">buen ajuste</span>.</li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="bondad-de-ajuste-del-modelo-estimado-2" class="slide level2">
+<h2>Bondad de ajuste del modelo estimado</h2>
+<div id="left">
+<pre><code>#Petición de elementos en la salida
+summary (fit, fit.measures=TRUE, standardized=TRUE, rsquare=TRUE)</code></pre>
+<pre><code>## lavaan 0.6-5 ended normally after 20 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of free parameters                         13
+##                                                       
+##   Number of observations                           275
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 8.842
+##   Degrees of freedom                                 8
+##   P-value (Chi-square)                           0.356
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                               392.818
+##   Degrees of freedom                                15
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.998
+##   Tucker-Lewis Index (TLI)                       0.996
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -1831.324
+##   Loglikelihood unrestricted model (H1)      -1826.887
+##                                                       
+##   Akaike (AIC)                                3688.648
+##   Bayesian (BIC)                              3735.666
+##   Sample-size adjusted Bayesian (BIC)         3694.445
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.020
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.075
+##   P-value RMSEA &lt;= 0.05                          0.758
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.031
+## 
+## Parameter Estimates:
+## 
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+##   Standard errors                             Standard
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   IV =~                                                                 
+##     L                 0.797    0.073   10.882    0.000    0.797    0.731
+##     FSF               0.406    0.039   10.309    0.000    0.406    0.689
+##     H                 0.481    0.066    7.327    0.000    0.481    0.491
+##   IQ =~                                                                 
+##     M                 0.835    0.067   12.488    0.000    0.835    0.759
+##     FSC               0.312    0.025   12.501    0.000    0.312    0.760
+##     Q                 0.682    0.069    9.921    0.000    0.682    0.615
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   IV ~~                                                                 
+##     IQ                0.583    0.064    9.120    0.000    0.583    0.583
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##     IV                1.000                               1.000    1.000
+##     IQ                1.000                               1.000    1.000
+##    .L                 0.553    0.088    6.264    0.000    0.553    0.465
+##    .FSF               0.183    0.025    7.287    0.000    0.183    0.526
+##    .H                 0.729    0.071   10.283    0.000    0.729    0.759
+##    .M                 0.512    0.075    6.828    0.000    0.512    0.423
+##    .FSC               0.071    0.010    6.810    0.000    0.071    0.422
+##    .Q                 0.767    0.079    9.655    0.000    0.767    0.622
+## 
+## R-Square:
+##                    Estimate
+##     L                 0.535
+##     FSF               0.474
+##     H                 0.241
+##     M                 0.577
+##     FSC               0.578
+##     Q                 0.378</code></pre>
+</div>
+<div id="right">
+<center>
+</center>
+<div align="justify">
+<font size="6">
+<p class="small">
+<ul>
+<li>Para el indicador RMSEA (Root Mean Square Error of Approximation) se obtiene un <span style="color:blue">buen ajuste</span> cuando <span style="color:blue">RMSEA&lt;0.05</span>, un <span style="color:green">ajuste aceptable</span> cuando está entre (<span style="color:green">0.05&lt;RMSEA&lt;0.08</span>) y un ajuste <span style="color:brown">pobre</span> si <span style="color:brown">RMSEA&gt;0.08</span>.</li>
+<li>Puede comprobarse como no solo el <span style="color:blue">RMSEA es inferior a 0.05 (es 0.02)</span> sino que el mencionado <span style="color:brown">test no puede descartarla hipótesis nula de que el RMSEA es inferior a 0.05 (p=0.758)</span>.</li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="bondad-de-ajuste-del-modelo-estimado-3" class="slide level2">
+<h2>Bondad de ajuste del modelo estimado</h2>
+<div id="left">
+<pre><code>#Petición de elementos en la salida
+summary (fit, fit.measures=TRUE, standardized=TRUE, rsquare=TRUE)</code></pre>
+<pre><code>## lavaan 0.6-5 ended normally after 20 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of free parameters                         13
+##                                                       
+##   Number of observations                           275
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                 8.842
+##   Degrees of freedom                                 8
+##   P-value (Chi-square)                           0.356
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                               392.818
+##   Degrees of freedom                                15
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.998
+##   Tucker-Lewis Index (TLI)                       0.996
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -1831.324
+##   Loglikelihood unrestricted model (H1)      -1826.887
+##                                                       
+##   Akaike (AIC)                                3688.648
+##   Bayesian (BIC)                              3735.666
+##   Sample-size adjusted Bayesian (BIC)         3694.445
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.020
+##   90 Percent confidence interval - lower         0.000
+##   90 Percent confidence interval - upper         0.075
+##   P-value RMSEA &lt;= 0.05                          0.758
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.031
+## 
+## Parameter Estimates:
+## 
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+##   Standard errors                             Standard
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   IV =~                                                                 
+##     L                 0.797    0.073   10.882    0.000    0.797    0.731
+##     FSF               0.406    0.039   10.309    0.000    0.406    0.689
+##     H                 0.481    0.066    7.327    0.000    0.481    0.491
+##   IQ =~                                                                 
+##     M                 0.835    0.067   12.488    0.000    0.835    0.759
+##     FSC               0.312    0.025   12.501    0.000    0.312    0.760
+##     Q                 0.682    0.069    9.921    0.000    0.682    0.615
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##   IV ~~                                                                 
+##     IQ                0.583    0.064    9.120    0.000    0.583    0.583
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+##     IV                1.000                               1.000    1.000
+##     IQ                1.000                               1.000    1.000
+##    .L                 0.553    0.088    6.264    0.000    0.553    0.465
+##    .FSF               0.183    0.025    7.287    0.000    0.183    0.526
+##    .H                 0.729    0.071   10.283    0.000    0.729    0.759
+##    .M                 0.512    0.075    6.828    0.000    0.512    0.423
+##    .FSC               0.071    0.010    6.810    0.000    0.071    0.422
+##    .Q                 0.767    0.079    9.655    0.000    0.767    0.622
+## 
+## R-Square:
+##                    Estimate
+##     L                 0.535
+##     FSF               0.474
+##     H                 0.241
+##     M                 0.577
+##     FSC               0.578
+##     Q                 0.378</code></pre>
+</div>
+<div id="right">
+<center>
+</center>
+<div align="justify">
+<font size="6">
+<p class="small">
+<ul>
+<li>Un modelo tendrá un <span style="color:blue">buen ajuste</span> de acuerdo al indicador Tucker-Lewis Index (TLI) cuando su <span style="color:blue">TLI &gt;0.90</span>, lo cual sucede con el obtenido en el ejemplo.</li>
+<li>Para el indicador Comparative Fit Index (CFl) tenemos que si esta <span style="color:green">entre [0,90-0,95] es aceptable</span> y si es <span style="color:brown">&gt;0,95 es bueno</span>. En nuestro caso se obtiene un valor bueno.</li>
+</ul>
+</p>
+<p></font></p>
+</div>
+</div>
+</section>
+<section id="bibliografía-complementaria" class="slide level2">
+<h2>Bibliografía complementaria</h2>
+<div id="left">
+<p><img src="images/libro2.JPG" width="70%" /></p>
+</div>
+<div id="right">
+<p><img src="images/libro2_p2.JPG" width="100%" /></p>
+</div>
+</section>
+<section id="bibliografía-complementaria-1" class="slide level2">
+<h2>Bibliografía complementaria</h2>
+<div id="left">
+<p><img src="images/libro2.JPG" width="70%" /></p>
+</div>
+<div id="right">
+<p><img src="images/libro2_p3.JPG" width="70%" /></p>
+</div>
+</section>
+<section id="bibliografía-complementaria-2" class="slide level2">
+<h2>Bibliografía complementaria</h2>
+<div id="left">
+<p><img src="images/libro1.JPG" width="70%" /></p>
+</div>
+<div id="right">
+<p><img src="images/libro1_p2.JPG" width="100%" /></p>
+</div>
+</section>
+<section id="bibliografía-complementaria-3" class="slide level2">
+<h2>Bibliografía complementaria</h2>
+<div id="left">
+<p><img src="images/libro3.JPG" width="70%" /></p>
+</div>
+<div id="right">
+<p><img src="images/libro3_p2.JPG" width="100%" /></p>
+</div>
+</section>
+<section id="bibliografía-complementaria-4" class="slide level2">
+<h2>Bibliografía complementaria</h2>
+<div id="left">
+<p><img src="images/libro3.JPG" width="70%" /></p>
+</div>
+<div id="right">
+<p><img src="images/libro3_p3.JPG" width="100%" /></p>
+</div>
+</section>
+<section id="bibliografía-complementaria-5" class="slide level2">
+<h2>Bibliografía complementaria</h2>
+<div id="left">
+<p><img src="images/articulo.JPG" width="100%" /></p>
+</div>
+<div id="right">
+<p><img src="images/libro4.JPG" width="70%" /></p>
+</div>
+</section>
+<section id="bibliografía-complementaria-6" class="slide level2">
+<h2>Bibliografía complementaria</h2>
+<div id="left">
+<p><img src="images/conjoint.JPG" width="150%" /></p>
+</div>
+<div id="right">
+<p><a href="https://rdrr.io/github/jlopezsi/MDSConjoint/">jlopezsi/MDSConjoint</a></p>
+</div>
+</section>
+    </div>
+  </div>
+
+  <script src="clase-6_2_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="clase-6_2_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: true,
+        // Transition style
+        transition: 'fade', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'clase-6_2_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
+          { src: 'clase-6_2_files/reveal.js-3.3.0.1/plugin/zoom-js/zoom.js', async: true },
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>
